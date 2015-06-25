@@ -1,0 +1,379 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cdata:StandardFields xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:cdata="http://www.chinacreator.com/platform/mvc/cdata" xmlns:dync="http://www.chinacreator.com/platform/mvc/ui/dync" xmlns:form="http://www.chinacreator.com/platform/mvc/form">
+  <cdata:group name="用户信息">
+    <cdata:standardFields id="user" name="用户" type="string">
+      <cdata:valueRange xsi:type="cdata:AllValueRange"/>
+      <cdata:standardControls>
+        <cdata:standardControl controlType="表单控件" id="formControl" name="默认表单控件">
+          <cdata:control type="widget/Text">
+            <form:attributes source="widget/Text"/>
+          </cdata:control>
+        </cdata:standardControl>
+        <cdata:standardControl controlType="表格控件" id="gridControl" name="默认表格控件">
+          <cdata:control type="widget/rendertest">
+            <form:attributes source="widget/rendertest">
+              <dync:attribute default="" group="Render示例" id="checkbox" name="checkbox" required="false" value="false">
+                <dync:render colSpan="2" height="0" multi="false" name="checkbox"/>
+                <dync:children/>
+              </dync:attribute>
+              <dync:attribute default="" group="Render示例" id="select" name="select" required="false" value="${sysvar.useraccount}">
+                <dync:render colSpan="2" height="0" multi="false" name="select">
+                  <dync:item name="" value=""/>
+                  <dync:item name="当前用户ID" value="${sysvar.userid}"/>
+                  <dync:item name="当前用户帐号" value="${sysvar.useraccount}"/>
+                  <dync:item name="当前用户姓名" value="${sysvar.username}"/>
+                </dync:render>
+                <dync:children/>
+              </dync:attribute>
+            </form:attributes>
+          </cdata:control>
+        </cdata:standardControl>
+      </cdata:standardControls>
+      <cdata:validations/>
+    </cdata:standardFields>
+    <cdata:standardFields id="user_id" name="用户id" type="string">
+      <cdata:valueRange xsi:type="cdata:AllValueRange"/>
+      <cdata:standardControls>
+        <cdata:standardControl controlType="表格控件" id="gridControl" name="默认表格控件">
+          <cdata:control type="widget/TableDatePicker">
+            <form:attributes source="widget/TableDatePicker"/>
+          </cdata:control>
+        </cdata:standardControl>
+        <cdata:standardControl controlType="表单控件" id="formControl" name="默认表单控件">
+          <cdata:control type="widget/button">
+            <form:attributes source="widget/button"/>
+          </cdata:control>
+        </cdata:standardControl>
+        <cdata:standardControl id="ControlID" name="新建页面控件">
+          <cdata:control type="widget/button">
+            <form:attributes source="widget/button"/>
+          </cdata:control>
+        </cdata:standardControl>
+        <cdata:standardControl id="ControlID1" name="新建页面控件1">
+          <cdata:control type="widget/button">
+            <form:attributes source="widget/button"/>
+          </cdata:control>
+        </cdata:standardControl>
+      </cdata:standardControls>
+      <cdata:validations>
+        <cdata:validation errorMessage="" expr="" name="新验证"/>
+      </cdata:validations>
+    </cdata:standardFields>
+    <cdata:standardFields id="user_name" name="用户名称" type="string">
+      <cdata:valueRange xsi:type="cdata:AllValueRange"/>
+      <cdata:standardControls>
+        <cdata:standardControl controlType="表单控件" id="formControl" name="默认表单控件">
+          <cdata:control type="widget/button">
+            <form:attributes source="widget/button"/>
+          </cdata:control>
+        </cdata:standardControl>
+        <cdata:standardControl controlType="表格控件" id="gridControl" name="默认表格控件">
+          <cdata:control type="widget/TableDatePicker">
+            <form:attributes source="widget/TableDatePicker"/>
+          </cdata:control>
+        </cdata:standardControl>
+      </cdata:standardControls>
+      <cdata:validations>
+        <cdata:validation expr="" name="新验证"/>
+      </cdata:validations>
+    </cdata:standardFields>
+    <cdata:standardFields id="email" name="电子邮件" type="string">
+      <cdata:valueRange xsi:type="cdata:NumericalValueRange"/>
+      <cdata:standardControls>
+        <cdata:standardControl controlType="表单控件" id="formControl" name="默认表单控件">
+          <cdata:control type="widget/button">
+            <form:attributes source="widget/button"/>
+          </cdata:control>
+        </cdata:standardControl>
+        <cdata:standardControl controlType="表格控件" id="gridControl" name="默认表格控件">
+          <cdata:control type="widget/TableDatePicker">
+            <form:attributes source="widget/TableDatePicker"/>
+          </cdata:control>
+        </cdata:standardControl>
+      </cdata:standardControls>
+      <cdata:validations/>
+    </cdata:standardFields>
+    <cdata:standardFields id="phone" name="固定电话" type="string">
+      <cdata:valueRange xsi:type="cdata:AllValueRange"/>
+      <cdata:standardControls>
+        <cdata:standardControl controlType="表单控件" id="formControl" name="默认表单控件">
+          <cdata:control type="widget/button">
+            <form:attributes source="widget/button"/>
+          </cdata:control>
+        </cdata:standardControl>
+        <cdata:standardControl controlType="表格控件" id="gridControl" name="默认表格控件">
+          <cdata:control type="widget/TableDatePicker">
+            <form:attributes source="widget/TableDatePicker"/>
+          </cdata:control>
+        </cdata:standardControl>
+        <cdata:standardControl id="ControlID" name="新建页面控件">
+          <cdata:control/>
+        </cdata:standardControl>
+      </cdata:standardControls>
+    </cdata:standardFields>
+    <cdata:standardFields id="mobile" name="移动电话" type="string">
+      <cdata:valueRange xsi:type="cdata:AllValueRange"/>
+      <cdata:standardControls>
+        <cdata:standardControl controlType="表单控件" id="formControl" name="默认表单控件">
+          <cdata:control/>
+        </cdata:standardControl>
+        <cdata:standardControl controlType="表格控件" id="gridControl" name="默认表格控件">
+          <cdata:control/>
+        </cdata:standardControl>
+      </cdata:standardControls>
+      <cdata:validations/>
+    </cdata:standardFields>
+    <cdata:standardFields id="address" length="100" name="地址" type="string">
+      <cdata:valueRange xsi:type="cdata:AllValueRange"/>
+      <cdata:standardControls>
+        <cdata:standardControl controlType="表单控件" id="formControl" name="默认表单控件">
+          <cdata:control/>
+        </cdata:standardControl>
+        <cdata:standardControl controlType="表格控件" id="gridControl" name="默认表格控件">
+          <cdata:control/>
+        </cdata:standardControl>
+      </cdata:standardControls>
+    </cdata:standardFields>
+  </cdata:group>
+  <cdata:group name="组织">
+    <cdata:standardFields id="company" length="20" name="公司" type="string">
+      <cdata:valueRange xsi:type="cdata:BDValueRange" displayExpr="data.company_code + ' - ' + data.company_name" id="entity:org.company"/>
+      <cdata:standardControls>
+        <cdata:standardControl controlType="表单控件" id="formControl" name="默认表单控件">
+          <cdata:control/>
+        </cdata:standardControl>
+        <cdata:standardControl controlType="表格控件" id="gridControl" name="默认表格控件">
+          <cdata:control/>
+        </cdata:standardControl>
+      </cdata:standardControls>
+      <cdata:validations>
+        <cdata:validation errorMessage="" expr="/^13[0-9]{9}$|14[0-9]{9}|15[0-9]{9}$|18[0-9]{9}$/" name="新验证"/>
+      </cdata:validations>
+    </cdata:standardFields>
+    <cdata:standardFields id="company_code" length="10" name="公司代码" type="string">
+      <cdata:valueRange xsi:type="cdata:AllValueRange"/>
+      <cdata:standardControls>
+        <cdata:standardControl controlType="表单控件" id="formControl" name="默认表单控件">
+          <cdata:control/>
+        </cdata:standardControl>
+        <cdata:standardControl controlType="表格控件" id="gridControl" name="默认表格控件">
+          <cdata:control/>
+        </cdata:standardControl>
+      </cdata:standardControls>
+      <cdata:validations/>
+    </cdata:standardFields>
+    <cdata:standardFields id="company_name" length="60" name="公司名称" type="string">
+      <cdata:valueRange xsi:type="cdata:AllValueRange"/>
+      <cdata:standardControls>
+        <cdata:standardControl controlType="表单控件" id="formControl" name="默认表单控件">
+          <cdata:control type="widget/Text">
+            <form:attributes source="widget/Text"/>
+          </cdata:control>
+        </cdata:standardControl>
+        <cdata:standardControl controlType="表格控件" id="gridControl" name="默认表格控件">
+          <cdata:control type="widget/TableLable">
+            <form:attributes source="widget/TableLable"/>
+          </cdata:control>
+        </cdata:standardControl>
+      </cdata:standardControls>
+    </cdata:standardFields>
+    <cdata:standardFields id="branch_name" length="60" name="部门名称" type="string">
+      <cdata:valueRange xsi:type="cdata:AllValueRange"/>
+      <cdata:standardControls>
+        <cdata:standardControl controlType="表单控件" id="formControl" name="默认表单控件">
+          <cdata:control type="widget/Text">
+            <form:attributes source="widget/Text"/>
+          </cdata:control>
+        </cdata:standardControl>
+        <cdata:standardControl controlType="表格控件" id="gridControl" name="默认表格控件">
+          <cdata:control/>
+        </cdata:standardControl>
+      </cdata:standardControls>
+    </cdata:standardFields>
+    <cdata:standardFields id="branch_code" length="20" name="部门代码" type="string">
+      <cdata:valueRange xsi:type="cdata:AllValueRange"/>
+      <cdata:standardControls>
+        <cdata:standardControl controlType="表单控件" id="formControl" name="默认表单控件">
+          <cdata:control/>
+        </cdata:standardControl>
+        <cdata:standardControl controlType="表格控件" id="gridControl" name="默认表格控件">
+          <cdata:control/>
+        </cdata:standardControl>
+      </cdata:standardControls>
+    </cdata:standardFields>
+  </cdata:group>
+  <cdata:group name="资产">
+    <cdata:standardFields id="equipment_xh" length="10" name="设备序号" type="int">
+      <cdata:valueRange xsi:type="cdata:AllValueRange"/>
+      <cdata:standardControls>
+        <cdata:standardControl controlType="表单控件" id="formControl" name="默认表单控件">
+          <cdata:control/>
+        </cdata:standardControl>
+        <cdata:standardControl controlType="表格控件" id="gridControl" name="默认表格控件">
+          <cdata:control/>
+        </cdata:standardControl>
+      </cdata:standardControls>
+      <cdata:validations/>
+    </cdata:standardFields>
+    <cdata:standardFields id="equipment_no" length="20" name="设备编号" type="string">
+      <cdata:valueRange xsi:type="cdata:AllValueRange"/>
+      <cdata:standardControls>
+        <cdata:standardControl controlType="表单控件" id="formControl" name="默认表单控件">
+          <cdata:control/>
+        </cdata:standardControl>
+        <cdata:standardControl controlType="表格控件" id="gridControl" name="默认表格控件">
+          <cdata:control/>
+        </cdata:standardControl>
+      </cdata:standardControls>
+    </cdata:standardFields>
+    <cdata:standardFields id="materiel_no" length="20" name="物料编号" type="string">
+      <cdata:valueRange xsi:type="cdata:AllValueRange"/>
+      <cdata:standardControls>
+        <cdata:standardControl controlType="表单控件" id="formControl" name="默认表单控件">
+          <cdata:control/>
+        </cdata:standardControl>
+        <cdata:standardControl controlType="表格控件" id="gridControl" name="默认表格控件">
+          <cdata:control/>
+        </cdata:standardControl>
+      </cdata:standardControls>
+    </cdata:standardFields>
+    <cdata:standardFields id="materiel_no" length="10" name="物料序号" type="int">
+      <cdata:valueRange xsi:type="cdata:BDValueRange"/>
+      <cdata:standardControls>
+        <cdata:standardControl controlType="表单控件" id="formControl" name="默认表单控件">
+          <cdata:control/>
+        </cdata:standardControl>
+        <cdata:standardControl controlType="表格控件" id="gridControl" name="默认表格控件">
+          <cdata:control/>
+        </cdata:standardControl>
+      </cdata:standardControls>
+    </cdata:standardFields>
+    <cdata:standardFields id="asset_no" length="30" name="固定资产编号" type="string">
+      <cdata:valueRange xsi:type="cdata:AllValueRange"/>
+      <cdata:standardControls>
+        <cdata:standardControl controlType="表单控件" id="formControl" name="默认表单控件">
+          <cdata:control/>
+        </cdata:standardControl>
+        <cdata:standardControl controlType="表格控件" id="gridControl" name="默认表格控件">
+          <cdata:control/>
+        </cdata:standardControl>
+      </cdata:standardControls>
+    </cdata:standardFields>
+    <cdata:standardFields id="equipment_type" length="10" name="设备分类" type="int">
+      <cdata:valueRange xsi:type="cdata:AllValueRange"/>
+      <cdata:standardControls>
+        <cdata:standardControl controlType="表单控件" id="formControl" name="默认表单控件">
+          <cdata:control/>
+        </cdata:standardControl>
+        <cdata:standardControl controlType="表格控件" id="gridControl" name="默认表格控件">
+          <cdata:control/>
+        </cdata:standardControl>
+      </cdata:standardControls>
+    </cdata:standardFields>
+    <cdata:standardFields id="materiel_type" length="10" name="物料分类" type="int">
+      <cdata:valueRange xsi:type="cdata:AllValueRange"/>
+      <cdata:standardControls>
+        <cdata:standardControl controlType="表单控件" id="formControl" name="默认表单控件">
+          <cdata:control/>
+        </cdata:standardControl>
+        <cdata:standardControl controlType="表格控件" id="gridControl" name="默认表格控件">
+          <cdata:control/>
+        </cdata:standardControl>
+      </cdata:standardControls>
+    </cdata:standardFields>
+  </cdata:group>
+  <cdata:group name="时间">
+    <cdata:standardFields id="date" name="日期" type="date">
+      <cdata:valueRange xsi:type="cdata:AllValueRange"/>
+      <cdata:standardControls>
+        <cdata:standardControl controlType="表单控件" id="formControl" name="默认表单控件">
+          <cdata:control/>
+        </cdata:standardControl>
+        <cdata:standardControl controlType="表格控件" id="gridControl" name="默认表格控件">
+          <cdata:control/>
+        </cdata:standardControl>
+      </cdata:standardControls>
+    </cdata:standardFields>
+    <cdata:standardFields id="time" name="时间" type="date">
+      <cdata:valueRange xsi:type="cdata:AllValueRange"/>
+      <cdata:standardControls>
+        <cdata:standardControl controlType="表单控件" id="formControl" name="默认表单控件">
+          <cdata:control/>
+        </cdata:standardControl>
+        <cdata:standardControl controlType="表格控件" id="gridControl" name="默认表格控件">
+          <cdata:control/>
+        </cdata:standardControl>
+      </cdata:standardControls>
+    </cdata:standardFields>
+    <cdata:standardFields id="timestamp" name="时间戳" type="date">
+      <cdata:valueRange xsi:type="cdata:AllValueRange"/>
+      <cdata:standardControls>
+        <cdata:standardControl controlType="表单控件" id="formControl" name="默认表单控件">
+          <cdata:control/>
+        </cdata:standardControl>
+        <cdata:standardControl controlType="表格控件" id="gridControl" name="默认表格控件">
+          <cdata:control/>
+        </cdata:standardControl>
+      </cdata:standardControls>
+    </cdata:standardFields>
+  </cdata:group>
+  <cdata:group name="树型结构">
+    <cdata:standardFields id="t_idx" length="10" name="树节点序号" type="int">
+      <cdata:valueRange xsi:type="cdata:AllValueRange"/>
+      <cdata:standardControls>
+        <cdata:standardControl controlType="表单控件" id="formControl" name="默认表单控件">
+          <cdata:control/>
+        </cdata:standardControl>
+        <cdata:standardControl controlType="表格控件" id="gridControl" name="默认表格控件">
+          <cdata:control/>
+        </cdata:standardControl>
+      </cdata:standardControls>
+    </cdata:standardFields>
+    <cdata:standardFields id="t_lft" length="10" name="树左序号" type="int">
+      <cdata:valueRange xsi:type="cdata:AllValueRange"/>
+      <cdata:standardControls>
+        <cdata:standardControl controlType="表单控件" id="formControl" name="默认表单控件">
+          <cdata:control/>
+        </cdata:standardControl>
+        <cdata:standardControl controlType="表格控件" id="gridControl" name="默认表格控件">
+          <cdata:control/>
+        </cdata:standardControl>
+      </cdata:standardControls>
+    </cdata:standardFields>
+    <cdata:standardFields id="t_rgt" length="10" name="树右序号" type="int">
+      <cdata:valueRange xsi:type="cdata:AllValueRange"/>
+      <cdata:standardControls>
+        <cdata:standardControl controlType="表单控件" id="formControl" name="默认表单控件">
+          <cdata:control/>
+        </cdata:standardControl>
+        <cdata:standardControl controlType="表格控件" id="gridControl" name="默认表格控件">
+          <cdata:control/>
+        </cdata:standardControl>
+      </cdata:standardControls>
+    </cdata:standardFields>
+  </cdata:group>
+  <cdata:group name="基本信息">
+    <cdata:standardFields id="id" name="ID" type="string">
+      <cdata:valueRange xsi:type="cdata:AllValueRange"/>
+      <cdata:standardControls>
+        <cdata:standardControl controlType="表单控件" id="formControl" name="默认表单控件">
+          <cdata:control/>
+        </cdata:standardControl>
+        <cdata:standardControl controlType="表格控件" id="gridControl" name="默认表格控件">
+          <cdata:control/>
+        </cdata:standardControl>
+      </cdata:standardControls>
+    </cdata:standardFields>
+    <cdata:standardFields id="name" name="名称" type="string">
+      <cdata:valueRange xsi:type="cdata:AllValueRange"/>
+      <cdata:standardControls>
+        <cdata:standardControl controlType="表单控件" id="formControl" name="默认表单控件">
+          <cdata:control/>
+        </cdata:standardControl>
+        <cdata:standardControl controlType="表格控件" id="gridControl" name="默认表格控件">
+          <cdata:control/>
+        </cdata:standardControl>
+      </cdata:standardControls>
+    </cdata:standardFields>
+  </cdata:group>
+</cdata:StandardFields>

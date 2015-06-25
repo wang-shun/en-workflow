@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomRule xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns="http://www.chinacreator.com/platform/mvc/rule" sn="getBindProcess" className="com.chinacreator.c2.flow.C2FlowRuleService" method="getBindProcessByModuleId">
+  <instanceCreator>
+    <params/>
+  </instanceCreator>
+  <name>获取事项绑定的流程</name>
+  <inputs>
+    <input collection="false" desc="" id="moduleId" required="true"/>
+  </inputs>
+  <outputs>
+    <output autoValue="Result" desc="" id="result" name="方法返回值" type="com.chinacreator.c2.flow.detail.WfProcessDefinition"/>
+  </outputs>
+  <params>
+    <param autoValue="Input.moduleId" name="moduleId" signature="QString;" type="java.lang.String"/>
+  </params>
+  <return signature="QWfProcessDefinition;" type="com.chinacreator.c2.flow.detail.WfProcessDefinition"/>
+</CustomRule>

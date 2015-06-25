@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:util="http://www.springframework.org/schema/util" xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context-3.2.xsd
+	http://www.springframework.org/schema/util
+    http://www.springframework.org/schema/util/spring-util.xsd">
+	<!-- 流程引擎配置 -->
+	<bean id="processEngineConfiguration"
+		class="com.chinacreator.c2.flow.cfg.ExtendSpringProcessEngineConfiguration">
+		<property name="dataSource" ref="dynamicDataSource" />
+		<property name="transactionManager" ref="transactionManager" />
+		<property name="databaseSchemaUpdate" value="true" />
+		<property name="jobExecutorActivate" value="false" />
+		<property name="activityFontName" value="宋体" />
+		<property name="labelFontName" value="宋体" />
+		<!-- 是否使用引擎自带身份(用户组、用户) -->
+		<property name="dbIdentityUsed" value="false" />
+		<!-- 系统管理机构用户所在数据库用户名，如果在同一个数据库用户不用配置，请用大写 -->
+		<property name="sys_prefix" value="" />
+		<!-- 自定义ID生成器 -->
+		<property name="idGenerator">
+			<bean class="com.chinacreator.c2.flow.util.PKGenerator" />
+		</property>
+		<!-- 事件监听器 -->
+		<property name="eventListeners">
+			<list>
+				<bean class="com.chinacreator.c2.flow.listener.ExtendEntityEventListener">
+					<!-- 当监听器处理失败是否抛出回滚异常 -->
+					<property name="failOnException" value="true" />
+					<!-- 监听对象实体Class类型，用于过滤事件 -->
+					<property name="entityClasses">
+						<set>
+							<value>org.activiti.engine.impl.persistence.entity.TaskEntity
+							</value>
+							<value>org.activiti.engine.impl.persistence.entity.HistoricTaskInstanceEntity
+							</value>
+						</set>
+					</property>
+				</bean>
+			</list>
+		</property>
+	</bean>
+	<bean id="processEngine" class="org.activiti.spring.ProcessEngineFactoryBean"
+		destroy-method="destroy">
+		<property name="processEngineConfiguration" ref="processEngineConfiguration" />
+	</bean>
+	<!-- Activiti内部服务 -->
+	<bean id="repositoryService" factory-bean="processEngine"
+		factory-method="getRepositoryService" />
+	<bean id="runtimeService" factory-bean="processEngine"
+		factory-method="getRuntimeService" />
+	<bean id="taskService" factory-bean="processEngine"
+		factory-method="getTaskService" />
+	<bean id="historyService" factory-bean="processEngine"
+		factory-method="getHistoryService" />
+	<bean id="managementService" factory-bean="processEngine"
+		factory-method="getManagementService" />
+	<bean id="identityService" factory-bean="processEngine"
+		factory-method="getIdentityService" />
+	<bean id="formService" factory-bean="processEngine"
+		factory-method="getFormService" />
+
+	<!-- 工作流本地服务 -->
+	<bean id="wfRepositoryServiceLocal" class="com.chinacreator.c2.flow.impl.WfRepositoryServiceImpl">
+		<property name="repositoryService" ref="repositoryService" />
+	</bean>
+	<bean id="wfRuntimeServiceLocal" class="com.chinacreator.c2.flow.impl.WfRuntimeServiceImpl">
+		<property name="repositoryService" ref="repositoryService" />
+		<property name="runtimeService" ref="runtimeService" />
+		<property name="taskService" ref="taskService" />
+		<property name="identityService" ref="identityService" />
+		<property name="historyService" ref="historyService" />
+		<property name="managementService" ref="managementService" />
+	</bean>
+	<bean id="wfHistoryServiceLocal" class="com.chinacreator.c2.flow.impl.WfHistoryServiceImpl">
+		<property name="historyService" ref="historyService" />
+		<property name="taskService" ref="taskService" />
+	</bean>
+	<bean id="wfFormServiceLocal" class="com.chinacreator.c2.flow.impl.WfFormServiceImpl">
+		<property name="formService" ref="formService" />
+	</bean>
+	<bean id="wfManagerServiceLocal" class="com.chinacreator.c2.flow.impl.WfManagerServiceImpl">
+		<property name="runtimeService" ref="runtimeService" />
+		<property name="managementService" ref="managementService" />
+		<property name="repositoryService" ref="repositoryService" />
+		<property name="processEngine" ref="processEngine" />
+		<property name="identityService" ref="identityService" />
+		<property name="historyService" ref="historyService" />
+		<property name="wfRepositoryServiceLocal" ref="wfRepositoryServiceLocal" />
+	</bean>
+
+	<context:component-scan base-package="com.chinacreator.c2.flow" />
+</beans>

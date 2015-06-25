@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomRule xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns="http://www.chinacreator.com/platform/mvc/rule" sn="startProcessInstanceByKey" className="com.chinacreator.c2.flow.C2FlowRuleService" method="startProcessInstanceByKey">
+  <instanceCreator>
+    <params/>
+  </instanceCreator>
+  <name>启动最新流程</name>
+  <desc>启动最新版本的流程实例</desc>
+  <inputs>
+    <input collection="false" desc="操作者信息，必须参数" id="wfOperator" name="操作者" required="true" type="com.chinacreator.c2.flow.detail.WfOperator"/>
+    <input collection="false" desc="业务ID，用于关联业务数据" id="bussinessId" name="业务ID" required="true"/>
+    <input collection="false" desc="流程定义Key,必须参数" id="processDefinitionKey" name="流程定义Key" required="true"/>
+    <input collection="false" desc="流程参数， 可以为null" id="variables" name="流程参数" required="false" type="java.util.Map"/>
+  </inputs>
+  <outputs>
+    <output autoValue="Result" desc="流程操作结果对象  @throws Exception" id="result_out" name="方法返回值" type="com.chinacreator.c2.flow.detail.WfResult"/>
+  </outputs>
+  <params>
+    <param autoValue="Input.wfOperator" name="wfOperator" signature="QWfOperator;" type="com.chinacreator.c2.flow.detail.WfOperator"/>
+    <param autoValue="Input.bussinessId" name="bussinessId" signature="QString;" type="java.lang.String"/>
+    <param autoValue="Input.processDefinitionKey" name="processDefinitionKey" signature="QString;" type="java.lang.String"/>
+    <param autoValue="Input.variables" name="variables" signature="QMap&lt;QString;QObject;>;" type="java.util.Map"/>
+  </params>
+  <return signature="QWfResult;" type="com.chinacreator.c2.flow.detail.WfResult"/>
+</CustomRule>

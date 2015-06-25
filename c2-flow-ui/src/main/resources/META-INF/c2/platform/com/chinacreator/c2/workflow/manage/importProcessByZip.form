@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form:Form xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dync="http://www.chinacreator.com/platform/mvc/ui/dync" xmlns:form="http://www.chinacreator.com/platform/mvc/form" name="导入流程" sn="importProcessByZip" type="form">
+  <form:control type="page/modal">
+    <form:attributes source="page/modal">
+      <dync:attribute default="" desc="页面宽度，支持px和%" group="HTML" hidden="false" id="width" name="页面宽度" required="false" value="40%">
+        <dync:render colSpan="2" height="0" multi="false" name="text"/>
+        <dync:children/>
+      </dync:attribute>
+      <dync:attribute default="" desc="页面头部的标题" group="HTML" hidden="false" id="title" name="标题" required="false" value="导入流程">
+        <dync:render colSpan="2" height="0" multi="false" name="text"/>
+        <dync:children/>
+      </dync:attribute>
+    </form:attributes>
+  </form:control>
+  <form:child xsi:type="form:Group" id="newGroup" name="简单容器(DIV)">
+    <form:control type="container/div">
+      <form:attributes source="container/div"/>
+    </form:control>
+    <form:child xsi:type="form:Field" id="file" name="选择文件：" customize="true">
+      <form:control type="widget/file_input">
+        <form:attributes source="widget/file_input">
+          <dync:attribute default="6" desc="网格布局中占位数" group="布局属性" hidden="false" id="span" name="占位数" required="false" value="12">
+            <dync:render colSpan="1" height="0" multi="false" name="text"/>
+            <dync:children/>
+          </dync:attribute>
+          <dync:attribute default="file" desc="处理文件上传的服务URL" group="HTML属性" hidden="false" id="url" name="上传路径" required="false" value="workflow/deploy">
+            <dync:render colSpan="1" height="0" multi="false" name="text"/>
+            <dync:children/>
+          </dync:attribute>
+          <dync:attribute default="" desc="文件上传成功后触发" group="事件" hidden="false" id="success" name="上传成功" required="false" value="file_success(data, status, headers, config)">
+            <dync:render colSpan="2" height="0" multi="false" name="event">
+              <dync:item name="params" value="data, status, headers, config"/>
+            </dync:render>
+            <dync:children/>
+          </dync:attribute>
+          <dync:attribute default="" desc="允许上传的文件类型，不写代表支持所有类型，内容是一个JS的字符串数组，例：[&quot;jpg&quot;,&quot;txt&quot;]" group="数据校验" hidden="false" id="allow" name="允许类型" required="false" value="[&quot;xml&quot;,&quot;bpmn&quot;,&quot;zip&quot;,&quot;bar&quot;]">
+            <dync:render colSpan="2" height="0" multi="false" name="text"/>
+            <dync:children/>
+          </dync:attribute>
+        </form:attributes>
+      </form:control>
+      <form:validation/>
+    </form:child>
+  </form:child>
+  <form:datasources>
+    <form:datasource xsi:type="form:Inputs"/>
+  </form:datasources>
+  <form:scripts>//关闭&#xD;
+closeModal:function(){&#xD;
+&#xD;
+	Modal.instance.close($scope.saveType);&#xD;
+	&#xD;
+},
+
+file_success:function(data, status, headers, config){&#xD;
+	if(data!=null){&#xD;
+		if('success'==data.result){&#xD;
+			Messenger.post({&#xD;
+				    'message': &quot;产生部署ID:&quot;+data.deployId,&#xD;
+				    'type': 'info',&#xD;
+			});&#xD;
+			this.closeModal();&#xD;
+		}&#xD;
+	&#xD;
+	}
+	
+}</form:scripts>
+</form:Form>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomRule xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns="http://www.chinacreator.com/platform/mvc/rule" sn="stopProcessInstance" className="com.chinacreator.c2.flow.C2FlowRuleService" method="deleteProcessInstancesById">
+  <instanceCreator>
+    <params/>
+  </instanceCreator>
+  <name>终止流程</name>
+  <inputs>
+    <input collection="false" desc="" id="wfOperator" required="true" type="com.chinacreator.c2.flow.detail.WfOperator"/>
+    <input collection="false" desc="" id="deleteReason" required="false"/>
+    <input collection="false" desc="" id="processInstanceId" required="true"/>
+  </inputs>
+  <outputs>
+    <output autoValue="Result" desc="" id="result" name="方法返回值"/>
+  </outputs>
+  <params>
+    <param autoValue="Input.wfOperator" name="wfOperator" signature="QWfOperator;" type="com.chinacreator.c2.flow.detail.WfOperator"/>
+    <param autoValue="Input.deleteReason" name="deleteReason" signature="QString;" type="java.lang.String"/>
+    <param autoValue="Input.processInstanceId" name="processInstanceId" signature="QString;" type="java.lang.String"/>
+  </params>
+  <return signature="QString;" type="java.lang.String"/>
+</CustomRule>

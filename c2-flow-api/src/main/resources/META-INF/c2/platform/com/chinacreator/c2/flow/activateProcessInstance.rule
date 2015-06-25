@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomRule xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns="http://www.chinacreator.com/platform/mvc/rule" sn="activateProcessInstance" className="com.chinacreator.c2.flow.C2FlowRuleService" method="activateProcessInstance">
+  <instanceCreator>
+    <params/>
+  </instanceCreator>
+  <name>恢复流程</name>
+  <desc>激活流程实例</desc>
+  <inputs>
+    <input collection="false" desc="操作者信息，必须参数" id="wfOperator" name="操作者" required="true" type="com.chinacreator.c2.flow.detail.WfOperator"/>
+    <input collection="false" desc="流程实例id,必须参数" id="processInstanceId" name="流程实例id" required="true"/>
+  </inputs>
+  <outputs>
+    <output autoValue="Result" desc="流程操作结果对象  @throws Exception" id="result_out" name="方法返回值" type="com.chinacreator.c2.flow.detail.WfResult"/>
+  </outputs>
+  <params>
+    <param autoValue="Input.wfOperator" name="wfOperator" signature="QWfOperator;" type="com.chinacreator.c2.flow.detail.WfOperator"/>
+    <param autoValue="Input.processInstanceId" name="processInstanceId" signature="QString;" type="java.lang.String"/>
+  </params>
+  <return signature="QWfResult;" type="com.chinacreator.c2.flow.detail.WfResult"/>
+</CustomRule>

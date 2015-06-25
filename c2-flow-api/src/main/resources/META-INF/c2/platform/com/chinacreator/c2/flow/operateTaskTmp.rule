@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomRule xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns="http://www.chinacreator.com/platform/mvc/rule" sn="operateTaskTmp" className="com.chinacreator.c2.flow.C2FlowRuleService" method="operateTaskTmp">
+  <instanceCreator>
+    <params/>
+  </instanceCreator>
+  <name>任务处理服务（过滤枚举）</name>
+  <desc>处理任务（为了C2封装的临时接口，解决枚举不支持作为参数的问题，以后要删掉）</desc>
+  <inputs>
+    <input collection="false" desc="操作者信息，必须参数" id="wfOperator" required="true" type="com.chinacreator.c2.flow.detail.WfOperator"/>
+    <input collection="false" desc="任务id,必须参数" id="taskId" required="true"/>
+    <input collection="false" desc="操作动作,必须参数（String类型）" id="action" required="true"/>
+    <input collection="false" desc="action=WfTaskAction.DELEGATE时有用，用于指定代理用户id,必须参数" id="userToDelegateTo" required="false"/>
+    <input collection="false" desc="操作参数，可以为null" id="variables" required="false" type="java.util.Map"/>
+  </inputs>
+  <outputs>
+    <output autoValue="Result" desc="流程操作结果对象  @throws Exception" id="result_out" name="方法返回值" type="com.chinacreator.c2.flow.detail.WfResult"/>
+  </outputs>
+  <params>
+    <param autoValue="Input.wfOperator" name="wfOperator" signature="QWfOperator;" type="com.chinacreator.c2.flow.detail.WfOperator"/>
+    <param autoValue="Input.taskId" name="taskId" signature="QString;" type="java.lang.String"/>
+    <param autoValue="Input.action" name="action" signature="QString;" type="java.lang.String"/>
+    <param autoValue="Input.userToDelegateTo" name="userToDelegateTo" signature="QString;" type="java.lang.String"/>
+    <param autoValue="Input.variables" name="variables" signature="QMap&lt;QString;QObject;>;" type="java.util.Map"/>
+  </params>
+  <return signature="QWfResult;" type="com.chinacreator.c2.flow.detail.WfResult"/>
+</CustomRule>

@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<!-- 事项流程配置表映射关系 -->
+<mapper
+	namespace="com.chinacreator.c2.flow.persistence.entity.WfModuleConfigEntity">
+
+
+	<sql id="ProcModuleConfig_Column_List"> ID, PROC_DEF_ID, PROC_DEF_KEY, PROC_DEF_NAME, MODULE_ID,
+		MODULE_NAME, IS_LATEST, APP_ID, IS_HASPROPERTY
+	</sql>
+
+	<sql id="Proc_Prop_Column_List">t.ID, t.CONFIG_ID , t.TASK_DEF_KEY , t.ALIAS ,t.DURATION
+		,t.DURATION_UNIT, t.PERFORMER , t.BIND_FORM, t.GROUP_PERFORMER
+	</sql>
+
+	<resultMap id="WfModuleConfigResultMap"
+		type="com.chinacreator.c2.flow.persistence.entity.WfModuleConfigEntity">
+		<result column="ID" property="id" jdbcType="NVARCHAR" />
+		<result column="PROC_DEF_ID" property="procDefId" jdbcType="NVARCHAR" />
+		<result column="PROC_DEF_KEY" property="procDefKey" jdbcType="NVARCHAR" />
+		<result column="PROC_DEF_NAME" property="procDefName" jdbcType="NVARCHAR" />
+		<result column="MODULE_ID" property="moduleId" jdbcType="VARCHAR" />
+		<result column="MODULE_NAME" property="moduleName" jdbcType="VARCHAR" />
+		<result column="IS_LATEST" property="isLatest" jdbcType="CHAR" />
+		<result column="APP_ID" property="appId" jdbcType="VARCHAR" />
+		<result column="IS_HASPROPERTY" property="isHasproperty"
+			jdbcType="CHAR" />
+	</resultMap>
+	<resultMap id="WfProcessConfigPropertyResultMap"
+		type="com.chinacreator.c2.flow.detail.WfProcessConfigProperty">
+		<result column="ID" property="id" jdbcType="VARCHAR" />
+		<result column="CONFIG_ID" property="configId" jdbcType="NVARCHAR" />
+		<result column="TASK_DEF_KEY" property="taskDefKey" jdbcType="NVARCHAR" />
+		<result column="ALIAS" property="alias" jdbcType="VARCHAR" />
+		<result column="DURATION" property="duration" jdbcType="INTEGER" />
+		<result column="DURATION_UNIT" property="durationUnit" jdbcType="VARCHAR" />
+		<result column="PERFORMER" property="performer" jdbcType="VARCHAR" />
+		<result column="BIND_FORM" property="bindForm" jdbcType="VARCHAR" />
+		<result column="GROUP_PERFORMER" property="groupPerformer" jdbcType="VARCHAR" />
+	</resultMap>
+
+
+	<select id="selectWfModuleConfig" parameterType="string"
+		resultMap="WfModuleConfigResultMap">
+		SELECT
+		<include refid="ProcModuleConfig_Column_List" />
+		FROM ${prefix}WF_MOD_PROC_CONFIG WHERE IS_LATEST = '1' AND MODULE_ID =
+		#{parameter}
+	</select>
+	
+	<select id="selectWfModuleConfigByParam" resultMap="WfModuleConfigResultMap">
+		SELECT
+		<include refid="ProcModuleConfig_Column_List" />
+		FROM ${prefix}WF_MOD_PROC_CONFIG
+		<trim prefix="WHERE" prefixOverrides="AND |OR ">
+			<if test="isLatest!=null">
+				<![CDATA[AND IS_LATEST=#{isLatest}]]>
+			</if>
+			<if test="moduleId!=null">
+				<![CDATA[AND MODULE_ID=#{moduleId}]]>
+			</if>
+			<if test="id!=null">
+				<![CDATA[AND ID=#{id}]]>
+			</if>
+			<if test="procDefId!=null">
+				<![CDATA[AND PROC_DEF_ID=#{procDefId}]]>
+			</if>
+			<if test="procDefKey!=null">
+				<![CDATA[AND PROC_DEF_KEY=#{procDefKey}]]>
+			</if>
+			<!--  ID, PROC_DEF_ID, PROC_DEF_KEY, PROC_DEF_NAME, MODULE_ID,
+		MODULE_NAME, IS_LATEST, APP_ID, IS_HASPROPERTY -->
+			<!-- PROC_DEF_KEY -->
+		</trim>
+	</select>
+
+	<insert id="insertWfModuleConfig"
+		parameterType="com.chinacreator.c2.flow.persistence.entity.WfModuleConfigEntity">
+		INSERT INTO ${prefix}WF_MOD_PROC_CONFIG (
+		ID,
+		PROC_DEF_ID,
+		PROC_DEF_KEY,
+		PROC_DEF_NAME,
+		MODULE_ID,
+		MODULE_NAME,
+		IS_LATEST,
+		APP_ID,
+		IS_HASPROPERTY
+		) values (
+		#{id ,jdbcType=VARCHAR},
+		#{procDefId, jdbcType=VARCHAR},
+		#{procDefKey, jdbcType=VARCHAR},
+		#{procDefName, jdbcType=VARCHAR},
+		#{moduleId, jdbcType=TIMESTAMP},
+		#{moduleName, jdbcType=TIMESTAMP},
+		#{isLatest ,jdbcType=BIGINT},
+		#{appId, jdbcType=VARCHAR},
+		#{isHasproperty, jdbcType=VARCHAR}
+		)
+	</insert>
+
+	<update id="updateIsLatestByModuleId"
+		parameterType="com.chinacreator.c2.flow.persistence.entity.WfModuleConfigEntity">
+		UPDATE ${prefix}WF_MOD_PROC_CONFIG set IS_LATEST=#{isLatest}
+		<trim prefix="WHERE" prefixOverrides="AND |OR ">
+			<if test="procDefId!=null">
+				<![CDATA[AND PROC_DEF_ID=#{procDefId}]]>
+			</if>
+			<if test="moduleId!=null">
+				<![CDATA[AND MODULE_ID=#{moduleId}]]>
+			</if>
+		</trim>
+		<!-- WHERE MODULE_ID =#{moduleId} AND PROC_DEF_ID=#{procDefId} -->
+	</update>
+
+	<select id="getBindModuleIdsByProcessDefKey" resultType="string" parameterType="string">
+		SELECT module_id
+		FROM ${prefix}WF_MOD_PROC_CONFIG WHERE
+		IS_LATEST = '1' AND PROC_DEF_KEY=#{parameter}
+	</select>
+	
+	<select id="findProcessConfigProperty" resultMap="WfProcessConfigPropertyResultMap">
+		SELECT <include refid="Proc_Prop_Column_List"/>
+		FROM ${prefix}WF_MOD_PROC_PROP t inner join ${prefix}WF_MOD_PROC_CONFIG t1 on t1.ID = t.CONFIG_ID
+		<trim prefix="WHERE" prefixOverrides="AND |OR ">
+			<!-- t1.IS_LATEST = '1' -->
+			<if test="processDefinitionId!=null">
+				<![CDATA[AND t1.PROC_DEF_ID=#{processDefinitionId}]]>
+			</if>
+			<if test="moduleId!=null">
+				<![CDATA[AND t1.MODULE_ID=#{moduleId}]]>
+			</if>
+			<if test="taskDefKey!=null">
+				<![CDATA[AND t.TASK_DEF_KEY=#{taskDefKey}]]>
+			</if>
+		</trim>
+	</select>
+	
+	<delete id="deleteProcessConfigPropertyByConfigIdAndTaskDefId">
+		DELETE FROM ${prefix}WF_MOD_PROC_PROP WHERE <![CDATA[config_id=#{configId}]]>
+		AND <![CDATA[task_def_key=#{taskDefinitionId}]]>
+	</delete>
+	
+	<insert id="insertWfProcessConfigProperty" parameterType="com.chinacreator.c2.flow.persistence.entity.WfProcessConfigPropertyEntity" >
+		INSERT INTO ${prefix}WF_MOD_PROC_PROP
+	    <trim prefix="(" suffix=")" suffixOverrides=",">
+	        <if test="id != null">
+	            ID,
+	        </if>
+	        <if test="configId != null">
+	            CONFIG_ID,
+	        </if>
+	        <if test="taskDefKey != null">
+	            TASK_DEF_KEY,
+	        </if>
+	        <if test="alias != null">
+	            ALIAS,
+	        </if>
+	        <if test="duration != null">
+	            DURATION,
+	        </if>
+	        <if test="durationUnit != null">
+	            DURATION_UNIT,
+	        </if>
+	         <if test="performer != null">
+	            PERFORMER,
+	        </if>
+	        <if test="groupPerformer != null">
+	            GROUP_PERFORMER,
+	        </if>
+	         <if test="bindForm != null">
+	            BIND_FORM,
+	        </if>
+	    </trim>
+	    <trim prefix="VALUES (" suffix=")" suffixOverrides=",">
+	         <if test="id != null">
+	            <![CDATA[#{id,jdbcType=VARCHAR},]]>
+	        </if>
+	        <if test="configId != null">
+	            <![CDATA[#{configId,jdbcType=NVARCHAR},]]>
+	        </if>
+	        <if test="taskDefKey != null">
+	             <![CDATA[#{taskDefKey,jdbcType=NVARCHAR},]]>
+	        </if>
+	        <if test="alias != null">
+	            <![CDATA[#{alias,jdbcType=VARCHAR},]]>
+	        </if>
+	        <if test="duration != null">
+	            <![CDATA[#{duration,jdbcType=INTEGER},]]>
+	        </if>
+	        <if test="durationUnit != null">
+	            <![CDATA[#{durationUnit,jdbcType=VARCHAR},]]>
+	        </if>
+	         <if test="performer != null">
+	            <![CDATA[#{performer,jdbcType=VARCHAR},]]>
+	        </if>
+	        <if test="groupPerformer != null">
+	            <![CDATA[#{groupPerformer,jdbcType=VARCHAR},]]>
+	        </if>
+	         <if test="bindForm != null">
+	            <![CDATA[#{bindForm,jdbcType=VARCHAR},]]>
+	        </if>
+	    </trim>
+	</insert>
+
+
+</mapper>

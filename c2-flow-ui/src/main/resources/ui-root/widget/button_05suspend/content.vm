@@ -1,0 +1,12 @@
+<button suspend-button #id($!{ele.id}) class="btn  $!{param.style} $!{param.size} no-border" 
+	ng-init='$state.${ele.id}.disabled = ${param.disabled};$state.${ele.id}.visible=${param.show}' 
+	ng-show='$state.${ele.id}.visible'
+	ng-disabled='$state.${ele.id}.disabled'"
+	#if(${param.click}!="")
+	#attr("ng-click='functions.${param.click}'" $!{param.click})>
+	#else
+	ng-click="suspendProcessInstance(${param.processInstanceId})">
+	#end
+	#if($!{param.icon}!="")<i class="ace-icon fa ${param.icon}"></i>#end
+	${ele.name}
+</button>

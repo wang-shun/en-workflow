@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.chinacreator.c2.flow.persistence.entity.WfOperateLogEntity">
+	<insert id="insertWfOperateLog"
+		parameterType="com.chinacreator.c2.flow.persistence.entity.WfOperateLogEntity">
+		INSERT INTO ${prefix}WF_OPERATE_LOG (
+		ID,
+		CLASS_NAME,
+		METHOD_NAME,
+		METHOD_ALIAS,
+		RESULT,
+		CALL_TIME,
+		USE_TIME,
+		APP_ID,
+		TENANT_ID,
+		ENGINE_NAME,
+		USER_ID,
+		IP
+		) values (
+		#{id
+		,jdbcType=VARCHAR},
+		#{className,
+		jdbcType=VARCHAR},
+		#{methodName,
+		jdbcType=VARCHAR},
+		#{methodAlias,
+		jdbcType=VARCHAR},
+		#{result,
+		jdbcType=VARCHAR},
+		#{callTime,
+		jdbcType=TIMESTAMP},
+		#{useTime
+		,jdbcType=BIGINT},
+		#{appId
+		,jdbcType=VARCHAR},
+		#{tenantId
+		,jdbcType=VARCHAR},
+		#{engineName
+		,jdbcType=VARCHAR},
+		#{userId
+		,jdbcType=VARCHAR},
+		#{ip
+		,jdbcType=VARCHAR}
+		)
+	</insert>
+	<insert id="insertWfOperateLogData"
+		parameterType="com.chinacreator.c2.flow.persistence.entity.WfOperateLogDataEntity">
+		INSERT INTO ${prefix}WF_OPERATE_LOGDATA (
+		LOG_ID,
+		ARGS_VALUE,
+		RETURN_VALUE,
+		EXCEPTION
+		) values (
+		#{logId
+		,jdbcType=VARCHAR},
+		#{argsValue,
+		jdbcType=CLOB},
+		#{returnValue,
+		jdbcType=CLOB},
+		#{exception,
+		jdbcType=CLOB}
+		)
+	</insert>
+
+	<resultMap id="WfOperateLogMap"
+		type="com.chinacreator.c2.flow.persistence.entity.WfOperateLogEntity">
+		<id property="id" column="ID" jdbcType="VARCHAR" />
+		<result property="className" column="CLASS_NAME" jdbcType="VARCHAR" />
+		<result property="methodName" column="METHOD_NAME" jdbcType="VARCHAR" />
+		<result property="methodAlias" column="METHOD_ALIAS" jdbcType="VARCHAR" />
+		<result property="result" column="RESULT" jdbcType="VARCHAR" />
+		<result property="callTime" column="CALL_TIME" jdbcType="VARCHAR" />
+		<result property="useTime" column="USE_TIME" jdbcType="BIGINT" />
+		<result property="appId" column="APP_ID" jdbcType="VARCHAR" />
+		<result property="tenantId" column="TENANT_ID" jdbcType="VARCHAR" />
+		<result property="engineName" column="ENGINE_NAME" jdbcType="VARCHAR" />
+		<result property="userId" column="USER_ID" jdbcType="VARCHAR" />
+		<result property="ip" column="IP" jdbcType="VARCHAR" />
+	</resultMap>
+	
+	<select id="selectWfOperateLog" parameterType="string"
+		resultMap="WfOperateLogMap">
+		select ID,
+		CLASS_NAME,
+		METHOD_NAME,
+		METHOD_ALIAS,
+		RESULT,
+		CALL_TIME,
+		USE_TIME,
+		APP_ID,
+		TENANT_ID,
+		ENGINE_NAME,
+		USER_ID,
+		IP
+		from
+		${prefix}WF_OPERATE_LOG where id = #{id}
+	</select>
+
+	<select id="selectWfOperateLogByC" parameterType="java.util.HashMap"
+		resultMap="WfOperateLogMap">
+		select ID,
+		CLASS_NAME,
+		METHOD_NAME,
+		METHOD_ALIAS,
+		RESULT,
+		CALL_TIME,
+		USE_TIME,
+		APP_ID,
+		TENANT_ID,
+		ENGINE_NAME,
+		USER_ID,
+		IP
+		from
+		${prefix}WF_OPERATE_LOG where 1=1
+		<if test="id != null">
+			and id = #{id}
+		</if>
+		<if test="className != null">
+			and CLASS_NAME like '%${className}%'
+		</if>
+		<if test="methodName != null">
+			and METHOD_NAME like '%${methodName}%'
+		</if>
+		<if test="methodAlias != null">
+			and METHOD_ALIAS like '%${methodAlias}%'
+		</if>
+		<if test="result != null">
+			and result like '%${result}%'
+		</if>
+		<if test="callTime != null">
+			and CALL_TIME like '%${callTime}%'
+		</if>
+		<if test="callTimeB != null">
+			and CALL_TIME &gt;= #{callTimeB}
+		</if>
+		<if test="callTimeE != null">
+			and CALL_TIME &lt;= #{callTimeE}
+		</if>
+		<if test="useTime != null">
+			and USE_TIME like '%${useTime}%'
+		</if>
+		<if test="appId != null">
+			and APP_ID like '%${appId}%'
+		</if>
+		<if test="tenantId != null">
+			and TENANT_ID like '%${tenantId}%'
+		</if>
+		<if test="engineName != null">
+			and ENGINE_NAME like '%${engineName}%'
+		</if>
+		<if test="userId != null">
+			and USER_ID like '%${userId}%'
+		</if>
+		<if test="ip != null">
+			and IP like '%${ip}%'
+		</if>
+		order by CALL_TIME desc
+	</select>
+	
+	
+	<select id="selectWfOperateLogCountByC" parameterType="java.util.HashMap"
+		resultType="Integer">
+		select count(1)
+		from
+		${prefix}WF_OPERATE_LOG where 1=1
+		<if test="id != null">
+			and id = #{id}
+		</if>
+		<if test="className != null">
+			and CLASS_NAME like '%${className}%'
+		</if>
+		<if test="methodName != null">
+			and METHOD_NAME like '%${methodName}%'
+		</if>
+		<if test="methodAlias != null">
+			and METHOD_ALIAS like '%${methodAlias}%'
+		</if>
+		<if test="result != null">
+			and result like '%${result}%'
+		</if>
+		<if test="callTime != null">
+			and CALL_TIME like '%${callTime}%'
+		</if>
+		<if test="callTimeB != null">
+			and CALL_TIME &gt;= #{callTimeB}
+		</if>
+		<if test="callTimeE != null">
+			and CALL_TIME &lt;= #{callTimeE}
+		</if>
+		<if test="useTime != null">
+			and USE_TIME like '%${useTime}%'
+		</if>
+		<if test="appId != null">
+			and APP_ID like '%${appId}%'
+		</if>
+		<if test="tenantId != null">
+			and TENANT_ID like '%${tenantId}%'
+		</if>
+		<if test="engineName != null">
+			and ENGINE_NAME like '%${engineName}%'
+		</if>
+		<if test="userId != null">
+			and USER_ID like '%${userId}%'
+		</if>
+		<if test="ip != null">
+			and IP like '%${ip}%'
+		</if>
+	</select>
+
+	<resultMap id="WfOperateLogDataMap"
+		type="com.chinacreator.c2.flow.persistence.entity.WfOperateLogDataEntity">
+		<result property="id" column="LOG_ID" jdbcType="VARCHAR" />
+		<result property="argsValue" column="ARGS_VALUE" jdbcType="CLOB" />
+		<result property="returnValue" column="RETURN_VALUE" jdbcType="CLOB" />
+		<result property="exception" column="EXCEPTION" jdbcType="CLOB" />
+	</resultMap>
+
+	<select id="selectWfOperateLogData" parameterType="string"
+		resultMap="WfOperateLogDataMap">
+		select 
+		LOG_ID,
+		ARGS_OBJECT,
+		ARGS_VALUE,
+		RETURN_OBJECT,
+		RETURN_VALUE,
+		EXCEPTION
+		from
+		${prefix}WF_OPERATE_LOGDATA where LOG_ID = #{id}
+	</select>
+</mapper>

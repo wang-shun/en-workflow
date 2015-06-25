@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PRSet xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns="http://www.chinacreator.com/platform/mvc/perm">
+  <resources>
+  </resources>
+  <resTypes>
+    <resType code="menu" name="菜单">
+      <resActions>
+        <resAction code="visible" name="可见" mask="0"/>
+      </resActions>
+    </resType>
+    <resType code="form" name="表单">
+      <resActions>
+        <resAction code="visible" name="可见" mask="0"/>
+      </resActions>
+    </resType>
+    <resType code="dom" name="dom元素">
+      <resActions>
+        <resAction code="visible" name="可见" mask="0"/>
+        <resAction code="enable" name="可用" mask="1"/>
+      </resActions>
+    </resType>
+    <resType code="service" name="服务">
+      <resActions>
+        <resAction code="accessible" name="可访问" mask="0"/>
+      </resActions>
+    </resType>
+    <resType code="entity_op" name="实体操作">
+      <resActions>
+        <resAction code="accessible" name="可访问" mask="0"/>
+      </resActions>
+    </resType>
+  </resTypes>
+</PRSet>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomRule xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns="http://www.chinacreator.com/platform/mvc/rule" sn="goAnyWhere" className="com.chinacreator.c2.flow.C2FlowRuleService" method="goAnyWhere">
+  <instanceCreator>
+    <params/>
+  </instanceCreator>
+  <name>自由流转</name>
+  <desc>自由流控制</desc>
+  <inputs>
+    <input collection="false" desc="操作者信息，必须参数" id="wfOperator" required="true" type="com.chinacreator.c2.flow.detail.WfOperator"/>
+    <input collection="false" desc="是否启动流程, 必须参数" id="isStart" name="是否启动" required="true" type="boolean"/>
+    <input collection="false" desc="业务id，启动流程时需要" id="bussinessKey" name="业务id" required="false"/>
+    <input collection="false" desc="流程定义id，启动流程时需要" id="processDefinitionId" name="流程定义id" required="false"/>
+    <input collection="false" desc="当前任务id" id="currenTaskId" name="当前任务id" required="false"/>
+    <input collection="false" desc="目标任务定义id, 必须参数" id="destTaskDefinitionKey" name="目标任务定义key" required="true"/>
+    <input collection="false" desc="是否使用历史负责人作为自由流向的任务执行人" id="useHisAssignee" name="使用历史参与者" required="false" type="boolean"/>
+    <input collection="false" desc="流程参数， 可以为null" id="variables" name="流程参数" required="false" type="java.util.Map"/>
+  </inputs>
+  <outputs>
+    <output autoValue="Result" desc="流程操作结果对象  @throws Exception" id="result_out" name="方法返回值" type="com.chinacreator.c2.flow.detail.WfResult"/>
+  </outputs>
+  <params>
+    <param autoValue="Input.wfOperator" name="wfOperator" signature="QWfOperator;" type="com.chinacreator.c2.flow.detail.WfOperator"/>
+    <param autoValue="Input.isStart" name="isStart" signature="Z" type="boolean"/>
+    <param autoValue="Input.bussinessKey" name="bussinessKey" signature="QString;" type="java.lang.String"/>
+    <param autoValue="Input.processDefinitionId" name="processDefinitionId" signature="QString;" type="java.lang.String"/>
+    <param autoValue="Input.currenTaskId" name="currenTaskId" signature="QString;" type="java.lang.String"/>
+    <param autoValue="Input.destTaskDefinitionKey" name="destTaskDefinitionKey" signature="QString;" type="java.lang.String"/>
+    <param autoValue="Input.useHisAssignee" name="useHisAssignee" signature="Z" type="boolean"/>
+    <param autoValue="Input.variables" name="variables" signature="QMap&lt;QString;QObject;>;" type="java.util.Map"/>
+  </params>
+  <return signature="QWfResult;" type="com.chinacreator.c2.flow.detail.WfResult"/>
+</CustomRule>

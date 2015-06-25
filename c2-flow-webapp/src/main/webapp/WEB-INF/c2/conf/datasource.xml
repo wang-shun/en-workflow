@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DataSources xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.chinacreator.com/platform/core/datasource"
+	default="">
+	<datasource xsi:type="DBCPDataSource" default="true" id="bspf"
+		name="平台工作流数据源" sys="true" type="Oracle">
+		<driverClassName>oracle.jdbc.OracleDriver</driverClassName>
+		<url>jdbc:oracle:thin:@//172.16.25.35:1521/asp</url>
+		<username>asp</username>
+		<password>123456</password>
+		<maxActive>20</maxActive>
+	</datasource>
+	<!-- <datasource xsi:type="DBCPDataSource" default="true" id="mysql" name="mysql数据源" 
+		sys="true" type="MySQL"> <driverClassName>com.mysql.jdbc.Driver</driverClassName> 
+		<url>jdbc:mysql://172.16.25.34:3306/gzl_q?zeroDateTimeBehavior=convertToNull&amp;useUnicode=true&amp;characterEncoding=utf-8</url> 
+		<username>root</username> <password>123456</password> </datasource> -->
+</DataSources>

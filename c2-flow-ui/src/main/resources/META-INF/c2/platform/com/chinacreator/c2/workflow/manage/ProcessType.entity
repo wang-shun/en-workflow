@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity:Entity xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.chinacreator.com/platform/mvc/rule" xmlns:_1="http://www.chinacreator.com/platform/ccep/datasource" xmlns:cdata="http://www.chinacreator.com/platform/mvc/cdata" xmlns:docket="http://www.chinacreator.com/platform/mvc/docket" xmlns:dync="http://www.chinacreator.com/platform/mvc/ui/dync" xmlns:entity="http://www.chinacreator.com/platform/mvc/entity" xmlns:form="http://www.chinacreator.com/platform/mvc/form" sn="processType">
+  <docket:name>流程类别</docket:name>
+  <docket:desc>流程类别树结构</docket:desc>
+  <docket:primaryKey>
+    <docket:pkAttribute attribute="proctype_id" docketId="entity:com.chinacreator.c2.workflow.workflowManage.ProcessType" type="UUID"/>
+  </docket:primaryKey>
+  <docket:attributes>
+    <docket:attribute code="proctype_id" length="32" name="流程类别ID" type="string32">
+      <docket:valueRange xsi:type="cdata:AllValueRange"/>
+    </docket:attribute>
+    <docket:attribute code="proctype_name" length="32" name="流程类别名称" nullable="true" type="string32">
+      <docket:valueRange xsi:type="cdata:AllValueRange"/>
+    </docket:attribute>
+    <docket:attribute code="proctype_desc" length="256" name="流程类别描述" nullable="true" type="string256">
+      <docket:valueRange xsi:type="cdata:AllValueRange"/>
+    </docket:attribute>
+    <docket:attribute code="order_no" length="10" name="排序号" nullable="true" type="int" sortType="升序">
+      <docket:valueRange xsi:type="cdata:AllValueRange"/>
+    </docket:attribute>
+    <docket:attribute code="parenttype_id" length="32" name="父类别" nullable="true" type="string32">
+      <docket:valueRange xsi:type="cdata:AllValueRange"/>
+    </docket:attribute>
+  </docket:attributes>
+  <docket:subDokcets/>
+  <docket:events>
+    <docket:event desc="" id="get" name="新操作">
+      <docket:logic>
+        <node xsi:type="RuleRef" id="selectOne" name="单记录查询" ruleId="rule:c2.dao.selectOne">
+          <inputs>
+            <input code="entity" from="data"/>
+          </inputs>
+        </node>
+      </docket:logic>
+      <docket:ui id="get" name="新操作" type="none">
+        <form:control type="page/normal">
+          <form:attributes source="page/normal"/>
+        </form:control>
+        <form:child xsi:type="form:Group" id="ProcessType" name="流程类别">
+          <form:control type="container/div">
+            <form:attributes source="container/div">
+              <dync:attribute default="12" desc="网格布局中占位数" group="HTML配置" hidden="false" id="span" name="占位数" required="true" value="12">
+                <dync:render colSpan="1" height="0" multi="false" name="text"/>
+                <dync:children/>
+              </dync:attribute>
+              <dync:attribute default="0" desc="网格布局中的偏移数" group="HTML配置" hidden="false" id="offset" name="偏移" required="false" value="0">
+                <dync:render colSpan="1" height="0" multi="false" name="text"/>
+                <dync:children/>
+              </dync:attribute>
+              <dync:attribute default="" desc="填写变量或者表达式控制控件是否可见。" group="HTML配置" hidden="false" id="visible" name="可见" required="false" value="">
+                <dync:render colSpan="2" height="0" multi="false" name="text"/>
+                <dync:children/>
+              </dync:attribute>
+              <dync:attribute default="true" desc="内容在页面初始化完成时是否可见。" group="HTML配置" hidden="false" id="defaultVisible" name="默认可见" required="false" value="true">
+                <dync:render colSpan="2" height="0" multi="false" name="checkbox"/>
+                <dync:children/>
+              </dync:attribute>
+              <dync:attribute default="false" desc="内部是否有边距" group="HTML配置" hidden="false" id="nopadding" name="无内边距" required="false" value="false">
+                <dync:render colSpan="2" height="0" multi="false" name="checkbox"/>
+                <dync:children/>
+              </dync:attribute>
+              <dync:attribute default="" desc="在容器内部直接嵌入自定义的HTML，容器里面的其他元素不再有效" group="高级自定义" hidden="false" id="html" name="自定义HTML" required="false" value="">
+                <dync:render colSpan="2" height="0" multi="false" name="html"/>
+                <dync:children/>
+              </dync:attribute>
+              <dync:attribute default="" desc="可以添加任意class" group="高级自定义" hidden="false" id="cssClass" name="自定义class" required="false" value="">
+                <dync:render colSpan="2" height="0" multi="false" name="text"/>
+                <dync:children/>
+              </dync:attribute>
+              <dync:attribute default="" desc="可以添加任意style" group="高级自定义" hidden="false" id="style" name="自定义style" required="false" value="">
+                <dync:render colSpan="2" height="0" multi="false" name="text"/>
+                <dync:children/>
+              </dync:attribute>
+            </form:attributes>
+          </form:control>
+        </form:child>
+        <form:datasources>
+          <form:datasource xsi:type="form:Inputs">
+            <form:input id="id" name="实体数据id"/>
+          </form:datasource>
+          <form:datasource xsi:type="form:EntityDataSource" id="entity" name="实体数据" data="in.id" entity="entity:com.chinacreator.c2.workflow.workflowManage.ProcessType"/>
+        </form:datasources>
+        <form:scripts></form:scripts>
+      </docket:ui>
+    </docket:event>
+    <docket:event desc="新增流程子类别" id="insert" name="新增流程子类别">
+      <docket:logic/>
+      <docket:ui id="insert" name="新增流程子类别" type="none">
+        <form:control type="page/normal">
+          <form:attributes source="page/normal"/>
+        </form:control>
+        <form:child xsi:type="form:Group" id="ProcessType" name="流程类别">
+          <form:control type="container/div">
+            <form:attributes source="container/div">
+              <dync:attribute default="12" desc="网格布局中占位数" group="HTML配置" hidden="false" id="span" name="占位数" required="true" value="12">
+                <dync:render colSpan="1" height="0" multi="false" name="text"/>
+                <dync:children/>
+              </dync:attribute>
+              <dync:attribute default="0" desc="网格布局中的偏移数" group="HTML配置" hidden="false" id="offset" name="偏移" required="false" value="0">
+                <dync:render colSpan="1" height="0" multi="false" name="text"/>
+                <dync:children/>
+              </dync:attribute>
+              <dync:attribute default="" desc="填写变量或者表达式控制控件是否可见。" group="HTML配置" hidden="false" id="visible" name="可见" required="false" value="">
+                <dync:render colSpan="2" height="0" multi="false" name="text"/>
+                <dync:children/>
+              </dync:attribute>
+              <dync:attribute default="true" desc="内容在页面初始化完成时是否可见。" group="HTML配置" hidden="false" id="defaultVisible" name="默认可见" required="false" value="true">
+                <dync:render colSpan="2" height="0" multi="false" name="checkbox"/>
+                <dync:children/>
+              </dync:attribute>
+              <dync:attribute default="false" desc="内部是否有边距" group="HTML配置" hidden="false" id="nopadding" name="无内边距" required="false" value="false">
+                <dync:render colSpan="2" height="0" multi="false" name="checkbox"/>
+                <dync:children/>
+              </dync:attribute>
+              <dync:attribute default="" desc="在容器内部直接嵌入自定义的HTML，容器里面的其他元素不再有效" group="高级自定义" hidden="false" id="html" name="自定义HTML" required="false" value="">
+                <dync:render colSpan="2" height="0" multi="false" name="html"/>
+                <dync:children/>
+              </dync:attribute>
+              <dync:attribute default="" desc="可以添加任意class" group="高级自定义" hidden="false" id="cssClass" name="自定义class" required="false" value="">
+                <dync:render colSpan="2" height="0" multi="false" name="text"/>
+                <dync:children/>
+              </dync:attribute>
+              <dync:attribute default="" desc="可以添加任意style" group="高级自定义" hidden="false" id="style" name="自定义style" required="false" value="">
+                <dync:render colSpan="2" height="0" multi="false" name="text"/>
+                <dync:children/>
+              </dync:attribute>
+            </form:attributes>
+          </form:control>
+        </form:child>
+        <form:datasources>
+          <form:datasource xsi:type="form:Inputs">
+            <form:input id="id" name="实体数据id"/>
+          </form:datasource>
+          <form:datasource xsi:type="form:EntityDataSource" id="entity" name="实体数据" data="in.id" entity="entity:com.chinacreator.c2.workflow.workflowManage.ProcessType"/>
+        </form:datasources>
+        <form:scripts></form:scripts>
+      </docket:ui>
+    </docket:event>
+    <docket:event desc="" id="edit" name="修改流程类别">
+      <docket:logic/>
+      <docket:ui name="修改流程类别" type="none">
+        <form:control type="page/normal">
+          <form:attributes source="page/normal"/>
+        </form:control>
+        <form:child xsi:type="form:Group" id="ProcessType" name="流程类别">
+          <form:control type="container/div">
+            <form:attributes source="container/div">
+              <dync:attribute default="12" desc="网格布局中占位数" group="HTML配置" hidden="false" id="span" name="占位数" required="true" value="12">
+                <dync:render colSpan="1" height="0" multi="false" name="text"/>
+                <dync:children/>
+              </dync:attribute>
+              <dync:attribute default="0" desc="网格布局中的偏移数" group="HTML配置" hidden="false" id="offset" name="偏移" required="false" value="0">
+                <dync:render colSpan="1" height="0" multi="false" name="text"/>
+                <dync:children/>
+              </dync:attribute>
+              <dync:attribute default="" desc="填写变量或者表达式控制控件是否可见。" group="HTML配置" hidden="false" id="visible" name="可见" required="false" value="">
+                <dync:render colSpan="2" height="0" multi="false" name="text"/>
+                <dync:children/>
+              </dync:attribute>
+              <dync:attribute default="true" desc="内容在页面初始化完成时是否可见。" group="HTML配置" hidden="false" id="defaultVisible" name="默认可见" required="false" value="true">
+                <dync:render colSpan="2" height="0" multi="false" name="checkbox"/>
+                <dync:children/>
+              </dync:attribute>
+              <dync:attribute default="false" desc="内部是否有边距" group="HTML配置" hidden="false" id="nopadding" name="无内边距" required="false" value="false">
+                <dync:render colSpan="2" height="0" multi="false" name="checkbox"/>
+                <dync:children/>
+              </dync:attribute>
+              <dync:attribute default="" desc="在容器内部直接嵌入自定义的HTML，容器里面的其他元素不再有效" group="高级自定义" hidden="false" id="html" name="自定义HTML" required="false" value="">
+                <dync:render colSpan="2" height="0" multi="false" name="html"/>
+                <dync:children/>
+              </dync:attribute>
+              <dync:attribute default="" desc="可以添加任意class" group="高级自定义" hidden="false" id="cssClass" name="自定义class" required="false" value="">
+                <dync:render colSpan="2" height="0" multi="false" name="text"/>
+                <dync:children/>
+              </dync:attribute>
+              <dync:attribute default="" desc="可以添加任意style" group="高级自定义" hidden="false" id="style" name="自定义style" required="false" value="">
+                <dync:render colSpan="2" height="0" multi="false" name="text"/>
+                <dync:children/>
+              </dync:attribute>
+            </form:attributes>
+          </form:control>
+        </form:child>
+        <form:datasources>
+          <form:datasource xsi:type="form:Inputs">
+            <form:input id="id" name="实体数据id"/>
+          </form:datasource>
+          <form:datasource xsi:type="form:EntityDataSource" id="entity" name="实体数据" data="in.id" entity="entity:com.chinacreator.c2.workflow.workflowManage.ProcessType"/>
+        </form:datasources>
+        <form:scripts></form:scripts>
+      </docket:ui>
+    </docket:event>
+  </docket:events>
+  <docket:table _1:ds="bspf" _1:table="wf_proc_type"/>
+  <docket:cache>false</docket:cache>
+  <entity:datas/>
+  <entity:views/>
+</entity:Entity>

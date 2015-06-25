@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomRule xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns="http://www.chinacreator.com/platform/mvc/rule" sn="setPropertyToActivity" className="com.chinacreator.c2.flow.C2FlowRuleService" method="saveProcessConfigProperty">
+  <instanceCreator>
+    <params/>
+  </instanceCreator>
+  <name>为环节设置新的外围属性</name>
+  <desc>保存环节外围配置信息</desc>
+  <inputs>
+    <input collection="false" desc="" id="processDefinitionId" required="true"/>
+    <input collection="false" desc="" id="taskDefinitionId" required="true"/>
+    <input collection="false" desc="" id="moduleId" required="true"/>
+    <input collection="false" desc="" id="wpcp" required="true" type="com.chinacreator.c2.flow.detail.WfProcessConfigProperty"/>
+  </inputs>
+  <outputs/>
+  <params>
+    <param autoValue="Input.processDefinitionId" name="processDefinitionId" signature="QString;" type="java.lang.String"/>
+    <param autoValue="Input.taskDefinitionId" name="taskDefinitionId" signature="QString;" type="java.lang.String"/>
+    <param autoValue="Input.moduleId" name="moduleId" signature="QString;" type="java.lang.String"/>
+    <param autoValue="Input.wpcp" name="wpcp" signature="QWfProcessConfigProperty;" type="com.chinacreator.c2.flow.detail.WfProcessConfigProperty"/>
+  </params>
+  <return signature="V" type="void"/>
+</CustomRule>

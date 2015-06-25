@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form:Form xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dync="http://www.chinacreator.com/platform/mvc/ui/dync" xmlns:form="http://www.chinacreator.com/platform/mvc/form" name="新增作息时间" sn="createWorkDatePop" type="form">
+  <form:control type="page/modal">
+    <form:attributes source="page/modal">
+      <dync:attribute default="" desc="页面头部的标题" group="HTML" hidden="false" id="title" name="标题" required="false" value="新增作息时间">
+        <dync:render colSpan="2" height="0" multi="false" name="text"/>
+        <dync:children/>
+      </dync:attribute>
+    </form:attributes>
+  </form:control>
+  <form:child xsi:type="form:Group" id="newGroupId" name="新分组">
+    <form:control type="container/div">
+      <form:attributes source="container/div">
+        <dync:attribute default="12" desc="网格布局中占位数" group="HTML配置" hidden="false" id="span" name="占位数" required="true" value="12">
+          <dync:render colSpan="1" height="0" multi="false" name="text"/>
+          <dync:children/>
+        </dync:attribute>
+        <dync:attribute default="0" desc="网格布局中的偏移数" group="HTML配置" hidden="false" id="offset" name="偏移" required="false" value="0">
+          <dync:render colSpan="1" height="0" multi="false" name="text"/>
+          <dync:children/>
+        </dync:attribute>
+        <dync:attribute default="" desc="填写变量或者表达式控制控件是否折叠。变量和表达式的值必须为布尔类型。&#xA;                @attention 当填写变量时，变量必须有初始值，如果变量未定义则无效。定义为`true`或者`false`之后，可以通过修改该变量的值来控制控件的折叠；&#xA;                &#x9;如果填写表达式，表达式中要有变量（当然你也可以直接写`true`,`false`或者是`1==1`。没问题，但是有意义吗！冏rz），通过改变变量的值改变表达式的结果。比如：你想让只有权限大于10的，才能显示，否则控件必须折叠。假设`right`为权限值，该属性可设置为`right&lt;=10`。&#xA;                @attention 变量可以从数据源中直接拿，或者在页面的*载入事件*中进行初始化。" group="HTML配置" hidden="false" id="collapse" name="变量折叠" required="false" value="">
+          <dync:render colSpan="2" height="0" multi="false" name="text"/>
+          <dync:children/>
+        </dync:attribute>
+        <dync:attribute default="false" desc="容器在页面初始化完成时是否折叠。当你不需要通过变量来控制控件折叠的话，只需要使用这个属性就够了。可以通过控件方法`show();hide();toggle()`控制容器的折叠状态。&#xA;                `false`表示展开控件（默认）。&#xA;                `true`表示折叠控件。&#xA;                @attention *变量折叠*和*折叠默认值*是或（||）的关系。当两个属性都设了值时，只要有一个为折叠（true），则另一个怎么设置都无效。所以当需要设置*变量折叠*属性进行容器折叠状态控制时，折叠默认值必须设置为`false`。同理，当*变量折叠*属性的值为`true`时,通过控件方法`show();hide();toggle()`是怎么也改变不了容器的折叠状态的。" group="HTML配置" hidden="false" id="defaultCollapse" name="折叠默认值" required="false" value="false">
+          <dync:render colSpan="2" height="0" multi="false" name="checkbox"/>
+          <dync:children/>
+        </dync:attribute>
+        <dync:attribute default="false" desc="内部是否有边距" group="HTML配置" hidden="false" id="nopadding" name="无内边距" required="false" value="false">
+          <dync:render colSpan="2" height="0" multi="false" name="checkbox"/>
+          <dync:children/>
+        </dync:attribute>
+        <dync:attribute default="" desc="在容器内部直接嵌入自定义的HTML。当控件满足不了页面需求时，可以通过这个去嵌入一段自定义的HTML代码。&#xA;                点击属性框右边按钮，会自动跳转到*HTML片段*的页签，并在页签内生成一段包裹脚本。需要自定义的HTML代码写在脚本内。如果还需要脚本控制元素，也可在模版内部写自己的脚本。&#xA;                @code&#xA;                &lt;script type=&quot;text/ng-template&quot; id=&quot;newGroup1_html&quot;>&#xA;&#x9;&#x9;&#x9;&#x9;我的地盘我做主！&#xA;&#x9;&#x9;&#x9;&#x9;&lt;script>&#xA;&#x9;&#x9;&#x9;&#x9;alert(&quot;oye!&quot;);&#xA;&#x9;&#x9;&#x9;&#x9;&lt;/script>&#xA;&#x9;&#x9;&#x9;&#x9;&lt;/script>&#xA;                @code&#xA;                @attention 如果定义了该属性，那么在容器中放置任何其他控件都会被忽略。" group="高级自定义" hidden="false" id="html" name="自定义HTML" required="false" value="">
+          <dync:render colSpan="2" height="0" multi="false" name="html"/>
+          <dync:children/>
+        </dync:attribute>
+        <dync:attribute default="" desc="可以添加任意class，多个class样式用空格分开" group="高级自定义" hidden="false" id="cssClass" name="自定义class" required="false" value="">
+          <dync:render colSpan="2" height="0" multi="false" name="text"/>
+          <dync:children/>
+        </dync:attribute>
+        <dync:attribute default="" desc="可以添加任意style样式,必须遵循style样式格式：&quot;color:red;backgroud-color:blue;&quot;。" group="高级自定义" hidden="false" id="style" name="自定义style" required="false" value="">
+          <dync:render colSpan="2" height="0" multi="false" name="text"/>
+          <dync:children/>
+        </dync:attribute>
+      </form:attributes>
+    </form:control>
+    <form:child xsi:type="form:Field" binding="$model.beginDate" id="newField" name="起始日期" customize="true">
+      <form:control type="widget/date_picker">
+        <form:attributes source="widget/date_picker">
+          <dync:attribute default="6" desc="日期选择控件在网格布局中占列数" group="HTML设置" hidden="false" id="span" name="控件宽度" required="false" value="9">
+            <dync:render colSpan="1" height="0" multi="false" name="text"/>
+            <dync:children/>
+          </dync:attribute>
+          <dync:attribute default="75" desc="lable文本的宽度" group="HTML设置" hidden="false" id="lableWidth" name="文本宽度" required="false" value="90">
+            <dync:render colSpan="1" height="0" multi="false" name="text"/>
+            <dync:children/>
+          </dync:attribute>
+        </form:attributes>
+      </form:control>
+      <form:validation/>
+    </form:child>
+    <form:child xsi:type="form:Field" binding="$model.endDate" id="newField1" name="结束日期" customize="true">
+      <form:control type="widget/date_picker">
+        <form:attributes source="widget/date_picker">
+          <dync:attribute default="6" desc="日期选择控件在网格布局中占列数" group="HTML设置" hidden="false" id="span" name="控件宽度" required="false" value="9">
+            <dync:render colSpan="1" height="0" multi="false" name="text"/>
+            <dync:children/>
+          </dync:attribute>
+          <dync:attribute default="75" desc="lable文本的宽度" group="HTML设置" hidden="false" id="lableWidth" name="文本宽度" required="false" value="90">
+            <dync:render colSpan="1" height="0" multi="false" name="text"/>
+            <dync:children/>
+          </dync:attribute>
+        </form:attributes>
+      </form:control>
+      <form:validation/>
+    </form:child>
+    <form:child xsi:type="form:Field" binding="$model.amBeginTime" id="newField2" name="上午上班时间" customize="true">
+      <form:control type="widget/time_picker">
+        <form:attributes source="widget/time_picker">
+          <dync:attribute default="hh-mm-ss" desc="時間控件输出格式" group="HTML设置" hidden="false" id="format" name="时间格式" required="true" value="hh-mm">
+            <dync:render colSpan="1" height="0" multi="false" name="select">
+              <dync:item name="hh" value="hh"/>
+              <dync:item name="hh-mm" value="hh-mm"/>
+              <dync:item name="hh-mm-ss" value="hh-mm-ss"/>
+            </dync:render>
+            <dync:children/>
+          </dync:attribute>
+          <dync:attribute default="75" desc="時間选择框（描述）文字宽度" group="HTML设置" hidden="false" id="lableWidth" name="文字宽度" required="false" value="90">
+            <dync:render colSpan="1" height="0" multi="false" name="text"/>
+            <dync:children/>
+          </dync:attribute>
+        </form:attributes>
+      </form:control>
+      <form:validation/>
+    </form:child>
+    <form:child xsi:type="form:Field" binding="$model.amEndTime" id="newField3" name="上午下班时间" customize="true">
+      <form:control type="widget/time_picker">
+        <form:attributes source="widget/time_picker">
+          <dync:attribute default="hh-mm-ss" desc="時間控件输出格式" group="HTML设置" hidden="false" id="format" name="时间格式" required="true" value="hh-mm">
+            <dync:render colSpan="1" height="0" multi="false" name="select">
+              <dync:item name="hh" value="hh"/>
+              <dync:item name="hh-mm" value="hh-mm"/>
+              <dync:item name="hh-mm-ss" value="hh-mm-ss"/>
+            </dync:render>
+            <dync:children/>
+          </dync:attribute>
+          <dync:attribute default="75" desc="時間选择框（描述）文字宽度" group="HTML设置" hidden="false" id="lableWidth" name="文字宽度" required="false" value="90">
+            <dync:render colSpan="1" height="0" multi="false" name="text"/>
+            <dync:children/>
+          </dync:attribute>
+        </form:attributes>
+      </form:control>
+      <form:validation/>
+    </form:child>
+    <form:child xsi:type="form:Field" binding="$model.pmBeginTime" id="newField4" name="下午上班时间" customize="true">
+      <form:control type="widget/time_picker">
+        <form:attributes source="widget/time_picker">
+          <dync:attribute default="hh-mm-ss" desc="時間控件输出格式" group="HTML设置" hidden="false" id="format" name="时间格式" required="true" value="hh-mm">
+            <dync:render colSpan="1" height="0" multi="false" name="select">
+              <dync:item name="hh" value="hh"/>
+              <dync:item name="hh-mm" value="hh-mm"/>
+              <dync:item name="hh-mm-ss" value="hh-mm-ss"/>
+            </dync:render>
+            <dync:children/>
+          </dync:attribute>
+          <dync:attribute default="75" desc="時間选择框（描述）文字宽度" group="HTML设置" hidden="false" id="lableWidth" name="文字宽度" required="false" value="90">
+            <dync:render colSpan="1" height="0" multi="false" name="text"/>
+            <dync:children/>
+          </dync:attribute>
+        </form:attributes>
+      </form:control>
+      <form:validation/>
+    </form:child>
+    <form:child xsi:type="form:Field" binding="$model.pmEndTime" id="newField5" name="下午下班时间" customize="true">
+      <form:control type="widget/time_picker">
+        <form:attributes source="widget/time_picker">
+          <dync:attribute default="hh-mm-ss" desc="時間控件输出格式" group="HTML设置" hidden="false" id="format" name="时间格式" required="true" value="hh-mm">
+            <dync:render colSpan="1" height="0" multi="false" name="select">
+              <dync:item name="hh" value="hh"/>
+              <dync:item name="hh-mm" value="hh-mm"/>
+              <dync:item name="hh-mm-ss" value="hh-mm-ss"/>
+            </dync:render>
+            <dync:children/>
+          </dync:attribute>
+          <dync:attribute default="75" desc="時間选择框（描述）文字宽度" group="HTML设置" hidden="false" id="lableWidth" name="文字宽度" required="false" value="90">
+            <dync:render colSpan="1" height="0" multi="false" name="text"/>
+            <dync:children/>
+          </dync:attribute>
+        </form:attributes>
+      </form:control>
+      <form:validation/>
+    </form:child>
+    <form:child xsi:type="form:Field" binding="$model.remark" id="newField6" name="备注" customize="true">
+      <form:control type="widget/textarea">
+        <form:attributes source="widget/textarea">
+          <dync:attribute default="75" desc="lable的宽度(px)。" group="HTML设置" hidden="false" id="lableWidth" name="lable宽度" required="false" value="90">
+            <dync:render colSpan="1" height="0" multi="false" name="text"/>
+            <dync:children/>
+          </dync:attribute>
+        </form:attributes>
+      </form:control>
+      <form:validation/>
+    </form:child>
+    <form:child xsi:type="form:Group" id="newGroup" name="普通工具条">
+      <form:control type="container/toolbar">
+        <form:attributes source="container/toolbar"/>
+      </form:control>
+      <form:child xsi:type="form:Field" id="newField7" name="新增" customize="true">
+        <form:control type="widget/button">
+          <form:attributes source="widget/button">
+            <dync:attribute default="" desc="按钮图标，Font Awesom 3.2.1中定义的所有图标都可用" group="HTML设置" hidden="false" id="icon" name="图标" required="false" value="fa-plus">
+              <dync:render colSpan="1" height="0" multi="false" name="selectIcon"/>
+              <dync:children/>
+            </dync:attribute>
+            <dync:attribute default="" desc="按钮事件。&#xA;                $param $event AngularJS的[event](https://docs.angularjs.org/guide/expression#-event-)事件。" group="事件设置" hidden="false" id="click" name="点击事件" required="false" value="newField7_click($event)">
+              <dync:render colSpan="1" height="0" multi="false" name="event">
+                <dync:item name="params" value="$event"/>
+              </dync:render>
+              <dync:children/>
+            </dync:attribute>
+          </form:attributes>
+        </form:control>
+        <form:validation/>
+      </form:child>
+      <form:child xsi:type="form:Field" id="newField8" name="关闭" customize="true">
+        <form:control type="widget/button">
+          <form:attributes source="widget/button">
+            <dync:attribute default="" desc="按钮图标，Font Awesom 3.2.1中定义的所有图标都可用" group="HTML设置" hidden="false" id="icon" name="图标" required="false" value="fa-times">
+              <dync:render colSpan="1" height="0" multi="false" name="selectIcon"/>
+              <dync:children/>
+            </dync:attribute>
+            <dync:attribute default="" desc="按钮事件。&#xA;                $param $event AngularJS的[event](https://docs.angularjs.org/guide/expression#-event-)事件。" group="事件设置" hidden="false" id="click" name="点击事件" required="false" value="newField8_click($event)">
+              <dync:render colSpan="1" height="0" multi="false" name="event">
+                <dync:item name="params" value="$event"/>
+              </dync:render>
+              <dync:children/>
+            </dync:attribute>
+          </form:attributes>
+        </form:control>
+        <form:validation/>
+      </form:child>
+    </form:child>
+  </form:child>
+  <form:datasources>
+    <form:datasource xsi:type="form:Inputs"/>
+  </form:datasources>
+  <form:scripts>
+
+newField7_click:function($event){
+	var beginDate = $model.beginDate;
+	var endDate = $model.endDate;
+	
+	var amBeginTime = $model.amBeginTime;
+	var amEndTime = $model.amEndTime;
+	var pmBeginTime = $model.pmBeginTime;
+	var pmEndTime = $model.pmEndTime;
+	var remark = $model.remark;
+	
+	var obj = {};
+	obj = {
+		params:{
+			wfWorkDate:{
+				beginDate:$view.newField.getDom().val(),
+				endDate:$view.newField1.getDom().val(),
+				amBeginTime:amBeginTime,
+				amEndTime:amEndTime,
+				pmBeginTime:pmBeginTime,
+				pmEndTime:pmEndTime,
+				remark:remark
+			}
+		}
+	};
+	
+	$http.get(&quot;ws/addWorkDate&quot;,obj).success(function(data){
+		Messenger.post({
+		    'message': &quot;新增操作成功！&quot;,
+		    'type': 'success',
+			});
+		Modal.instance.close();
+		});
+	
+},
+
+newField8_click:function($event){
+	Modal.instance.close();
+}</form:scripts>
+</form:Form>

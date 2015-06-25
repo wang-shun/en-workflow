@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dict:DictSet xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:dict="http://www.chinacreator.com/platform/mvc/dict">
+  <dict:version>0.0.1</dict:version>
+  <dict:dict desc="性别" id="sex" name="性别" res="">
+    <dict:entry id="F" name="女" res="" index="0"/>
+    <dict:entry id="-1" name="未知" index="1"/>
+    <dict:entry id="M" name="男" index="2"/>
+  </dict:dict>
+  <dict:dict desc="调拨类型" id="allocateType" name="调拨类型" res="">
+    <dict:entry desc="" id="1" name="直运调拨" res="" index="0"/>
+    <dict:entry id="2" name="其他" index="1"/>
+  </dict:dict>
+  <dict:dict desc="有效否" id="isvalid" name="有效否">
+    <dict:entry id="2" name="开通" index="0"/>
+    <dict:entry id="1" name="申请" index="1"/>
+    <dict:entry id="3" name="停用" index="2"/>
+    <dict:entry id="0" name="删除" index="3"/>
+  </dict:dict>
+  <dict:dict desc="是否字典" id="isorno" name="是否字典">
+    <dict:entry id="1" name="是" index="0"/>
+    <dict:entry id="0" name="否" index="1"/>
+  </dict:dict>
+  <dict:dict desc="仓库类别" id="STORE_TYPE" name="仓库类别">
+    <dict:entry id="1" name="普通仓" index="0"/>
+    <dict:entry id="2" name="临时仓" index="1"/>
+  </dict:dict>
+  <dict:dict desc="计量单位" id="计量单位" name="计量单位">
+    <dict:entry id="0101" name="年" index="0"/>
+    <dict:entry id="0102" name="季度" index="1"/>
+    <dict:entry id="0103" name="月" index="2"/>
+    <dict:entry id="0104" name="天" index="3"/>
+    <dict:entry id="0105" name="时" index="4"/>
+    <dict:entry id="0201" name="千米" index="5"/>
+    <dict:entry id="0202" name="米" index="6"/>
+    <dict:entry id="0203" name="分米" index="7"/>
+    <dict:entry id="0204" name="厘米" index="8"/>
+    <dict:entry id="0205" name="毫米" index="9"/>
+    <dict:entry id="0301" name="吨" index="10"/>
+    <dict:entry id="0302" name="公斤" index="11"/>
+    <dict:entry id="0303" name="克" index="12"/>
+    <dict:entry id="0401" name="个" index="13"/>
+    <dict:entry id="0402" name="台" index="14"/>
+  </dict:dict>
+</dict:DictSet>

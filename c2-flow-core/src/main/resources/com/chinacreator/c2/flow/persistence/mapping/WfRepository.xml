@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<!-- 流程定义与部署表映射关系 -->
+<mapper namespace="com.chinacreator.c2.flow.persistence.entity.WfProcessDefinitionAndDeployInfoEntity">
+
+	
+	  
+	<resultMap id="wfProcessDefinitionAndDeployInfoResultMap" type="com.chinacreator.c2.flow.persistence.entity.WfProcessDefinitionAndDeployInfoEntity">
+		<result column="ID_" property="id" jdbcType="NVARCHAR" />
+		<result column="REV_" property="rev" jdbcType="INTEGER" />
+		<result column="CATEGORY_" property="category" jdbcType="NVARCHAR" />
+		<result column="NAME_" property="name" jdbcType="NVARCHAR" />
+		<result column="KEY_" property="key" jdbcType="NVARCHAR" />
+		<result column="VERSION_" property="version" jdbcType="INTEGER" />
+		<result column="DEPLOYMENT_ID_" property="deploymentId" jdbcType="NVARCHAR" />
+		<result column="RESOURCE_NAME_" property="resourceName" jdbcType="NVARCHAR" />
+		<result column="DGRM_RESOURCE_NAME_" property="dgrmResourceName" jdbcType="VARCHAR" />
+		<result column="DESCRIPTION_" property="description" jdbcType="NVARCHAR" />
+		<result column="HAS_START_FORM_KEY_" property="hasStartFormKey" jdbcType="NUMERIC" />
+		<result column="SUSPENSION_STATE_" property="suspensionState" jdbcType="INTEGER" />
+		<result column="TENANT_ID_" property="tenantId" jdbcType="NVARCHAR" />
+		<result column="DEPLOY_TIME_" property="deployTime" jdbcType="TIMESTAMP" />
+	</resultMap>
+	
+	
+	<select id="getProcessDefinitionAndDeployInfoList" resultMap="wfProcessDefinitionAndDeployInfoResultMap">
+		SELECT RES.*, DEP.DEPLOY_TIME_
+             FROM ACT_RE_PROCDEF RES
+            inner join ACT_RE_DEPLOYMENT DEP
+               on RES.DEPLOYMENT_ID_ = DEP.ID_
+               <trim prefix="WHERE" prefixOverrides="AND |OR ">
+               	RES.VERSION_ = (select max(VERSION_)
+                                    from ACT_RE_PROCDEF
+                                   where KEY_ = RES.KEY_)
+                  <if test="wfProcessDefinitionParam.keyLike!=null">
+						<![CDATA[AND  RES.KEY_ like '%${wfProcessDefinitionParam.keyLike}%']]>
+					</if>
+					<if test="wfProcessDefinitionParam.nameLike!=null">
+						<![CDATA[AND  RES.NAME_ like '%${wfProcessDefinitionParam.nameLike}%']]>
+					</if>
+					<if test="wfProcessDefinitionParam.key!=null">
+						<![CDATA[AND  RES.KEY_=#{wfProcessDefinitionParam.key}]]>
+					</if>
+					<if test="wfProcessDefinitionParam.name!=null">
+						<![CDATA[AND  RES.NAME_=#{wfProcessDefinitionParam.name}]]>
+					</if>
+					<if test="wfProcessDefinitionParam.id!=null">
+						<![CDATA[AND  RES.ID_=#{wfProcessDefinitionParam.id}]]>
+					</if>
+				order by DEP.DEPLOY_TIME_ desc
+               </trim>
+	</select>
+	
+	<select id="getProcessDefinitionAndDeployInfoListC" resultType="Integer">
+		SELECT count(1)
+             FROM ACT_RE_PROCDEF RES
+            inner join ACT_RE_DEPLOYMENT DEP
+               on RES.DEPLOYMENT_ID_ = DEP.ID_
+               <trim prefix="WHERE" prefixOverrides="AND |OR ">
+               	RES.VERSION_ = (select max(VERSION_)
+                                    from ACT_RE_PROCDEF
+                                   where KEY_ = RES.KEY_)
+                  <if test="wfProcessDefinitionParam.keyLike!=null">
+						<![CDATA[AND  RES.KEY_ like '%${wfProcessDefinitionParam.keyLike}%']]>
+					</if>
+					<if test="wfProcessDefinitionParam.nameLike!=null">
+						<![CDATA[AND  RES.NAME_ like '%${wfProcessDefinitionParam.nameLike}%']]>
+					</if>
+					<if test="wfProcessDefinitionParam.key!=null">
+						<![CDATA[AND  RES.KEY_=#{wfProcessDefinitionParam.key}]]>
+					</if>
+					<if test="wfProcessDefinitionParam.name!=null">
+						<![CDATA[AND  RES.NAME_=#{wfProcessDefinitionParam.name}]]>
+					</if>
+					<if test="wfProcessDefinitionParam.id!=null">
+						<![CDATA[AND  RES.ID_=#{wfProcessDefinitionParam.id}]]>
+					</if>
+				
+               </trim>
+	</select>
+	
+</mapper>

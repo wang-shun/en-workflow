@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomRule xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns="http://www.chinacreator.com/platform/mvc/rule" sn="setHoliday" className="com.chinacreator.c2.flow.C2FlowRuleService" method="setHoliday">
+  <name>设置节假日</name>
+  <inputs>
+    <input collection="false" desc="" id="wfHoliday" required="true" type="com.chinacreator.c2.flow.detail.WfHoliday"/>
+  </inputs>
+  <outputs>
+    <output autoValue="Result" desc="" id="result" name="方法返回值" type="boolean"/>
+  </outputs>
+  <params>
+    <param autoValue="Input.wfHoliday" name="wfHoliday" signature="QWfHoliday;" type="com.chinacreator.c2.flow.detail.WfHoliday"/>
+  </params>
+  <return signature="Z" type="boolean"/>
+</CustomRule>

@@ -1,0 +1,423 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<!-- 事项委托表映射关系 -->
+<mapper namespace="com.chinacreator.c2.flow.persistence.entity.WfModuleDelegateEntity">
+
+	<sql id="ModuleDelegate_Column_List"> 
+ 		 DELEGATE_ID, DESIGNATOR_ID, DESIGNATOR_NAME, DESIGNEE_ID, DESIGNEE_NAME, DELEGATE_TYPE,
+  		 DELEGATE_START_TIME, DELEGATE_END_TIME, DELEGATE_STAT, DELEGATE_RANGE, CONFIRM_TIME, APP_ID,
+  		 TENANT_ID
+	</sql>
+	
+	<sql id="ModuleDelegateInfo_Column_List"> 
+ 		   ID, DELEGATE_ID, MOUDULE_ID, MOUDULE_NAME
+	</sql>
+	
+	<resultMap id="WfModuleDelegateResultMap" type="com.chinacreator.c2.flow.persistence.entity.WfModuleDelegateEntity">
+		<result column="DELEGATE_ID" property="delegateId" jdbcType="VARCHAR" />
+		<result column="DESIGNATOR_ID" property="designatorId" jdbcType="VARCHAR" />
+		<result column="DESIGNATOR_NAME" property="designatorName" jdbcType="VARCHAR" />
+		<result column="DESIGNEE_ID" property="designeeId" jdbcType="VARCHAR" />
+		<result column="DESIGNEE_NAME" property="designeeName" jdbcType="VARCHAR" />
+		<result column="DELEGATE_TYPE" property="delegateType" jdbcType="CHAR" />
+		<result column="DELEGATE_START_TIME" property="delegateStartTime" jdbcType="TIMESTAMP" />
+		<result column="DELEGATE_END_TIME" property="delegateEndTime" jdbcType="TIMESTAMP" />
+		<result column="DELEGATE_STAT" property="delegateStat" jdbcType="CHAR" />
+		<result column="DELEGATE_RANGE" property="delegateRange" jdbcType="CHAR" />
+		<result column="CONFIRM_TIME" property="confirmTime" jdbcType="TIMESTAMP" />
+		<result column="APP_ID" property="appId" jdbcType="VARCHAR" />
+		<result column="TENANT_ID" property="tenantId" jdbcType="VARCHAR" />
+	</resultMap>
+	
+	<resultMap id="WfModuleDelegateInfoResultMap" type="com.chinacreator.c2.flow.persistence.entity.WfModuleDelegateInfoEntity">
+		<result column="ID" property="id" jdbcType="VARCHAR" />
+		<result column="DELEGATE_ID" property="delegateId" jdbcType="VARCHAR" />
+		<result column="MOUDULE_ID" property="mouduleId" jdbcType="VARCHAR" />
+		<result column="MOUDULE_NAME" property="mouduleName" jdbcType="VARCHAR" />
+	</resultMap>
+	
+	<resultMap id="WfModuleDelegateFullAttrResultMap" type="com.chinacreator.c2.flow.persistence.entity.WfModuleDelegateFullAttrEntity">
+		<result column="DELEGATE_ID" property="delegateId" jdbcType="VARCHAR" />
+		<result column="DESIGNATOR_ID" property="designatorId" jdbcType="VARCHAR" />
+		<result column="DESIGNATOR_NAME" property="designatorName" jdbcType="VARCHAR" />
+		<result column="DESIGNEE_ID" property="designeeId" jdbcType="VARCHAR" />
+		<result column="DESIGNEE_NAME" property="designeeName" jdbcType="VARCHAR" />
+		<result column="DELEGATE_TYPE" property="delegateType" jdbcType="CHAR" />
+		<result column="DELEGATE_START_TIME" property="delegateStartTime" jdbcType="TIMESTAMP" />
+		<result column="DELEGATE_END_TIME" property="delegateEndTime" jdbcType="TIMESTAMP" />
+		<result column="DELEGATE_STAT" property="delegateStat" jdbcType="CHAR" />
+		<result column="DELEGATE_RANGE" property="delegateRange" jdbcType="CHAR" />
+		<result column="CONFIRM_TIME" property="confirmTime" jdbcType="TIMESTAMP" />
+		<result column="APP_ID" property="appId" jdbcType="VARCHAR" />
+		<result column="TENANT_ID" property="tenantId" jdbcType="VARCHAR" />
+		<result column="ID" property="id" jdbcType="VARCHAR" />
+		<result column="MOUDULE_ID" property="mouduleId" jdbcType="VARCHAR" />
+		<result column="MOUDULE_NAME" property="mouduleName" jdbcType="VARCHAR" />
+	</resultMap>
+	
+	<select id="getModuleDelegateByParam" resultMap="WfModuleDelegateResultMap">
+		SELECT
+		<include refid="ModuleDelegate_Column_List" />
+		FROM ${prefix}WF_MOD_DELEGATE
+		<trim prefix="WHERE" prefixOverrides="AND |OR ">
+			<if test="wfModuleDelegate.delegateId!=null">
+				<![CDATA[AND DELEGATE_ID=#{wfModuleDelegate.delegateId,jdbcType=VARCHAR}]]>
+			</if>
+			<if test="wfModuleDelegate.designeeId!=null">
+				<![CDATA[AND DESIGNEE_ID=#{wfModuleDelegate.designeeId,jdbcType=VARCHAR}]]>
+			</if>
+			<if test="wfModuleDelegate.designeeName!=null">
+				<![CDATA[AND DESIGNEE_NAME=#{wfModuleDelegate.designeeName,jdbcType=VARCHAR}]]>
+			</if>
+			<if test="wfModuleDelegate.designatorId!=null">
+				<![CDATA[AND DESIGNATOR_ID=#{wfModuleDelegate.designatorId,jdbcType=VARCHAR}]]>
+			</if>
+			<if test="wfModuleDelegate.designatorName!=null">
+				<![CDATA[AND DESIGNATOR_NAME=#{wfModuleDelegate.designatorName,jdbcType=VARCHAR}]]>
+			</if>
+			
+			<if test="wfModuleDelegate.delegateStartTimeBegine!=null">
+				<![CDATA[AND DELEGATE_START_TIME > #{wfModuleDelegate.delegateStartTimeBegine,jdbcType=TIMESTAMP} ]]>
+			</if>
+			<if test="wfModuleDelegate.delegateStartTimeEnd!=null">
+				<![CDATA[AND DELEGATE_START_TIME <= #{wfModuleDelegate.delegateStartTimeEnd,jdbcType=TIMESTAMP} ]]>
+			</if>
+			
+			<if test="wfModuleDelegate.delegateEndTimeBegine!=null">
+				<![CDATA[AND DELEGATE_END_TIME > #{wfModuleDelegate.delegateEndTimeBegine,jdbcType=TIMESTAMP} ]]>
+			</if>
+			<if test="wfModuleDelegate.delegateEndTimeEnd!=null">
+				<![CDATA[AND DELEGATE_END_TIME <= #{wfModuleDelegate.delegateEndTimeEnd,jdbcType=TIMESTAMP} ]]>
+			</if>
+			
+			<if test="wfModuleDelegate.delegateStat!=null">
+				<![CDATA[AND DELEGATE_STAT = #{wfModuleDelegate.delegateStat,jdbcType=CHAR} ]]>
+			</if>
+			<if test="wfModuleDelegate.delegateRange!=null">
+				<![CDATA[AND DELEGATE_RANGE = #{wfModuleDelegate.delegateRange,jdbcType=CHAR} ]]>
+			</if>
+		</trim>
+	</select>
+	
+	<select id="getModuleDelegateByParamC" resultType="Integer">
+		SELECT
+		count(1)
+		FROM ${prefix}WF_MOD_DELEGATE
+		<trim prefix="WHERE" prefixOverrides="AND |OR ">
+			<if test="wfModuleDelegate.delegateId!=null">
+				<![CDATA[AND DELEGATE_ID=#{wfModuleDelegate.delegateId,jdbcType=VARCHAR}]]>
+			</if>
+			<if test="wfModuleDelegate.designeeId!=null">
+				<![CDATA[AND DESIGNEE_ID=#{wfModuleDelegate.designeeId,jdbcType=VARCHAR}]]>
+			</if>
+			<if test="wfModuleDelegate.designeeName!=null">
+				<![CDATA[AND DESIGNEE_NAME=#{wfModuleDelegate.designeeName,jdbcType=VARCHAR}]]>
+			</if>
+			<if test="wfModuleDelegate.designatorId!=null">
+				<![CDATA[AND DESIGNATOR_ID=#{wfModuleDelegate.designatorId,jdbcType=VARCHAR}]]>
+			</if>
+			<if test="wfModuleDelegate.designatorName!=null">
+				<![CDATA[AND DESIGNATOR_NAME=#{wfModuleDelegate.designatorName,jdbcType=VARCHAR}]]>
+			</if>
+			
+			<if test="wfModuleDelegate.delegateStartTimeBegine!=null">
+				<![CDATA[AND DELEGATE_START_TIME >= #{wfModuleDelegate.delegateStartTimeBegine,jdbcType=TIMESTAMP} ]]>
+			</if>
+			<if test="wfModuleDelegate.delegateStartTimeEnd!=null">
+				<![CDATA[AND DELEGATE_START_TIME <= #{wfModuleDelegate.delegateStartTimeEnd,jdbcType=TIMESTAMP} ]]>
+			</if>
+			
+			<if test="wfModuleDelegate.delegateEndTimeBegine!=null">
+				<![CDATA[AND DELEGATE_END_TIME >= #{wfModuleDelegate.delegateEndTimeBegine,jdbcType=TIMESTAMP} ]]>
+			</if>
+			<if test="wfModuleDelegate.delegateEndTimeEnd!=null">
+				<![CDATA[AND DELEGATE_END_TIME <= #{wfModuleDelegate.delegateEndTimeEnd,jdbcType=TIMESTAMP} ]]>
+			</if>
+			
+			<if test="wfModuleDelegate.delegateStat!=null">
+				<![CDATA[AND DELEGATE_STAT = #{wfModuleDelegate.delegateStat,jdbcType=CHAR} ]]>
+			</if>
+			<if test="wfModuleDelegate.delegateRange!=null">
+				<![CDATA[AND DELEGATE_RANGE = #{wfModuleDelegate.delegateRange,jdbcType=CHAR} ]]>
+			</if>
+		</trim>
+	</select>
+	
+	<insert id="insertWfModuleDelegate" parameterType="com.chinacreator.c2.flow.persistence.entity.WfModuleDelegateEntity">
+		INSERT INTO ${prefix}WF_MOD_DELEGATE
+	    <trim prefix="(" suffix=")" suffixOverrides=",">
+	        <if test="delegateId != null">
+	            DELEGATE_ID,
+	        </if>
+	        <if test="designatorId != null">
+	            DESIGNATOR_ID,
+	        </if>
+	        <if test="designatorName != null">
+	            DESIGNATOR_NAME,
+	        </if>
+	        <if test="designeeId != null">
+	            DESIGNEE_ID,
+	        </if>
+	        <if test="designeeName != null">
+	            DESIGNEE_NAME,
+	        </if>
+	        <if test="delegateType != null">
+	            DELEGATE_TYPE,
+	        </if>
+	         <if test="delegateStartTime != null">
+	            DELEGATE_START_TIME,
+	        </if>
+	        <if test="delegateEndTime != null">
+	            DELEGATE_END_TIME,
+	        </if>
+	         <if test="delegateStat != null">
+	            DELEGATE_STAT,
+	        </if>
+	        
+	        <if test="delegateRange != null">
+	            DELEGATE_RANGE,
+	        </if>
+	        <if test="confirmTime != null">
+	            CONFIRM_TIME,
+	        </if>
+	        <if test="appId != null">
+	            APP_ID,
+	        </if>
+	        <if test="tenantId != null">
+	            TENANT_ID,
+	        </if>
+	    </trim>
+	    <trim prefix="VALUES (" suffix=")" suffixOverrides=",">		
+	         <if test="delegateId != null">
+	            <![CDATA[#{delegateId,jdbcType=VARCHAR},]]>
+	        </if>
+	        <if test="designatorId != null">
+	            <![CDATA[#{designatorId,jdbcType=VARCHAR},]]>
+	        </if>
+	        <if test="designatorName != null">
+	             <![CDATA[#{designatorName,jdbcType=VARCHAR},]]>
+	        </if>
+	        <if test="designeeId != null">
+	            <![CDATA[#{designeeId,jdbcType=VARCHAR},]]>
+	        </if>
+	        <if test="designeeName != null">
+	            <![CDATA[#{designeeName,jdbcType=VARCHAR},]]>
+	        </if>
+	        <if test="delegateType != null">
+	            <![CDATA[#{delegateType,jdbcType=CHAR},]]>
+	        </if>
+	         <if test="delegateStartTime != null">
+	            <![CDATA[#{delegateStartTime,jdbcType=TIMESTAMP},]]>
+	        </if>
+	        <if test="delegateEndTime != null">
+	            <![CDATA[#{delegateEndTime,jdbcType=TIMESTAMP},]]>
+	        </if>
+	         <if test="delegateStat != null">
+	            <![CDATA[#{delegateStat,jdbcType=CHAR},]]>
+	        </if>
+	        
+	         <if test="delegateRange != null">
+	            <![CDATA[#{delegateRange,jdbcType=CHAR},]]>
+	        </if>
+	         <if test="confirmTime != null">
+	            <![CDATA[#{confirmTime,jdbcType=TIMESTAMP},]]>
+	        </if>
+	         <if test="appId != null">
+	            <![CDATA[#{appId,jdbcType=VARCHAR},]]>
+	        </if>
+	         <if test="tenantId != null">
+	            <![CDATA[#{tenantId,jdbcType=VARCHAR},]]>
+	        </if>
+	        
+	    </trim>
+	</insert>
+	
+	<insert id="insertWfModuleDelegateInfo" parameterType="com.chinacreator.c2.flow.persistence.entity.WfModuleDelegateInfoEntity">
+		INSERT INTO ${prefix}WF_MOD_DELEGATE_INFO
+		 <trim prefix="(" suffix=")" suffixOverrides=",">
+	        <if test="id != null">
+	            ID,
+	        </if>
+	        <if test="delegateId != null">
+	            DELEGATE_ID,
+	        </if>
+	        <if test="mouduleId != null">
+	            MOUDULE_ID,
+	        </if>
+	        <if test="mouduleName != null">
+	            MOUDULE_NAME,
+	        </if>
+	    </trim>
+	    <trim prefix="VALUES (" suffix=")" suffixOverrides=",">		
+	        <if test="id != null">
+	            <![CDATA[#{id,jdbcType=VARCHAR},]]>
+	        </if>
+	        <if test="delegateId != null">
+	            <![CDATA[#{delegateId,jdbcType=VARCHAR},]]>
+	        </if>
+	        <if test="mouduleId != null">
+	            <![CDATA[#{mouduleId,jdbcType=VARCHAR},]]>
+	        </if>
+	        <if test="mouduleName != null">
+	            <![CDATA[#{mouduleName,jdbcType=VARCHAR},]]>
+	        </if>
+	    </trim>
+	</insert>
+	
+	<select id="getModuleDelegateInfoByDelegateId" parameterType="string" resultMap="WfModuleDelegateInfoResultMap">
+		SELECT
+		<include refid="ModuleDelegateInfo_Column_List" />
+		FROM ${prefix}WF_MOD_DELEGATE_INFO
+		<trim prefix="WHERE" prefixOverrides="AND |OR ">
+			<if test="parameter!=null">
+				<![CDATA[AND DELEGATE_ID=#{parameter,jdbcType=VARCHAR}]]>
+			</if>
+		</trim>
+	</select>
+	
+			
+	<update id="updateWfModuleDelegate" parameterType="com.chinacreator.c2.flow.persistence.entity.WfModuleDelegateEntity">
+		UPDATE  ${prefix}WF_MOD_DELEGATE
+      <set>
+      	  <if test="designatorId != null">
+              DESIGNATOR_ID=<![CDATA[#{designatorId,jdbcType=VARCHAR},]]>
+          </if>
+          
+          <if test="designatorName != null">
+              DESIGNATOR_NAME=<![CDATA[#{designatorName,jdbcType=VARCHAR},]]>
+          </if>
+          <if test="designeeId != null">
+          	  DESIGNEE_ID=<![CDATA[#{designeeId,jdbcType=VARCHAR},]]>
+          </if>
+          <if test="designeeName != null">
+          	  DESIGNEE_NAME=<![CDATA[#{designeeName,jdbcType=VARCHAR},]]>
+          </if>
+          <if test="delegateType != null">
+          	   DELEGATE_TYPE=<![CDATA[#{delegateType,jdbcType=CHAR},]]>
+          </if>
+          <if test="delegateStartTime != null">
+          	  DELEGATE_START_TIME=<![CDATA[#{delegateStartTime,jdbcType=TIMESTAMP},]]>
+          </if>
+          <if test="delegateEndTime != null">
+          	   DELEGATE_END_TIME=<![CDATA[#{delegateEndTime,jdbcType=TIMESTAMP},]]>
+          </if>
+          <if test="delegateStat != null">
+               DELEGATE_STAT=<![CDATA[#{delegateStat,jdbcType=CHAR},]]>
+          </if>
+          <if test="delegateRange != null">
+          	   DELEGATE_RANGE=<![CDATA[#{delegateRange,jdbcType=CHAR},]]>
+          </if>
+          <if test="confirmTime != null">
+              CONFIRM_TIME=<![CDATA[#{confirmTime,jdbcType=TIMESTAMP},]]>
+          </if>
+          <if test="appId != null">
+          	  APP_ID=<![CDATA[#{appId,jdbcType=VARCHAR},]]>
+          </if>
+          <if test="tenantId != null">
+          	  TENANT_ID=<![CDATA[#{tenantId,jdbcType=VARCHAR},]]>
+          </if>
+      </set>
+       WHERE <![CDATA[DELEGATE_ID = #{delegateId,jdbcType=VARCHAR}]]>
+	</update>
+	
+	
+	
+	
+	<update id="updateModuleDelegateState" parameterType="com.chinacreator.c2.flow.persistence.entity.WfModuleDelegateEntity">
+	  UPDATE  ${prefix}WF_MOD_DELEGATE
+      <set>
+          <if test="delegateStat != null">
+              DELEGATE_STAT=<![CDATA[#{delegateStat,jdbcType=CHAR},]]>
+          </if>
+          <if test="confirmTime != null">
+              CONFIRM_TIME=<![CDATA[#{confirmTime,jdbcType=TIMESTAMP},]]>
+          </if>
+      </set>
+       WHERE <![CDATA[DELEGATE_ID = #{delegateId,jdbcType=VARCHAR}]]>
+	</update>
+	
+	<delete id="deleteModuleDelegateInfoByDelegateId">
+		DELETE FROM ${prefix}WF_MOD_DELEGATE_INFO WHERE <![CDATA[DELEGATE_ID=#{delegateId}]]>
+	</delete>
+	
+	<delete id="deleteModuleDelegateById">
+		DELETE FROM ${prefix}WF_MOD_DELEGATE WHERE <![CDATA[DELEGATE_ID=#{delegateId}]]>
+	</delete>
+	
+	<select id="getModuleDelegateOnDelegate" resultMap="WfModuleDelegateFullAttrResultMap">
+		SELECT t.*, t1.ID, t1.MOUDULE_ID, t1.MOUDULE_NAME
+  		FROM ${prefix}WF_MOD_DELEGATE t
+		 INNER JOIN ${prefix}WF_MOD_DELEGATE_INFO t1
+    	ON t.DELEGATE_ID = t1.DELEGATE_ID
+    	<trim prefix="WHERE" prefixOverrides="AND |OR ">
+			<if test="moduleId!=null">
+				<![CDATA[AND t1.MOUDULE_ID = #{moduleId,jdbcType=VARCHAR}]]>
+			</if>
+			<if test="designatorId!=null">
+				<![CDATA[AND t.DESIGNATOR_ID = #{designatorId,jdbcType=VARCHAR} ]]>
+			</if>
+			<if test="designeeId!=null">
+				<![CDATA[AND t.DESIGNEE_ID = #{designeeId,jdbcType=VARCHAR} ]]>
+			</if>
+			
+			<if test="delegateRange!=null">
+				<![CDATA[AND t.DELEGATE_RANGE = #{delegateRange,jdbcType=CHAR} ]]>
+			</if>
+			<if test="delegateStat!=null">
+				<![CDATA[AND t.DELEGATE_STAT = #{delegateStat,jdbcType=CHAR} ]]>
+			</if>
+			
+			<if test="currentTime!=null">
+				<![CDATA[AND t.DELEGATE_END_TIME >= #{currentTime,jdbcType=TIMESTAMP} AND t.DELEGATE_START_TIME <= #{currentTime,jdbcType=TIMESTAMP} ]]>
+			</if>
+			
+		</trim>
+	</select>
+	
+	<select id="getWfDelegateSomeRangeCount" resultType="Integer">
+		<!-- SELECT count(1)
+  		FROM ${prefix}WF_MOD_DELEGATE t
+		 INNER JOIN ${prefix}WF_MOD_DELEGATE_INFO t1
+    	ON t.DELEGATE_ID = t1.DELEGATE_ID
+		<trim prefix="WHERE" prefixOverrides="AND |OR ">
+			t.DELEGATE_STAT = '2' OR t.DELEGATE_STAT = '1'
+			<if test="moduleId!=null">
+				<![CDATA[AND t1.MOUDULE_ID = #{moduleId,jdbcType=VARCHAR}]]>
+			</if> 
+			<if test="designeeId!=null">
+				<![CDATA[AND t.DESIGNEE_ID = #{designeeId,jdbcType=VARCHAR} ]]>
+			</if>
+			<if test="designatorId!=null">
+				<![CDATA[AND t.DESIGNATOR_ID = #{designatorId,jdbcType=VARCHAR} ]]>
+			</if>
+			<if test="delegateRange!=null">
+				<![CDATA[AND t.DELEGATE_RANGE = #{delegateRange,jdbcType=CHAR} ]]>
+			</if>
+			<if test="startTime!=null and endTime!=null">
+				<![CDATA[AND ((t.DELEGATE_START_TIME <= #{endTime,jdbcType=TIMESTAMP} AND t.DELEGATE_START_TIME >= #{startTime,jdbcType=TIMESTAMP}) OR (t.DELEGATE_END_TIME <= #{endTime,jdbcType=TIMESTAMP} AND t.DELEGATE_END_TIME >= #{startTime,jdbcType=TIMESTAMP}) OR (t.DELEGATE_END_TIME > #{endTime,jdbcType=TIMESTAMP} AND t.DELEGATE_START_TIME < #{startTime,jdbcType=TIMESTAMP})) ]]>
+			</if>
+		</trim> -->
+		
+		SELECT count(1) FROM ${prefix}WF_MOD_DELEGATE t
+		 LEFT JOIN ${prefix}WF_MOD_DELEGATE_INFO t1
+    	ON t.DELEGATE_ID = t1.DELEGATE_ID
+		<trim prefix="WHERE" prefixOverrides="AND |OR ">
+			t.DELEGATE_STAT IN ('1', '2')
+			AND ((t.DESIGNATOR_ID =#{designeeId,jdbcType=VARCHAR} OR t.DESIGNEE_ID =#{designeeId,jdbcType=VARCHAR}) 
+				OR (t.DESIGNATOR_ID =#{designatorId,jdbcType=VARCHAR} OR t.DESIGNEE_ID =#{designatorId,jdbcType=VARCHAR}))
+			<if test="delegateRange!=null and delegateRange=='1'">
+				AND (t.DELEGATE_RANGE = '0'	OR (t.DELEGATE_RANGE = '1' AND t1.MOUDULE_ID IN (#{moduleId,jdbcType=VARCHAR})))
+			</if>
+			<if test="delegateId!=null">
+				<![CDATA[AND t.DELEGATE_ID != #{delegateId,jdbcType=VARCHAR}]]>
+			</if>
+			<if test="startTime!=null and endTime!=null">
+				<![CDATA[AND ((t.DELEGATE_START_TIME BETWEEN #{startTime,jdbcType=TIMESTAMP} AND #{endTime,jdbcType=TIMESTAMP}) 
+							OR ( t.DELEGATE_END_TIME BETWEEN #{startTime,jdbcType=TIMESTAMP} AND #{endTime,jdbcType=TIMESTAMP}) 
+							OR ( t.DELEGATE_START_TIME < #{startTime,jdbcType=TIMESTAMP} AND t.DELEGATE_END_TIME > #{endTime,jdbcType=TIMESTAMP}))]]>
+			</if>
+		</trim>
+	</select>
+	
+</mapper>

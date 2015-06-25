@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<perm:PRSet xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:perm="http://www.chinacreator.com/platform/mvc/perm">
+  <perm:resources/>
+  <perm:permissions/>
+  <perm:resTypes>
+    <perm:resType code="menu" name="菜单">
+      <perm:resActions>
+        <perm:resAction code="visible" name="可见" mask="0"/>
+      </perm:resActions>
+    </perm:resType>
+    <perm:resType code="dict" name="字典">
+      <perm:resActions>
+        <perm:resAction code="visible" name="可见" mask="0"/>
+        <perm:resAction code="editable" name="可编辑" mask="1"/>
+      </perm:resActions>
+    </perm:resType>
+    <perm:resType code="dict_entry" name="字典条目">
+      <perm:resActions>
+        <perm:resAction code="visible" name="可见" mask="0"/>
+        <perm:resAction code="editable" name="可编辑" mask="1"/>
+        <perm:resAction code="deletable" name="可删除" mask="2"/>
+      </perm:resActions>
+    </perm:resType>
+    <perm:resType code="button" name="按钮权限">
+      <perm:resActions>
+        <perm:resAction code="visible" name="可见" mask="0"/>
+        <perm:resAction code="enable" name="可用" mask="1"/>
+      </perm:resActions>
+    </perm:resType>
+    <perm:resType code="field" name="字段">
+      <perm:resActions>
+        <perm:resAction code="visible" name="可见" mask="0"/>
+        <perm:resAction code="ediable" name="可编辑" mask="1"/>
+      </perm:resActions>
+    </perm:resType>
+    <perm:resType code="entity" name="基础数据项">
+      <perm:resActions>
+        <perm:resAction code="visible" name="可见" mask="0"/>
+        <perm:resAction code="editable" name="编辑数据" mask="1"/>
+        <perm:resAction code="deletable" name="删除数据" mask="2"/>
+        <perm:resAction code="view_editable" name="编辑视图" mask="3"/>
+        <perm:resAction code="view_deletable" name="删除视图" mask="4"/>
+      </perm:resActions>
+    </perm:resType>
+    <perm:resType code="entity_view" name="基础数据项视图">
+      <perm:resActions>
+        <perm:resAction code="visible" name="可见" mask="0"/>
+      </perm:resActions>
+    </perm:resType>
+    <perm:resType code="docket" name="单据">
+      <perm:resActions>
+        <perm:resAction code="visible" name="可见" mask="0"/>
+      </perm:resActions>
+    </perm:resType>
+    <perm:resType code="docket_op" name="单据操作">
+      <perm:resActions>
+        <perm:resAction code="enable" name="可用" mask="0"/>
+      </perm:resActions>
+    </perm:resType>
+    <perm:resType code="rule" name="规则">
+      <perm:resActions>
+        <perm:resAction code="enable" name="可用" mask="0"/>
+      </perm:resActions>
+    </perm:resType>
+  </perm:resTypes>
+</perm:PRSet>

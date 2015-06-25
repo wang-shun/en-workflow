@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomRule xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns="http://www.chinacreator.com/platform/mvc/rule" sn="unBindProcess" className="com.chinacreator.c2.flow.C2FlowRuleService" method="unBindProcessFromModule">
+  <instanceCreator>
+    <params/>
+  </instanceCreator>
+  <name>解除事项的流程绑定</name>
+  <desc>解除流程与事项的绑定</desc>
+  <inputs>
+    <input collection="false" desc="" id="moduleId" required="true"/>
+    <input collection="false" desc="" id="wpd" required="true" type="com.chinacreator.c2.flow.detail.WfProcessDefinition"/>
+  </inputs>
+  <outputs/>
+  <params>
+    <param autoValue="Input.moduleId" name="moduleId" signature="QString;" type="java.lang.String"/>
+    <param autoValue="Input.wpd" name="wpd" signature="QWfProcessDefinition;" type="com.chinacreator.c2.flow.detail.WfProcessDefinition"/>
+  </params>
+  <return signature="V" type="void"/>
+</CustomRule>

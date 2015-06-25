@@ -1,0 +1,1015 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper
+	namespace="com.chinacreator.c2.flow.persistence.entity.WfUniteRunTaskEntity">
+
+	<insert id="insertWfUniteRunTask"
+		parameterType="com.chinacreator.c2.flow.persistence.entity.WfUniteRunTaskEntity">
+		insert into ${prefix}WF_UNITE_RUN_TASK(ID,TASK_ID,
+		BUSINESS_KEY,EXECUTION_ID, PROC_INST_ID, PROC_DEF_ID, NAME,
+		PARENT_TASK_ID, DESCRIPTION, TASK_DEF_KEY, OWNER, ASSIGNEE, CANDIDATE,
+		DELEGATION, PRIORITY, CREATE_TIME, END_TIME, DUE_DATE, CATEGORY,
+		TASK_STATE,
+		TENANT_ID, APP_ID, MODULE_ID, MODULE_NAME, DELETE_REASON,
+		FORM_KEY,
+		REVISION, REMARK1, REMARK2, REMARK3, REMARK4, REMARK5,
+		REMARK6,
+		REMARK7, REMARK8, REMARK9, REMARK10) values( #{id,
+		jdbcType=VARCHAR},#{taskId, jdbcType=VARCHAR},
+		#{businessKey,
+		jdbcType=VARCHAR}, #{executionId, jdbcType=VARCHAR},
+		#{procInstId,
+		jdbcType=VARCHAR}, #{procDefId, jdbcType=VARCHAR},
+		#{name,
+		jdbcType=VARCHAR}, #{parentTaskId, jdbcType=VARCHAR},
+		#{description,
+		jdbcType=VARCHAR}, #{taskDefKey, jdbcType=VARCHAR},
+		#{owner,
+		jdbcType=VARCHAR}, #{assignee, jdbcType=VARCHAR},
+		#{candidate,
+		jdbcType=VARCHAR}, #{delegation, jdbcType=VARCHAR},
+		#{priority,
+		jdbcType=INTEGER}, #{createTime, jdbcType=TIMESTAMP},
+		#{endTime,
+		jdbcType=TIMESTAMP},
+		#{dueDate,
+		jdbcType=TIMESTAMP}, #{category,
+		jdbcType=VARCHAR},
+		#{taskState,
+		jdbcType=VARCHAR}, #{tenantId,
+		jdbcType=VARCHAR},
+		#{appId,
+		jdbcType=VARCHAR}, #{moduleId,
+		jdbcType=VARCHAR},
+		#{moduleName,
+		jdbcType=VARCHAR}, #{deleteReason,
+		jdbcType=VARCHAR},
+		#{formKey,
+		jdbcType=VARCHAR}, 1, #{remark1,
+		jdbcType=VARCHAR},
+		#{remark2,
+		jdbcType=VARCHAR}, #{remark3,
+		jdbcType=VARCHAR}, #{remark4,
+		jdbcType=VARCHAR}, #{remark5,
+		jdbcType=VARCHAR}, #{remark6,
+		jdbcType=VARCHAR}, #{remark7,
+		jdbcType=VARCHAR}, #{remark8,
+		jdbcType=VARCHAR}, #{remark9,
+		jdbcType=VARCHAR}, #{remark10,
+		jdbcType=VARCHAR} )
+	</insert>
+
+	<!-- WfUniteRunTask UPDATE -->
+	<update id="updateWfUniteRunTask"
+		parameterType="com.chinacreator.c2.flow.persistence.entity.WfUniteRunTaskEntity">
+		update ${prefix}WF_UNITE_RUN_TASK set TASK_ID=#{taskId,
+		jdbcType=VARCHAR},
+		BUSINESS_KEY =
+		#{businessKey, jdbcType=VARCHAR},
+		EXECUTION_ID = #{executionId,
+		jdbcType=VARCHAR}, PROC_INST_ID =
+		#{procInstId, jdbcType=VARCHAR},
+		PROC_DEF_ID = #{procDefId,
+		jdbcType=VARCHAR}, NAME = #{name,
+		jdbcType=VARCHAR}, PARENT_TASK_ID =
+		#{parentTaskId, jdbcType=VARCHAR},
+		DESCRIPTION = #{description,
+		jdbcType=VARCHAR},
+		TASK_DEF_KEY=#{taskDefKey, jdbcType=VARCHAR},
+		OWNER=#{owner,
+		jdbcType=VARCHAR}, ASSIGNEE=#{assignee,
+		jdbcType=VARCHAR},
+		CANDIDATE=#{candidate, jdbcType=VARCHAR},
+		DELEGATION=#{delegation,
+		jdbcType=VARCHAR}, PRIORITY=#{priority,
+		jdbcType=INTEGER},
+		CREATE_TIME=#{createTime, jdbcType=TIMESTAMP},
+		END_TIME=#{endTime, jdbcType=TIMESTAMP},
+		DUE_DATE=#{dueDate,
+		jdbcType=TIMESTAMP}, CATEGORY=#{category,
+		jdbcType=VARCHAR},
+		TASK_STATE=#{taskState, jdbcType=VARCHAR},
+		TENANT_ID=#{tenantId,
+		jdbcType=VARCHAR}, APP_ID=#{appId,
+		jdbcType=VARCHAR},
+		MODULE_ID=#{moduleId, jdbcType=VARCHAR},
+		MODULE_NAME=#{moduleName,
+		jdbcType=VARCHAR},
+		DELETE_REASON=#{deleteReason, jdbcType=VARCHAR},
+		FORM_KEY=#{formKey,
+		jdbcType=VARCHAR}, REMARK1=#{remark1,
+		jdbcType=VARCHAR},
+		REMARK2=#{remark2, jdbcType=VARCHAR},
+		REMARK3=#{remark3,
+		jdbcType=VARCHAR}, REMARK4=#{remark4,
+		jdbcType=VARCHAR},
+		REMARK5=#{remark5, jdbcType=VARCHAR},
+		REMARK6=#{remark6,
+		jdbcType=VARCHAR}, REMARK7=#{remark7,
+		jdbcType=VARCHAR},
+		REMARK8=#{remark8, jdbcType=VARCHAR},
+		REMARK9=#{remark9,
+		jdbcType=VARCHAR}, REMARK10=#{remark10,
+		jdbcType=VARCHAR} where ID =
+		#{id, jdbcType=VARCHAR} and REVISION =
+		#{revision, jdbcType=INTEGER}
+	</update>
+
+	<delete id="deleteWfUniteRunTask"
+		parameterType="com.chinacreator.c2.flow.persistence.entity.WfUniteRunTaskEntity">
+		delete from ${prefix}WF_UNITE_RUN_TASK where ID = #{id}
+		and REVISION = #{revision}
+	</delete>
+
+	<delete id="deleteWfUniteRunTaskByTaskId" parameterType="string">
+		delete
+		from ${prefix}WF_UNITE_RUN_TASK where TASK_ID = #{taskId}
+	</delete>
+
+	<select id="selectWfUniteRunTask" parameterType="string"
+		resultMap="WfUniteTaskResultMap">
+		select * from ${prefix}WF_UNITE_RUN_TASK where TASK_ID =
+		#{taskId}
+	</select>
+
+	<insert id="insertWfUniteHisTask"
+		parameterType="com.chinacreator.c2.flow.persistence.entity.WfUniteHisTaskEntity">
+		insert into ${prefix}WF_UNITE_HIS_TASK(ID,TASK_ID,
+		BUSINESS_KEY,EXECUTION_ID, PROC_INST_ID, PROC_DEF_ID, NAME,
+		PARENT_TASK_ID, DESCRIPTION, TASK_DEF_KEY, OWNER, ASSIGNEE, CANDIDATE,
+		DELEGATION, PRIORITY, CREATE_TIME, END_TIME, DUE_DATE, CATEGORY,
+		TASK_STATE,
+		TENANT_ID, APP_ID, MODULE_ID, MODULE_NAME, DELETE_REASON,
+		FORM_KEY,
+		REVISION, REMARK1, REMARK2, REMARK3, REMARK4, REMARK5,
+		REMARK6,
+		REMARK7, REMARK8, REMARK9, REMARK10) values( #{id,
+		jdbcType=VARCHAR},#{taskId, jdbcType=VARCHAR},
+		#{businessKey,
+		jdbcType=VARCHAR}, #{executionId, jdbcType=VARCHAR},
+		#{procInstId,
+		jdbcType=VARCHAR}, #{procDefId, jdbcType=VARCHAR},
+		#{name,
+		jdbcType=VARCHAR}, #{parentTaskId, jdbcType=VARCHAR},
+		#{description,
+		jdbcType=VARCHAR}, #{taskDefKey, jdbcType=VARCHAR},
+		#{owner,
+		jdbcType=VARCHAR}, #{assignee, jdbcType=VARCHAR},
+		#{candidate,
+		jdbcType=VARCHAR}, #{delegation, jdbcType=VARCHAR},
+		#{priority,
+		jdbcType=INTEGER}, #{createTime, jdbcType=TIMESTAMP},
+		#{endTime,
+		jdbcType=TIMESTAMP},
+		#{dueDate,
+		jdbcType=TIMESTAMP}, #{category,
+		jdbcType=VARCHAR},
+		#{taskState,
+		jdbcType=VARCHAR}, #{tenantId,
+		jdbcType=VARCHAR},
+		#{appId,
+		jdbcType=VARCHAR}, #{moduleId,
+		jdbcType=VARCHAR},
+		#{moduleName,
+		jdbcType=VARCHAR}, #{deleteReason,
+		jdbcType=VARCHAR},
+		#{formKey,
+		jdbcType=VARCHAR}, 1, #{remark1,
+		jdbcType=VARCHAR},
+		#{remark2,
+		jdbcType=VARCHAR}, #{remark3,
+		jdbcType=VARCHAR}, #{remark4,
+		jdbcType=VARCHAR}, #{remark5,
+		jdbcType=VARCHAR}, #{remark6,
+		jdbcType=VARCHAR}, #{remark7,
+		jdbcType=VARCHAR}, #{remark8,
+		jdbcType=VARCHAR}, #{remark9,
+		jdbcType=VARCHAR}, #{remark10,
+		jdbcType=VARCHAR} )
+	</insert>
+
+	<!-- WfUniteRunTask UPDATE -->
+	<update id="updateWfUniteHisTask"
+		parameterType="com.chinacreator.c2.flow.persistence.entity.WfUniteHisTaskEntity">
+		update ${prefix}WF_UNITE_HIS_TASK set TASK_ID=#{taskId,
+		jdbcType=VARCHAR},
+		BUSINESS_KEY =
+		#{businessKey, jdbcType=VARCHAR},
+		EXECUTION_ID = #{executionId,
+		jdbcType=VARCHAR}, PROC_INST_ID =
+		#{procInstId, jdbcType=VARCHAR},
+		PROC_DEF_ID = #{procDefId,
+		jdbcType=VARCHAR}, NAME = #{name,
+		jdbcType=VARCHAR}, PARENT_TASK_ID =
+		#{parentTaskId, jdbcType=VARCHAR},
+		DESCRIPTION = #{description,
+		jdbcType=VARCHAR},
+		TASK_DEF_KEY=#{taskDefKey, jdbcType=VARCHAR},
+		OWNER=#{owner,
+		jdbcType=VARCHAR}, ASSIGNEE=#{assignee,
+		jdbcType=VARCHAR},
+		CANDIDATE=#{candidate, jdbcType=VARCHAR},
+		DELEGATION=#{delegation,
+		jdbcType=VARCHAR}, PRIORITY=#{priority,
+		jdbcType=INTEGER},
+		CREATE_TIME=#{createTime, jdbcType=TIMESTAMP},
+		END_TIME=#{endTime, jdbcType=TIMESTAMP},
+		DUE_DATE=#{dueDate,
+		jdbcType=TIMESTAMP}, CATEGORY=#{category,
+		jdbcType=VARCHAR},
+		TASK_STATE=#{taskState, jdbcType=VARCHAR},
+		TENANT_ID=#{tenantId,
+		jdbcType=VARCHAR}, APP_ID=#{appId,
+		jdbcType=VARCHAR},
+		MODULE_ID=#{moduleId, jdbcType=VARCHAR},
+		MODULE_NAME=#{moduleName,
+		jdbcType=VARCHAR},
+		DELETE_REASON=#{deleteReason, jdbcType=VARCHAR},
+		FORM_KEY=#{formKey,
+		jdbcType=VARCHAR}, REMARK1=#{remark1,
+		jdbcType=VARCHAR},
+		REMARK2=#{remark2, jdbcType=VARCHAR},
+		REMARK3=#{remark3,
+		jdbcType=VARCHAR}, REMARK4=#{remark4,
+		jdbcType=VARCHAR},
+		REMARK5=#{remark5, jdbcType=VARCHAR},
+		REMARK6=#{remark6,
+		jdbcType=VARCHAR}, REMARK7=#{remark7,
+		jdbcType=VARCHAR},
+		REMARK8=#{remark8, jdbcType=VARCHAR},
+		REMARK9=#{remark9,
+		jdbcType=VARCHAR}, REMARK10=#{remark10,
+		jdbcType=VARCHAR} where ID =
+		#{id, jdbcType=VARCHAR} and REVISION =
+		#{revision, jdbcType=INTEGER}
+	</update>
+
+	<delete id="deleteWfUniteHisTask"
+		parameterType="com.chinacreator.c2.flow.persistence.entity.WfUniteHisTaskEntity">
+		delete from ${prefix}WF_UNITE_HIS_TASK where ID = #{id}
+		and REVISION = #{revision}
+	</delete>
+
+	<select id="selectWfUniteHisTask" parameterType="string"
+		resultMap="WfUniteTaskResultMap">
+		select * from ${prefix}WF_UNITE_HIS_TASK where TASK_ID =
+		#{taskId}
+	</select>
+
+	<!-- WfUniteRunTask RESULTMAP -->
+	<resultMap id="WfUniteTaskResultMap"
+		type="com.chinacreator.c2.flow.persistence.entity.WfUniteRunTaskEntity">
+		<id property="id" column="ID" jdbcType="VARCHAR" />
+		<result property="taskId" column="TASK_ID" jdbcType="VARCHAR" />
+		<result property="businessKey" column="BUSINESS_KEY" jdbcType="VARCHAR" />
+		<result property="executionId" column="EXECUTION_ID" jdbcType="VARCHAR" />
+		<result property="procInstId" column="PROC_INST_ID" jdbcType="VARCHAR" />
+		<result property="procDefId" column="PROC_DEF_ID" jdbcType="VARCHAR" />
+		<result property="name" column="NAME" jdbcType="VARCHAR" />
+		<result property="parentTaskId" column="PARENT_TASK_ID"
+			jdbcType="VARCHAR" />
+		<result property="description" column="DESCRIPTION" jdbcType="VARCHAR" />
+		<result property="taskDefKey" column="TASK_DEF_KEY" jdbcType="VARCHAR" />
+		<result property="owner" column="OWNER" jdbcType="VARCHAR" />
+		<result property="assignee" column="ASSIGNEE" jdbcType="VARCHAR" />
+		<result property="candidate" column="CANDIDATE" jdbcType="VARCHAR" />
+		<result property="delegation" column="DELEGATION" jdbcType="VARCHAR" />
+		<result property="priority" column="PRIORITY" jdbcType="INTEGER" />
+		<result property="createTime" column="CREATE_TIME" jdbcType="TIMESTAMP" />
+		<result property="endTime" column="CREATE_TIME" jdbcType="TIMESTAMP" />
+		<result property="dueDate" column="DUE_DATE" jdbcType="TIMESTAMP" />
+		<result property="category" column="CATEGORY" jdbcType="VARCHAR" />
+		<result property="taskState" column="TASK_STATE" jdbcType="VARCHAR" />
+		<result property="tenantId" column="TENANT_ID" jdbcType="VARCHAR" />
+		<result property="appId" column="APP_ID" jdbcType="VARCHAR" />
+		<result property="moduleId" column="MODULE_ID" jdbcType="VARCHAR" />
+		<result property="moduleName" column="MODULE_NAME" jdbcType="VARCHAR" />
+		<result property="deleteReason" column="DELETE_REASON"
+			jdbcType="VARCHAR" />
+		<result property="formKey" column="FORM_KEY" jdbcType="VARCHAR" />
+		<result property="revision" column="REVISION" jdbcType="INTEGER" />
+		<result property="remark1" column="REMARK1" jdbcType="VARCHAR" />
+		<result property="remark2" column="REMARK2" jdbcType="VARCHAR" />
+		<result property="remark3" column="REMARK3" jdbcType="VARCHAR" />
+		<result property="remark4" column="REMARK4" jdbcType="VARCHAR" />
+		<result property="remark5" column="REMARK5" jdbcType="VARCHAR" />
+		<result property="remark6" column="REMARK6" jdbcType="VARCHAR" />
+		<result property="remark7" column="REMARK7" jdbcType="VARCHAR" />
+		<result property="remark8" column="REMARK8" jdbcType="VARCHAR" />
+		<result property="remark9" column="REMARK9" jdbcType="VARCHAR" />
+		<result property="remark10" column="REMARK10" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<select id="selectWfUniteRunTaskByC" parameterType="java.util.HashMap"
+		resultMap="WfUniteTaskResultMap">
+		select b.ID,
+		b.TASK_ID,
+		b.BUSINESS_KEY,
+		b.EXECUTION_ID,
+		b.PROC_INST_ID,
+		b.PROC_DEF_ID,
+		b.NAME,
+		b.PARENT_TASK_ID,
+		b.DESCRIPTION,
+		b.TASK_DEF_KEY,
+		b.OWNER,
+		b.ASSIGNEE,
+		b.CANDIDATE,
+		b.DELEGATION,
+		b.PRIORITY,
+		b.CREATE_TIME,
+		b.END_TIME,
+		b.DUE_DATE,
+		b.CATEGORY,
+		b.TASK_STATE,
+		b.TENANT_ID,
+		b.APP_ID,
+		b.MODULE_ID,
+		b.MODULE_NAME,
+		b.DELETE_REASON,
+		b.FORM_KEY,
+		b.REVISION,
+		b.REMARK1,
+		b.REMARK2,
+		b.REMARK3,
+		b.REMARK4,
+		b.REMARK5,
+		b.REMARK6,
+		b.REMARK7,
+		b.REMARK8,
+		b.REMARK9,
+		b.REMARK10 from
+		${prefix}WF_UNITE_RUN_TASK b
+		where ((b.category = 'users' and
+		b.candidate = #{userId} and
+		(b.assignee IS NULL or b.ASSIGNEE='')) or
+		(b.assignee = #{userId} or
+		(b.category = 'groups' and
+		b.assignee in
+		(select c.GROUP_ID_
+		from act_id_membership c
+		where c.USER_ID_ =
+		#{userId}))) or
+		(b.category = 'groups' and (b.assignee IS NULL or
+		b.ASSIGNEE='') and
+		b.candidate in
+		(select c.GROUP_ID_
+		from
+		act_id_membership c
+		where c.USER_ID_ = #{userId}))) and
+		b.TASK_STATE=#{taskType}
+		<if test="id != null">
+			and b.id = #{id}
+		</if>
+		<if test="taskid != null">
+			and b.task_id like '%${taskid}%'
+		</if>
+		<if test="businesskey != null">
+			and b.business_key like '%${businesskey}%'
+		</if>
+		<if test="executionid != null">
+			and b.execution_id like '%${executionid}%'
+		</if>
+		<if test="procinstid != null">
+			and b.proc_inst_id like '%${procinstid}%'
+		</if>
+		<if test="procdefid != null">
+			and b.proc_def_id like '%${procdefid}%'
+		</if>
+		<if test="name != null">
+			and b.name like '%${name}%'
+		</if>
+		<if test="parenttaskid != null">
+			and b.parent_task_id like
+			'%${parenttaskid}%'
+		</if>
+		<if test="description != null">
+			and b.description like '%${description}%'
+		</if>
+		<if test="taskdefkey != null">
+			and b.task_def_key like '%${taskdefkey}%'
+		</if>
+		<if test="owner != null">
+			and b.owner like '%${owner}%'
+		</if>
+		<if test="assignee != null">
+			and b.assignee like '%${assignee}%'
+		</if>
+		<if test="candidate != null">
+			and b.candidate like '%${candidate}%'
+		</if>
+		<if test="delegation != null">
+			and b.delegation like '%${delegation}%'
+		</if>
+		<if test="priority != null">
+			and b.priority like '%${priority}%'
+		</if>
+		<if test="createtimeb != null">
+			and b.create_time &gt;= #{createtimeb}
+		</if>
+		<if test="createtimee != null">
+			and b.create_time &lt;= #{createtimee}
+		</if>
+		<if test="endtimeb != null">
+			and b.end_time &gt;= #{endtimeb}
+		</if>
+		<if test="endtimee != null">
+			and b.end_time &lt;= #{endtimee}
+		</if>
+		<if test="duedateb != null">
+			and b.due_date &gt;= #{duedateb}
+		</if>
+		<if test="duedatee != null">
+			and b.due_date &lt;= #{duedatee}
+		</if>
+		<if test="category != null">
+			and b.category like '%${category}%'
+		</if>
+		<if test="taskstate != null">
+			and b.task_state like '%${taskstate}%'
+		</if>
+		<if test="tenantid != null">
+			and b.tenant_id like '%${tenantid}%'
+		</if>
+		<if test="appid != null">
+			and b.app_id like '%${appid}%'
+		</if>
+		<if test="moduleid != null">
+			and b.module_id like '%${moduleid}%'
+		</if>
+		<if test="modulename != null">
+			and b.module_name like '%${modulename}%'
+		</if>
+		<if test="deletereason != null">
+			and b.delete_reason like '%${deletereason}%'
+		</if>
+		<if test="formkey != null">
+			and b.form_key like '%${formkey}%'
+		</if>
+		<if test="revision != null">
+			and b.revision = #{revision}
+		</if>
+		<if test="remark1 != null">
+			and b.remark1 like '%${remark1}%'
+		</if>
+		<if test="remark2 != null">
+			and b.remark2 like '%${remark2}%'
+		</if>
+		<if test="remark3 != null">
+			and b.remark3 like '%${remark3}%'
+		</if>
+		<if test="remark4 != null">
+			and b.remark4 like '%${remark4}%'
+		</if>
+		<if test="remark5 != null">
+			and b.remark5 like '%${remark5}%'
+		</if>
+		<if test="remark6 != null">
+			and b.remark6 like '%${remark6}%'
+		</if>
+		<if test="remark7 != null">
+			and b.remark7 like '%${remark7}%'
+		</if>
+		<if test="remark8 != null">
+			and b.remark8 like '%${remark8}%'
+		</if>
+		<if test="remark9 != null">
+			and b.remark9 like '%${remark9}%'
+		</if>
+		<if test="remark10 != null">
+			and b.remark10 like '%${remark10}%'
+		</if>
+		order by b.create_time desc
+	</select>
+	<select id="selectWfUniteRunTaskCountByC" parameterType="java.util.HashMap"
+		resultType="Integer">
+		select count(1) from
+		${prefix}WF_UNITE_RUN_TASK b
+		where ((b.category =
+		'users' and
+		b.candidate = #{userId} and
+		(b.assignee IS NULL or
+		b.ASSIGNEE='')) or
+		(b.assignee = #{userId} or
+		(b.category = 'groups' and
+		b.assignee in
+		(select c.GROUP_ID_
+		from act_id_membership c
+		where
+		c.USER_ID_ = #{userId}))) or
+		(b.category = 'groups' and (b.assignee IS
+		NULL or b.ASSIGNEE='') and
+		b.candidate in
+		(select c.GROUP_ID_
+		from
+		act_id_membership c
+		where c.USER_ID_ = #{userId}))) and
+		b.TASK_STATE=#{taskType}
+		<if test="id != null">
+			and b.id = #{id}
+		</if>
+		<if test="taskid != null">
+			and b.task_id like '%${taskid}%'
+		</if>
+		<if test="businesskey != null">
+			and b.business_key like '%${businesskey}%'
+		</if>
+		<if test="executionid != null">
+			and b.execution_id like '%${executionid}%'
+		</if>
+		<if test="procinstid != null">
+			and b.proc_inst_id like '%${procinstid}%'
+		</if>
+		<if test="procdefid != null">
+			and b.proc_def_id like '%${procdefid}%'
+		</if>
+		<if test="name != null">
+			and b.name like '%${name}%'
+		</if>
+		<if test="parenttaskid != null">
+			and b.parent_task_id like
+			'%${parenttaskid}%'
+		</if>
+		<if test="description != null">
+			and b.description like '%${description}%'
+		</if>
+		<if test="taskdefkey != null">
+			and b.task_def_key like '%${taskdefkey}%'
+		</if>
+		<if test="owner != null">
+			and b.owner like '%${owner}%'
+		</if>
+		<if test="assignee != null">
+			and b.assignee like '%${assignee}%'
+		</if>
+		<if test="candidate != null">
+			and b.candidate like '%${candidate}%'
+		</if>
+		<if test="delegation != null">
+			and b.delegation like '%${delegation}%'
+		</if>
+		<if test="priority != null">
+			and b.priority like '%${priority}%'
+		</if>
+		<if test="createtime != null">
+			and b.end_time like '%${createtime}%'
+		</if>
+		<if test="createtimeb != null">
+			and b.create_time &gt;= #{createtimeb}
+		</if>
+		<if test="createtimee != null">
+			and b.create_time &lt;= #{createtimee}
+		</if>
+		<if test="endtime != null">
+			and b.end_time like '%${endtime}%'
+		</if>
+		<if test="endtimeb != null">
+			and b.end_time &gt;= #{endtimeb}
+		</if>
+		<if test="endtimee != null">
+			and b.end_time &lt;= #{endtimee}
+		</if>
+		<if test="duedate != null">
+			and b.due_date like '%${duedate}%'
+		</if>
+		<if test="duedateb != null">
+			and b.due_date &gt;= #{duedateb}
+		</if>
+		<if test="duedatee != null">
+			and b.due_date &lt;= #{duedatee}
+		</if>
+		<if test="category != null">
+			and b.category like '%${category}%'
+		</if>
+		<if test="taskstate != null">
+			and b.task_state like '%${taskstate}%'
+		</if>
+		<if test="tenantid != null">
+			and b.tenant_id like '%${tenantid}%'
+		</if>
+		<if test="appid != null">
+			and b.app_id like '%${appid}%'
+		</if>
+		<if test="moduleid != null">
+			and b.module_id like '%${moduleid}%'
+		</if>
+		<if test="modulename != null">
+			and b.module_name like '%${modulename}%'
+		</if>
+		<if test="deletereason != null">
+			and b.delete_reason like '%${deletereason}%'
+		</if>
+		<if test="formkey != null">
+			and b.form_key like '%${formkey}%'
+		</if>
+		<if test="revision != null">
+			and b.revision = #{revision}
+		</if>
+		<if test="remark1 != null">
+			and b.remark1 like '%${remark1}%'
+		</if>
+		<if test="remark2 != null">
+			and b.remark2 like '%${remark2}%'
+		</if>
+		<if test="remark3 != null">
+			and b.remark3 like '%${remark3}%'
+		</if>
+		<if test="remark4 != null">
+			and b.remark4 like '%${remark4}%'
+		</if>
+		<if test="remark5 != null">
+			and b.remark5 like '%${remark5}%'
+		</if>
+		<if test="remark6 != null">
+			and b.remark6 like '%${remark6}%'
+		</if>
+		<if test="remark7 != null">
+			and b.remark7 like '%${remark7}%'
+		</if>
+		<if test="remark8 != null">
+			and b.remark8 like '%${remark8}%'
+		</if>
+		<if test="remark9 != null">
+			and b.remark9 like '%${remark9}%'
+		</if>
+		<if test="remark10 != null">
+			and b.remark10 like '%${remark10}%'
+		</if>
+	</select>
+
+	<select id="selectWfUniteHisTaskByC" parameterType="java.util.HashMap"
+		resultMap="WfUniteTaskResultMap">
+		select b.ID,
+		b.TASK_ID,
+		b.BUSINESS_KEY,
+		b.EXECUTION_ID,
+		b.PROC_INST_ID,
+		b.PROC_DEF_ID,
+		b.NAME,
+		b.PARENT_TASK_ID,
+		b.DESCRIPTION,
+		b.TASK_DEF_KEY,
+		b.OWNER,
+		b.ASSIGNEE,
+		b.CANDIDATE,
+		b.DELEGATION,
+		b.PRIORITY,
+		b.CREATE_TIME,
+		b.END_TIME,
+		b.DUE_DATE,
+		b.CATEGORY,
+		b.TASK_STATE,
+		b.TENANT_ID,
+		b.APP_ID,
+		b.MODULE_ID,
+		b.MODULE_NAME,
+		b.DELETE_REASON,
+		b.FORM_KEY,
+		b.REVISION,
+		b.REMARK1,
+		b.REMARK2,
+		b.REMARK3,
+		b.REMARK4,
+		b.REMARK5,
+		b.REMARK6,
+		b.REMARK7,
+		b.REMARK8,
+		b.REMARK9,
+		b.REMARK10 from
+		${prefix}WF_UNITE_HIS_TASK b
+		where ((b.category = 'users' and
+		b.candidate = #{userId} and
+		(b.assignee IS NULL or b.ASSIGNEE='')) or
+		(b.assignee = #{userId} or
+		(b.category = 'groups' and
+		b.assignee in
+		(select c.GROUP_ID_
+		from act_id_membership c
+		where c.USER_ID_ =
+		#{userId}))) or
+		(b.category = 'groups' and (b.assignee IS NULL or
+		b.ASSIGNEE='') and
+		b.candidate in
+		(select c.GROUP_ID_
+		from
+		act_id_membership c
+		where c.USER_ID_ = #{userId}))) and
+		b.TASK_STATE=#{taskType}
+		<if test="id != null">
+			and b.id = #{id}
+		</if>
+		<if test="taskid != null">
+			and b.task_id like '%${taskid}%'
+		</if>
+		<if test="businesskey != null">
+			and b.business_key like '%${businesskey}%'
+		</if>
+		<if test="executionid != null">
+			and b.execution_id like '%${executionid}%'
+		</if>
+		<if test="procinstid != null">
+			and b.proc_inst_id like '%${procinstid}%'
+		</if>
+		<if test="procdefid != null">
+			and b.proc_def_id like '%${procdefid}%'
+		</if>
+		<if test="name != null">
+			and b.name like '%${name}%'
+		</if>
+		<if test="parenttaskid != null">
+			and b.parent_task_id like
+			'%${parenttaskid}%'
+		</if>
+		<if test="description != null">
+			and b.description like '%${description}%'
+		</if>
+		<if test="taskdefkey != null">
+			and b.task_def_key like '%${taskdefkey}%'
+		</if>
+		<if test="owner != null">
+			and b.owner like '%${owner}%'
+		</if>
+		<if test="assignee != null">
+			and b.assignee like '%${assignee}%'
+		</if>
+		<if test="candidate != null">
+			and b.candidate like '%${candidate}%'
+		</if>
+		<if test="delegation != null">
+			and b.delegation like '%${delegation}%'
+		</if>
+		<if test="priority != null">
+			and b.priority like '%${priority}%'
+		</if>
+		<if test="createtime != null">
+			and b.create_time like '%${createtime}%'
+		</if>
+		<if test="createtimeb != null">
+			and b.create_time &gt;= #{createtimeb}
+		</if>
+		<if test="createtimee != null">
+			and b.create_time &lt;= #{createtimee}
+		</if>
+		<if test="endtime != null">
+			and b.end_time like '%${endtime}%'
+		</if>
+		<if test="endtimeb != null">
+			and b.end_time &gt;= #{endtimeb}
+		</if>
+		<if test="endtimee != null">
+			and b.end_time &lt;= #{endtimee}
+		</if>
+		<if test="duedate != null">
+			and b.due_date like '%${duedate}%'
+		</if>
+		<if test="duedateb != null">
+			and b.due_date &gt;= #{duedateb}
+		</if>
+		<if test="duedatee != null">
+			and b.due_date &lt;= #{duedatee}
+		</if>
+		<if test="category != null">
+			and b.category like '%${category}%'
+		</if>
+		<if test="taskstate != null">
+			and b.task_state like '%${taskstate}%'
+		</if>
+		<if test="tenantid != null">
+			and b.tenant_id like '%${tenantid}%'
+		</if>
+		<if test="appid != null">
+			and b.app_id like '%${appid}%'
+		</if>
+		<if test="moduleid != null">
+			and b.module_id like '%${moduleid}%'
+		</if>
+		<if test="modulename != null">
+			and b.module_name like '%${modulename}%'
+		</if>
+		<if test="deletereason != null">
+			and b.delete_reason like '%${deletereason}%'
+		</if>
+		<if test="formkey != null">
+			and b.form_key like '%${formkey}%'
+		</if>
+		<if test="revision != null">
+			and b.revision = #{revision}
+		</if>
+		<if test="remark1 != null">
+			and b.remark1 like '%${remark1}%'
+		</if>
+		<if test="remark2 != null">
+			and b.remark2 like '%${remark2}%'
+		</if>
+		<if test="remark3 != null">
+			and b.remark3 like '%${remark3}%'
+		</if>
+		<if test="remark4 != null">
+			and b.remark4 like '%${remark4}%'
+		</if>
+		<if test="remark5 != null">
+			and b.remark5 like '%${remark5}%'
+		</if>
+		<if test="remark6 != null">
+			and b.remark6 like '%${remark6}%'
+		</if>
+		<if test="remark7 != null">
+			and b.remark7 like '%${remark7}%'
+		</if>
+		<if test="remark8 != null">
+			and b.remark8 like '%${remark8}%'
+		</if>
+		<if test="remark9 != null">
+			and b.remark9 like '%${remark9}%'
+		</if>
+		<if test="remark10 != null">
+			and b.remark10 like '%${remark10}%'
+		</if>
+		order by b.create_time desc
+	</select>
+	<select id="selectWfUniteHisTaskCountByC" parameterType="java.util.HashMap"
+		resultType="Integer">
+		select count(1) from
+		${prefix}WF_UNITE_HIS_TASK b
+		where ((b.category =
+		'users' and
+		b.candidate = #{userId} and
+		(b.assignee IS NULL or
+		b.ASSIGNEE='')) or
+		(b.assignee = #{userId} or
+		(b.category = 'groups' and
+		b.assignee in
+		(select c.GROUP_ID_
+		from act_id_membership c
+		where
+		c.USER_ID_ = #{userId}))) or
+		(b.category = 'groups' and (b.assignee IS
+		NULL or b.ASSIGNEE='') and
+		b.candidate in
+		(select c.GROUP_ID_
+		from
+		act_id_membership c
+		where c.USER_ID_ = #{userId}))) and
+		b.TASK_STATE=#{taskType}
+		<if test="id != null">
+			and b.id = #{id}
+		</if>
+		<if test="taskid != null">
+			and b.task_id like '%${taskid}%'
+		</if>
+		<if test="businesskey != null">
+			and b.business_key like '%${businesskey}%'
+		</if>
+		<if test="executionid != null">
+			and b.execution_id like '%${executionid}%'
+		</if>
+		<if test="procinstid != null">
+			and b.proc_inst_id like '%${procinstid}%'
+		</if>
+		<if test="procdefid != null">
+			and b.proc_def_id like '%${procdefid}%'
+		</if>
+		<if test="name != null">
+			and b.name like '%${name}%'
+		</if>
+		<if test="parenttaskid != null">
+			and b.parent_task_id like
+			'%${parenttaskid}%'
+		</if>
+		<if test="description != null">
+			and b.description like '%${description}%'
+		</if>
+		<if test="taskdefkey != null">
+			and b.task_def_key like '%${taskdefkey}%'
+		</if>
+		<if test="owner != null">
+			and b.owner like '%${owner}%'
+		</if>
+		<if test="assignee != null">
+			and b.assignee like '%${assignee}%'
+		</if>
+		<if test="candidate != null">
+			and b.candidate like '%${candidate}%'
+		</if>
+		<if test="delegation != null">
+			and b.delegation like '%${delegation}%'
+		</if>
+		<if test="priority != null">
+			and b.priority like '%${priority}%'
+		</if>
+		<if test="createtime != null">
+			and b.create_time like '%${createtime}%'
+		</if>
+		<if test="createtimeb != null">
+			and b.create_time &gt;= #{createtimeb}
+		</if>
+		<if test="createtimee != null">
+			and b.create_time &lt;= #{createtimee}
+		</if>
+		<if test="endtime != null">
+			and b.end_time like '%${endtime}%'
+		</if>
+		<if test="endtimeb != null">
+			and b.end_time &gt;= #{endtimeb}
+		</if>
+		<if test="endtimee != null">
+			and b.end_time &lt;= #{endtimee}
+		</if>
+		<if test="duedate != null">
+			and b.due_date like '%${duedate}%'
+		</if>
+		<if test="duedateb != null">
+			and b.due_date &gt;= #{duedateb}
+		</if>
+		<if test="duedatee != null">
+			and b.due_date &lt;= #{duedatee}
+		</if>
+		<if test="category != null">
+			and b.category like '%${category}%'
+		</if>
+		<if test="taskstate != null">
+			and b.task_state like '%${taskstate}%'
+		</if>
+		<if test="tenantid != null">
+			and b.tenant_id like '%${tenantid}%'
+		</if>
+		<if test="appid != null">
+			and b.app_id like '%${appid}%'
+		</if>
+		<if test="moduleid != null">
+			and b.module_id like '%${moduleid}%'
+		</if>
+		<if test="modulename != null">
+			and b.module_name like '%${modulename}%'
+		</if>
+		<if test="deletereason != null">
+			and b.delete_reason like '%${deletereason}%'
+		</if>
+		<if test="formkey != null">
+			and b.form_key like '%${formkey}%'
+		</if>
+		<if test="revision != null">
+			and b.revision = #{revision}
+		</if>
+		<if test="remark1 != null">
+			and b.remark1 like '%${remark1}%'
+		</if>
+		<if test="remark2 != null">
+			and b.remark2 like '%${remark2}%'
+		</if>
+		<if test="remark3 != null">
+			and b.remark3 like '%${remark3}%'
+		</if>
+		<if test="remark4 != null">
+			and b.remark4 like '%${remark4}%'
+		</if>
+		<if test="remark5 != null">
+			and b.remark5 like '%${remark5}%'
+		</if>
+		<if test="remark6 != null">
+			and b.remark6 like '%${remark6}%'
+		</if>
+		<if test="remark7 != null">
+			and b.remark7 like '%${remark7}%'
+		</if>
+		<if test="remark8 != null">
+			and b.remark8 like '%${remark8}%'
+		</if>
+		<if test="remark9 != null">
+			and b.remark9 like '%${remark9}%'
+		</if>
+		<if test="remark10 != null">
+			and b.remark10 like '%${remark10}%'
+		</if>
+	</select>
+
+	<resultMap id="historicActivityInstanceResultMap"
+		type="org.activiti.engine.impl.persistence.entity.HistoricActivityInstanceEntity">
+		<id property="id" column="ID_" jdbcType="VARCHAR" />
+		<result property="processDefinitionId" column="PROC_DEF_ID_"
+			jdbcType="VARCHAR" />
+		<result property="processInstanceId" column="PROC_INST_ID_"
+			jdbcType="VARCHAR" />
+		<result property="executionId" column="EXECUTION_ID_" jdbcType="VARCHAR" />
+		<result property="activityId" column="ACT_ID_" jdbcType="VARCHAR" />
+		<result property="taskId" column="TASK_ID_" jdbcType="VARCHAR" />
+		<result property="calledProcessInstanceId" column="CALL_PROC_INST_ID_"
+			jdbcType="VARCHAR" />
+		<result property="activityName" column="ACT_NAME_" jdbcType="VARCHAR" />
+		<result property="activityType" column="ACT_TYPE_" jdbcType="VARCHAR" />
+		<result property="assignee" column="ASSIGNEE_" jdbcType="VARCHAR" />
+		<result property="startTime" column="START_TIME_" jdbcType="TIMESTAMP" />
+		<result property="endTime" column="END_TIME_" jdbcType="TIMESTAMP" />
+		<result property="durationInMillis" column="DURATION_"
+			jdbcType="BIGINT" />
+		<result property="tenantId" column="TENANT_ID_" jdbcType="VARCHAR" />
+	</resultMap>
+	
+	<select id="selectHistoricActivityInstanceByProcessInstanceId"
+		resultMap="historicActivityInstanceResultMap">
+		select * from ${prefix}ACT_HI_ACTINST where
+		PROC_INST_ID_ = #{processInstanceId} order by START_TIME_ asc
+	</select>
+</mapper>

@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<!-- 作息时间表映射关系 -->
+<mapper namespace="com.chinacreator.c2.flow.persistence.entity.WfWorkDateEntity">
+	<sql id="WorkDate_Column_List">
+		  BEGIN_DATE,END_DATE,AM_END_TIME,WORK_ID,PM_END_TIME,AM_BEGIN_TIME,
+          PM_BEGIN_TIME,REMARK,LAST_MODIFY_TIME,TENANT_ID
+	</sql>
+
+	<resultMap id="WorkDate_ResultMap"
+		type="com.chinacreator.c2.flow.persistence.entity.WfWorkDateEntity">
+		<result column="WORK_ID" property="workId" jdbcType="VARCHAR" />
+		<result column="BEGIN_DATE" property="beginDate" jdbcType="VARCHAR" />
+		<result column="END_DATE" property="endDate" jdbcType="VARCHAR" />
+		<result column="AM_END_TIME" property="amEndTime" jdbcType="VARCHAR" />
+		<result column="PM_END_TIME" property="pmEndTime" jdbcType="VARCHAR" />
+		<result column="AM_BEGIN_TIME" property="amBeginTime" jdbcType="VARCHAR" />
+		<result column="PM_BEGIN_TIME" property="pmBeginTime" jdbcType="VARCHAR" />
+		<result column="REMARK" property="remark" jdbcType="VARCHAR" />
+		<result column="LAST_MODIFY_TIME" property="lastModifyTime" jdbcType="TIMESTAMP" />
+		<result column="TENANT_ID" property="tenantId" jdbcType="VARCHAR" />
+	</resultMap>
+	
+	<insert id="insertWfWorkDate" parameterType="com.chinacreator.c2.flow.persistence.entity.WfWorkDateEntity">
+		INSERT INTO ${prefix}WF_WORKDATE
+	    <trim prefix="(" suffix=")" suffixOverrides=",">
+	        <if test="workId != null">
+	            WORK_ID,
+	        </if>
+	        <if test="beginDate != null">
+	            BEGIN_DATE,
+	        </if>
+	        <if test="endDate != null">
+	            END_DATE,
+	        </if>
+	        <if test="amEndTime != null">
+	            AM_END_TIME,
+	        </if>
+	        <if test="amBeginTime != null">
+	            AM_BEGIN_TIME,
+	        </if>
+	        <if test="pmEndTime != null">
+	            PM_END_TIME,
+	        </if>
+	         <if test="pmBeginTime != null">
+	            PM_BEGIN_TIME,
+	        </if>
+	        <if test="remark != null">
+	            REMARK,
+	        </if>
+	         <if test="lastModifyTime != null">
+	            LAST_MODIFY_TIME,
+	        </if>
+	        
+	        <if test="tenantId != null">
+	            TENANT_ID,
+	        </if>
+	    </trim>
+	    <trim prefix="VALUES (" suffix=")" suffixOverrides=",">		
+	         <if test="workId != null">
+	            <![CDATA[#{workId,jdbcType=VARCHAR},]]>
+	        </if>
+	        <if test="beginDate != null">
+	            <![CDATA[#{beginDate,jdbcType=VARCHAR},]]>
+	        </if>
+	        <if test="endDate != null">
+	             <![CDATA[#{endDate,jdbcType=VARCHAR},]]>
+	        </if>
+	        <if test="amEndTime != null">
+	            <![CDATA[#{amEndTime,jdbcType=VARCHAR},]]>
+	        </if>
+	        <if test="amBeginTime != null">
+	            <![CDATA[#{amBeginTime,jdbcType=VARCHAR},]]>
+	        </if>
+	        <if test="pmEndTime != null">
+	            <![CDATA[#{pmEndTime,jdbcType=VARCHAR},]]>
+	        </if>
+	         <if test="pmBeginTime != null">
+	            <![CDATA[#{pmBeginTime,jdbcType=VARCHAR},]]>
+	        </if>
+	        <if test="remark != null">
+	            <![CDATA[#{remark,jdbcType=VARCHAR},]]>
+	        </if>
+	         <if test="lastModifyTime != null">
+	            <![CDATA[#{lastModifyTime,jdbcType=TIMESTAMP},]]>
+	        </if>
+	         <if test="tenantId != null">
+	            <![CDATA[#{tenantId,jdbcType=VARCHAR},]]>
+	        </if>
+	    </trim>
+	</insert>
+	
+	<update id="updateWorkDateByParam" parameterType="com.chinacreator.c2.flow.detail.WfWorkDate">
+		UPDATE ${prefix}WF_WORKDATE
+        <set>
+      	  <if test="beginDate != null">
+              BEGIN_DATE=<![CDATA[#{beginDate,jdbcType=VARCHAR},]]>
+          </if>
+          <if test="endDate != null">
+              END_DATE=<![CDATA[#{endDate,jdbcType=VARCHAR},]]>
+          </if>
+          <if test="amEndTime != null">
+          	  AM_END_TIME=<![CDATA[#{amEndTime,jdbcType=VARCHAR},]]>
+          </if>
+          <if test="amBeginTime != null">
+          	  AM_BEGIN_TIME=<![CDATA[#{amBeginTime,jdbcType=VARCHAR},]]>
+          </if>
+          <if test="pmEndTime != null">
+          	   PM_END_TIME=<![CDATA[#{pmEndTime,jdbcType=VARCHAR},]]>
+          </if>
+          <if test="pmBeginTime != null">
+          	  PM_BEGIN_TIME=<![CDATA[#{pmBeginTime,jdbcType=VARCHAR},]]>
+          </if>
+          <if test="remark != null">
+          	   REMARK=<![CDATA[#{remark,jdbcType=VARCHAR},]]>
+          </if>
+          <if test="lastModifyTime != null">
+               LAST_MODIFY_TIME=<![CDATA[#{lastModifyTime,jdbcType=TIMESTAMP},]]>
+          </if>
+          <if test="tenantId != null">
+          	   TENANT_ID=<![CDATA[#{tenantId,jdbcType=VARCHAR},]]>
+          </if>
+        </set>
+        WHERE <![CDATA[WORK_ID = #{workId,jdbcType=VARCHAR}]]>
+	</update>
+	
+	<delete id="deleteWorkDate">
+		 DELETE FROM ${prefix}WF_WORKDATE
+		 <trim prefix="WHERE" prefixOverrides="AND |OR ">
+			<if test="tenantId!=null">
+				<![CDATA[AND TENANT_ID = #{tenantId,jdbcType=VARCHAR}]]>
+			</if>
+			<if test="workId!=null">
+				<![CDATA[AND WORK_ID = #{workId,jdbcType=VARCHAR} ]]>
+			</if>
+		</trim>
+	</delete>
+	
+	<select id="getWorkDateByParamC" resultType="Integer">
+		SELECT
+		count(1)
+		FROM ${prefix}WF_WORKDATE
+		<trim prefix="WHERE" prefixOverrides="AND |OR ">
+		
+			<if test="wfWorkDateParam.workId!=null">
+				<![CDATA[AND WORK_ID=#{wfWorkDateParam.workId,jdbcType=VARCHAR}]]>
+			</if>
+			<if test="wfWorkDateParam.beginDate!=null">
+				<![CDATA[AND BEGIN_DATE=#{wfWorkDateParam.beginDate,jdbcType=VARCHAR}]]>
+			</if>
+			<if test="wfWorkDateParam.endDate!=null">
+				<![CDATA[AND END_DATE=#{wfWorkDateParam.endDate,jdbcType=VARCHAR}]]>
+			</if>
+			<if test="wfWorkDateParam.amEndTime!=null">
+				<![CDATA[AND AM_END_TIME=#{wfWorkDateParam.amEndTime,jdbcType=VARCHAR}]]>
+			</if>
+			<if test="wfWorkDateParam.amBeginTime!=null">
+				<![CDATA[AND AM_BEGIN_TIME=#{wfWorkDateParam.amBeginTime,jdbcType=VARCHAR}]]>
+			</if>
+			
+			<if test="wfWorkDateParam.pmEndTime!=null">
+				<![CDATA[AND PM_END_TIME = #{wfWorkDateParam.pmEndTime,jdbcType=VARCHAR} ]]>
+			</if>
+			<if test="wfWorkDateParam.pmBeginTime!=null">
+				<![CDATA[AND PM_BEGIN_TIME = #{wfWorkDateParam.pmBeginTime,jdbcType=VARCHAR} ]]>
+			</if>
+			
+			<if test="wfWorkDateParam.remark!=null">
+				<![CDATA[AND REMARK = #{wfWorkDateParam.remark,jdbcType=VARCHAR} ]]>
+			</if>
+			
+			<if test="wfWorkDateParam.tenantId!=null">
+				<![CDATA[AND TENANT_ID = #{wfWorkDateParam.tenantId,jdbcType=VARCHAR} ]]>
+			</if>
+		</trim>
+	</select>
+	
+	<select id="getWorkDateByParam" resultMap="WorkDate_ResultMap">
+		SELECT
+		<include refid="WorkDate_Column_List"/>
+		FROM ${prefix}WF_WORKDATE
+		<trim prefix="WHERE" prefixOverrides="AND |OR ">
+		
+			<if test="wfWorkDateParam.workId!=null">
+				<![CDATA[AND WORK_ID=#{wfWorkDateParam.workId,jdbcType=VARCHAR}]]>
+			</if>
+			<if test="wfWorkDateParam.beginDate!=null">
+				<![CDATA[AND BEGIN_DATE=#{wfWorkDateParam.beginDate,jdbcType=VARCHAR}]]>
+			</if>
+			<if test="wfWorkDateParam.endDate!=null">
+				<![CDATA[AND END_DATE=#{wfWorkDateParam.endDate,jdbcType=VARCHAR}]]>
+			</if>
+			<if test="wfWorkDateParam.amEndTime!=null">
+				<![CDATA[AND AM_END_TIME=#{wfWorkDateParam.amEndTime,jdbcType=VARCHAR}]]>
+			</if>
+			<if test="wfWorkDateParam.amBeginTime!=null">
+				<![CDATA[AND AM_BEGIN_TIME=#{wfWorkDateParam.amBeginTime,jdbcType=VARCHAR}]]>
+			</if>
+			
+			<if test="wfWorkDateParam.pmEndTime!=null">
+				<![CDATA[AND PM_END_TIME = #{wfWorkDateParam.pmEndTime,jdbcType=VARCHAR} ]]>
+			</if>
+			<if test="wfWorkDateParam.pmBeginTime!=null">
+				<![CDATA[AND PM_BEGIN_TIME = #{wfWorkDateParam.pmBeginTime,jdbcType=VARCHAR} ]]>
+			</if>
+			
+			<if test="wfWorkDateParam.remark!=null">
+				<![CDATA[AND REMARK = #{wfWorkDateParam.remark,jdbcType=VARCHAR} ]]>
+			</if>
+			
+			<if test="wfWorkDateParam.tenantId!=null">
+				<![CDATA[AND TENANT_ID = #{wfWorkDateParam.tenantId,jdbcType=VARCHAR} ]]>
+			</if>
+		</trim>
+		order by LAST_MODIFY_TIME desc
+	</select>
+	
+	<select id="getWorkDateOfDay_oracle" resultMap="WorkDate_ResultMap">
+			select 
+			 <include refid="WorkDate_Column_List"/>
+			<![CDATA[
+			 from (select * from wf_workdate where to_date(begin_date,'yyyy-mm-dd')<= to_date( #{curDate} 
+			,'yyyy-mm-dd') and to_date(end_date,'yyyy-mm-dd')>= to_date( #{curDate} 
+			,'yyyy-mm-dd')  order by to_date(begin_date,'yyyy-mm-dd') desc,to_date(end_date,'yyyy-mm-dd')) where rownum=1 
+			]]>
+	</select>
+	
+	<select id="getWorkDateOfDay_mysql" resultMap="WorkDate_ResultMap">
+			select
+			 <include refid="WorkDate_Column_List"/>
+			<![CDATA[
+			 from (select * from wf_workdate where date_format(begin_date,'%Y-%m-%d')<= date_format( #{curDate} 
+			,'%Y-%m-%d') and date_format(end_date,'%Y-%m-%d')>= date_format( #{curDate}
+			,'%Y-%m-%d')  order by date_format(begin_date,'%Y-%m-%d') desc,date_format(end_date,'%Y-%m-%d')) aa limit 0,1 
+			]]>
+	</select>
+	
+	
+</mapper>

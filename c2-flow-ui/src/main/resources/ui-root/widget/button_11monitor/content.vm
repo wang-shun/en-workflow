@@ -1,0 +1,8 @@
+<button monitor-button #id($!{ele.id}) class="btn  $!{param.style} $!{param.size} no-border" 
+	ng-init='$state.${ele.id}.disabled = ${param.disabled};$state.${ele.id}.visible=${param.show}' 
+	ng-show='$state.${ele.id}.visible'
+	ng-disabled='$state.${ele.id}.disabled'"
+	ng-click="monitorProcessInstance(${param.processInstanceId},${param.processDefinitionId})">
+	#if($!{param.icon}!="")<i class="ace-icon fa ${param.icon}"></i>#end
+	${ele.name}
+</button>

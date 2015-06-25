@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomRule xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns="http://www.chinacreator.com/platform/mvc/rule" sn="setWorkDate" className="com.chinacreator.c2.flow.C2FlowRuleService" method="setWorkDate">
+  <instanceCreator>
+    <params/>
+  </instanceCreator>
+  <name>修改作息时间</name>
+  <inputs>
+    <input collection="false" desc="工作流作息时间对象" id="wfWorkDate" required="true" type="com.chinacreator.c2.flow.detail.WfWorkDate"/>
+  </inputs>
+  <outputs/>
+  <params>
+    <param autoValue="Input.wfWorkDate" name="wfWorkDate" signature="QWfWorkDate;" type="com.chinacreator.c2.flow.detail.WfWorkDate"/>
+  </params>
+  <return signature="V" type="void"/>
+</CustomRule>

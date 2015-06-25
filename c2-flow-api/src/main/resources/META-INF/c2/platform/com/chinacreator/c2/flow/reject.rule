@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomRule xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns="http://www.chinacreator.com/platform/mvc/rule" sn="reject" className="com.chinacreator.c2.flow.C2FlowRuleService" method="reject">
+  <instanceCreator>
+    <params/>
+  </instanceCreator>
+  <name>驳回任务</name>
+  <desc>回退流程活动，注意:如果被驳回活动有多个来源活动,且没有制定目标驳回活动的时候,随机驳回</desc>
+  <inputs>
+    <input collection="false" desc="操作者信息，必须参数" id="wfOperator" name="操作者信息" required="true" type="com.chinacreator.c2.flow.detail.WfOperator"/>
+    <input collection="false" desc="当前任务id, 必须参数" id="currenTaskId" name="当前任务id" required="true"/>
+    <input collection="false" desc="驳回信息" id="rejectMessage" name="驳回意见" required="false"/>
+    <input collection="false" desc="流程参数， 可以为null" id="variables" name="流程参数" required="false" type="java.util.Map"/>
+  </inputs>
+  <outputs>
+    <output autoValue="Result" desc="流程操作结果对象  @throws Exception" id="result_out" name="方法返回值" type="com.chinacreator.c2.flow.detail.WfResult"/>
+  </outputs>
+  <params>
+    <param autoValue="Input.wfOperator" name="wfOperator" signature="QWfOperator;" type="com.chinacreator.c2.flow.detail.WfOperator"/>
+    <param autoValue="Input.currenTaskId" name="currenTaskId" signature="QString;" type="java.lang.String"/>
+    <param autoValue="Input.rejectMessage" name="rejectMessage" signature="QString;" type="java.lang.String"/>
+    <param autoValue="Input.variables" name="variables" signature="QMap&lt;QString;QObject;>;" type="java.util.Map"/>
+  </params>
+  <return signature="QWfResult;" type="com.chinacreator.c2.flow.detail.WfResult"/>
+</CustomRule>

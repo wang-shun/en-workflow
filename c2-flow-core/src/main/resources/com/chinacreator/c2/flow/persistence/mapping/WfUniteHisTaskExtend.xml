@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper
+	namespace="com.chinacreator.c2.flow.persistence.entity.WfUniteHisTaskExtendEntity">
+
+<resultMap id="WfUniteHisTaskExtendResultMap" type="com.chinacreator.c2.flow.persistence.entity.WfUniteHisTaskExtendEntity">
+		<id property="id" column="ID" jdbcType="VARCHAR" />
+		<result property="uniteTaskHisId" column="UNITE_TASK_HIS_ID" jdbcType="NVARCHAR" />
+		<result property="extFieldKey" column="EXT_FIELD_KEY" jdbcType="VARCHAR" />
+		<result property="extFieldValue" column="EXT_FIELD_VALUE" jdbcType="VARCHAR" />
+		<result property="extFieldType" column="EXT_FIELD_TYPE" jdbcType="VARCHAR" />
+	</resultMap>
+	
+	<sql id="WfUniteHisTaskExtend_Column_List">
+		ID,
+		UNITE_TASK_HIS_ID,
+		EXT_FIELD_KEY,
+		EXT_FIELD_VALUE,
+		EXT_FIELD_TYPE
+	</sql>
+	
+	<insert id="insertWfUniteHisTaskExtend"
+		parameterType="com.chinacreator.c2.flow.persistence.entity.WfUniteHisTaskExtendEntity">
+		insert into ${prefix}WF_UNITE_HIS_TASK_EXT (
+		ID,
+		UNITE_TASK_HIS_ID,
+		EXT_FIELD_KEY,
+		EXT_FIELD_VALUE,
+		EXT_FIELD_TYPE
+		) values (
+		#{id, jdbcType=VARCHAR},
+		#{uniteTaskHisId, jdbcType=NVARCHAR},
+		#{extFieldKey, jdbcType=VARCHAR},
+		#{extFieldValue, jdbcType=VARCHAR},
+		#{extFieldType, jdbcType=VARCHAR}
+		)
+	</insert>
+	
+	<select id="selectWfUniteHisTaskExtendByUniteIds" resultMap="WfUniteHisTaskExtendResultMap">
+		SELECT <include refid="WfUniteHisTaskExtend_Column_List"/>
+			FROM ${prefix}WF_UNITE_HIS_TASK_EXT
+			WHERE UNITE_TASK_HIS_ID in 
+		 <foreach item="item" index="index" collection="list"
+		      open="(" separator="," close=")">
+		        #{item}
+		  </foreach>
+	</select>
+	
+	<!-- <delete id="deleteWfUniteHisTaskExtendByUniteTaskId" parameterType="string">
+		delete
+		from ${prefix}WF_UNITE_HIS_TASK_EXT where UNITE_TASK_HIS_ID = #{uniteTaskHisId, jdbcType=NVARCHAR}
+	</delete> -->
+	
+</mapper>

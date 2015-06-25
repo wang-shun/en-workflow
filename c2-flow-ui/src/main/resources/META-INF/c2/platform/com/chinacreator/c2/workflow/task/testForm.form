@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form:Form xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dync="http://www.chinacreator.com/platform/mvc/ui/dync" xmlns:form="http://www.chinacreator.com/platform/mvc/form" name="test" sn="testForm" type="form">
+  <form:control type="page/normal">
+    <form:attributes source="page/normal">
+      <dync:attribute default="" desc="是否显示页面头部的标题等信息" group="HTML" hidden="false" id="showHead" name="显示标题" required="false" value="">
+        <dync:render colSpan="2" height="0" multi="false" name="checkbox"/>
+        <dync:children/>
+      </dync:attribute>
+      <dync:attribute default="" desc="页面头部的标题" group="HTML" hidden="false" id="title" name="标题" required="false" value="">
+        <dync:render colSpan="2" height="0" multi="false" name="text"/>
+        <dync:children/>
+      </dync:attribute>
+      <dync:attribute default="" desc="页面头部的描述" group="HTML" hidden="false" id="desc" name="描述" required="false" value="">
+        <dync:render colSpan="2" height="0" multi="false" name="text"/>
+        <dync:children/>
+      </dync:attribute>
+      <dync:attribute default="false" desc="页面高度是否自动固定为浏览器高度(除去外围元素)" group="HTML" hidden="false" id="fixedHeight" name="自动高度" required="false" value="false">
+        <dync:render colSpan="2" height="0" multi="false" name="checkbox"/>
+        <dync:children/>
+      </dync:attribute>
+      <dync:attribute default="false" desc="页面侧边是否有padding" group="HTML" hidden="false" id="compact" name="紧凑页面" required="false" value="false">
+        <dync:render colSpan="2" height="0" multi="false" name="checkbox"/>
+        <dync:children/>
+      </dync:attribute>
+      <dync:attribute default="" desc="数据源加载前" group="事件" hidden="false" id="beforeDataSourceLoad" name="数据源加载前" required="false" value="">
+        <dync:render colSpan="2" height="0" multi="false" name="event">
+          <dync:item name="param" value="$params"/>
+        </dync:render>
+        <dync:children/>
+      </dync:attribute>
+    </form:attributes>
+  </form:control>
+  <form:child xsi:type="form:Group" id="newGroup" name="普通工具条">
+    <form:control type="container/toolbar">
+      <form:attributes source="container/toolbar"/>
+    </form:control>
+    <form:child xsi:type="form:Field" id="newField" name="启动流程" customize="true">
+      <form:control type="widget/button_01startWorkflow">
+        <form:attributes source="widget/button_01startWorkflow">
+          <dync:attribute default="" desc="按钮事件。&#xA;                $param $event AngularJS的[event](https://docs.angularjs.org/guide/expression#-event-)事件。" group="流程设置" hidden="false" id="click" name="点击事件" required="false" value="newField_click($event)">
+            <dync:render colSpan="1" height="0" multi="false" name="event">
+              <dync:item name="params" value="$event"/>
+            </dync:render>
+            <dync:children/>
+          </dync:attribute>
+        </form:attributes>
+      </form:control>
+      <form:validation/>
+    </form:child>
+    <form:child xsi:type="form:Field" id="newField1" name="签收任务" customize="true">
+      <form:control type="widget/button_02claim">
+        <form:attributes source="widget/button_02claim"/>
+      </form:control>
+      <form:validation/>
+    </form:child>
+    <form:child xsi:type="form:Field" id="newField2" name="完成任务" customize="true">
+      <form:control type="widget/button_03complete">
+        <form:attributes source="widget/button_03complete"/>
+      </form:control>
+      <form:validation/>
+    </form:child>
+    <form:child xsi:type="form:Field" id="newField3" name="签收并完成" customize="true">
+      <form:control type="widget/button_04claimComplete">
+        <form:attributes source="widget/button_04claimComplete"/>
+      </form:control>
+      <form:validation/>
+    </form:child>
+    <form:child xsi:type="form:Field" id="newField4" name="挂起任务" customize="true">
+      <form:control type="widget/button_05suspend">
+        <form:attributes source="widget/button_05suspend"/>
+      </form:control>
+      <form:validation/>
+    </form:child>
+    <form:child xsi:type="form:Field" id="newField5" name="激活任务" customize="true">
+      <form:control type="widget/button_06resume">
+        <form:attributes source="widget/button_06resume"/>
+      </form:control>
+      <form:validation/>
+    </form:child>
+    <form:child xsi:type="form:Field" id="newField6" name="驳回任务" customize="true">
+      <form:control type="widget/button_07reject">
+        <form:attributes source="widget/button_07reject"/>
+      </form:control>
+      <form:validation/>
+    </form:child>
+    <form:child xsi:type="form:Field" id="newField9" name="终止流程" customize="true">
+      <form:control type="widget/button_09stop">
+        <form:attributes source="widget/button_09stop"/>
+      </form:control>
+      <form:validation/>
+    </form:child>
+    <form:child xsi:type="form:Field" id="newField7" name="自由流转" customize="true">
+      <form:control type="widget/button_10goAnywhere">
+        <form:attributes source="widget/button_10goAnywhere"/>
+      </form:control>
+      <form:validation/>
+    </form:child>
+  </form:child>
+  <form:datasources>
+    <form:datasource xsi:type="form:Inputs"/>
+  </form:datasources>
+  <form:scripts>
+
+newField_click:function($event){
+	alert(111);
+}</form:scripts>
+</form:Form>

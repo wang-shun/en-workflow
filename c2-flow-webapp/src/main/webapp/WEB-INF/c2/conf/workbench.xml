@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workbench xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns="http://www.chinacreator.com/platform/mvc/workbench">
+  <component col="12" height="285" titile="新建组件">
+    <url>xyz</url>
+    <buttons>
+      <button iconCls="icon-th-large" title="新建按钮"/>
+      <button iconCls="icon-refresh" title="新建按钮"/>
+    </buttons>
+  </component>
+  <component col="8" height="321" iconCls="icon-th-large" titile="新建组件">
+    <url>icon-th-largeicon-th-largeicon-th-largeicon-th-largeicon-th-largeicon-th-largeicon-th-largeicon-th-largeicon-th-largeicon-th-largeicon-th-largeicon-th-large</url>
+    <buttons/>
+  </component>
+</Workbench>

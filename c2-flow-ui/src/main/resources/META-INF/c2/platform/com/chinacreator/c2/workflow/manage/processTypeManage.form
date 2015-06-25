@@ -1,0 +1,460 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form:Form xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dync="http://www.chinacreator.com/platform/mvc/ui/dync" xmlns:form="http://www.chinacreator.com/platform/mvc/form" name="流程定义管理" sn="procTypeManage" type="form">
+  <form:control type="page/normal">
+    <form:attributes source="page/normal">
+      <dync:attribute default="" desc="是否显示页面头部的标题等信息" group="HTML" hidden="false" id="showHead" name="显示标题" required="false" value="true">
+        <dync:render colSpan="2" height="0" multi="false" name="checkbox"/>
+        <dync:children/>
+      </dync:attribute>
+      <dync:attribute default="" desc="页面头部的标题" group="HTML" hidden="false" id="title" name="标题" required="false" value="流程定义管理">
+        <dync:render colSpan="2" height="0" multi="false" name="text"/>
+        <dync:children/>
+      </dync:attribute>
+      <dync:attribute default="" desc="页面头部的描述" group="HTML" hidden="false" id="desc" name="描述" required="false" value="管理流程定义和部署">
+        <dync:render colSpan="2" height="0" multi="false" name="text"/>
+        <dync:children/>
+      </dync:attribute>
+      <dync:attribute default="false" desc="页面侧边是否有padding" group="HTML" hidden="false" id="compact" name="紧凑页面" required="false" value="false">
+        <dync:render colSpan="2" height="0" multi="false" name="checkbox"/>
+        <dync:children/>
+      </dync:attribute>
+      <dync:attribute default="" desc="页面载入事件" group="事件" hidden="false" id="onload" name="载入事件" required="false" value="">
+        <dync:render colSpan="2" height="0" multi="false" name="event"/>
+        <dync:children/>
+      </dync:attribute>
+    </form:attributes>
+  </form:control>
+  <form:child xsi:type="form:Group" id="newGroup1" name="">
+    <form:control type="container/div">
+      <form:attributes source="container/div"/>
+    </form:control>
+    <form:child xsi:type="form:Group" id="newGroup2" name="简单容器(DIV)">
+      <form:control type="container/div">
+        <form:attributes source="container/div"/>
+      </form:control>
+      <form:child xsi:type="form:Field" binding="$model.search_key" id="newField12" name="流程标识：" customize="true">
+        <form:control type="widget/text">
+          <form:attributes source="widget/text">
+            <dync:attribute default="6" desc="网格布局中占位数" group="布局属性" hidden="false" id="span" name="占位数" required="true" value="7">
+              <dync:render colSpan="1" height="0" multi="false" name="text"/>
+              <dync:children/>
+            </dync:attribute>
+          </form:attributes>
+        </form:control>
+        <form:validation/>
+      </form:child>
+      <form:child xsi:type="form:Group" id="newGroup" name="简单容器(DIV)">
+        <form:control type="container/div">
+          <form:attributes source="container/div">
+            <dync:attribute default="12" desc="网格布局中占位数" group="HTML配置" hidden="false" id="span" name="占位数" required="true" value="5">
+              <dync:render colSpan="1" height="0" multi="false" name="text"/>
+              <dync:children/>
+            </dync:attribute>
+          </form:attributes>
+        </form:control>
+        <form:child xsi:type="form:Field" id="newField11" name="查询" customize="true">
+          <form:control type="widget/button">
+            <form:attributes source="widget/button">
+              <dync:attribute default="" desc="按钮事件。&#xA;                $param $event AngularJS的[event](https://docs.angularjs.org/guide/expression#-event-)事件。" group="事件设置" hidden="false" id="click" name="单击事件" required="false" value="searchProcDef($event)">
+                <dync:render colSpan="1" height="0" multi="false" name="event">
+                  <dync:item name="params" value="$event"/>
+                </dync:render>
+                <dync:children/>
+              </dync:attribute>
+              <dync:attribute default="" desc="按钮图标，Font Awesom 3.2.1中定义的所有图标都可用" group="HTML设置" hidden="false" id="icon" name="图标" required="false" value="fa-search">
+                <dync:render colSpan="1" height="0" multi="false" name="selectIcon"/>
+                <dync:children/>
+              </dync:attribute>
+            </form:attributes>
+          </form:control>
+          <form:validation/>
+        </form:child>
+        <form:child xsi:type="form:Field" id="newField13" name="重置" customize="true">
+          <form:control type="widget/button">
+            <form:attributes source="widget/button">
+              <dync:attribute default="" desc="按钮图标，Font Awesom 3.2.1中定义的所有图标都可用" group="HTML设置" hidden="false" id="icon" name="图标" required="false" value="fa-refresh">
+                <dync:render colSpan="1" height="0" multi="false" name="selectIcon"/>
+                <dync:children/>
+              </dync:attribute>
+              <dync:attribute default="" desc="按钮事件。&#xA;                $param $event AngularJS的[event](https://docs.angularjs.org/guide/expression#-event-)事件。" group="事件设置" hidden="false" id="click" name="单击事件" required="false" value="resetCondition($event)">
+                <dync:render colSpan="1" height="0" multi="false" name="event">
+                  <dync:item name="params" value="$event"/>
+                </dync:render>
+                <dync:children/>
+              </dync:attribute>
+            </form:attributes>
+          </form:control>
+          <form:validation/>
+        </form:child>
+      </form:child>
+    </form:child>
+    <form:child xsi:type="form:Group" binding="$model.list" id="processTable" name="表格">
+      <form:control type="container/table_jqgrid">
+        <form:attributes source="container/table_jqgrid">
+          <dync:attribute default="false" desc="是否开启分页工具栏显示文字。" group="功能按钮" hidden="false" id="pageToolbarText" name="分页工具栏文字" required="false" value="true">
+            <dync:render colSpan="1" height="0" multi="false" name="checkbox"/>
+            <dync:children/>
+          </dync:attribute>
+        </form:attributes>
+      </form:control>
+      <form:child xsi:type="form:Group" id="table_toolbar" name="table_toolbar">
+        <form:control type="container/toolbar_table">
+          <form:attributes source="container/toolbar_table"/>
+        </form:control>
+        <form:child xsi:type="form:Field" id="buttonRefresh" name="刷新">
+          <form:control type="widget/button_a_table">
+            <form:attributes source="widget/button_a_table">
+              <dync:attribute id="clickType" value="refrash">
+                <dync:render/>
+                <dync:children/>
+              </dync:attribute>
+              <dync:attribute id="icon" value="fa-refresh">
+                <dync:render/>
+                <dync:children/>
+              </dync:attribute>
+              <dync:attribute id="iconColor" value="green">
+                <dync:render/>
+                <dync:children/>
+              </dync:attribute>
+            </form:attributes>
+          </form:control>
+        </form:child>
+        <form:child xsi:type="form:Field" id="newField1" name="创建" customize="true">
+          <form:control type="widget/button_a_table">
+            <form:attributes source="widget/button_a_table">
+              <dync:attribute default="" desc="顶部标题栏前的图标的颜色" group="HTML设置" hidden="false" id="iconColor" name="图标颜色" required="false" value="green">
+                <dync:render colSpan="2" height="0" multi="false" name="selectIconColor"/>
+                <dync:children/>
+              </dync:attribute>
+              <dync:attribute default="" desc="按钮图标，[Font Awesom](http://fortawesome.github.io/Font-Awesome/icons/)中定义的所有图标都可用" group="HTML设置" hidden="false" id="icon" name="图标" required="false" value="fa-plus">
+                <dync:render colSpan="1" height="0" multi="false" name="selectIcon"/>
+                <dync:children/>
+              </dync:attribute>
+              <dync:attribute default="" desc="按钮事件" group="事件设置" hidden="false" id="click" name="单击事件" required="false" value="createProcDefByWeb($event)">
+                <dync:render colSpan="1" height="0" multi="false" name="event">
+                  <dync:item name="params" value=""/>
+                </dync:render>
+                <dync:children/>
+              </dync:attribute>
+            </form:attributes>
+          </form:control>
+          <form:validation/>
+        </form:child>
+        <form:child xsi:type="form:Field" id="newField15" name="导入" customize="true">
+          <form:control type="widget/button_a_table">
+            <form:attributes source="widget/button_a_table">
+              <dync:attribute default="" desc="按钮图标，[Font Awesom](http://fortawesome.github.io/Font-Awesome/icons/)中定义的所有图标都可用" group="HTML设置" hidden="false" id="icon" name="图标" required="false" value="fa-arrow-circle-down">
+                <dync:render colSpan="1" height="0" multi="false" name="selectIcon"/>
+                <dync:children/>
+              </dync:attribute>
+              <dync:attribute default="" desc="顶部标题栏前的图标的颜色" group="HTML设置" hidden="false" id="iconColor" name="图标颜色" required="false" value="green">
+                <dync:render colSpan="2" height="0" multi="false" name="selectIconColor"/>
+                <dync:children/>
+              </dync:attribute>
+              <dync:attribute default="" desc="按钮事件" group="事件设置" hidden="false" id="click" name="单击事件" required="false" value="importProcDef($event)">
+                <dync:render colSpan="1" height="0" multi="false" name="event">
+                  <dync:item name="params" value=""/>
+                </dync:render>
+                <dync:children/>
+              </dync:attribute>
+            </form:attributes>
+          </form:control>
+          <form:validation/>
+        </form:child>
+        <form:child xsi:type="form:Field" id="newField16" name="导出" customize="true">
+          <form:control type="widget/button_a_table">
+            <form:attributes source="widget/button_a_table">
+              <dync:attribute default="" desc="按钮图标，[Font Awesom](http://fortawesome.github.io/Font-Awesome/icons/)中定义的所有图标都可用" group="HTML设置" hidden="false" id="icon" name="图标" required="false" value="fa-arrow-circle-up">
+                <dync:render colSpan="1" height="0" multi="false" name="selectIcon"/>
+                <dync:children/>
+              </dync:attribute>
+              <dync:attribute default="" desc="顶部标题栏前的图标的颜色" group="HTML设置" hidden="false" id="iconColor" name="图标颜色" required="false" value="green">
+                <dync:render colSpan="2" height="0" multi="false" name="selectIconColor"/>
+                <dync:children/>
+              </dync:attribute>
+              <dync:attribute default="" desc="按钮事件" group="事件设置" hidden="false" id="click" name="单击事件" required="false" value="exportProcess($event)">
+                <dync:render colSpan="1" height="0" multi="false" name="event">
+                  <dync:item name="params" value=""/>
+                </dync:render>
+                <dync:children/>
+              </dync:attribute>
+            </form:attributes>
+          </form:control>
+          <form:validation/>
+        </form:child>
+        <form:child xsi:type="form:Field" id="newField17" name="删除" customize="true">
+          <form:control type="widget/button_a_table">
+            <form:attributes source="widget/button_a_table">
+              <dync:attribute default="" desc="按钮事件" group="事件设置" hidden="false" id="click" name="单击事件" required="false" value="deleteByDeployIds()">
+                <dync:render colSpan="1" height="0" multi="false" name="event">
+                  <dync:item name="params" value=""/>
+                </dync:render>
+                <dync:children/>
+              </dync:attribute>
+              <dync:attribute default="" desc="按钮图标，[Font Awesom](http://fortawesome.github.io/Font-Awesome/icons/)中定义的所有图标都可用" group="HTML设置" hidden="false" id="icon" name="图标" required="false" value="fa-trash-o">
+                <dync:render colSpan="1" height="0" multi="false" name="selectIcon"/>
+                <dync:children/>
+              </dync:attribute>
+              <dync:attribute default="" desc="顶部标题栏前的图标的颜色" group="HTML设置" hidden="false" id="iconColor" name="图标颜色" required="false" value="green">
+                <dync:render colSpan="2" height="0" multi="false" name="selectIconColor"/>
+                <dync:children/>
+              </dync:attribute>
+            </form:attributes>
+          </form:control>
+          <form:validation/>
+        </form:child>
+      </form:child>
+      <form:child xsi:type="form:Field" binding="name" id="newField6" name="流程名称" customize="true">
+        <form:control type="widget/col_jqgrid">
+          <form:attributes source="widget/col_jqgrid">
+            <dync:attribute default="false" desc="是否鼠标悬浮单元格显示" group="基本设置" hidden="false" id="title" name="鼠标悬浮显示" required="false" value="true">
+              <dync:render colSpan="1" height="0" multi="false" name="checkbox"/>
+              <dync:children/>
+            </dync:attribute>
+          </form:attributes>
+        </form:control>
+        <form:validation/>
+      </form:child>
+      <form:child xsi:type="form:Field" binding="key" id="newField7" name="流程标识" customize="true">
+        <form:control type="widget/col_jqgrid">
+          <form:attributes source="widget/col_jqgrid">
+            <dync:attribute default="false" desc="是否鼠标悬浮单元格显示" group="基本设置" hidden="false" id="title" name="鼠标悬浮显示" required="false" value="true">
+              <dync:render colSpan="1" height="0" multi="false" name="checkbox"/>
+              <dync:children/>
+            </dync:attribute>
+          </form:attributes>
+        </form:control>
+        <form:validation/>
+      </form:child>
+      <form:child xsi:type="form:Field" binding="version" id="newField" name="流程版本" customize="true">
+        <form:control type="widget/col_jqgrid">
+          <form:attributes source="widget/col_jqgrid"/>
+        </form:control>
+        <form:validation/>
+      </form:child>
+      <form:child xsi:type="form:Field" binding="deployTime" id="newField8" name="部署时间" customize="true">
+        <form:control type="widget/col_jqgrid">
+          <form:attributes source="widget/col_jqgrid">
+            <dync:attribute default="false" desc="是否鼠标悬浮单元格显示" group="基本设置" hidden="false" id="title" name="鼠标悬浮显示" required="false" value="true">
+              <dync:render colSpan="1" height="0" multi="false" name="checkbox"/>
+              <dync:children/>
+            </dync:attribute>
+          </form:attributes>
+        </form:control>
+        <form:validation/>
+      </form:child>
+      <form:child xsi:type="form:Field" binding="id" id="newField10" name="流程定义ID" customize="true">
+        <form:control type="widget/col_jqgrid">
+          <form:attributes source="widget/col_jqgrid">
+            <dync:attribute default="false" desc="不显示的列" group="表格设置" hidden="false" id="hidden" name="隐藏列" required="false" value="true">
+              <dync:render colSpan="1" height="0" multi="false" name="checkbox"/>
+              <dync:children/>
+            </dync:attribute>
+          </form:attributes>
+        </form:control>
+        <form:validation/>
+      </form:child>
+      <form:child xsi:type="form:Field" binding="deploymentId" id="newField14" name="部署ID" customize="true">
+        <form:control type="widget/col_jqgrid">
+          <form:attributes source="widget/col_jqgrid">
+            <dync:attribute default="false" desc="不显示的列" group="表格设置" hidden="false" id="hidden" name="隐藏列" required="false" value="true">
+              <dync:render colSpan="1" height="0" multi="false" name="checkbox"/>
+              <dync:children/>
+            </dync:attribute>
+          </form:attributes>
+        </form:control>
+        <form:validation/>
+      </form:child>
+      <form:child xsi:type="form:Field" id="newField9" name="操作" customize="true">
+        <form:control type="widget/col_jqgrid">
+          <form:attributes source="widget/col_jqgrid">
+            <dync:attribute default="" desc="将替换掉预定格式；可参考[jqGrid自定义格式](http://www.trirand.com/jqgridwiki/doku.php?id=wiki:custom_formatter)。&#xA;&#x9;&#x9;&#x9;@param cellvalue[String] 单元格值。&#xA;&#x9;&#x9;&#x9;@param options[JSON] 表格列选项。&#xA;&#x9;&#x9;&#x9;@param rowObject[JSON] 行数据。&#xA;&#x9;&#x9;&#x9;&#xA;&#x9;&#x9;&#x9;@code&#xA;&#x9;&#x9;&#x9;newField8_customFormatter:function (cellvalue, options, rowObject){&#xA;&#x9;&#x9;&#x9;&#x9;return cellvalue+&quot;显示什么我说的算!!&quot;;&#xA;&#x9;&#x9;&#x9;}&#xA;&#x9;&#x9;&#x9;@code" group="格式设置" hidden="false" id="customFormatter" name="自定义格式" required="false" value="operationFunction(cellvalue,options,rowObject)">
+              <dync:render colSpan="2" height="0" multi="false" name="event">
+                <dync:item name="param" value="cellvalue,options,rowObject"/>
+              </dync:render>
+              <dync:children/>
+            </dync:attribute>
+            <dync:attribute default="left" desc="内容在td内排列的位置" group="基本设置" hidden="false" id="align" name="位置" required="false" value="center">
+              <dync:render colSpan="1" height="0" multi="false" name="select">
+                <dync:item name="左" value="left"/>
+                <dync:item name="中" value="center"/>
+                <dync:item name="右" value="right"/>
+              </dync:render>
+              <dync:children/>
+            </dync:attribute>
+          </form:attributes>
+        </form:control>
+        <form:validation/>
+      </form:child>
+    </form:child>
+  </form:child>
+  <form:datasources>
+    <form:datasource xsi:type="form:Inputs"/>
+    <form:datasource xsi:type="form:EntityDataSource" id="ProcessType" name="流程类别" data="" entity="entity:com.chinacreator.c2.workflow.manage.ProcessType"/>
+    <form:datasource xsi:type="form:TreeDataSource" id="processTypeTree" name="流程类别树型数据源" impl="com.chinacreator.c2.workflow.workflowManage.ds.ProcessTypeTreeContentProvider" type="custom"/>
+    <form:datasource xsi:type="form:PagingDataSource" id="list" name="列表型数据源" logic="com.chinacreator.c2.workflow.workflowManage.ds.ProcessDefListContentProvider" pageSize="10" type="custom"/>
+  </form:datasources>
+  <form:scripts>// 获取流程定义表&#xD;
+getProcessTable:function(){&#xD;
+	return $view.processTable;&#xD;
+},&#xD;
+&#xD;
+
+
+createProcDefByWeb:function($event){&#xD;
+	Modal.open('f/createProcDefPop',{type:&quot;create&quot;},function(){&#xD;
+	    $view.processTable.refresh();&#xD;
+    });	&#xD;
+},&#xD;
+
+importProcDef:function($event){&#xD;
+	&#xD;
+	Modal.open('f/importProcessByZip',{type:&quot;import&quot;},function(){&#xD;
+	    $view.processTable.refresh();&#xD;
+    });	&#xD;
+	&#xD;
+	
+},&#xD;
+&#xD;
+deleteInRow:function(key,name){&#xD;
+		Modal.openDelConfirm({message:&quot;是否确认删除流程定义?&lt;br>待删除流程定义名称：&quot;+name},function(){&#xD;
+			 $http.post(&quot;workflow/process/delete&quot;,{keys:key}).success(&#xD;
+				function(data, status, headers, config){&#xD;
+				 	$view.processTable.refresh();&#xD;
+				 	var type = &quot;success&quot;;&#xD;
+				 	if(!angular.isUndefined(data) &amp;&amp; data.indexOf(&quot;失败&quot;) >= 0){&#xD;
+				 		type = &quot;error&quot;;&#xD;
+				 	};&#xD;
+					Messenger.post({&#xD;
+		                'message': data,&#xD;
+		                'type': type,&#xD;
+		            });&#xD;
+				}&#xD;
+				);&#xD;
+		});&#xD;
+},&#xD;
+&#xD;
+editInRow:function(id,name){&#xD;
+	Modal.open('f/bpmn2Editor?procDefId=id',{procDefId:id},function(){&#xD;
+		    $view.processTable.refresh();&#xD;
+	},function(){&#xD;
+		    $view.processTable.refresh();&#xD;
+	});	&#xD;
+},&#xD;
+&#xD;
+historyInRow:function(key,name){&#xD;
+	Modal.open('f/historyProcess',{key:key,name:name},function(){&#xD;
+		    $view.processTable.refresh();&#xD;
+	});	&#xD;
+},&#xD;
+&#xD;
+viewInRow:function(id){&#xD;
+&#xD;
+	&#xD;
+	Modal.open('f/viewProcessDef?processDefinitionId='+id,{processDefinitionId:id},&#xD;
+	function(){&#xD;
+	 $view.processTable.refresh();&#xD;
+	},&#xD;
+	function(){&#xD;
+	}&#xD;
+	);&#xD;
+},
+
+operationFunction:function(cellvalue,options,rowObject){&#xD;
+	if(!angular.isUndefined(rowObject))&#xD;
+	{&#xD;
+		var id = rowObject.id;&#xD;
+		var name = rowObject.name;&#xD;
+		var key = rowObject.key;&#xD;
+		var version = rowObject.version;&#xD;
+		var deployTime = rowObject.deployTime;&#xD;
+		var deploymentId = rowObject.deploymentId;&#xD;
+		&#xD;
+		var picString = &quot;&quot;;&#xD;
+		// 编辑按钮&#xD;
+		picString += '&lt;a class=&quot;green&quot; style=&quot;margin:0 3px&quot; ng-click=functions.editInRow(&quot;'+id+'&quot;,&quot;'+name+'&quot;) href=&quot;javascript:void(0)&quot;>&lt;i class=&quot;ace-icon fa fa-edit bigger-130&quot; popover=&quot;编辑&quot; popover-trigger=&quot;mouseenter&quot; popover-append-to-body=&quot;true&quot; popover-placement=&quot;right&quot;/>&lt;/a>';&#xD;
+		&#xD;
+		// 查看历史按钮&#xD;
+		picString += &quot;&amp;nbsp&quot;;&#xD;
+		picString += '&lt;a class=&quot;blue&quot; style=&quot;margin:0 3px&quot; ng-click=functions.historyInRow(&quot;'+key+'&quot;,&quot;'+name+'&quot;) href=&quot;javascript:void(0)&quot;>&lt;i class=&quot;ace-icon fa fa-clock-o bigger-130&quot; popover=&quot;查看历史定义&quot; popover-trigger=&quot;mouseenter&quot; popover-append-to-body=&quot;true&quot; popover-placement=&quot;right&quot;/>&lt;/a>';&#xD;
+		&#xD;
+		// 查看按钮&#xD;
+		picString += &quot;&amp;nbsp&quot;;&#xD;
+		picString += '&lt;a class=&quot;blue&quot; style=&quot;margin:0 3px&quot; ng-click=functions.viewInRow(&quot;'+id+'&quot;) href=&quot;javascript:void(0)&quot;>&lt;i class=&quot;ace-icon fa fa-info-circle bigger-130&quot; popover=&quot;查看流程定义&quot; popover-trigger=&quot;mouseenter&quot; popover-append-to-body=&quot;true&quot; popover-placement=&quot;right&quot;/>&lt;/a>';&#xD;
+		&#xD;
+		// 删除按钮&#xD;
+		picString += &quot;&amp;nbsp&quot;;&#xD;
+		picString += '&lt;a class=&quot;red&quot; style=&quot;margin:0 3px&quot; ng-click=functions.deleteInRow(&quot;'+key+'&quot;,&quot;'+name+'&quot;) href=&quot;javascript:void(0)&quot;>&lt;i class=&quot;ace-icon fa fa-trash-o bigger-130&quot; popover=&quot;删除&quot; popover-trigger=&quot;mouseenter&quot; popover-append-to-body=&quot;true&quot; popover-placement=&quot;right&quot;/>&lt;/a>';&#xD;
+		&#xD;
+		return picString;&#xD;
+	}&#xD;
+	
+},
+
+exportProcess:function(events){
+	var selectNodes = this.getProcessTable().getSelectDatas();&#xD;
+	if(angular.isArray(selectNodes) &amp;&amp; selectNodes.length==1){&#xD;
+		window.open('workflow/model/exportBpmnFile/'+selectNodes[0].id);&#xD;
+	}else{&#xD;
+		Messenger.post({&#xD;
+			    'message': &quot;请选择单条流程记录！&quot;,&#xD;
+			    'type': 'error',&#xD;
+			});&#xD;
+	}
+},
+
+newField6_click:function($event){
+	$view.newGroup2.toggle();
+},
+
+searchProcDef:function($event){&#xD;
+	var param = {&#xD;
+				keyLike:$model.search_key&#xD;
+				};
+	$view.processTable.refresh(param);
+},
+
+resetCondition:function($event){
+	$model.search_key = &quot;&quot;;
+},&#xD;
+&#xD;
+deleteByDeployIds:function(){&#xD;
+&#xD;
+	var deleteKeys = &quot;&quot;;&#xD;
+	var deleteNames = &quot;&quot;;&#xD;
+	&#xD;
+	var selectNodes = this.getProcessTable().getSelectDatas();&#xD;
+	if(angular.isArray(selectNodes) &amp;&amp; selectNodes.length>0){&#xD;
+		angular.forEach(selectNodes, function (value, key) {&#xD;
+			deleteKeys += value.key + &quot;,&quot;;&#xD;
+			deleteNames += value.name+&quot;,&quot;;&#xD;
+		});&#xD;
+		&#xD;
+		Modal.openDelConfirm({message:&quot;是否确认删除流程定义?&lt;br>待删除流程定义名称：&quot;+deleteNames.substring(0, deleteNames.length-1)},function(){&#xD;
+			 $http.post(&quot;workflow/process/delete&quot;,{keys:deleteKeys.substring(0, deleteKeys.length-1)}&#xD;
+			 ).success(function(data){&#xD;
+				 	$view.processTable.refresh();&#xD;
+				 	var type = &quot;success&quot;;&#xD;
+				 	if(!angular.isUndefined(data) &amp;&amp; data.indexOf(&quot;失败&quot;) >= 0){&#xD;
+				 		type = &quot;error&quot;;&#xD;
+				 	};&#xD;
+					Messenger.post({&#xD;
+		                'message': data,&#xD;
+		                'type': type,&#xD;
+		            });&#xD;
+				});&#xD;
+		});&#xD;
+	}else{&#xD;
+		Messenger.post({&#xD;
+		    'message': &quot;请选择需要删除的流程！&quot;,&#xD;
+		    'type': 'error',&#xD;
+		});&#xD;
+	}&#xD;
+	&#xD;
+},&#xD;
+
+
+refreshProcDefTable:function(){
+	$view.processTable.refresh();
+}</form:scripts>
+</form:Form>

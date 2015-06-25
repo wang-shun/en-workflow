@@ -1,0 +1,3 @@
+<div c2floweditor class="col-sm-$!{param.span} no-padding">
+	<iframe id="c2-flow-editor" width="$!{param.width}" height="$!{param.height}" frameborder="0" src=""></iframe>
+</div>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Template xmlns="http://www.chinacreator.com/c2/ui/template"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://www.chinacreator.com/c2/ui/template template_config.xsd ">
+    <name>流程监控图</name>
+    <description><![CDATA[
+		流程监控图
+    	]]></description>
+    <excepts>container/toolbar*,container/table*</excepts>
+    <catalog>workflow</catalog>
+    <params>
+    	<group name="显示设置">
+            <param id="span" name="占位数" required="false">
+                <description>网格布局中占位数</description>
+                <defaultValue>12</defaultValue>
+                <editor name="text" colSpan="1"></editor>
+            </param>
+            
+            <param id="width" name="宽度" required="false">
+                <description>流程实例监控图的宽度</description>
+                <defaultValue>800</defaultValue>
+                <editor name="text" colSpan="1"></editor>
+            </param>
+            
+            <param id="height" name="高度" required="false">
+                <description>流程实例监控图的高度</description>
+                <defaultValue>800</defaultValue>
+                <editor name="text" colSpan="1"></editor>
+            </param>
+        </group>
+    </params>
+</Template>

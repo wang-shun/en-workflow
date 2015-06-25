@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<!-- 节假日表映射关系 -->
+<mapper namespace="com.chinacreator.c2.flow.persistence.entity.WfHolidayEntity">
+	<sql id="WfHoliday_Column_List">
+	    HOLIDAY, YHOLIDAY, MHOLIDAY, TENANT_ID
+	</sql>
+	
+	<resultMap id="WfHolidayResultMap" type="com.chinacreator.c2.flow.detail.WfHoliday">
+		<result column="HOLIDAY" property="holiday" jdbcType="VARCHAR" />
+		<result column="YHOLIDAY" property="yHoliday" jdbcType="VARCHAR" />
+		<result column="MHOLIDAY" property="mHoliday" jdbcType="VARCHAR" />
+		<result column="TENANT_ID" property="tenantId" jdbcType="VARCHAR" />
+	</resultMap>
+	
+	<insert id="insertWfHoliday" parameterType="com.chinacreator.c2.flow.persistence.entity.WfHolidayEntity">
+		INSERT INTO ${prefix}WF_HOLIDAY
+	    <trim prefix="(" suffix=")" suffixOverrides=",">
+	        <if test="holiday != null">
+	            HOLIDAY,
+	        </if>
+	        <if test="yHoliday != null">
+	            YHOLIDAY,
+	        </if>
+	        <if test="mHoliday != null">
+	            MHOLIDAY,
+	        </if>
+	        <if test="tenantId != null">
+	            TENANT_ID,
+	        </if>
+	    </trim>
+	    <trim prefix="VALUES (" suffix=")" suffixOverrides=",">		
+	         <if test="holiday != null">
+	            <![CDATA[#{holiday,jdbcType=VARCHAR},]]>
+	        </if>
+	        <if test="yHoliday != null">
+	            <![CDATA[#{yHoliday,jdbcType=VARCHAR},]]>
+	        </if>
+	        <if test="mHoliday != null">
+	             <![CDATA[#{mHoliday,jdbcType=VARCHAR},]]>
+	        </if>
+	        <if test="tenantId != null">
+	            <![CDATA[#{tenantId,jdbcType=VARCHAR},]]>
+	        </if>
+	    </trim>
+	</insert>
+	
+	<delete id="deleteHolidayByParam">
+		 DELETE FROM ${prefix}WF_HOLIDAY
+		 <trim prefix="WHERE" prefixOverrides="AND |OR ">
+			<if test="holiday!=null">
+				<![CDATA[AND HOLIDAY = #{holiday,jdbcType=VARCHAR}]]>
+			</if>
+			<if test="yHoliday!=null">
+				<![CDATA[AND YHOLIDAY = #{yHoliday,jdbcType=VARCHAR} ]]>
+			</if>
+			<if test="mHoliday!=null">
+				<![CDATA[AND MHOLIDAY = #{mHoliday,jdbcType=VARCHAR} ]]>
+			</if>
+			<if test="tenantId!=null">
+				<![CDATA[AND TENANT_ID = #{tenantId,jdbcType=VARCHAR} ]]>
+			</if>
+		</trim>
+	</delete>
+	
+	<select id="getHolidayByParam" resultMap="WfHolidayResultMap">
+		SELECT <include refid="WfHoliday_Column_List"/>
+		FROM ${prefix}WF_HOLIDAY
+		<trim prefix="WHERE" prefixOverrides="AND |OR ">
+			<if test="wfHoliday.holiday!=null">
+				<![CDATA[AND HOLIDAY = #{wfHoliday.holiday,jdbcType=VARCHAR}]]>
+			</if>
+			<if test="wfHoliday.yHoliday!=null">
+				<![CDATA[AND YHOLIDAY = #{wfHoliday.yHoliday,jdbcType=VARCHAR} ]]>
+			</if>
+			<if test="wfHoliday.mHoliday!=null">
+				<![CDATA[AND MHOLIDAY = #{wfHoliday.mHoliday,jdbcType=VARCHAR} ]]>
+			</if>
+			<if test="wfHoliday.tenantId!=null">
+				<![CDATA[AND TENANT_ID = #{wfHoliday.tenantId,jdbcType=VARCHAR} ]]>
+			</if>
+		</trim>
+	</select>
+	
+	<select id="getHolidays" resultMap="WfHolidayResultMap">
+		SELECT <include refid="WfHoliday_Column_List"/>
+		FROM ${prefix}WF_HOLIDAY WHERE  1=1 
+			AND ${other}
+	</select>
+
+</mapper>

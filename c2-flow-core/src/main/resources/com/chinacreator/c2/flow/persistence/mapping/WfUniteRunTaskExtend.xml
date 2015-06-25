@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper
+	namespace="com.chinacreator.c2.flow.persistence.entity.WfUniteRunTaskExtendEntity">
+	
+	<resultMap id="WfUniteTaskExtendResultMap" type="com.chinacreator.c2.flow.persistence.entity.WfUniteRunTaskExtendEntity">
+		<id property="id" column="ID" jdbcType="VARCHAR" />
+		<result property="uniteTaskId" column="UNITE_TASK_ID" jdbcType="NVARCHAR" />
+		<result property="extFieldKey" column="EXT_FIELD_KEY" jdbcType="VARCHAR" />
+		<result property="extFieldValue" column="EXT_FIELD_VALUE" jdbcType="VARCHAR" />
+		<result property="extFieldType" column="EXT_FIELD_TYPE" jdbcType="VARCHAR" />
+	</resultMap>
+	
+	<sql id="WfUniteRunTaskExtend_Column_List">
+		ID,
+		UNITE_TASK_ID,
+		EXT_FIELD_KEY,
+		EXT_FIELD_VALUE,
+		EXT_FIELD_TYPE
+	</sql>
+	
+	<insert id="insertWfUniteRunTaskExtend"
+		parameterType="com.chinacreator.c2.flow.persistence.entity.WfUniteRunTaskExtendEntity">
+		insert into ${prefix}WF_UNITE_RUN_TASK_EXT (
+		ID,
+		UNITE_TASK_ID,
+		EXT_FIELD_KEY,
+		EXT_FIELD_VALUE,
+		EXT_FIELD_TYPE
+		) values (
+		#{id, jdbcType=VARCHAR},
+		#{uniteTaskId, jdbcType=NVARCHAR},
+		#{extFieldKey, jdbcType=VARCHAR},
+		#{extFieldValue, jdbcType=VARCHAR},
+		#{extFieldType, jdbcType=VARCHAR}
+		)
+	</insert>
+	<!-- parameterType="string" -->
+	<select id="selectWfUniteRunTaskExtend" resultMap="WfUniteTaskExtendResultMap">
+		SELECT <include refid="WfUniteRunTaskExtend_Column_List"/>
+		FROM ${prefix}WF_UNITE_RUN_TASK_EXT
+		<trim prefix="WHERE" prefixOverrides="AND |OR ">
+			<if test="uniteTaskId!=null">
+				<![CDATA[AND UNITE_TASK_ID = #{uniteTaskId}]]>
+			</if>
+		</trim>
+	</select>
+	
+	<delete id="deleteWfUniteRunTaskExtendByUniteTaskId" parameterType="string">
+		delete
+		from ${prefix}WF_UNITE_RUN_TASK_EXT where UNITE_TASK_ID = #{uniteTaskId, jdbcType=NVARCHAR}
+	</delete>
+	
+	
+	<select id="selectWfUniteRunTaskExtendByUniteIds" resultMap="WfUniteTaskExtendResultMap">
+		SELECT <include refid="WfUniteRunTaskExtend_Column_List"/>
+		FROM ${prefix}WF_UNITE_RUN_TASK_EXT
+		WHERE UNITE_TASK_ID in 
+		 <foreach item="item" index="index" collection="list"
+		      open="(" separator="," close=")">
+		        #{item}
+		  </foreach>
+	</select>
+</mapper>

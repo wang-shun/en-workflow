@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomRule xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns="http://www.chinacreator.com/platform/mvc/rule" sn="addDelegate" className="com.chinacreator.c2.flow.C2FlowRuleService" method="saveModuleDelegateArr">
+  <instanceCreator>
+    <params/>
+  </instanceCreator>
+  <name>新增事项委托</name>
+  <inputs>
+    <input collection="false" desc="事项委托基本信息" id="wfModuleDelegate" required="true" type="com.chinacreator.c2.flow.detail.WfModuleDelegate"/>
+    <input collection="false" desc="事项委托事项信息列表" id="wfModuleDelegateInfoArr" required="false" type="[Lcom.chinacreator.c2.flow.detail.WfModuleDelegateInfo;"/>
+  </inputs>
+  <outputs>
+    <output autoValue="Result" desc="" id="result" name="方法返回值" type="java.util.Map"/>
+  </outputs>
+  <params>
+    <param autoValue="Input.wfModuleDelegate" name="wfModuleDelegate" signature="QWfModuleDelegate;" type="com.chinacreator.c2.flow.detail.WfModuleDelegate"/>
+    <param autoValue="Input.wfModuleDelegateInfoArr" name="wfModuleDelegateInfoArr" signature="[QWfModuleDelegateInfo;" type="[Lcom.chinacreator.c2.flow.detail.WfModuleDelegateInfo;"/>
+  </params>
+  <return signature="QMap&lt;QString;QString;>;" type="java.util.Map"/>
+</CustomRule>

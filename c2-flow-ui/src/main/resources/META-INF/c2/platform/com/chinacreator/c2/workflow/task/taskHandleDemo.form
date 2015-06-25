@@ -1,0 +1,920 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form:Form xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dync="http://www.chinacreator.com/platform/mvc/ui/dync" xmlns:form="http://www.chinacreator.com/platform/mvc/form" xmlns:template="http://www.chinacreator.com/c2/ui/template" name="任务处理" sn="taskHandleDemo" type="form">
+  <form:control type="page/normal">
+    <form:attributes source="page/normal">
+      <dync:attribute default="" desc="是否显示页面头部的标题等信息" group="HTML" hidden="false" id="showHead" name="显示标题" required="false" value="">
+        <dync:render colSpan="2" height="0" multi="false" name="checkbox"/>
+        <dync:children/>
+      </dync:attribute>
+      <dync:attribute default="" desc="页面头部的标题" group="HTML" hidden="false" id="title" name="标题" required="false" value="">
+        <dync:render colSpan="2" height="0" multi="false" name="text"/>
+        <dync:children/>
+      </dync:attribute>
+      <dync:attribute default="" desc="页面头部的描述" group="HTML" hidden="false" id="desc" name="描述" required="false" value="">
+        <dync:render colSpan="2" height="0" multi="false" name="text"/>
+        <dync:children/>
+      </dync:attribute>
+      <dync:attribute default="false" desc="页面侧边是否有padding" group="HTML" hidden="false" id="compact" name="紧凑页面" required="false" value="false">
+        <dync:render colSpan="2" height="0" multi="false" name="checkbox"/>
+        <dync:children/>
+      </dync:attribute>
+      <dync:attribute default="" desc="数据源加载前" group="事件" hidden="false" id="beforeDataSourceLoad" name="数据源加载前" required="false" value="">
+        <dync:render colSpan="2" height="0" multi="false" name="event">
+          <dync:item name="param" value="$params"/>
+        </dync:render>
+        <dync:children/>
+      </dync:attribute>
+      <dync:attribute default="" desc="页面加载完成事件" group="事件" hidden="false" id="onload" name="页面加载完成" required="false" value="page_onload()">
+        <dync:render colSpan="2" height="0" multi="false" name="event">
+          <dync:item name="param" value=""/>
+        </dync:render>
+        <dync:children/>
+      </dync:attribute>
+    </form:attributes>
+  </form:control>
+  <form:child xsi:type="form:Group" id="newGroup2" name="控制按钮">
+    <form:control type="container/widgetbox">
+      <form:attributes source="container/widgetbox"/>
+    </form:control>
+    <form:child xsi:type="form:Field" id="newField" name="启动流程" customize="true">
+      <form:control type="widget/button">
+        <form:attributes source="widget/button">
+          <dync:attribute default="" desc="按钮事件。&#xA;                $param $event AngularJS的[event](https://docs.angularjs.org/guide/expression#-event-)事件。" group="事件设置" hidden="false" id="click" name="单击事件" required="false" value="start_click($event)">
+            <dync:render colSpan="1" height="0" multi="false" name="event">
+              <dync:item name="params" value="$event"/>
+            </dync:render>
+            <dync:children/>
+          </dync:attribute>
+        </form:attributes>
+      </form:control>
+      <form:validation/>
+    </form:child>
+    <form:child xsi:type="form:Field" id="newField2" name="签收任务" customize="true">
+      <form:control type="widget/button">
+        <form:attributes source="widget/button">
+          <dync:attribute default="" desc="按钮事件。&#xA;                $param $event AngularJS的[event](https://docs.angularjs.org/guide/expression#-event-)事件。" group="事件设置" hidden="false" id="click" name="单击事件" required="false" value="claimClick($event)">
+            <dync:render colSpan="1" height="0" multi="false" name="event">
+              <dync:item name="params" value="$event"/>
+            </dync:render>
+            <dync:children/>
+          </dync:attribute>
+        </form:attributes>
+      </form:control>
+      <form:validation/>
+    </form:child>
+    <form:child xsi:type="form:Field" id="newField16" name="完成任务" customize="true">
+      <form:control type="widget/button">
+        <form:attributes source="widget/button">
+          <dync:attribute default="" desc="按钮事件。&#xA;                $param $event AngularJS的[event](https://docs.angularjs.org/guide/expression#-event-)事件。" group="事件设置" hidden="false" id="click" name="单击事件" required="false" value="completeClick($event)">
+            <dync:render colSpan="1" height="0" multi="false" name="event">
+              <dync:item name="params" value="$event"/>
+            </dync:render>
+            <dync:children/>
+          </dync:attribute>
+        </form:attributes>
+      </form:control>
+      <form:validation/>
+    </form:child>
+    <form:child xsi:type="form:Field" id="newField2" name="签收并完成" customize="true">
+      <form:control type="widget/button">
+        <form:attributes source="widget/button">
+          <dync:attribute default="" desc="按钮事件。&#xA;                $param $event AngularJS的[event](https://docs.angularjs.org/guide/expression#-event-)事件。" group="事件设置" hidden="false" id="click" name="单击事件" required="false" value="claimCompleteClick($event)">
+            <dync:render colSpan="1" height="0" multi="false" name="event">
+              <dync:item name="params" value="$event"/>
+            </dync:render>
+            <dync:children/>
+          </dync:attribute>
+        </form:attributes>
+      </form:control>
+      <form:validation/>
+    </form:child>
+    <form:child xsi:type="form:Field" id="newField2" name="挂起" customize="true">
+      <form:control type="widget/button">
+        <form:attributes source="widget/button">
+          <dync:attribute default="" desc="按钮事件。&#xA;                $param $event AngularJS的[event](https://docs.angularjs.org/guide/expression#-event-)事件。" group="事件设置" hidden="false" id="click" name="单击事件" required="false" value="suspendClick($event)">
+            <dync:render colSpan="1" height="0" multi="false" name="event">
+              <dync:item name="params" value="$event"/>
+            </dync:render>
+            <dync:children/>
+          </dync:attribute>
+        </form:attributes>
+      </form:control>
+      <form:validation/>
+    </form:child>
+    <form:child xsi:type="form:Field" id="newField2" name="恢复" customize="true">
+      <form:control type="widget/button">
+        <form:attributes source="widget/button">
+          <dync:attribute default="" desc="按钮事件。&#xA;                $param $event AngularJS的[event](https://docs.angularjs.org/guide/expression#-event-)事件。" group="事件设置" hidden="false" id="click" name="单击事件" required="false" value="resumeClick($event)">
+            <dync:render colSpan="1" height="0" multi="false" name="event">
+              <dync:item name="params" value="$event"/>
+            </dync:render>
+            <dync:children/>
+          </dync:attribute>
+        </form:attributes>
+      </form:control>
+      <form:validation/>
+    </form:child>
+    <form:child xsi:type="form:Field" id="newField2" name="回退" customize="true">
+      <form:control type="widget/button">
+        <form:attributes source="widget/button">
+          <dync:attribute default="" desc="按钮事件。&#xA;                $param $event AngularJS的[event](https://docs.angularjs.org/guide/expression#-event-)事件。" group="事件设置" hidden="false" id="click" name="单击事件" required="false" value="rejectClick($event)">
+            <dync:render colSpan="1" height="0" multi="false" name="event">
+              <dync:item name="params" value="$event"/>
+            </dync:render>
+            <dync:children/>
+          </dync:attribute>
+        </form:attributes>
+      </form:control>
+      <form:validation/>
+    </form:child>
+    <form:child xsi:type="form:Field" id="newField2" name="自由流转" customize="true">
+      <form:control type="widget/button">
+        <form:attributes source="widget/button">
+          <dync:attribute default="" desc="按钮事件。&#xA;                $param $event AngularJS的[event](https://docs.angularjs.org/guide/expression#-event-)事件。" group="事件设置" hidden="false" id="click" name="单击事件" required="false" value="goAnyWhereClick($event)">
+            <dync:render colSpan="1" height="0" multi="false" name="event">
+              <dync:item name="params" value="$event"/>
+            </dync:render>
+            <dync:children/>
+          </dync:attribute>
+        </form:attributes>
+      </form:control>
+      <form:validation/>
+    </form:child>
+    <form:child xsi:type="form:Group" id="widgexbox_toolbar" name="widgexbox_toolbar">
+      <form:control type="container/toolbar_widget">
+        <form:attributes source="container/toolbar_widget"/>
+      </form:control>
+    </form:child>
+  </form:child>
+  <form:child xsi:type="form:Group" id="newGroup3" name="基本信息">
+    <form:control type="container/widgetbox">
+      <form:attributes source="container/widgetbox"/>
+    </form:control>
+    <form:child xsi:type="form:Field" binding="$params.processDefinitionId" id="newField6" name="流程定义ID" customize="true">
+      <form:control type="widget/text">
+        <form:attributes source="widget/text">
+          <dync:attribute default="false" desc="是否为禁用状态。可以用true和false，可以用表达式，如：1==1；也可以用变量，但是变量的值必须为布尔类型。" group="HTML设置" hidden="false" id="disabled" name="禁用" required="true" value="true">
+            <dync:render colSpan="1" height="0" multi="false" name="checkboxAndExpr"/>
+            <dync:children/>
+          </dync:attribute>
+        </form:attributes>
+      </form:control>
+      <form:validation/>
+    </form:child>
+    <form:child xsi:type="form:Field" binding="$params.moduleId" id="newField7" name="事项ID" customize="true">
+      <form:control type="widget/text">
+        <form:attributes source="widget/text">
+          <dync:attribute default="false" desc="是否为禁用状态。可以用true和false，可以用表达式，如：1==1；也可以用变量，但是变量的值必须为布尔类型。" group="HTML设置" hidden="false" id="disabled" name="禁用" required="true" value="true">
+            <dync:render colSpan="1" height="0" multi="false" name="checkboxAndExpr"/>
+            <dync:children/>
+          </dync:attribute>
+        </form:attributes>
+      </form:control>
+      <form:validation/>
+    </form:child>
+    <form:child xsi:type="form:Field" binding="$model.businessKey" id="newField13" name="业务ID" customize="true">
+      <form:control type="widget/text">
+        <form:attributes source="widget/text">
+          <dync:attribute default="false" desc="是否验证必填。只有当焦点离开文本框时才开始验证，验证失败会有验证失败的样式和提示。也有单独触发验证的方法：`check()`。" group="数据校验" hidden="false" id="required" name="必填项" required="true" value="true">
+            <dync:render colSpan="1" height="0" multi="false" name="checkbox"/>
+            <dync:children/>
+          </dync:attribute>
+          <dync:attribute default="custom" desc="验证的数据类型。" group="数据校验" hidden="false" id="valitype" name="数据类型" required="true" value="combiOne">
+            <dync:render colSpan="2" height="0" multi="false" name="select">
+              <dync:item name="自定义" value="custom"/>
+              <dync:item name="手机号" value="mobile"/>
+              <dync:item name="电话号码" value="phone"/>
+              <dync:item name="QQ" value="qq"/>
+              <dync:item name="身份证" value="idCard"/>
+              <dync:item name="邮件" value="email"/>
+              <dync:item name="URL" value="url"/>
+              <dync:item name="数字|字母|下划线" value="combiOne"/>
+              <dync:item name="中文|数字|字母|下划线" value="combiTwo"/>
+            </dync:render>
+            <dync:children/>
+            <dync:onChange>
+              <template:case value="custom">
+                <template:set param="pattern" value=""/>
+                <template:set param="patternError" value=""/>
+                <template:hide param="pattern" value="false"/>
+                <template:hide param="patternError" value="false"/>
+              </template:case>
+              <template:case value="mobile">
+                <template:set param="pattern" value="/^1[3-8][0-9]\d{8}$/"/>
+                <template:set param="patternError" value="手机号码格式不正确!"/>
+                <template:hide param="pattern" value="false"/>
+                <template:hide param="patternError" value="false"/>
+              </template:case>
+              <template:case value="phone">
+                <template:set param="pattern" value="/((\d{11})|^((\d{7,8})|(\d{4}|\d{3})-(\d{7,8})|(\d{4}|\d{3})-(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1})|(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1}))$)/"/>
+                <template:set param="patternError" value="电话号码格式不正确!"/>
+                <template:hide param="pattern" value="false"/>
+                <template:hide param="patternError" value="false"/>
+              </template:case>
+              <template:case value="qq">
+                <template:set param="pattern" value="/^\d{5,10}$/"/>
+                <template:set param="patternError" value="QQ号码格式不正确!"/>
+                <template:hide param="pattern" value="false"/>
+                <template:hide param="patternError" value="false"/>
+              </template:case>
+              <template:case value="idCard">
+                <template:set param="pattern" value="/^\d{6}(18|19|20)?\d{2}(0[1-9]|1[12])(0[1-9]|[12]\d|3[01])\d{3}(\d|X)$/"/>
+                <template:set param="patternError" value="身份证格式不正确!"/>
+                <template:hide param="pattern" value="false"/>
+                <template:hide param="patternError" value="false"/>
+              </template:case>
+              <template:case value="email">
+                <template:set param="pattern" value="/\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/"/>
+                <template:set param="patternError" value="邮件格式不正确!"/>
+                <template:hide param="pattern" value="false"/>
+                <template:hide param="patternError" value="false"/>
+              </template:case>
+              <template:case value="url">
+                <template:set param="pattern" value="/[a-zA-z]+://[^s]*/"/>
+                <template:set param="patternError" value="url格式不正确!"/>
+                <template:hide param="pattern" value="false"/>
+                <template:hide param="patternError" value="false"/>
+              </template:case>
+              <template:case value="combiOne">
+                <template:set param="pattern" value="/^[\w]+$/"/>
+                <template:set param="patternError" value="只能输入数字、字母、下划线!"/>
+                <template:hide param="pattern" value="false"/>
+                <template:hide param="patternError" value="false"/>
+              </template:case>
+              <template:case value="combiTwo">
+                <template:set param="pattern" value="/^[\w\u4e00-\u9fa5]+$/"/>
+                <template:set param="patternError" value="只能输入中文、数字、字母、下划线!"/>
+                <template:hide param="pattern" value="false"/>
+                <template:hide param="patternError" value="false"/>
+              </template:case>
+            </dync:onChange>
+          </dync:attribute>
+          <dync:attribute default="" desc="验证正则表达式，注意正则表达式必须包含在“//”内：“/^\\d+$/”" group="数据校验" hidden="false" id="pattern" name="正则验证" required="false" value="/^[\w]+$/">
+            <dync:render colSpan="1" height="0" multi="false" name="text"/>
+            <dync:children/>
+          </dync:attribute>
+          <dync:attribute default="" desc="验证正则表达式失败后的提示。" group="数据校验" hidden="false" id="patternError" name="正则验证失败提示" required="false" value="只能输入数字、字母、下划线!">
+            <dync:render colSpan="1" height="0" multi="false" name="text"/>
+            <dync:children/>
+          </dync:attribute>
+        </form:attributes>
+      </form:control>
+      <form:validation/>
+    </form:child>
+    <form:child xsi:type="form:Field" binding="$params.taskDefKey" id="newField8" name="活动定义ID" customize="true">
+      <form:control type="widget/text">
+        <form:attributes source="widget/text">
+          <dync:attribute default="false" desc="是否为禁用状态。可以用true和false，可以用表达式，如：1==1；也可以用变量，但是变量的值必须为布尔类型。" group="HTML设置" hidden="false" id="disabled" name="禁用" required="true" value="true">
+            <dync:render colSpan="1" height="0" multi="false" name="checkboxAndExpr"/>
+            <dync:children/>
+          </dync:attribute>
+        </form:attributes>
+      </form:control>
+      <form:validation/>
+    </form:child>
+    <form:child xsi:type="form:Field" binding="$params.processInstanceId" id="newField14" name="流程实例ID" customize="true">
+      <form:control type="widget/text">
+        <form:attributes source="widget/text">
+          <dync:attribute default="false" desc="是否为禁用状态。可以用true和false，可以用表达式，如：1==1；也可以用变量，但是变量的值必须为布尔类型。" group="HTML设置" hidden="false" id="disabled" name="禁用" required="true" value="true">
+            <dync:render colSpan="1" height="0" multi="false" name="checkboxAndExpr"/>
+            <dync:children/>
+          </dync:attribute>
+        </form:attributes>
+      </form:control>
+      <form:validation/>
+    </form:child>
+    <form:child xsi:type="form:Field" binding="$params.taskId" id="newField15" name="任务ID" customize="true">
+      <form:control type="widget/text">
+        <form:attributes source="widget/text">
+          <dync:attribute default="false" desc="是否为禁用状态。可以用true和false，可以用表达式，如：1==1；也可以用变量，但是变量的值必须为布尔类型。" group="HTML设置" hidden="false" id="disabled" name="禁用" required="true" value="true">
+            <dync:render colSpan="1" height="0" multi="false" name="checkboxAndExpr"/>
+            <dync:children/>
+          </dync:attribute>
+        </form:attributes>
+      </form:control>
+      <form:validation/>
+    </form:child>
+    <form:child xsi:type="form:Field" binding="$params.performer" id="newField9" name="外围参与人" customize="true">
+      <form:control type="widget/text">
+        <form:attributes source="widget/text">
+          <dync:attribute default="false" desc="是否为禁用状态。可以用true和false，可以用表达式，如：1==1；也可以用变量，但是变量的值必须为布尔类型。" group="HTML设置" hidden="false" id="disabled" name="禁用" required="true" value="true">
+            <dync:render colSpan="1" height="0" multi="false" name="checkboxAndExpr"/>
+            <dync:children/>
+          </dync:attribute>
+        </form:attributes>
+      </form:control>
+      <form:validation/>
+    </form:child>
+    <form:child xsi:type="form:Field" binding="$params.duedate" id="newField11" name="外围截至时间" customize="true">
+      <form:control type="widget/text">
+        <form:attributes source="widget/text">
+          <dync:attribute default="false" desc="是否为禁用状态。可以用true和false，可以用表达式，如：1==1；也可以用变量，但是变量的值必须为布尔类型。" group="HTML设置" hidden="false" id="disabled" name="禁用" required="true" value="true">
+            <dync:render colSpan="1" height="0" multi="false" name="checkboxAndExpr"/>
+            <dync:children/>
+          </dync:attribute>
+        </form:attributes>
+      </form:control>
+      <form:validation/>
+    </form:child>
+    <form:child xsi:type="form:Field" binding="$params.groupPerformer" id="newField10" name="外围参与组" customize="true">
+      <form:control type="widget/text">
+        <form:attributes source="widget/text">
+          <dync:attribute default="false" desc="是否为禁用状态。可以用true和false，可以用表达式，如：1==1；也可以用变量，但是变量的值必须为布尔类型。" group="HTML设置" hidden="false" id="disabled" name="禁用" required="true" value="true">
+            <dync:render colSpan="1" height="0" multi="false" name="checkboxAndExpr"/>
+            <dync:children/>
+          </dync:attribute>
+        </form:attributes>
+      </form:control>
+      <form:validation/>
+    </form:child>
+    <form:child xsi:type="form:Field" binding="$model.isStart" id="newField18" name="自由流启动流程" customize="true">
+      <form:control type="widget/checkbox">
+        <form:attributes source="widget/checkbox">
+          <dync:attribute default="false" desc="" group="HTML设置" hidden="false" id="switch" name="显示为开关(滑动or对勾)" required="true" value="true">
+            <dync:render colSpan="1" height="0" multi="false" name="checkbox"/>
+            <dync:children/>
+          </dync:attribute>
+          <dync:attribute default="2" desc="网格布局中占位数" group="HTML设置" hidden="false" id="span" name="占位数" required="false" value="6">
+            <dync:render colSpan="1" height="0" multi="false" name="text"/>
+            <dync:children/>
+          </dync:attribute>
+        </form:attributes>
+      </form:control>
+      <form:validation/>
+    </form:child>
+    <form:child xsi:type="form:Field" binding="$model.useHisAssignee" id="newField20" name="自由流选择历史执行人" customize="true">
+      <form:control type="widget/checkbox">
+        <form:attributes source="widget/checkbox">
+          <dync:attribute default="2" desc="网格布局中占位数" group="HTML设置" hidden="false" id="span" name="占位数" required="false" value="6">
+            <dync:render colSpan="1" height="0" multi="false" name="text"/>
+            <dync:children/>
+          </dync:attribute>
+          <dync:attribute default="false" desc="" group="HTML设置" hidden="false" id="switch" name="显示为开关(滑动or对勾)" required="true" value="true">
+            <dync:render colSpan="1" height="0" multi="false" name="checkbox"/>
+            <dync:children/>
+          </dync:attribute>
+        </form:attributes>
+      </form:control>
+      <form:validation/>
+    </form:child>
+    <form:child xsi:type="form:Field" binding="$model.destTaskDefinitionKey" id="newField19" name="自由流目标活动" customize="true">
+      <form:control type="widget/text">
+        <form:attributes source="widget/text"/>
+      </form:control>
+      <form:validation/>
+    </form:child>
+    <form:child xsi:type="form:Field" binding="$model.rejectMessage" id="newField17" name="回退理由" customize="true">
+      <form:control type="widget/textarea">
+        <form:attributes source="widget/textarea"/>
+      </form:control>
+      <form:validation/>
+    </form:child>
+    <form:child xsi:type="form:Field" binding="$model.getUser.result.principal" id="newField3" name="登录用户" customize="true">
+      <form:control type="widget/text">
+        <form:attributes source="widget/text">
+          <dync:attribute default="true" desc="是否为可见状态。可以用表达式和变量。" group="HTML设置" hidden="false" id="show" name="可见" required="true" value="false">
+            <dync:render colSpan="1" height="0" multi="false" name="checkboxAndExpr"/>
+            <dync:children/>
+          </dync:attribute>
+        </form:attributes>
+      </form:control>
+      <form:validation/>
+    </form:child>
+    <form:child xsi:type="form:Group" id="widgexbox_toolbar" name="widgexbox_toolbar">
+      <form:control type="container/toolbar_widget">
+        <form:attributes source="container/toolbar_widget"/>
+      </form:control>
+    </form:child>
+  </form:child>
+  <form:child xsi:type="form:Group" id="newGroup" name="动态参数">
+    <form:control type="container/widgetbox">
+      <form:attributes source="container/widgetbox"/>
+    </form:control>
+    <form:child xsi:type="form:Group" binding="$model.ActivityVariablesList" id="newGroup1" name="表格">
+      <form:control type="container/table_jqgrid">
+        <form:attributes source="container/table_jqgrid">
+          <dync:attribute default="" desc="初始参数，使用JSON格式。可支持`$params.xx`参数。例如：`{&quot;key&quot;:$params.key}`。&#xA;                @attention 只支持`$params`内的参数。在*普通页面*，`$params`参数为url上面带的参数。在*对话框*，`$params`参数为打开对话框的所传递的参数。" group="表格设置" hidden="false" id="paramData" name="初始化参数" required="false" value="{&quot;processDefinitionId&quot;:$params.processDefinitionId,&quot;taskDefKey&quot;:$params.taskDefKey}">
+            <dync:render colSpan="1" height="0" multi="false" name="text"/>
+            <dync:children/>
+          </dync:attribute>
+          <dync:attribute default="false" desc="是否显示序号。" group="表格设置" hidden="false" id="rownumbers" name="序号" required="false" value="true">
+            <dync:render colSpan="1" height="0" multi="false" name="checkbox"/>
+            <dync:children/>
+          </dync:attribute>
+          <dync:attribute default="true" desc="是否显示分页栏。" group="表格设置" hidden="false" id="pagerView" name="分页栏" required="false" value="false">
+            <dync:render colSpan="1" height="0" multi="false" name="checkbox"/>
+            <dync:children/>
+          </dync:attribute>
+        </form:attributes>
+      </form:control>
+      <form:child xsi:type="form:Field" binding="varibaleName" id="newField5" name="参数名" customize="true">
+        <form:control type="widget/col_jqgrid">
+          <form:attributes source="widget/col_jqgrid">
+            <dync:attribute default="" desc="将替换掉预定格式；可参考[jqGrid自定义格式](http://www.trirand.com/jqgridwiki/doku.php?id=wiki:custom_formatter)。&#xA;&#x9;&#x9;&#x9;@param cellvalue[String] 单元格值。&#xA;&#x9;&#x9;&#x9;@param options[JSON] 表格列选项。&#xA;&#x9;&#x9;&#x9;@param rowObject[JSON] 行数据。&#xA;&#x9;&#x9;&#x9;&#xA;&#x9;&#x9;&#x9;@code&#xA;&#x9;&#x9;&#x9;newField8_customFormatter:function (cellvalue, options, rowObject){&#xA;&#x9;&#x9;&#x9;&#x9;return cellvalue+&quot;显示什么我说的算!!&quot;;&#xA;&#x9;&#x9;&#x9;}&#xA;&#x9;&#x9;&#x9;//如果想写自定义按钮事件，可以在&quot;页面js&quot;内写下自己的脚本方法，然后通过ng-click来实现：&#xA;&#x9;&#x9;&#x9;newField5_customFormatter:function(cellvalue,options,rowObject){&#xA;&#x9;&#x9;&#x9;&#x9;return '&lt;button ng-click=functions.myClick(&quot;'+cellvalue+'&quot;)>&lt;i class=&quot;ace-icon fa fa-meh-o&quot;>&lt;/i>&lt;/button>';&#xA;&#x9;&#x9;&#x9;&#x9;//不调用其他方法，也可以用onClick&#xA;&#x9;&#x9;&#x9;&#x9;//return '&lt;button onClick=alert(&quot;hohoHa'+cellvalue+'&quot;)>&lt;i class=&quot;ace-icon fa fa-meh-o&quot;>&lt;/i>&lt;/button>';&#xA;&#x9;&#x9;&#x9;},&#xA;&#x9;&#x9;&#x9;myClick:function(value){&#xA;&#x9;&#x9;&#x9;&#x9;alert(&quot;我的点击事件：&quot;+value);&#xA;&#x9;&#x9;&#x9;}&#xA;&#x9;&#x9;&#x9;@code&#xA;&#x9;&#x9;&#x9;&#xA;&#x9;&#x9;&#x9;@attention 通过自己手写HTML代码事件调用&quot;页面js&quot;的方法时必须加上`functions.`的前缀。  &#xA;&#x9;&#x9;&#x9;通过html内置的事件(onClick)是不能够调用到&quot;页面js&quot;上的方法的,只能通过Angular内置的指令事件(ng-click)调用。  &#xA;&#x9;&#x9;&#x9;当然，如果你不需要调用到&quot;页面js&quot;的方法，还是可以用`onClick`事件的，如：`onClick=alert(&quot;hahaho'+cellvalue+'&quot;)`" group="格式设置" hidden="false" id="customFormatter" name="自定义格式" required="false" value="newField5_customFormatter(cellvalue,options,rowObject)">
+              <dync:render colSpan="2" height="0" multi="false" name="event">
+                <dync:item name="param" value="cellvalue,options,rowObject"/>
+              </dync:render>
+              <dync:children/>
+            </dync:attribute>
+          </form:attributes>
+        </form:control>
+        <form:validation/>
+      </form:child>
+      <form:child xsi:type="form:Field" binding="variableValue" id="newField4" name="参数值" customize="true">
+        <form:control type="widget/col_jqgrid">
+          <form:attributes source="widget/col_jqgrid">
+            <dync:attribute default="" desc="将替换掉预定格式；可参考[jqGrid自定义格式](http://www.trirand.com/jqgridwiki/doku.php?id=wiki:custom_formatter)。&#xA;&#x9;&#x9;&#x9;@param cellvalue[String] 单元格值。&#xA;&#x9;&#x9;&#x9;@param options[JSON] 表格列选项。&#xA;&#x9;&#x9;&#x9;@param rowObject[JSON] 行数据。&#xA;&#x9;&#x9;&#x9;&#xA;&#x9;&#x9;&#x9;@code&#xA;&#x9;&#x9;&#x9;newField8_customFormatter:function (cellvalue, options, rowObject){&#xA;&#x9;&#x9;&#x9;&#x9;return cellvalue+&quot;显示什么我说的算!!&quot;;&#xA;&#x9;&#x9;&#x9;}&#xA;&#x9;&#x9;&#x9;//如果想写自定义按钮事件，可以在&quot;页面js&quot;内写下自己的脚本方法，然后通过ng-click来实现：&#xA;&#x9;&#x9;&#x9;newField5_customFormatter:function(cellvalue,options,rowObject){&#xA;&#x9;&#x9;&#x9;&#x9;return '&lt;button ng-click=functions.myClick(&quot;'+cellvalue+'&quot;)>&lt;i class=&quot;ace-icon fa fa-meh-o&quot;>&lt;/i>&lt;/button>';&#xA;&#x9;&#x9;&#x9;&#x9;//不调用其他方法，也可以用onClick&#xA;&#x9;&#x9;&#x9;&#x9;//return '&lt;button onClick=alert(&quot;hohoHa'+cellvalue+'&quot;)>&lt;i class=&quot;ace-icon fa fa-meh-o&quot;>&lt;/i>&lt;/button>';&#xA;&#x9;&#x9;&#x9;},&#xA;&#x9;&#x9;&#x9;myClick:function(value){&#xA;&#x9;&#x9;&#x9;&#x9;alert(&quot;我的点击事件：&quot;+value);&#xA;&#x9;&#x9;&#x9;}&#xA;&#x9;&#x9;&#x9;@code&#xA;&#x9;&#x9;&#x9;&#xA;&#x9;&#x9;&#x9;@attention 通过自己手写HTML代码事件调用&quot;页面js&quot;的方法时必须加上`functions.`的前缀。  &#xA;&#x9;&#x9;&#x9;通过html内置的事件(onClick)是不能够调用到&quot;页面js&quot;上的方法的,只能通过Angular内置的指令事件(ng-click)调用。  &#xA;&#x9;&#x9;&#x9;当然，如果你不需要调用到&quot;页面js&quot;的方法，还是可以用`onClick`事件的，如：`onClick=alert(&quot;hahaho'+cellvalue+'&quot;)`" group="格式设置" hidden="false" id="customFormatter" name="自定义格式" required="false" value="newField4_customFormatter(cellvalue,options,rowObject)">
+              <dync:render colSpan="2" height="0" multi="false" name="event">
+                <dync:item name="param" value="cellvalue,options,rowObject"/>
+              </dync:render>
+              <dync:children/>
+            </dync:attribute>
+          </form:attributes>
+        </form:control>
+        <form:validation/>
+      </form:child>
+      <form:child xsi:type="form:Field" binding="id" id="newField12" name="表格列" customize="true">
+        <form:control type="widget/col_jqgrid">
+          <form:attributes source="widget/col_jqgrid">
+            <dync:attribute default="false" desc="不显示的列" group="表格设置" hidden="false" id="hidden" name="隐藏列" required="false" value="true">
+              <dync:render colSpan="1" height="0" multi="false" name="checkbox"/>
+              <dync:children/>
+            </dync:attribute>
+          </form:attributes>
+        </form:control>
+        <form:validation/>
+      </form:child>
+      <form:child xsi:type="form:Group" id="toolbar_table" name="toolbar_table">
+        <form:control type="container/toolbar_table">
+          <form:attributes source="container/toolbar_table"/>
+        </form:control>
+        <form:child xsi:type="form:Field" id="buttonRefresh" name="刷新">
+          <form:control type="widget/button_a_table">
+            <form:attributes source="widget/button_a_table">
+              <dync:attribute id="clickType" value="刷新">
+                <dync:render/>
+                <dync:children/>
+              </dync:attribute>
+              <dync:attribute id="icon" value="fa-refresh">
+                <dync:render/>
+                <dync:children/>
+              </dync:attribute>
+              <dync:attribute id="iconColor" value="green">
+                <dync:render/>
+                <dync:children/>
+              </dync:attribute>
+            </form:attributes>
+          </form:control>
+        </form:child>
+      </form:child>
+    </form:child>
+    <form:child xsi:type="form:Group" id="widgexbox_toolbar" name="widgexbox_toolbar">
+      <form:control type="container/toolbar_widget">
+        <form:attributes source="container/toolbar_widget"/>
+      </form:control>
+      <form:child xsi:type="form:Field" id="newField12" name="增加" customize="true">
+        <form:control type="widget/button_a">
+          <form:attributes source="widget/button_a">
+            <dync:attribute default="" desc="按钮图标，[Font Awesom](http://fortawesome.github.io/Font-Awesome/icons/)中定义的所有图标都可用" group="HTML设置" hidden="false" id="icon" name="图标" required="false" value="fa-plus">
+              <dync:render colSpan="1" height="0" multi="false" name="selectIcon"/>
+              <dync:children/>
+            </dync:attribute>
+            <dync:attribute default="" desc="按钮事件" group="事件设置" hidden="false" id="click" name="单击事件" required="false" value="addRow_click($event)">
+              <dync:render colSpan="1" height="0" multi="false" name="event">
+                <dync:item name="params" value="$event"/>
+              </dync:render>
+              <dync:children/>
+            </dync:attribute>
+          </form:attributes>
+        </form:control>
+        <form:validation/>
+      </form:child>
+      <form:child xsi:type="form:Field" id="newField12" name="删除" customize="true">
+        <form:control type="widget/button_a">
+          <form:attributes source="widget/button_a">
+            <dync:attribute default="" desc="按钮图标，[Font Awesom](http://fortawesome.github.io/Font-Awesome/icons/)中定义的所有图标都可用" group="HTML设置" hidden="false" id="icon" name="图标" required="false" value="fa-trash-o">
+              <dync:render colSpan="1" height="0" multi="false" name="selectIcon"/>
+              <dync:children/>
+            </dync:attribute>
+            <dync:attribute default="" desc="按钮事件" group="事件设置" hidden="false" id="click" name="单击事件" required="false" value="delete_params($event)">
+              <dync:render colSpan="1" height="0" multi="false" name="event">
+                <dync:item name="params" value="$event"/>
+              </dync:render>
+              <dync:children/>
+            </dync:attribute>
+          </form:attributes>
+        </form:control>
+        <form:validation/>
+      </form:child>
+    </form:child>
+  </form:child>
+  <form:datasources>
+    <form:datasource xsi:type="form:Inputs"/>
+    <form:datasource xsi:type="form:PagingDataSource" id="ActivityVariablesList" name="活动定义参数列表型数据源" logic="com.chinacreator.c2.workflow.workflowManage.ds.ActivityVariablesListContentProvider" pageSize="10" type="custom"/>
+    <form:datasource xsi:type="form:LogicDataSource" id="getUser" name="获取登录用户信息" logic="rule:com.chinacreator.c2.sysmgr.security.getSubject" sn="getSubject"/>
+  </form:datasources>
+  <form:scripts>
+start_click:function($event){
+	
+	//var data = $view.newGroup3.getRowData();
+	 var processDefinitionId = $params.processDefinitionId;
+	 var moduleId =  $params.moduleId;
+	 var taskDefKey =  $params.taskDefKey;
+	 var userId =  $model.getUser.result.id;
+	 
+	 var keys = $(&quot;input[name='params_name']&quot;);
+	 var values = $(&quot;input[name='params_value']&quot;);
+	 var keyArr = [];
+	 var valueArr = [];
+	 $(keys).each(function(i){
+		 keyArr.push(keys[i].value);
+	 });
+	 $(values).each(function(i){
+		 valueArr.push(values[i].value);
+	 });
+	 var variablesJson = {};
+	 for(var i in keyArr){
+		  variablesJson[keyArr[i]] = valueArr[i];
+	 }
+	 
+		$http.get(&quot;ws/startWorkFlow&quot;,
+		{
+				params:
+				{
+					bussinessId:$model.businessKey,
+					processDefinitionId:processDefinitionId,
+					variables:
+						variablesJson
+					,
+					wfOperator:{
+						userId:userId,
+						businessData:{
+							moduleId:moduleId,
+							businessKey:$model.businessKey
+						}
+				    }
+				}
+		}
+		).success(function(data){
+				if(data.result_out.result=='200'){
+					Messenger.post({
+					    'message': &quot;开启成功，产生流程实例ID:&quot;+data.result_out.processInstanceId+&quot;！&quot;,
+					    'type': 'success',
+					});
+				}
+			});
+},
+
+timeGenerator:function(){
+	 var day=new Date();
+	   var Year=0;
+	   var Month=0;
+	   var Day=0;
+	   var Hour = 0;
+	   var Minute = 0;
+	   var Second = 0;
+	   var CurrentDate=&quot;&quot;;
+	   //初始化时间
+	   Year       = day.getYear();
+	   Month      = day.getMonth()+1;
+	   Day        = day.getDate();
+	   Hour       = day.getHours();
+	   Minute     = day.getMinutes();
+	   Second     = day.getSeconds();
+	   CurrentDate = (Year+&quot;&quot;)+(&quot;&quot;+Month)+(Day+&quot;&quot;)+(&quot;&quot;+Hour)+(&quot;&quot;+Minute)+(Second+&quot;&quot;);
+	   return CurrentDate;
+		
+},
+
+addRow_click:function($event){
+	if(angular.isUndefined($scope.aId))$scope.aId = 1;
+	var dom = $view.newGroup1.getDom();
+	var r = dom.jqGrid(&quot;addRowData&quot;,$scope.aId, {&quot;id&quot;:$scope.aId,&quot;varibaleName&quot;:&quot;params_name&quot;,&quot;variableValue&quot;:&quot;params_value&quot;},&quot;last&quot;);
+	$scope.aId = $scope.aId+1;
+},
+
+newField5_customFormatter:function(cellvalue,options,rowObject){
+	return &quot;&lt;input name='params_name'/>&quot;;
+},
+
+newField4_customFormatter:function(cellvalue,options,rowObject){
+	return &quot;&lt;input name='params_value'/>&quot;;
+},
+
+delete_params:function(events){
+	var selectNodes = $view.newGroup1.getSelectDatas();
+	if(angular.isArray(selectNodes) &amp;&amp; selectNodes.length>0){
+		angular.forEach(selectNodes, function (value, key) {
+		var dom = $view.newGroup1.getDom();
+		var r = dom.jqGrid(&quot;delRowData&quot;,value.id);
+			});
+	}
+},
+
+page_onload:function(){
+	console.log($params.businessKey);
+	if($params.businessKey){
+		$model.businessKey =  $params.businessKey;
+	}else{
+		$model.businessKey =  $params.moduleId+&quot;_&quot;+this.timeGenerator();
+	}
+	
+},
+
+claimCompleteClick:function($event){
+	 var taskId = $params.taskId;
+	 var moduleId =  $params.moduleId;
+	 var action =  &quot;claim_complete&quot;;
+	 var userId =  $model.getUser.result.id;
+	 
+	  var keys = $(&quot;input[name='params_name']&quot;);
+	 var values = $(&quot;input[name='params_value']&quot;);
+	 var keyArr = [];
+	 var valueArr = [];
+	 $(keys).each(function(i){
+		 keyArr.push(keys[i].value);
+	 });
+	 $(values).each(function(i){
+		 valueArr.push(values[i].value);
+	 });
+	 var variablesJson = {};
+	 for(var i in keyArr){
+		  variablesJson[keyArr[i]] = valueArr[i];
+	 }
+	 // TODO userToDelegateTo等非必填参数还是要填？？？C2的bug
+	 	$http.get(&quot;ws/operateTaskTmp&quot;,
+		{
+				params:
+				{
+					taskId:taskId,
+					action:action,
+					userToDelegateTo:1,
+					variables:
+						variablesJson
+					,
+					wfOperator:{
+						userId:userId,
+						businessData:{
+							moduleId:moduleId
+						}
+				    }
+				}
+		}
+		).success(function(data){
+				if(data.result_out.result=='200'){
+					Messenger.post({
+				    'message': &quot;签收且完成任务成功，下一步任务ID:&quot;+data.result_out.nextTaskId+&quot;！&quot;,
+				    'type': 'success',
+					});
+				}
+			});
+	 
+},
+
+claimClick:function($event){
+	 var taskId = $params.taskId;
+	 var moduleId =  $params.moduleId;
+	 var action =  &quot;claim&quot;;
+	 var userId =  $model.getUser.result.id;
+	 
+	 var keys = $(&quot;input[name='params_name']&quot;);
+	 var values = $(&quot;input[name='params_value']&quot;);
+	 var keyArr = [];
+	 var valueArr = [];
+	 $(keys).each(function(i){
+		 keyArr.push(keys[i].value);
+	 });
+	 $(values).each(function(i){
+		 valueArr.push(values[i].value);
+	 });
+	 var variablesJson = {};
+	 for(var i in keyArr){
+		  variablesJson[keyArr[i]] = valueArr[i];
+	 }
+	 // TODO userToDelegateTo等非必填参数还是要填？？？C2的bug
+	 	$http.get(&quot;ws/operateTaskTmp&quot;,
+		{
+				params:
+				{
+					taskId:taskId,
+					action:action,
+					userToDelegateTo:1,
+					variables:
+						variablesJson
+					,
+					wfOperator:{
+						userId:userId,
+						businessData:{
+							moduleId:moduleId
+						}
+				    }
+				}
+		}
+		).success(function(data){
+				if(data.result_out.result=='200'){
+					Messenger.post({
+					    'message': &quot;签收成功！&quot;,
+					    'type': 'success',
+						});
+				}
+			});
+},
+
+completeClick:function($event){
+	 var taskId = $params.taskId;
+	 var moduleId =  $params.moduleId;
+	 var action =  &quot;complete&quot;;
+	 var userId =  $model.getUser.result.id;
+	 
+	 var keys = $(&quot;input[name='params_name']&quot;);
+	 var values = $(&quot;input[name='params_value']&quot;);
+	 var keyArr = [];
+	 var valueArr = [];
+	 $(keys).each(function(i){
+		 keyArr.push(keys[i].value);
+	 });
+	 $(values).each(function(i){
+		 valueArr.push(values[i].value);
+	 });
+	 var variablesJson = {};
+	 for(var i in keyArr){
+		  variablesJson[keyArr[i]] = valueArr[i];
+	 }
+	 // TODO userToDelegateTo等非必填参数还是要填？？？C2的bug
+	 	$http.get(&quot;ws/operateTaskTmp&quot;,
+		{
+				params:
+				{
+					taskId:taskId,
+					action:action,
+					userToDelegateTo:1,
+					variables:
+						variablesJson
+					,
+					wfOperator:{
+						userId:userId,
+						businessData:{
+							moduleId:moduleId
+						}
+				    }
+				}
+		}
+		).success(function(data){
+				if(data.result_out.result=='200'){
+					Messenger.post({
+					    'message': &quot;完成任务成功,下一步任务ID:&quot;+data.result_out.nextTaskId+&quot;！&quot;,
+					    'type': 'success',
+						});
+				}
+			});
+},
+
+suspendClick:function($event){
+	var processInstanceId = $params.processInstanceId;
+	var userId =  $model.getUser.result.id;
+	var moduleId =  $params.moduleId;
+		$http.get(&quot;ws/suspendProcessInstance&quot;,
+		{
+				params:
+				{
+					processInstanceId:processInstanceId,
+					wfOperator:{
+						userId:userId,
+						businessData:{
+							moduleId:moduleId
+						}
+				    }
+				}
+		}
+		).success(function(data){
+				if(data.result_out.result=='200'){
+						Messenger.post({
+					    'message': &quot;挂起成功！&quot;,
+					    'type': 'success',
+						});
+				}
+			});
+},
+
+resumeClick:function($event){
+	var processInstanceId = $params.processInstanceId;
+	var userId =  $model.getUser.result.id;
+	var moduleId =  $params.moduleId;
+		$http.get(&quot;ws/activateProcessInstance&quot;,
+		{
+				params:
+				{
+					processInstanceId:processInstanceId,
+					wfOperator:{
+						userId:userId,
+						businessData:{
+							moduleId:moduleId
+						}
+				    }
+				}
+		}
+		).success(function(data){
+			if(data.result_out.result=='200'){
+				Messenger.post({
+			    'message': &quot;恢复成功！&quot;,
+			    'type': 'success',
+				});
+			}
+			});
+},
+
+rejectClick:function($event){
+	 var moduleId =  $params.moduleId;
+	 var userId =  $model.getUser.result.id;
+	 var taskId = $params.taskId;
+	 var rejectMessage = $model.rejectMessage;
+	 if(!angular.isUndefined(taskId)){
+		 $http.get(&quot;ws/reject&quot;,
+		{
+				params:
+				{
+					currenTaskId:taskId,
+					rejectMessage:rejectMessage,
+					variables:
+						{}
+					,
+					wfOperator:{
+						userId:userId,
+						businessData:{
+							moduleId:moduleId
+						}
+				    }
+				}
+		}
+		).success(function(data){
+			if(data.result_out.result=='200'){
+				Messenger.post({
+				    'message': &quot;回退任务成功,产生任务ID&quot;+data.result_out.nextTaskId+&quot;！&quot;,
+				    'type': 'success',
+					});
+			}
+			});
+	 }
+	 
+},
+
+goAnyWhereClick:function($event){
+	 var moduleId =  $params.moduleId;
+	 var userId =  $model.getUser.result.id;
+	 var currenTaskId = $params.taskId;
+	 var isStart = $model.isStart;
+	 var bussinessKey = $model.businessKey;
+	 var processDefinitionId = $params.processDefinitionId;
+	 var destTaskDefinitionKey = $model.destTaskDefinitionKey;
+	 var useHisAssignee = $model.useHisAssignee;
+	 //这个地方如果是启动时就用自由流，随便传个值当当前任务ID，因为平台服务的bug导致，bug修复后删除以下三行
+	 if(isStart){
+		 currenTaskId = 'c2';
+	 }
+	 
+	 var keys = $(&quot;input[name='params_name']&quot;);
+	 var values = $(&quot;input[name='params_value']&quot;);
+	 var keyArr = [];
+	 var valueArr = [];
+	 $(keys).each(function(i){
+		 keyArr.push(keys[i].value);
+	 });
+	 $(values).each(function(i){
+		 valueArr.push(values[i].value);
+	 });
+	 var variablesJson = {};
+	 for(var i in keyArr){
+		  variablesJson[keyArr[i]] = valueArr[i];
+	 }
+	 
+	 $http.get(&quot;ws/goAnyWhere&quot;,
+		{
+				params:
+				{
+					isStart:isStart,
+					bussinessKey:bussinessKey,
+					processDefinitionId:processDefinitionId,
+					currenTaskId:currenTaskId,
+					destTaskDefinitionKey:destTaskDefinitionKey,
+					useHisAssignee:useHisAssignee,
+					wfOperator:{
+						userId:userId,
+						businessData:{
+							moduleId:moduleId,
+							businessKey:bussinessKey
+						}
+				    },
+				    variables:variablesJson
+				}
+		}
+		).success(function(data){
+				if(data.result_out.result=='200'){
+					Messenger.post({
+					    'message': &quot;自由流操作成功，产生任务ID:&quot;+data.result_out.nextTaskId+&quot;！&quot;,
+					    'type': 'success',
+					});
+				}
+			});
+	 
+}</form:scripts>
+</form:Form>

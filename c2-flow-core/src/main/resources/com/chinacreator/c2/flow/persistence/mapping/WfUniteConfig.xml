@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper
+	namespace="com.chinacreator.c2.flow.persistence.entity.WfUniteConfigEntity">
+
+	<select id="selectWfUniteConfigByC" parameterType="com.chinacreator.c2.flow.persistence.entity.WfUniteConfigEntity"
+		resultMap="WfUniteConfigResultMap">
+		select ID, APP_ID, TENANT_ID, ENGINE_NAME, TASK_LIST,
+		ONLY_TITLE, REVISION
+		from
+		${prefix}WF_UNITE_CONFIG where
+		APP_ID =
+		#{appId} AND
+		TENANT_ID=#{tenantId}
+		AND ENGINE_NAME=#{engineName} AND
+		TASK_LIST=#{taskList}
+	</select>
+
+	<!-- WfUniteConfig INSERT -->
+	<insert id="insertWfUniteConfig"
+		parameterType="com.chinacreator.c2.flow.persistence.entity.WfUniteConfigEntity">
+		insert into ${prefix}WF_UNITE_CONFIG(ID, REVISION,
+		APP_ID, TENANT_ID,
+		ENGINE_NAME, TASK_LIST, ONLY_TITLE)
+		values(#{id,
+		jdbcType=VARCHAR},
+		1,
+		#{appId, jdbcType=VARCHAR},
+		#{tenantId,
+		jdbcType=VARCHAR},
+		#{engineName, jdbcType=VARCHAR},
+		#{taskList,
+		jdbcType=VARCHAR},
+		#{onlyTitle, jdbcType=INTEGER})
+	</insert>
+
+	<!-- WfUniteConfig UPDATE -->
+	<update id="updateWfUniteConfig"
+		parameterType="com.chinacreator.c2.flow.persistence.entity.WfUniteConfigEntity">
+		update ${prefix}WF_UNITE_CONFIG set
+		APP_ID = #{appId,
+		jdbcType=VARCHAR},
+		TENANT_ID = #{tenantId, jdbcType=VARCHAR},
+		ENGINE_NAME = #{engineName, jdbcType=VARCHAR},
+		TASK_LIST = #{taskList,
+		jdbcType=VARCHAR},
+		ONLY_TITLE = #{onlyTitle, jdbcType=INTEGER}
+		where ID
+		= #{id, jdbcType=VARCHAR} and REVISION = #{revision,
+		jdbcType=INTEGER}
+	</update>
+
+	<!-- WfUniteConfig RESULTMAP -->
+
+	<resultMap id="WfUniteConfigResultMap"
+		type="com.chinacreator.c2.flow.persistence.entity.WfUniteConfigEntity">
+		<id property="id" column="ID" jdbcType="VARCHAR" />
+		<result property="revision" column="REVISION" jdbcType="INTEGER" />
+		<result property="appId" column="APP_ID" jdbcType="VARCHAR" />
+		<result property="tenantId" column="TENANT_ID" jdbcType="VARCHAR" />
+		<result property="engineName" column="ENGINE_NAME" jdbcType="VARCHAR" />
+		<result property="taskList" column="TASK_LIST" jdbcType="VARCHAR" />
+		<result property="onlyTitle" column="ONLY_TITLE" jdbcType="INTEGER" />
+	</resultMap>
+
+	<parameterMap type="java.util.Map" id="WfUniteColumnsParameterMap">
+		<parameter property="appId" />
+		<parameter property="tenantId" />
+		<parameter property="engineName" />
+		<parameter property="taskList" />
+	</parameterMap>
+
+	<resultMap id="WfUniteColumnsResultMap"
+		type="com.chinacreator.c2.flow.persistence.entity.WfUniteColumnsEntity">
+		<id property="id" column="ID" jdbcType="VARCHAR" />
+		<result property="revision" column="REVISION" jdbcType="INTEGER" />
+		<result property="configId" column="CONFIG_ID" jdbcType="VARCHAR" />
+		<result property="columnId" column="COLUMN_ID" jdbcType="VARCHAR" />
+		<result property="columnName" column="COLUMN_NAME" jdbcType="VARCHAR" />
+		<result property="isShow" column="IS_SHOW" jdbcType="INTEGER" />
+		<result property="isTitle" column="IS_TITLE" jdbcType="INTEGER" />
+		<result property="sn" column="SN" jdbcType="INTEGER" />
+	</resultMap>
+
+	<select id="selectWfUnitColumnsByConfig" parameterType="java.util.HashMap"
+		resultMap="WfUniteColumnsResultMap">
+		select t.ID,
+		t.CONFIG_ID,t.COLUMN_ID,t.COLUMN_NAME,t.IS_SHOW,t.IS_TITLE,t.REVISION,t.SN
+		from
+		${prefix}WF_UNITE_COLUNMS t, ${prefix}WF_UNITE_CONFIG t1 where
+		t.CONFIG_ID=t1.ID AND t1.APP_ID =
+		#{appId} AND
+		t1.TENANT_ID=#{tenantId}
+		AND t1.ENGINE_NAME=#{engineName} AND
+		t1.TASK_LIST=#{taskList} order by
+		t.SN
+	</select>
+
+	<select id="selectWfUniteColumns" parameterType="string"
+		resultMap="WfUniteColumnsResultMap">
+		select t.ID,
+		t.CONFIG_ID,t.COLUMN_ID,t.COLUMN_NAME,t.IS_SHOW,t.IS_TITLE,t.REVISION,t.SN
+		from
+		${prefix}WF_UNITE_COLUNMS t where
+		t.ID=#{id} order by
+		t.SN
+	</select>
+
+	<insert id="insertWfUniteColumns"
+		parameterType="com.chinacreator.c2.flow.persistence.entity.WfUniteColumnsEntity">
+		insert into
+		${prefix}WF_UNITE_COLUNMS(ID,CONFIG_ID,COLUMN_ID,COLUMN_NAME,IS_SHOW,IS_TITLE,REVISION,SN)
+		values(#{id,
+		jdbcType=VARCHAR},
+		#{configId, jdbcType=VARCHAR},
+		#{columnId,
+		jdbcType=VARCHAR},#{columnName, jdbcType=VARCHAR},
+		#{isShow, jdbcType=INTEGER},
+		#{isTitle,
+		jdbcType=INTEGER},
+		#{revision,
+		jdbcType=INTEGER},
+		#{sn,
+		jdbcType=INTEGER})
+	</insert>
+
+	<!-- WfUniteConfig UPDATE -->
+	<update id="updateWfUniteColumns"
+		parameterType="com.chinacreator.c2.flow.persistence.entity.WfUniteColumnsEntity">
+		update ${prefix}WF_UNITE_COLUNMS set
+		CONFIG_ID =
+		#{configId,
+		jdbcType=VARCHAR},
+		COLUMN_ID = #{columnId,
+		jdbcType=VARCHAR},
+		COLUMN_NAME = #{columnName, jdbcType=VARCHAR},
+		IS_SHOW = #{isShow,
+		jdbcType=VARCHAR},
+		IS_TITLE = #{isTitle,
+		jdbcType=INTEGER},
+		SN = #{sn,
+		jdbcType=INTEGER}
+		where ID
+		= #{id,
+		jdbcType=VARCHAR} and REVISION =
+		#{revision,
+		jdbcType=INTEGER}
+	</update>
+</mapper>

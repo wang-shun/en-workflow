@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomRule xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns="http://www.chinacreator.com/platform/mvc/rule" sn="getModuleDelegateByParam" className="com.chinacreator.c2.flow.C2FlowRuleService" method="getModuleDelegateByParam">
+  <instanceCreator>
+    <params/>
+  </instanceCreator>
+  <name>查询事项委托信息</name>
+  <inputs>
+    <input collection="false" desc="事项委托查询条件" id="wfModuleDelegateParam" required="true" type="com.chinacreator.c2.flow.detail.WfModuleDelegateParam"/>
+  </inputs>
+  <outputs>
+    <output autoValue="Result" desc="" id="result" name="方法返回值" type="com.chinacreator.c2.flow.detail.WfPageList"/>
+  </outputs>
+  <params>
+    <param autoValue="Input.wfModuleDelegateParam" name="wfModuleDelegateParam" signature="QWfModuleDelegateParam;" type="com.chinacreator.c2.flow.detail.WfModuleDelegateParam"/>
+  </params>
+  <return signature="QWfPageList&lt;QWfModuleDelegate;QWfModuleDelegateParam;>;" type="com.chinacreator.c2.flow.detail.WfPageList"/>
+</CustomRule>

@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Template xmlns="http://www.chinacreator.com/c2/ui/template"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://www.chinacreator.com/c2/ui/template template_config.xsd ">
+    <name>驳回任务</name>
+    <description><![CDATA[驳回任务按钮,用于将当前待办任务回退到上一环节执行人。]]></description>
+    <excepts>container/table*</excepts>
+    <catalog>workflow</catalog>
+    <params>
+        <group name="HTML设置">
+        	<param id="icon" name="图标" required="false">
+                <description>按钮图标，Font Awesom 3.2.1中定义的所有图标都可用</description>
+                <defaultValue></defaultValue>
+                <editor name="selectIcon" colSpan="1"></editor>
+            </param>
+            <param id="iconColor" name="图标颜色" required="false">
+				<description>顶部标题栏前的图标的颜色</description>
+				<defaultValue></defaultValue>
+				<editor name="selectIconColor"></editor>
+			</param>
+            <param id="style" name="样式" required="false">
+                <description>按钮样式</description>
+                <defaultValue><![CDATA[btn-primary]]></defaultValue>
+                <editor name="select" colSpan="1">
+                    <item name="默认" value="btn-default"/>
+                    <item name="主要" value="btn-primary"/>
+                    <item name="成功" value="btn-success"/>
+                    <item name="信息" value="btn-info"/>
+                    <item name="警告" value="btn-warning"/>
+                    <item name="危险" value="btn-danger"/>
+                    <item name="链接" value="btn-link"/>
+                </editor>
+            </param>
+            <param id="show" name="可见" required="true">
+                <description><![CDATA[是否为可见状态。可以用表达式和变量。]]></description>
+                <defaultValue><![CDATA[true]]></defaultValue>
+                <editor name="checkboxAndExpr" colSpan="1"></editor>
+            </param>
+            <param id="disabled" name="禁用" required="false">
+				<description>是否禁用控件，可以用表达式和变量。</description>
+				<defaultValue>false</defaultValue>
+				<editor name="checkboxAndExpr"></editor>
+			</param>
+            <param id="size" name="尺寸" required="false">
+                <description><![CDATA[按钮尺寸]]></description>
+                <defaultValue><![CDATA[btn-sm ]]></defaultValue>
+                 <editor name="select" colSpan="1">
+                 	<item name="很小" value="btn-xs"/>
+                    <item name="小" value="btn-sm"/>
+                    <item name="正常" value=" "/>
+                    <item name="大" value="btn-lg"/>
+                </editor>
+            </param>
+        </group>
+		<group name="流程设置">
+			<param id="taskId" name="任务id" required="true">
+				<description><![CDATA[按钮事件。
+                $param $event AngularJS的[event](https://docs.angularjs.org/guide/expression#-event-)事件。]]>
+				</description>
+				<defaultValue>$params.taskId</defaultValue>
+				<editor name="text" colSpan="1">
+				</editor>
+			</param>
+			<param id="rejectMessage" name="驳回原因" required="true">
+				<description><![CDATA[按钮事件。
+                $param $event AngularJS的[event](https://docs.angularjs.org/guide/expression#-event-)事件。]]>
+				</description>
+				<defaultValue>$params.rejectMessage</defaultValue>
+				<editor name="text" colSpan="1">
+				</editor>
+			</param>
+        	<param id="click" name="点击事件" required="false">
+                <description><![CDATA[按钮事件。
+                $param $event AngularJS的[event](https://docs.angularjs.org/guide/expression#-event-)事件。]]>
+                </description>
+                <defaultValue></defaultValue>
+                <editor name="event" colSpan="1">
+                	<item name="params" value="$event"></item>
+                </editor>
+            </param>
+        </group>
+    </params>
+    <interfaces>
+    	<interface name="setVisible" return="void">
+    		<desc><![CDATA[设置按钮是否可见。
+    		@param visible 是否可见]]>
+    		</desc>
+    		<param name="visible" type="boolean"></param>
+    	</interface>
+    	<interface name="setDisabled">
+    		<desc><![CDATA[设置按钮是否被禁用。
+    		@param disabled 是否被禁用]]></desc>
+    		<param name="disabled" type="boolean"></param>
+    	</interface>
+    </interfaces>
+</Template>

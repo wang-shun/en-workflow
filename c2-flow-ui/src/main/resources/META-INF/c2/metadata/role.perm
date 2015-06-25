@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<perm:Roles xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:perm="http://www.chinacreator.com/platform/mvc/perm">
+  <perm:role id="administrator" name="管理员" type="基本角色"/>
+  <perm:role id="user" name="用户" type="基本角色">
+    <perm:children id="depart1" name="新子角色" type=""/>
+  </perm:role>
+  <perm:role id="department1" name="部门1" type=""/>
+</perm:Roles>
