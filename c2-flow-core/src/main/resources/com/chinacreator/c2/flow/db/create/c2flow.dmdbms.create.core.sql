@@ -756,7 +756,7 @@ comment on column WF_WORKDATE.TENANT_ID
   
 alter table WF_WORKDATE
   add constraint PK_WORKDATE primary key (WORK_ID);
-  
+
 create table WF_UNITE_RUN_TASK_EXT
 (
   ID              VARCHAR2(64) not null,
@@ -764,7 +764,7 @@ create table WF_UNITE_RUN_TASK_EXT
   EXT_FIELD_KEY   VARCHAR2(64),
   EXT_FIELD_VALUE VARCHAR2(255),
   EXT_FIELD_TYPE  VARCHAR2(64),
-  constraint WF_UNITE_HIS_TASK_EXT primary key (ID)
+  constraint WF_UNITE_RUN_TASK_EXT primary key (ID)
 );
 
 alter table WF_UNITE_RUN_TASK_EXT
