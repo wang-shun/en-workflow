@@ -290,7 +290,36 @@ alter table WF_WORKDATE comment '作息时间表';
 
 alter table WF_WORKDATE
   add constraint PK_WORKDATE primary key (WORK_ID);
+ 
+
+create table WF_UNITE_RUN_TASK_EXT
+(
+  ID              VARCHAR(64) not null,
+  UNITE_TASK_ID   VARCHAR(64),
+  EXT_FIELD_KEY   VARCHAR(64),
+  EXT_FIELD_VALUE VARCHAR(255),
+  EXT_FIELD_TYPE  VARCHAR(64),
+  primary key (ID)
+);
+
+alter table WF_UNITE_RUN_TASK_EXT
+  add constraint FK_TASK_EXT_REFERENCE_WF_TASK foreign key (UNITE_TASK_ID)
+  references WF_UNITE_RUN_TASK (ID) on delete restrict on update restrict;
   
+create table WF_UNITE_HIS_TASK_EXT
+(
+  ID                VARCHAR(64) not null,
+  UNITE_TASK_HIS_ID VARCHAR(64),
+  EXT_FIELD_KEY     VARCHAR(64),
+  EXT_FIELD_VALUE   VARCHAR(255),
+  EXT_FIELD_TYPE    VARCHAR(64),
+  primary key (ID)
+);
+  
+alter table WF_UNITE_HIS_TASK_EXT
+  add constraint FK_WF_HISTASK_REFERENCE_WF_EXT foreign key (UNITE_TASK_HIS_ID)
+  references WF_UNITE_HIS_TASK (ID) on delete restrict on update restrict;
+
 create or replace view v_wf_todolist as
 select a.id_ task_id_,
        a.proc_inst_id_,
