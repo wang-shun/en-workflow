@@ -48,10 +48,10 @@
 	<insert id="insertWfOperateLogData"
 		parameterType="com.chinacreator.c2.flow.persistence.entity.WfOperateLogDataEntity">
 		INSERT INTO ${prefix}WF_OPERATE_LOGDATA (
-		LOG_ID,
-		ARGS_VALUE,
-		RETURN_VALUE,
-		EXCEPTION
+		"LOG_ID",
+		"ARGS_VALUE",
+		"RETURN_VALUE",
+		"EXCEPTION"
 		) values (
 		#{logId
 		,jdbcType=VARCHAR},

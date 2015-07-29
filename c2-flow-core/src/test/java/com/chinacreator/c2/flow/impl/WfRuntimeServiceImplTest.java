@@ -134,6 +134,7 @@ public class WfRuntimeServiceImplTest {
 			wfRuntimeServiceLocal.operateTask(wfOperator,
 					wfResult.getNextTaskId(), WfTaskAction.CLAIM_COMPLETE,
 					null, variables);
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 			fail(e.getMessage());

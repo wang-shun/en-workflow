@@ -2,11 +2,15 @@ package com.chinacreator.c2.flow.cfg;
 
 import java.io.InputStream;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 
 import org.activiti.engine.ProcessEngine;
 import org.activiti.engine.delegate.TaskListener;
+import org.activiti.engine.impl.db.DbSqlSession;
+import org.activiti.engine.impl.db.DbSqlSessionFactory;
 import org.activiti.engine.impl.persistence.entity.ProcessDefinitionEntity;
 import org.activiti.engine.impl.task.TaskDefinition;
 import org.activiti.engine.impl.util.ReflectUtil;
@@ -22,6 +26,13 @@ public class ExtendSpringProcessEngineConfiguration extends
 	
 	public static final String EXTEND_MYBATIS_MAPPING_FILE = "com/chinacreator/c2/flow/persistence/mapping/mappings.xml";
 
+	static {
+		DBSqlSessionFactoryExt.initExt();
+		
+		//增加database type
+		databaseTypeMappings.setProperty("DM DBMS","dmdbms");
+	}
+	
 	@Override
 	public ProcessEngine buildProcessEngine() {
 		ProcessEngine processEngine = super.buildProcessEngine();
