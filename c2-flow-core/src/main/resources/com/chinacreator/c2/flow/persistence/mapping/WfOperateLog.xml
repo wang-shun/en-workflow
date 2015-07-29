@@ -216,16 +216,17 @@
 		<result property="returnValue" column="RETURN_VALUE" jdbcType="CLOB" />
 		<result property="exception" column="EXCEPTION" jdbcType="CLOB" />
 	</resultMap>
-
+	
+	
 	<select id="selectWfOperateLogData" parameterType="string"
 		resultMap="WfOperateLogDataMap">
 		select 
-		LOG_ID,
-		ARGS_OBJECT,
-		ARGS_VALUE,
-		RETURN_OBJECT,
-		RETURN_VALUE,
-		EXCEPTION
+		"LOG_ID",
+		"ARGS_OBJECT",
+		"ARGS_VALUE",
+		"RETURN_OBJECT",
+		"RETURN_VALUE",
+		"EXCEPTION"
 		from
 		${prefix}WF_OPERATE_LOGDATA where LOG_ID = #{id}
 	</select>
