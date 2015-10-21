@@ -928,11 +928,11 @@ chooseAssignee:function(dom){
 				var userIdArray = functions.array_unique(data.userIds);
 				var userNameArray = functions.array_unique(data.userNames);
 				var kvJson = {};
-				for(var i in userIdArray){
+				for(var i = 0;i &lt; userIdArray.length; i++) {
 					kvJson[userIdArray[i]]=userNameArray[i];
 				}
 				
-				for(var i in userIdArray){
+				for(var i = 0;i &lt; userIdArray.length; i++) {
 					strId+=userIdArray[i]+&quot;,&quot;;
 					str+=kvJson[userIdArray[i]]+&quot;,&quot;;
 				}

@@ -5,7 +5,7 @@
   <parent>
     <groupId>com.chinacreator.c2</groupId>
     <artifactId>c2-flow-parent</artifactId>
-    <version>4.1.5-SNAPSHOT</version>
+    <version>4.1.5.1</version>
   </parent>
   <artifactId>c2-flow-ui</artifactId>
   <name>c2-flow-ui</name>
