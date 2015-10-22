@@ -950,7 +950,7 @@ chooseAssignee:function(dom){
 			}
 			if(data.groupIds){
 				var str =&quot;&quot;;
-				for(var i in data.groupNames){
+				for(var i = 0;i &lt; data.groupNames.length; i++) {
 					str+=data.groupNames[i]+&quot;,&quot;;
 				}
 				if(str!=&quot;&quot;){
@@ -959,7 +959,7 @@ chooseAssignee:function(dom){
 				$(&quot;#activity_performer&quot;).val(&quot;组【&quot;+str+&quot;】&quot;);
 				
 				var strId =&quot;&quot;;
-				for(var i in data.groupIds){
+				for(var i = 0;i &lt; data.groupIds.length; i++) {
 					strId+=data.groupIds[i]+&quot;,&quot;;
 				}
 				if(strId!=&quot;&quot;){
