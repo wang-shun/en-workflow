@@ -8,5 +8,6 @@
     http://www.springframework.org/schema/context
     http://www.springframework.org/schema/context/spring-context-3.2.xsd">
 
-	<bean id="wfExtendServiceLocal" class="com.chinacreator.c2.workflow.service.WfExtendServiceImpl"/>
+	<context:property-placeholder/>
+	<bean id="wfExtendServiceLocal" class="${c2.workflow.wfExtendServiceLocal}"/>
 </beans>
