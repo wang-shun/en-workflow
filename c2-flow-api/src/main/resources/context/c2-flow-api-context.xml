@@ -18,6 +18,6 @@
 		<dubbo:reference id="wfFormServiceRemote"
 			interface="com.chinacreator.c2.flow.api.WfFormService" version="${c2.flow.api.service.version}" />
 		<dubbo:reference id="wfManagerServiceRemote"
-			interface="com.chinacreator.c2.fl ow.api.WfManagerService" version="${c2.flow.api.service.version}" />
+			interface="com.chinacreator.c2.flow.api.WfManagerService" version="${c2.flow.api.service.version}" />
 	</beans>
 </beans>
