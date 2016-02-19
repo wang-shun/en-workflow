@@ -75,7 +75,7 @@ import org.codehaus.jackson.node.ObjectNode;
 import org.springframework.context.ApplicationContext;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.chinacreator.c2.flow.WfApiFactory;
+import com.chinacreator.c2.config.ConfigManager;
 import com.chinacreator.c2.flow.api.WfManagerService;
 import com.chinacreator.c2.flow.api.WfRepositoryService;
 import com.chinacreator.c2.flow.cmd.aspect.FindWfOperateLogByConditionCmd;
@@ -3466,13 +3466,15 @@ public class WfManagerServiceImpl implements WfManagerService {
 		}
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(begineDate);
+		
+		String holidayWorkDayFlag = ConfigManager.getInstance().getConfig("c2.flow.core.holidayworkday.flag");
 		if (WfConstants.WF_DURATION_UNIT_DAY.equals(durationUnit)
-				&& "true".equals(WfApiFactory.getHolidayWorkdayFlag())) {
+				&& "true".equals(holidayWorkDayFlag)) {
 			// 通过作息时间查询真实的天数，通过真实的天数计算期限
 			int realDays = getRealdays(begineDate, duration);
 			cal.add(Calendar.DAY_OF_MONTH, realDays);
 		} else if (WfConstants.WF_DURATION_UNIT_HOUR.equals(durationUnit)
-				&& "true".equals(WfApiFactory.getHolidayWorkdayFlag())) {
+				&& "true".equals(holidayWorkDayFlag)) {
 
 			Date date1 = getOverTimes(begineDate, duration);
 			cal.setTime(date1);

@@ -1,9 +1,12 @@
 package com.chinacreator.c2.flow;
 
+import java.io.IOException;
+import java.util.Properties;
+
 import org.springframework.context.ApplicationContext;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.web.context.ContextLoader;
 
-import com.chinacreator.c2.config.ConfigManager;
 import com.chinacreator.c2.flow.api.WfFormService;
 import com.chinacreator.c2.flow.api.WfHistoryService;
 import com.chinacreator.c2.flow.api.WfManagerService;
@@ -21,13 +24,19 @@ public class WfApiFactory {
 	private static WfFormService wfFormService;
 	
 	private static String remoted = "false";
-	private static String holidayWorkDayFlag = "false";
+	//private static String holidayWorkDayFlag = "false";
 	
 	static {
 		
-		//统一配置文件
-		remoted = ConfigManager.getInstance().getConfig("c2.flow.api.remoted");
-		holidayWorkDayFlag = ConfigManager.getInstance().getConfig("c2.flow.api.holidayworkday.flag");
+		Properties p = new Properties();
+		try {
+			p.load(new ClassPathResource("custom/c2-flow-api-application.properties").getInputStream());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		remoted = (String)p.get("c2.flow.api.remoted");
+		//holidayWorkDayFlag = (String)p.get("c2.flow.api.holidayworkday.flag");
 		
 //		remoted = (String) WfPropertyPlaceholderConfigurer
 //				.getContextProperty("c2.flow.api.remoted");
@@ -84,7 +93,5 @@ public class WfApiFactory {
 		return wfFormService;
 	}
 	
-	public static String getHolidayWorkdayFlag(){
-		return holidayWorkDayFlag;
-	}
+
 }

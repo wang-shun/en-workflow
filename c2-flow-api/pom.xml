@@ -15,12 +15,12 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 	<dependencies>
-        <dependency>
-            <groupId>com.chinacreator.c2</groupId>
-            <artifactId>c2-core</artifactId>
-            <version>4.2.1</version>
-            <scope>provided</scope>
-        </dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-web</artifactId>
+			<version>3.2.7.RELEASE</version>
+			<scope>provided</scope>
+		</dependency>
 		
 	</dependencies>
 	

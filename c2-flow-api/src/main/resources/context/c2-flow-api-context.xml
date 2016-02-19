@@ -7,6 +7,7 @@
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
 		http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
 	
+	
 	<beans profile="c2_flow_consumer">
 		<!-- 生成远程服务代理，可以和本地bean一样使用demoService -->
 		<dubbo:reference id="wfRepositoryServiceRemote"
