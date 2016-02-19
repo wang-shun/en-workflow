@@ -7,22 +7,6 @@
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
 		http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
 	
-	<!-- 加载classPath中的properties文件 -->
-	    <bean id="propertyConfigurer"
-          class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-        <property name="locations">
-            <list>
-                <!-- 默认属性文件 -->
-                <value>classpath*:c2-default-config.properties</value>
-                <!-- 业务系统配置文件 -->
-                <value>classpath:c2-config.properties</value>
-                <value>classpath*:custom/c2-flow-api-application.properties</value>
-            </list>
-        </property>
-
-        <property name="fileEncoding" value="utf-8"/>
-    </bean>
-	
 	<beans profile="c2_flow_consumer">
 		<!-- 生成远程服务代理，可以和本地bean一样使用demoService -->
 		<dubbo:reference id="wfRepositoryServiceRemote"
