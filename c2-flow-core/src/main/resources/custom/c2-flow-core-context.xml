@@ -101,6 +101,7 @@
 	
 	<!-- 工作流dubbo分布式服务配置 -->
     <beans profile="c2_flow_provider">
+
 	    <dubbo:service interface="com.chinacreator.c2.flow.api.WfRepositoryService"
 			ref="wfRepositoryServiceLocal" timeout="${c2.flow.core.service.timeout}"
 			retries="${c2.flow.core.service.retries}" version="${c2.flow.core.service.version}" />

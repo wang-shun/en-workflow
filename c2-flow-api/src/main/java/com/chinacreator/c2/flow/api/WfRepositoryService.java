@@ -4,6 +4,7 @@ import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
 
+import com.chinacreator.c2.flow.detail.WfActivity;
 import com.chinacreator.c2.flow.detail.WfDeployment;
 import com.chinacreator.c2.flow.detail.WfDeploymentParam;
 import com.chinacreator.c2.flow.detail.WfIdentityLink;
@@ -406,4 +407,27 @@ public interface WfRepositoryService {
 	 */
 	public Map<String, Object> queryVariablesOfActivityInDefinition(
 			String processDefinitionId, String taskDefId) throws Exception;
+	
+	
+	/**
+	 * 查询流程定义模型的所有活动
+	 * @param processDefinitionId 
+	 * 			流程定义ID
+	 * @return
+	 * @throws Exception
+	 */
+	public List<WfActivity> getActivitiesByDefinition(String processDefinitionId) throws Exception;
+	
+	
+	/**
+	 * 创建一个新的模型
+	 * 
+	 * @param wfOperator
+	 *            操作者信息，必须参数
+	 * @param wfModel
+	 *            模型对象，必须参数
+	 * @return 返回最新对象，返回主键
+	 * @throws Exception
+	 */
+	public WfModel insertModel(WfOperator wfOperator, WfModel wfModel) throws Exception;
 }

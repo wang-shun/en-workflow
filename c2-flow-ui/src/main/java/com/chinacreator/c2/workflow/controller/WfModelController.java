@@ -40,9 +40,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.chinacreator.c2.context.OperationContextHolder;
+import com.chinacreator.c2.context.WebOperationContext;
 import com.chinacreator.c2.flow.WfApiFactory;
 import com.chinacreator.c2.flow.api.WfManagerService;
 import com.chinacreator.c2.flow.api.WfRepositoryService;
+import com.chinacreator.c2.flow.detail.WfConstants;
+import com.chinacreator.c2.flow.detail.WfModel;
+import com.chinacreator.c2.flow.detail.WfOperator;
 import com.chinacreator.c2.flow.detail.WfPageList;
 import com.chinacreator.c2.flow.detail.WfProcessDefinition;
 import com.chinacreator.c2.flow.detail.WfProcessDefinitionParam;
@@ -246,14 +251,28 @@ public class WfModelController {
 	public void editProcessByConvert(
 			@PathVariable("processDefinitionId") String processDefinitionId,
 			HttpServletRequest request, HttpServletResponse response)
-			throws IOException, XMLStreamException {
-		// 转换为model
-		ProcessDefinition processDefinition = repositoryService
-				.createProcessDefinitionQuery()
-				.processDefinitionId(processDefinitionId).singleResult();
-		InputStream bpmnStream = repositoryService.getResourceAsStream(
-				processDefinition.getDeploymentId(),
-				processDefinition.getResourceName());
+			throws Exception {
+		
+		//转换为model
+		WfProcessDefinition wfProcessDefinition=null;
+		String bpmnStr=null;
+		try {
+			wfProcessDefinition = wfRepositoryService.getProcessDefinition(processDefinitionId);
+			bpmnStr=wfRepositoryService.getProcessDefinitionBPMN(processDefinitionId);
+		} catch (Exception e) {
+			throw new RuntimeException("获取流程定义异常",e);
+		}
+		
+//		ProcessDefinition processDefinition = repositoryService
+//				.createProcessDefinitionQuery()
+//				.processDefinitionId(processDefinitionId).singleResult();
+		
+//		InputStream bpmnStream = repositoryService.getResourceAsStream(
+//				wfProcessDefinition.getDeploymentId(),
+//				wfProcessDefinition.getResourceName());
+		
+		InputStream bpmnStream=new ByteArrayInputStream(bpmnStr.getBytes(WfConstants.WF_CHARSET_UTF_8));
+		
 		XMLInputFactory xif = XMLInputFactory.newInstance();
 		InputStreamReader in = new InputStreamReader(bpmnStream, "UTF-8");
 		XMLStreamReader xtr = xif.createXMLStreamReader(in);
@@ -261,23 +280,31 @@ public class WfModelController {
 
 		BpmnJsonConverter converter = new BpmnJsonConverter();
 		ObjectNode modelNode = converter.convertToJson(bpmnModel);
-		Model modelData = repositoryService.newModel();
-		modelData.setKey(processDefinition.getKey());
-		modelData.setName(processDefinition.getResourceName());
-		modelData.setCategory(processDefinition.getDeploymentId());
+		
+		WfModel modelData=new WfModel();
+		//Model modelData = repositoryService.newModel();
+		modelData.setKey(wfProcessDefinition.getKey());
+		modelData.setName(wfProcessDefinition.getResourceName());
+		modelData.setCategory(wfProcessDefinition.getDeploymentId());
 
 		ObjectNode modelObjectNode = new ObjectMapper().createObjectNode();
 		modelObjectNode.put(ModelDataJsonConstants.MODEL_NAME,
-				processDefinition.getName());
+				wfProcessDefinition.getName());
 		modelObjectNode.put(ModelDataJsonConstants.MODEL_REVISION, 1);
 		modelObjectNode.put(ModelDataJsonConstants.MODEL_DESCRIPTION,
-				processDefinition.getDescription());
+				wfProcessDefinition.getDescription());
 		modelData.setMetaInfo(modelObjectNode.toString());
 
-		repositoryService.saveModel(modelData);
-
-		repositoryService.addModelEditorSource(modelData.getId(), modelNode
-				.toString().getBytes("utf-8"));
+		WebOperationContext context = (WebOperationContext)OperationContextHolder.getContext();
+		WfOperator wfOperator = new WfOperator(context.getUser().getId(),context.getUser().getName(),context.getUser().getName(),context.getRequest().getRemoteHost(),null);
+		
+		modelData=wfRepositoryService.insertModel(wfOperator,modelData);
+		
+		//repositoryService.saveModel(modelData);
+		
+		//repositoryService.addModelEditorSource(modelData.getId(), modelNode.toString().getBytes("utf-8"));
+		
+		wfRepositoryService.saveModelEditorSource(wfOperator,modelData.getId(),modelNode.toString());
 
 		// 获取modelId
 		String modelId = modelData.getId();

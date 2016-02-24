@@ -1032,5 +1032,17 @@ public class C2FlowRuleService implements WfRuntimeService,
 	public void setDefaultYearHoliday(String yHoliday) throws Exception {
 		WfApiFactory.getWfManagerService().setDefaultYearHoliday(yHoliday);
 	}
+	
+	@Override
+	public List<WfActivity> getActivitiesByDefinition(String processDefinitionId)
+			throws Exception {
+		return WfApiFactory.getWfRepositoryService().getActivitiesByDefinition(processDefinitionId);
+	}
+	
+	@Override
+	public WfModel insertModel(WfOperator wfOperator, WfModel wfModel)
+			throws Exception {
+		return WfApiFactory.getWfRepositoryService().insertModel(wfOperator, wfModel);
+	}
 
 }

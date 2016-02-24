@@ -8,9 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.activiti.engine.FormService;
-import org.activiti.engine.RepositoryService;
-import org.activiti.engine.impl.persistence.entity.ProcessDefinitionEntity;
-import org.activiti.engine.impl.pvm.process.ActivityImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
@@ -23,6 +20,7 @@ import com.chinacreator.c2.flow.api.WfHistoryService;
 import com.chinacreator.c2.flow.api.WfManagerService;
 import com.chinacreator.c2.flow.api.WfRepositoryService;
 import com.chinacreator.c2.flow.api.WfRuntimeService;
+import com.chinacreator.c2.flow.detail.WfActivity;
 import com.chinacreator.c2.flow.detail.WfConstants;
 import com.chinacreator.c2.flow.detail.WfHistoricTask;
 import com.chinacreator.c2.flow.detail.WfModuleBean;
@@ -54,8 +52,7 @@ public class WfTaskHandleController {
 			.getWfRuntimeService();
 	private WfHistoryService wfHistoryService = WfApiFactory
 			.getWfHistoryService();
-	@Autowired
-	protected RepositoryService repositoryService;
+
 	@Autowired
 	protected FormService formService;
 
@@ -342,23 +339,33 @@ public class WfTaskHandleController {
 			try {
 				WfProcessDefinition wfProcessDefinition = wfManagerService
 						.getBindProcessByModuleId(moduleId);
+				
 				// 通过流程定义查到开始环节的定义key
 				String processDefinitionId = wfProcessDefinition.getId();
 				result.put("processDefinitionId", processDefinitionId);
-				ProcessDefinitionEntity processDefEntity = (ProcessDefinitionEntity) repositoryService
-						.getProcessDefinition(processDefinitionId);
-				List<ActivityImpl> ActivityImplList = processDefEntity
-						.getActivities();
-				if (null != ActivityImplList && !ActivityImplList.isEmpty()) {
-					for (ActivityImpl ai : ActivityImplList) {
-						if ("startEvent".equals(ai.getProperty("type"))) {
-							wfProcessConfigProperty = wfManagerService
-									.findProcessConfigProperty(
-											processDefinitionId, moduleId,
-											ai.getId());
-						}
+				
+				List<WfActivity> wfActivityList = wfRepositoryService.getActivitiesByDefinition(processDefinitionId);
+				for (WfActivity wfActivity : wfActivityList) {
+					if ("startEvent".equals(wfActivity.getProperties().get("type"))){
+						wfProcessConfigProperty = wfManagerService.findProcessConfigProperty(processDefinitionId, moduleId,wfActivity.getId());
 					}
 				}
+				
+				
+//				ProcessDefinitionEntity processDefEntity = (ProcessDefinitionEntity) repositoryService
+//						.getProcessDefinition(processDefinitionId);
+//				List<ActivityImpl> ActivityImplList = processDefEntity
+//						.getActivities();
+//				if (null != ActivityImplList && !ActivityImplList.isEmpty()) {
+//					for (ActivityImpl ai : ActivityImplList) {
+//						if ("startEvent".equals(ai.getProperty("type"))) {
+//							wfProcessConfigProperty = wfManagerService
+//									.findProcessConfigProperty(
+//											processDefinitionId, moduleId,
+//											ai.getId());
+//						}
+//					}
+//				}
 				// 如果流程定义图中配置了表单，如果外围配置没配置表单，可以用流程定义中的表单，但是外围配置表单优先级>流程定义的表单
 				if (wfProcessConfigProperty != null) {
 					if (wfProcessConfigProperty.getBindForm() != null

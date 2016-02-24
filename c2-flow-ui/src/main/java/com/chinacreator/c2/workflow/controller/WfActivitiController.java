@@ -43,13 +43,19 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.chinacreator.c2.context.OperationContextHolder;
+import com.chinacreator.c2.context.WebOperationContext;
 import com.chinacreator.c2.flow.WfApiFactory;
 import com.chinacreator.c2.flow.api.WfManagerService;
 import com.chinacreator.c2.flow.api.WfRepositoryService;
+import com.chinacreator.c2.flow.detail.WfDeployment;
+import com.chinacreator.c2.flow.detail.WfDeploymentParam;
+import com.chinacreator.c2.flow.detail.WfOperator;
 import com.chinacreator.c2.flow.detail.WfPageList;
 import com.chinacreator.c2.flow.detail.WfProcessDefinition;
 import com.chinacreator.c2.flow.detail.WfProcessDefinitionParam;
 import com.chinacreator.c2.web.controller.ResponseFactory;
+import com.chinacreator.c2.web.exception.EntityBusinessException;
 
 /**
  * 流程管理控制器
@@ -236,12 +242,32 @@ public class WfActivitiController {
 		return new ResponseFactory().createResponseBodyHtml(result);
 	}
 
+	
 	private void deleteDelopymentIdsByKey(String key, boolean cascade) {
-		List<Deployment> list = repositoryService.createDeploymentQuery()
-				.processDefinitionKey(key).orderByDeploymenTime().desc().list();
-		for (Deployment deployment : list) {
-			repositoryService.deleteDeployment(deployment.getId(), cascade);
+		WfDeploymentParam wfDeploymentParam=new WfDeploymentParam();
+		wfDeploymentParam.setProcessDefinitionKey(key);
+		
+		WebOperationContext context = (WebOperationContext)OperationContextHolder.getContext();
+		WfOperator wfOperator = new WfOperator(context.getUser().getId(),context.getUser().getName(),context.getUser().getName(),context.getRequest().getRemoteHost(),null);
+		
+		try {
+			
+			WfPageList<WfDeployment, WfDeploymentParam> wfPageList=wfRepositoryService.queryDeployments(wfDeploymentParam);
+			for (WfDeployment wfDeployment : wfPageList.getDatas()) {
+				wfRepositoryService.deleteDeploymentsById(wfOperator, cascade,wfDeployment.getId());
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new EntityBusinessException("获取流程部署出错",e);
 		}
+		
+//		List<Deployment> list = repositoryService.createDeploymentQuery()
+//				.processDefinitionKey(key).orderByDeploymenTime().desc().list();
+//		
+//		for (Deployment deployment : list) {
+//			repositoryService.deleteDeployment(deployment.getId(), cascade);
+//		}
 
 	}
 

@@ -27,6 +27,7 @@ import org.activiti.engine.repository.ProcessDefinitionQuery;
 import org.activiti.engine.task.IdentityLink;
 
 import com.chinacreator.c2.flow.api.WfRepositoryService;
+import com.chinacreator.c2.flow.detail.WfActivity;
 import com.chinacreator.c2.flow.detail.WfConstants;
 import com.chinacreator.c2.flow.detail.WfDeployment;
 import com.chinacreator.c2.flow.detail.WfDeploymentParam;
@@ -761,6 +762,32 @@ public class WfRepositoryServiceImpl implements WfRepositoryService {
 		}
 		return WfConstants.WF_CONTROL_EXE_SUCCESS;
 	}
+	
+	@Override
+	public WfModel insertModel(WfOperator wfOperator, WfModel wfModel) throws Exception {
+		
+		
+		try {
+			Model model = new ModelEntity();
+			model.setCategory(wfModel.getCategory());
+			model.setDeploymentId(wfModel.getDeploymentId());
+			model.setKey(wfModel.getKey());
+			model.setMetaInfo(wfModel.getMetaInfo());
+			model.setName(wfModel.getName());
+			model.setVersion(wfModel.getVersion());
+			model.setTenantId(wfModel.getTenantId());
+			repositoryService.saveModel(model);
+			wfModel.setId(model.getId());
+			
+			LoggerManager.log(getClass(), LoggerType.DEBUG, wfOperator, null,
+					"添加模型成功:模型={}", wfModel);
+		} catch (Exception e) {
+			LoggerManager.log(getClass(), LoggerType.ERROR, wfOperator, e,
+					"添加模型失败:模型={}", wfModel);
+			throw e;
+		}
+		return wfModel;
+	}
 
 	@Override
 	public String updateModel(WfOperator wfOper, String modelId, WfModel wfModel)
@@ -814,7 +841,7 @@ public class WfRepositoryServiceImpl implements WfRepositoryService {
 			String modelSource) throws Exception {
 		try {
 			if (modelSource != null) {
-				byte[] bytes = modelSource.getBytes();
+				byte[] bytes = modelSource.getBytes("utf-8");
 				repositoryService.addModelEditorSource(modelId, bytes);
 				LoggerManager.log(getClass(), LoggerType.DEBUG, wfOper, null,
 						"保存模型源码成功:模型id={}, 源码={}", modelId, modelSource);
@@ -928,5 +955,36 @@ public class WfRepositoryServiceImpl implements WfRepositoryService {
 //		map.put("candidateUserIdExpressions", set.);
 		return map;
 	}
+	
+	
+	@Override
+	public List<WfActivity> getActivitiesByDefinition(String processDefinitionId)
+			throws Exception {
+		List<WfActivity> result = new ArrayList<WfActivity>();
+
+		// 获得当前流程的定义模型
+		ProcessDefinitionEntity processDefinition = (ProcessDefinitionEntity) repositoryService.getProcessDefinition(processDefinitionId);
+		
+		// 获得当前流程定义模型的所有任务节点
+		List<ActivityImpl> activitilist = processDefinition.getActivities();
+		for (ActivityImpl activity : activitilist) {
+			WfActivity wai = new WfActivity();
+			wai.setHeight(activity.getHeight());
+			wai.setId(activity.getId());
+			wai.setVariables(activity.getVariables());
+			wai.setWidth(activity.getWidth());
+			wai.setX(activity.getX());
+			wai.setY(activity.getY());
+			
+			//排除非序列化的属性
+			Map<String, Object> properties=new HashMap<String, Object>();
+			properties.put("type", activity.getProperties().get("type"));
+			wai.setProperties(properties);
+			
+			result.add(wai);
+		}
+		return result;
+	}
+	
 	
 }
