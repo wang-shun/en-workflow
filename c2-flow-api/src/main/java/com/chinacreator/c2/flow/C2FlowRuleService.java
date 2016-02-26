@@ -1045,4 +1045,24 @@ public class C2FlowRuleService implements WfRuntimeService,
 		return WfApiFactory.getWfRepositoryService().insertModel(wfOperator, wfModel);
 	}
 
+	@Override
+	public WfDeployment deployClassPath(WfOperator wfOperator, String name,
+			String category, String resourceClassPath) throws Exception {
+		return WfApiFactory.getWfRepositoryService().deployClassPath(wfOperator, name, category, resourceClassPath);
+	}
+	
+	
+	@Override
+	public WfDeployment deployContent(WfOperator wfOperator, String name,
+			String category, String resourceName, String resourceContent)
+			throws Exception {
+		return WfApiFactory.getWfRepositoryService().deployContent(wfOperator, name, category, resourceName, resourceContent);
+	}
+	
+	
+	@Override
+	public WfDeployment deployZip(WfOperator wfOperator, String name,
+			String category, InputStream inputStream) throws Exception {
+		return WfApiFactory.getWfRepositoryService().deployZip(wfOperator, name, category, inputStream);
+	}
 }

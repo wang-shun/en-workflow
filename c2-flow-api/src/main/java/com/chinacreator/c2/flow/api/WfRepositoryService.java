@@ -430,4 +430,79 @@ public interface WfRepositoryService {
 	 * @throws Exception
 	 */
 	public WfModel insertModel(WfOperator wfOperator, WfModel wfModel) throws Exception;
+	
+	
+	/**
+	 * 部署流程文件内容
+	 * 
+	 * @param wfOperator
+	 *            当前操作者信息，必须参数
+	 * @param name
+	 *            部署名称,可以为空
+	 * @param category
+	 *            部署分类,可以为空
+	 * @param resourceName
+	 *            部署流程资源名称，必须参数
+	 * @param resourceContent
+	 *            部署流程内容，读取的bpmn文件的xml内容，必须参数
+	 * @return 最新部署实体，携带ID
+	 * @throws Exception 失败则抛出异常
+	 */
+	public WfDeployment deployContent(WfOperator wfOperator, String name,
+			String category, String resourceName, String resourceContent) throws Exception;
+	
+	
+	/**
+	 * 部署流程包（zip）
+	 * 
+	 * @param wfOperator
+	 *            当前操作者信息，必须参数
+	 * @param name
+	 *            部署名称,可以为空
+	 * @param category
+	 *            部署分类,可以为空
+	 * @param inputStream
+	 *            zip文件输入流，必须参数
+	 * @return 最新部署实体，携带ID
+	 * @throws Exception 失败则抛出异常
+	 */
+	public WfDeployment deployZip(WfOperator wfOperator, String name,
+			String category, InputStream inputStream) throws Exception;
+	
+	
+	/**
+	 * 部署流程引擎classpath路径下的流程，只适用于本地部署
+	 * 
+	 * @param wfOperator
+	 *            当前操作者信息，必须参数
+	 * @param name
+	 *            部署名称,可以为空
+	 * @param category
+	 *            部署分类,可以为空
+	 * @param resourceClassPath
+	 *            部署流程文件相对classpath路径，必须参数
+	 * @return 最新部署实体，携带ID
+	 * @throws Exception 失败则抛出异常
+	 */
+	public WfDeployment deployClassPath(WfOperator wfOperator, String name,
+			String category, String resourceClassPath) throws Exception;
+	
+	
+	/**
+	 * 部署流程(字节)
+	 * 
+	 * @param wfOperator
+	 *            当前操作者信息，必须参数
+	 * @param bytes
+	 *            部署流程文件节字数组，必须参数
+	 * @param name
+	 *            部署名称,可以为空
+	 * @param category
+	 *            部署分类,可以为空
+	 * @return 最新部署实体，携带ID
+	 * @throws Exception 失败则抛出异常
+	 */
+	public WfDeployment deployByte(WfOperator wfOperator,byte[] bytes,String name,
+			String category) throws Exception;
+	
 }
