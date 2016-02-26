@@ -1065,4 +1065,27 @@ public class C2FlowRuleService implements WfRuntimeService,
 			String category, InputStream inputStream) throws Exception {
 		return WfApiFactory.getWfRepositoryService().deployZip(wfOperator, name, category, inputStream);
 	}
+	
+	@Override
+	public WfDeployment deployByte(WfOperator wfOperator, byte[] bytes,
+			String name, String category) throws Exception {
+		return WfApiFactory.getWfRepositoryService().deployByte(wfOperator, bytes, name, category);
+	}
+	
+	@Override
+	public List<String> getActiveActivityIds(String executionId)
+			throws Exception {
+		return WfApiFactory.getWfRuntimeService().getActiveActivityIds(executionId);
+	}
+	
+	@Override
+	public String getStartFormKey(String processDefinitionId) {
+		return WfApiFactory.getWfFormService().getStartFormKey(processDefinitionId);
+	}
+	
+	@Override
+	public String getTaskFormKey(String processDefinitionId,
+			String taskDefinitionKey) {
+		return WfApiFactory.getWfFormService().getTaskFormKey(processDefinitionId, taskDefinitionKey);
+	}
 }

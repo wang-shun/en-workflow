@@ -137,7 +137,7 @@ public class WfModelController {
 			response.sendRedirect(request.getContextPath()+ "/workflow/service/editor?id=" + modelData.getId());
 		} catch (Exception e) {
 			logger.error("创建模型失败：", e);
-			throw new C2FlowRuntimeException("创建模型失败,请检查服务是否可能！",e);
+			throw new C2FlowRuntimeException("创建模型失败,请检查服务是否可!",e);
 		}
 	}
 

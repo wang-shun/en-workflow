@@ -16,9 +16,6 @@ import org.activiti.bpmn.converter.BpmnXMLConverter;
 import org.activiti.bpmn.model.BpmnModel;
 import org.activiti.editor.constants.ModelDataJsonConstants;
 import org.activiti.editor.language.json.converter.BpmnJsonConverter;
-import org.activiti.engine.ManagementService;
-import org.activiti.engine.RuntimeService;
-import org.activiti.engine.TaskService;
 import org.activiti.engine.impl.bpmn.diagram.ProcessDiagramGenerator;
 import org.activiti.engine.impl.context.Context;
 import org.activiti.engine.repository.ProcessDefinition;
@@ -67,13 +64,6 @@ import com.chinacreator.c2.web.exception.EntityBusinessException;
 public class WfActivitiController {
 
 	protected Logger logger = LoggerFactory.getLogger(getClass());
-	
-	@Autowired
-	protected ManagementService managementService;
-
-	protected RuntimeService runtimeService;
-
-	protected TaskService taskService;
 	
 	private WfRuntimeService wfRuntimeService = WfApiFactory.getWfRuntimeService();
 
@@ -521,21 +511,10 @@ public class WfActivitiController {
 	 * = workflowProcessDefinitionService; }
 	 */
 
-
-	@Autowired
-	public void setRuntimeService(RuntimeService runtimeService) {
-		this.runtimeService = runtimeService;
-	}
-
 	/*
 	 * @Autowired public void setTraceService(WorkflowTraceService traceService)
 	 * { this.traceService = traceService; }
 	 */
-
-	@Autowired
-	public void setTaskService(TaskService taskService) {
-		this.taskService = taskService;
-	}
 
 	private void reBindModuleAndProcess(String deployId) throws Exception {
 		if (null != deployId && !"".equals(deployId.trim())) {
@@ -564,14 +543,6 @@ public class WfActivitiController {
 			}
 
 		}
-	}
-
-	public ManagementService getManagementService() {
-		return managementService;
-	}
-
-	public void setManagementService(ManagementService managementService) {
-		this.managementService = managementService;
 	}
 
 }

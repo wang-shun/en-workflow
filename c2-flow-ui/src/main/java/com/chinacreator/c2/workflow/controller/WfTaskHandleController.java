@@ -7,8 +7,6 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.activiti.engine.FormService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.chinacreator.c2.flow.WfApiFactory;
+import com.chinacreator.c2.flow.api.WfFormService;
 import com.chinacreator.c2.flow.api.WfHistoryService;
 import com.chinacreator.c2.flow.api.WfManagerService;
 import com.chinacreator.c2.flow.api.WfRepositoryService;
@@ -52,10 +51,8 @@ public class WfTaskHandleController {
 			.getWfRuntimeService();
 	private WfHistoryService wfHistoryService = WfApiFactory
 			.getWfHistoryService();
-
-	@Autowired
-	protected FormService formService;
-
+	private WfFormService wfFormService=WfApiFactory.getWfFormService();
+	
 	@RequestMapping(value = "/taskHandle")
 	public ModelAndView taskHandle(@RequestParam(value = "moduleId", required = false) String moduleId,
 			String taskId, String businessKey, String taskType,String menuCode,
@@ -278,7 +275,7 @@ public class WfTaskHandleController {
 						// 以外围配置中的为准，不做处理
 					} else {
 						// 以流程定义中的表单为准
-						String bindFormInDefinition = formService
+						String bindFormInDefinition = wfFormService
 								.getTaskFormKey(processDefinitionId,
 										taskDefinitionId);
 						wfProcessConfigProperty
@@ -287,7 +284,7 @@ public class WfTaskHandleController {
 				} else {
 					wfProcessConfigProperty = new WfProcessConfigProperty();
 					// 以流程定义中的表单为准
-					String bindFormInDefinition = formService.getTaskFormKey(
+					String bindFormInDefinition = wfFormService.getTaskFormKey(
 							processDefinitionId, taskDefinitionId);
 					wfProcessConfigProperty.setBindForm(bindFormInDefinition);
 				}
@@ -374,7 +371,7 @@ public class WfTaskHandleController {
 						// 以外围配置中的为准，不做处理
 					} else {
 						// 以流程定义中的表单为准
-						String bindFormInDefinition = formService
+						String bindFormInDefinition = wfFormService
 								.getStartFormKey(processDefinitionId);
 						wfProcessConfigProperty
 								.setBindForm(bindFormInDefinition);
@@ -382,7 +379,7 @@ public class WfTaskHandleController {
 				} else {
 					wfProcessConfigProperty = new WfProcessConfigProperty();
 					// 以流程定义中的表单为准
-					String bindFormInDefinition = formService
+					String bindFormInDefinition = wfFormService
 							.getStartFormKey(processDefinitionId);
 					wfProcessConfigProperty.setBindForm(bindFormInDefinition);
 				}
