@@ -4,21 +4,19 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import com.chinacreator.c2.flow.WfApiFactory;
-import com.chinacreator.c2.flow.api.WfManagerService;
-import com.chinacreator.c2.flow.detail.WfGroup;
-import com.chinacreator.c2.flow.detail.WfGroupParam;
-import com.chinacreator.c2.flow.detail.WfPageList;
-import com.chinacreator.c2.flow.detail.WfUser;
+import com.chinacreator.asp.comp.sys.advanced.job.dto.JobDTO;
+import com.chinacreator.asp.comp.sys.advanced.job.service.JobService;
+import com.chinacreator.asp.comp.sys.advanced.user.service.UserService;
+import com.chinacreator.asp.comp.sys.common.CommonPropertiesUtil;
+import com.chinacreator.asp.comp.sys.core.user.dto.UserDTO;
 import com.chinacreator.c2.flow.detail.WfUserParam;
+import com.chinacreator.c2.ioc.ApplicationContextManager;
 import com.chinacreator.c2.web.ds.TreeContentProvider;
 import com.chinacreator.c2.web.ds.TreeContext;
 import com.chinacreator.c2.web.ds.TreeNode;
 import com.chinacreator.c2.web.ds.impl.DefaultTreeNode;
 
 public class CandidateChooseTreeContentProvider implements TreeContentProvider{
-
-	private WfManagerService wfManagerService = WfApiFactory.getWfManagerService();
 	
 	@Override
 	public TreeNode[] getElements(TreeContext context) {
@@ -43,20 +41,22 @@ public class CandidateChooseTreeContentProvider implements TreeContentProvider{
 				}
 			}
 			
+			JobService jobService = ApplicationContextManager.getContext().getBean(JobService.class);
+			
 			if(null == menuId || menuId.trim().equals("")){
 				//查询所有的角色
 				try {
-					WfGroupParam params = new WfGroupParam();
-					params.setPaged(false);
-					params.setOrderByName(true);
-					params.setOrder(WfGroupParam.SORT_ASC);
-					WfPageList<WfGroup, WfGroupParam> list = wfManagerService.queryGroups(params);
-					if(null!=list && !list.getDatas().isEmpty()){
+					
+					//考虑到分布式环境组织机构可能不统一情况，外围配置处理人从本地获取(流程管理所在应用)
+					List<JobDTO> allJobList=jobService.queryAll();
+					
+					if(null!=allJobList && !allJobList.isEmpty()){
 						TreeNode tn = new DefaultTreeNode(null, "orgTree", "参与者树", true);
+						((DefaultTreeNode)tn).setChkDisabled(true);
 						nodes.add(tn);
-						for(WfGroup wfGroup : list.getDatas()){
-							TreeNode tnRole = new DefaultTreeNode("orgTree", wfGroup.getId(), wfGroup.getName(), true);
-							if(selectedGroupIdList.contains(wfGroup.getId()))
+						for(JobDTO jobDTO : allJobList){
+							TreeNode tnRole = new DefaultTreeNode("orgTree", jobDTO.getJobId(),jobDTO.getJobName(),true);
+							if(selectedGroupIdList.contains(jobDTO.getJobId()))
 								((DefaultTreeNode)tnRole).setChecked(true);
 							nodes.add(tnRole);
 						}
@@ -65,6 +65,7 @@ public class CandidateChooseTreeContentProvider implements TreeContentProvider{
 					e.printStackTrace();
 				}
 			}else{
+				
 				//查询角色下的用户
 				// menuId传过来是角色ID，查询角色下的用户即可
 				WfUserParam params = new WfUserParam();
@@ -72,11 +73,21 @@ public class CandidateChooseTreeContentProvider implements TreeContentProvider{
 				params.setOrderByUserFirstName(true);
 				params.setOrder(WfUserParam.SORT_ASC);
 				try {
-					WfPageList<WfUser, WfUserParam> wfUserPageList = wfManagerService.queryUsers(params);
-					if(null!=wfUserPageList && !wfUserPageList.getDatas().isEmpty()){
-						for(WfUser wfUser : wfUserPageList.getDatas()){
-							TreeNode tn = new DefaultTreeNode(null, wfUser.getId(), wfUser.getLastName(), false);
-							if(selectedUserIdList.contains(wfUser.getId()))
+					
+					UserService userService = ApplicationContextManager.getContext().getBean(UserService.class);
+					List<UserDTO> userDtoList =null;
+					
+					//获取普通用户岗位
+					if(menuId.equals(CommonPropertiesUtil.getRoleofeveryoneJobId())){
+						userDtoList=userService.queryAll();
+					}else{
+						userDtoList = jobService.queryUsers(menuId);
+					}
+					
+					if(null!=userDtoList && !userDtoList.isEmpty()){
+						for(UserDTO userDTO : userDtoList){
+							TreeNode tn = new DefaultTreeNode(null, userDTO.getUserId(), userDTO.getUserRealname(),false);
+							if(selectedUserIdList.contains(userDTO.getUserId()))
 								((DefaultTreeNode)tn).setChecked(true);
 							nodes.add(tn);
 						}

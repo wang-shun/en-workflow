@@ -12,6 +12,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.chinacreator.asp.comp.sys.advanced.job.dto.JobDTO;
+import com.chinacreator.asp.comp.sys.advanced.job.service.JobService;
+import com.chinacreator.asp.comp.sys.advanced.user.service.UserService;
+import com.chinacreator.asp.comp.sys.core.user.dto.UserDTO;
 import com.chinacreator.c2.flow.WfApiFactory;
 import com.chinacreator.c2.flow.api.WfFormService;
 import com.chinacreator.c2.flow.api.WfHistoryService;
@@ -20,13 +24,11 @@ import com.chinacreator.c2.flow.api.WfRepositoryService;
 import com.chinacreator.c2.flow.api.WfRuntimeService;
 import com.chinacreator.c2.flow.detail.WfActivity;
 import com.chinacreator.c2.flow.detail.WfConstants;
-import com.chinacreator.c2.flow.detail.WfGroup;
 import com.chinacreator.c2.flow.detail.WfHistoricTask;
 import com.chinacreator.c2.flow.detail.WfModuleBean;
 import com.chinacreator.c2.flow.detail.WfProcessConfigProperty;
 import com.chinacreator.c2.flow.detail.WfProcessDefinition;
 import com.chinacreator.c2.flow.detail.WfTask;
-import com.chinacreator.c2.flow.detail.WfUser;
 import com.chinacreator.c2.flow.util.CommonUtil;
 import com.chinacreator.c2.ioc.ApplicationContextManager;
 import com.chinacreator.c2.web.controller.ResponseFactory;
@@ -67,13 +69,21 @@ public class WfConfigController {
 			map.put("result", "success");
 			map.put("wfProcessConfigProperty", wfProcessConfigProperty);
 
+			
+			UserService userService = ApplicationContextManager.getContext().getBean(UserService.class);
+			
 			String userIds = wfProcessConfigProperty.getPerformer();
 			if (null != userIds && !"".equals(userIds)) {
 				String userNames = "";
 				String[] userArr = userIds.split(",");
 				for (String uId : userArr) {
-					WfUser wfUser = wfManagerService.getUserById(uId);
-					userNames += wfUser.getLastName() + ",";
+					
+					UserDTO userDto=userService.queryByPK(uId);
+					if(null!=userDto){
+						userNames += userDto.getUserRealname() + ",";
+					}else{
+						userNames += uId + ",";
+					}
 				}
 				if (!"".equals(userNames)) {
 					map.put("userNames",
@@ -87,8 +97,15 @@ public class WfConfigController {
 				String groupNames = "";
 				String[] groupArr = groupPerformer.split(",");
 				for (String gId : groupArr) {
-					WfGroup wfGroup = wfManagerService.getGroupById(gId);
-					groupNames += wfGroup.getName() + ",";
+					
+					JobService jobService = ApplicationContextManager.getContext().getBean(JobService.class);
+					JobDTO jobDto=jobService.queryByPK(gId);
+					if(null!=jobDto){
+						groupNames += jobDto.getJobName()+ ",";
+					}else{
+						groupNames += gId+ ",";
+					}
+					
 				}
 				if (!"".equals(groupNames)) {
 					map.put("groupNames",
