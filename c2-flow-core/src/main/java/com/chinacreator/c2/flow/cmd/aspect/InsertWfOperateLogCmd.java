@@ -19,10 +19,12 @@ public class InsertWfOperateLogCmd implements Command<Void> {
 		if(data != null){
 			String userId = data.getUserId();
 			User u = commandContext.getUserIdentityManager().findUserById(userId);
-			String userCName = u.getLastName();
-			String userName = u.getFirstName();
-			userCName = userCName == null ? userName : userCName + "("+userName+")";
-			data.setUserId(userCName);
+			if(null!=u){
+				String userCName = u.getLastName();
+				String userName = u.getFirstName();
+				userCName = userCName == null ? userName : userCName + "("+userName+")";
+				data.setUserId(userCName);
+			}
 		}
 		data.setEngineName(commandContext.getProcessEngineConfiguration().getProcessEngineName());
 		DbSqlSession dbSqlSession = commandContext.getDbSqlSession();
