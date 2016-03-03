@@ -8,27 +8,28 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import com.chinacreator.asp.comp.sys.advanced.job.dto.JobDTO;
+import com.chinacreator.asp.comp.sys.advanced.job.service.JobService;
+import com.chinacreator.asp.comp.sys.advanced.user.service.UserService;
+import com.chinacreator.asp.comp.sys.core.user.dto.UserDTO;
 import com.chinacreator.c2.dao.mybatis.enhance.Page;
 import com.chinacreator.c2.dao.mybatis.enhance.Pageable;
 import com.chinacreator.c2.flow.WfApiFactory;
 import com.chinacreator.c2.flow.api.WfHistoryService;
-import com.chinacreator.c2.flow.api.WfManagerService;
 import com.chinacreator.c2.flow.api.WfRuntimeService;
-import com.chinacreator.c2.flow.detail.WfGroup;
 import com.chinacreator.c2.flow.detail.WfHistoricTask;
 import com.chinacreator.c2.flow.detail.WfHistoricTaskParam;
 import com.chinacreator.c2.flow.detail.WfIdentityLink;
 import com.chinacreator.c2.flow.detail.WfPageList;
-import com.chinacreator.c2.flow.detail.WfUser;
 import com.chinacreator.c2.flow.util.CommonUtil;
 import com.chinacreator.c2.flow.util.DateUtil;
+import com.chinacreator.c2.ioc.ApplicationContextManager;
 import com.chinacreator.c2.web.ds.ArrayContentProvider;
 import com.chinacreator.c2.web.ds.ArrayContext;
 
 public class ProcessInstanceMonitorContentProvider implements ArrayContentProvider{
 
 	private WfHistoryService wfHistoryService = WfApiFactory.getWfHistoryService();
-	private WfManagerService wfManagerService = WfApiFactory.getWfManagerService();
 	private WfRuntimeService wfRuntimeService = WfApiFactory.getWfRuntimeService();
 	
 	@Override
@@ -75,6 +76,10 @@ public class ProcessInstanceMonitorContentProvider implements ArrayContentProvid
 
 	private List<Map<String, Object>> formList(
 			WfPageList<WfHistoricTask, WfHistoricTaskParam> wfHistoricTaskPageList) throws Exception{
+		
+		UserService userService = ApplicationContextManager.getContext().getBean(UserService.class);
+		JobService jobService = ApplicationContextManager.getContext().getBean(JobService.class);
+		
 		List<Map<String,Object>> mapList = new ArrayList<Map<String,Object>>();
 		if(null!=wfHistoricTaskPageList && !wfHistoricTaskPageList.getDatas().isEmpty()){
 			for(WfHistoricTask wfHistoricTask:wfHistoricTaskPageList.getDatas()){
@@ -114,8 +119,8 @@ public class ProcessInstanceMonitorContentProvider implements ArrayContentProvid
 								}
 								for (String userId : set) {
 									try {
-										WfUser user = wfManagerService.getUserById(userId);
-										assignee += user.getLastName() + ",";
+										UserDTO userDto=userService.queryByPK(userId);
+										assignee += userDto.getUserRealname() + ",";
 									} catch (Exception e) {
 										assignee += userId + ",";
 									}
@@ -126,8 +131,8 @@ public class ProcessInstanceMonitorContentProvider implements ArrayContentProvid
 							}
 						} else {
 							try {
-								WfUser user = wfManagerService.getUserById(assignee);
-								assignee = user.getLastName();
+								UserDTO userDto=userService.queryByPK(assignee);
+								assignee = userDto.getUserRealname();
 							} catch (Exception e) {
 
 							}
@@ -156,8 +161,8 @@ public class ProcessInstanceMonitorContentProvider implements ArrayContentProvid
 							}
 							for (String userId : userSet) {
 								try {
-									WfUser user =  wfManagerService.getUserById(userId);
-									assigneeUserItem += user.getLastName() + ",";
+									UserDTO userDto=userService.queryByPK(userId);
+									assigneeUserItem += userDto.getUserRealname() + ",";
 								} catch (Exception e) {
 									assigneeUserItem += userId + ",";
 								}
@@ -167,11 +172,10 @@ public class ProcessInstanceMonitorContentProvider implements ArrayContentProvid
 								assigneeInfo += "用户【"+assigneeUserItem+"】";
 							}
 							
-							
 							for (String groupId : groupSet) {
 								try {
-									WfGroup wfGroup =  wfManagerService.getGroupById(groupId);
-									assigneeGroupItem += wfGroup.getName() + ",";
+									JobDTO jobDTO=jobService.queryByPK(groupId);
+									assigneeGroupItem += jobDTO.getJobName()+ ",";
 								} catch (Exception e) {
 									assigneeGroupItem += groupId + ",";
 								}
