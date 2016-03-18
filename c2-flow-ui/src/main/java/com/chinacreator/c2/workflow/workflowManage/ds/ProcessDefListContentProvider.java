@@ -12,6 +12,7 @@ import com.chinacreator.c2.flow.api.WfManagerService;
 import com.chinacreator.c2.flow.detail.WfPageList;
 import com.chinacreator.c2.flow.detail.WfProcessDefinition;
 import com.chinacreator.c2.flow.detail.WfProcessDefinitionParam;
+import com.chinacreator.c2.flow.util.CommonUtil;
 import com.chinacreator.c2.web.ds.ArrayContentProvider;
 import com.chinacreator.c2.web.ds.ArrayContext;
 
@@ -46,6 +47,15 @@ public class ProcessDefListContentProvider implements ArrayContentProvider{
 				if(null!=id && !"".equals(id.trim())){
 					param.setId(id);
 				}
+				
+				//处理租户完全隔离
+				String tenantId=WfApiFactory.getWfTenant();
+				if(!CommonUtil.stringNullOrEmpty(tenantId)){
+					param.setTenantId(tenantId);
+				}else{
+					param.setWithoutTenantId(true);
+				}
+				
 				/*boolean isLatest = map.get("isLatest")==null?true:(Boolean)map.get("isLatest");
 				if(isLatest){
 					param.setLatest(true);

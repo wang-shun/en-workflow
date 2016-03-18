@@ -227,6 +227,13 @@ public class WfRepositoryServiceImpl implements WfRepositoryService {
 				.getOrderByProcessDefinitionId();
 		Boolean orderByTenantId = wfProcessDefinitionParam.getOrderByTenantId();
 		Boolean orderByVersion = wfProcessDefinitionParam.getOrderByVersion();
+		
+		String tenantId=wfProcessDefinitionParam.getTenantId();
+		String tenantIdLike=wfProcessDefinitionParam.getTenantIdLike();
+		
+		Boolean withoutTenantId=wfProcessDefinitionParam.getWithoutTenantId();
+		if(!CommonUtil.stringNullOrEmpty(tenantId))  withoutTenantId=false;
+		
 		if (id != null) {
 			processDefinitionQuery.processDefinitionId(id);
 		}
@@ -273,6 +280,18 @@ public class WfRepositoryServiceImpl implements WfRepositoryService {
 		}
 		if (suspended) {
 			processDefinitionQuery.suspended();
+		}
+		
+		if (tenantId != null) {
+			processDefinitionQuery.processDefinitionTenantId(tenantId);
+		}
+		
+		if (tenantIdLike != null) {
+			processDefinitionQuery.processDefinitionTenantIdLike(tenantIdLike);
+		}
+		
+		if (null!=withoutTenantId&&withoutTenantId) {
+			processDefinitionQuery.processDefinitionWithoutTenantId();
 		}
 
 		if (orderByDeploymentId) {

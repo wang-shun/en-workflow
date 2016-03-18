@@ -83,4 +83,16 @@ public class WfApiFactory {
 		}
 		return wfFormService;
 	}
+	
+	
+	public static String getWfTenant() {
+		
+		String tenantId=null;
+		if ("true".equals(remoted)) {
+			tenantId=ConfigManager.getInstance().getConfig("c2.desb.application.name");
+			if("".equals(tenantId)) tenantId=null;
+		}
+		
+		return tenantId;
+	}
 }

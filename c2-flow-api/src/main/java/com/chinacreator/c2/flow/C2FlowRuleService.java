@@ -1088,4 +1088,11 @@ public class C2FlowRuleService implements WfRuntimeService,
 			String taskDefinitionKey) {
 		return WfApiFactory.getWfFormService().getTaskFormKey(processDefinitionId, taskDefinitionKey);
 	}
+	
+	@Override
+	public void addTaskListener(String processDefinitionKey, String tenantId)
+			throws Exception {
+		WfApiFactory.getWfManagerService().addTaskListener(processDefinitionKey, tenantId);
+		
+	}
 }

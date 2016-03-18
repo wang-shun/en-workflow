@@ -125,7 +125,7 @@ public class WfModelController {
 			modelData.setKey(StringUtils.defaultString(key));
 			
 			WebOperationContext context = (WebOperationContext)OperationContextHolder.getContext();
-			WfOperator wfOperator = new WfOperator(context.getUser().getId(),context.getUser().getName(),context.getUser().getName(),context.getRequest().getRemoteHost(),null);
+			WfOperator wfOperator = new WfOperator(context.getUser().getId(),context.getUser().getName(),context.getUser().getName(),context.getRequest().getRemoteHost(),WfApiFactory.getWfTenant());
 			
 			modelData=wfRepositoryService.insertModel(wfOperator,modelData);
 
@@ -159,9 +159,12 @@ public class WfModelController {
 			bpmnBytes = new BpmnXMLConverter().convertToXML(model);
 
 			String processName = modelData.getName() + ".bpmn20.xml";
-
+			
+			//如果开启了分布式，将分布式应用名称作为tenantId
+			String tenantId=WfApiFactory.getWfTenant();
+			
 			WebOperationContext context = (WebOperationContext)OperationContextHolder.getContext();
-			WfOperator wfOperator = new WfOperator(context.getUser().getId(),context.getUser().getName(),context.getUser().getName(),context.getRequest().getRemoteHost(),null);
+			WfOperator wfOperator = new WfOperator(context.getUser().getId(),context.getUser().getName(),context.getUser().getName(),context.getRequest().getRemoteHost(),tenantId);
 			
 			WfDeployment wfDeployment=wfRepositoryService.deployContent(wfOperator,modelData.getName(),null,processName,new String(bpmnBytes));
 
@@ -242,7 +245,7 @@ public class WfModelController {
 		modelData.setMetaInfo(modelObjectNode.toString());
 
 		WebOperationContext context = (WebOperationContext)OperationContextHolder.getContext();
-		WfOperator wfOperator = new WfOperator(context.getUser().getId(),context.getUser().getName(),context.getUser().getName(),context.getRequest().getRemoteHost(),null);
+		WfOperator wfOperator = new WfOperator(context.getUser().getId(),context.getUser().getName(),context.getUser().getName(),context.getRequest().getRemoteHost(),WfApiFactory.getWfTenant());
 		
 		modelData=wfRepositoryService.insertModel(wfOperator,modelData);
 		//repositoryService.saveModel(modelData);
@@ -324,7 +327,7 @@ public class WfModelController {
 		modelData.setMetaInfo(modelObjectNode.toString());
 
 		WebOperationContext context = (WebOperationContext)OperationContextHolder.getContext();
-		WfOperator wfOperator = new WfOperator(context.getUser().getId(),context.getUser().getName(),context.getUser().getName(),context.getRequest().getRemoteHost(),null);
+		WfOperator wfOperator = new WfOperator(context.getUser().getId(),context.getUser().getName(),context.getUser().getName(),context.getRequest().getRemoteHost(),WfApiFactory.getWfTenant());
 		
 		modelData=wfRepositoryService.insertModel(wfOperator,modelData);
 		
@@ -351,8 +354,7 @@ public class WfModelController {
 		try {
 			
 			WebOperationContext context = (WebOperationContext)OperationContextHolder.getContext();
-			WfOperator wfOperator = new WfOperator(context.getUser().getId(),context.getUser().getName(),context.getUser().getName(),context.getRequest().getRemoteHost(),null);
-			
+			WfOperator wfOperator = new WfOperator(context.getUser().getId(),context.getUser().getName(),context.getUser().getName(),context.getRequest().getRemoteHost(),WfApiFactory.getWfTenant());
 			
 			//转换为model
 			WfProcessDefinition wfProcessDefinition=null;

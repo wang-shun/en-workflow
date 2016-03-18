@@ -103,7 +103,10 @@ public class WfHistoryServiceImpl implements WfHistoryService {
 			String superProcessInstanceId = params.getSuperProcessInstanceId();
 			String tenantId = params.getTenantId();
 			String tenantIdLike = params.getTenantIdLike();
+			
 			boolean withoutTenantId = params.getWithoutTenantId();
+			if(!CommonUtil.stringNullOrEmpty(tenantId))  withoutTenantId=false;
+			
 			//是否分页
 			boolean isPaged = params.isPaged();
 			

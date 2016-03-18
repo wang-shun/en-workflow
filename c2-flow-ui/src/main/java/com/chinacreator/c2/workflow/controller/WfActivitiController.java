@@ -51,6 +51,7 @@ import com.chinacreator.c2.flow.detail.WfPageList;
 import com.chinacreator.c2.flow.detail.WfProcessDefinition;
 import com.chinacreator.c2.flow.detail.WfProcessDefinitionParam;
 import com.chinacreator.c2.flow.detail.WfProcessInstance;
+import com.chinacreator.c2.flow.util.CommonUtil;
 import com.chinacreator.c2.web.controller.ResponseFactory;
 import com.chinacreator.c2.web.exception.EntityBusinessException;
 
@@ -218,10 +219,19 @@ public class WfActivitiController {
 		WfDeploymentParam wfDeploymentParam=new WfDeploymentParam();
 		wfDeploymentParam.setProcessDefinitionKey(key);
 		
+		String tenantId=WfApiFactory.getWfTenant();
+		
 		WebOperationContext context = (WebOperationContext)OperationContextHolder.getContext();
-		WfOperator wfOperator = new WfOperator(context.getUser().getId(),context.getUser().getName(),context.getUser().getName(),context.getRequest().getRemoteHost(),null);
+		WfOperator wfOperator = new WfOperator(context.getUser().getId(),context.getUser().getName(),context.getUser().getName(),context.getRequest().getRemoteHost(),WfApiFactory.getWfTenant());
 		
 		try {
+			
+			//不同租户下key有可能相同
+			if(!CommonUtil.stringNullOrEmpty(tenantId)){
+				wfDeploymentParam.setTenantId(tenantId);
+			}else{
+				wfDeploymentParam.setWithoutTenantId(true);
+			}
 			
 			WfPageList<WfDeployment, WfDeploymentParam> wfPageList=wfRepositoryService.queryDeployments(wfDeploymentParam);
 			for (WfDeployment wfDeployment : wfPageList.getDatas()) {
@@ -303,8 +313,11 @@ public class WfActivitiController {
 
 		try {
 			
+			//如果开启了分布式，将分布式应用名称作为tenantId
+			String tenantId=WfApiFactory.getWfTenant();
+			
 			WebOperationContext context = (WebOperationContext)OperationContextHolder.getContext();
-			WfOperator wfOperator = new WfOperator(context.getUser().getId(),context.getUser().getName(),context.getUser().getName(),context.getRequest().getRemoteHost(),null);
+			WfOperator wfOperator = new WfOperator(context.getUser().getId(),context.getUser().getName(),context.getUser().getName(),context.getRequest().getRemoteHost(),tenantId);
 			
 			WfDeployment wfDeployment = null;
 		
@@ -338,7 +351,13 @@ public class WfActivitiController {
 			wfProcessDefinitionParam.setDeploymentId(wfDeployment.getId());
 			WfPageList<WfProcessDefinition, WfProcessDefinitionParam> wfList=wfRepositoryService.queryProcessDefinitions(wfProcessDefinitionParam);
 			WfProcessDefinition pdf = wfList.getDatas().get(0);
-			wfManagerService.addTaskListener(pdf.getKey());//防止分布式部署没有给服务提供端加监听导致流程执行不正常
+			
+			if(null==tenantId){
+				wfManagerService.addTaskListener(pdf.getKey());//防止分布式部署没有给服务提供端加监听导致流程执行不正常
+			}else{
+				wfManagerService.addTaskListener(pdf.getKey(),tenantId);//防止分布式部署没有给服务提供端加监听导致流程执行不正常
+			}
+			
 //			AddTaskListenerUtil.addTaskListener(repositoryService, managementService, pdf.getKey());
 			return new ResponseFactory().createResponseBodyJSONObject(model);
 		} catch (Exception e) {
@@ -380,7 +399,7 @@ public class WfActivitiController {
 		modelData.setMetaInfo(modelObjectNode.toString());
 
 		WebOperationContext context = (WebOperationContext)OperationContextHolder.getContext();
-		WfOperator wfOperator = new WfOperator(context.getUser().getId(),context.getUser().getName(),context.getUser().getName(),context.getRequest().getRemoteHost(),null);
+		WfOperator wfOperator = new WfOperator(context.getUser().getId(),context.getUser().getName(),context.getUser().getName(),context.getRequest().getRemoteHost(),WfApiFactory.getWfTenant());
 		
 		modelData=wfRepositoryService.insertModel(wfOperator,modelData);
 		//repositoryService.saveModel(modelData);
@@ -455,7 +474,7 @@ public class WfActivitiController {
 			RedirectAttributes redirectAttributes) {
 		
 		WebOperationContext context = (WebOperationContext)OperationContextHolder.getContext();
-		WfOperator wfOperator = new WfOperator(context.getUser().getId(),context.getUser().getName(),context.getUser().getName(),context.getRequest().getRemoteHost(),null);
+		WfOperator wfOperator = new WfOperator(context.getUser().getId(),context.getUser().getName(),context.getUser().getName(),context.getRequest().getRemoteHost(),WfApiFactory.getWfTenant());
 
 		if (state.equals("active")) {
 			

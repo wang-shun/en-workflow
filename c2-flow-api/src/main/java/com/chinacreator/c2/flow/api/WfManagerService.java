@@ -438,6 +438,14 @@ public interface WfManagerService {
 	public void addTaskListener(String processDefinitionKey) throws Exception;
 	
 	/**
+	 * 根据流程定义key给最新版本的流程添加任务监听器
+	 * @param processDefinitionKey 流程定义key
+	 * @param tenantId   租户id
+	 * @throws Exception
+	 */
+	public void addTaskListener(String processDefinitionKey,String tenantId) throws Exception;
+	
+	/**
 	 * 新增节假日（已有的不重复添加，容错）
 	 * @param wfHoliday 工作流节假日对象
 	 * @throws Exception

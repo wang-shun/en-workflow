@@ -15,6 +15,7 @@ import com.chinacreator.c2.flow.detail.WfPageList;
 import com.chinacreator.c2.flow.detail.WfPageParam;
 import com.chinacreator.c2.flow.detail.WfProcessDefinition;
 import com.chinacreator.c2.flow.detail.WfProcessDefinitionParam;
+import com.chinacreator.c2.flow.util.CommonUtil;
 import com.chinacreator.c2.flow.util.DateUtil;
 import com.chinacreator.c2.web.ds.ArrayContentProvider;
 import com.chinacreator.c2.web.ds.ArrayContext;
@@ -32,6 +33,11 @@ public class ProcessHistoryListContentProvider implements ArrayContentProvider{
 		param.setStart((context.getPageable().getPageIndex()-1)*context.getPageable().getPageSize());
 		param.setOrderByVersion(true);
 		param.setOrder(WfPageParam.SORT_DESC);
+		param.setTenantId(WfApiFactory.getWfTenant());
+		
+		//处理租户完全隔离
+		if(CommonUtil.stringNullOrEmpty(WfApiFactory.getWfTenant())) param.setWithoutTenantId(true);
+		
 		Map<String, Object> map = context.getCondition();
 		if(null!=map && !map.isEmpty()){
 			String key = (String)map.get("key");
@@ -40,6 +46,7 @@ public class ProcessHistoryListContentProvider implements ArrayContentProvider{
 			}
 		}
 		try {
+			
 			WfPageList<WfProcessDefinition, WfProcessDefinitionParam> wfPageList = wfRepositoryService.queryProcessDefinitions(param);
 			long size = wfPageList.getWfQuery().getSize();
 			long total = wfPageList.getWfQuery().getTotal();
