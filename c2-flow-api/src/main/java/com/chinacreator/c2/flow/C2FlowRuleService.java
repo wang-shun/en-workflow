@@ -1095,4 +1095,11 @@ public class C2FlowRuleService implements WfRuntimeService,
 		WfApiFactory.getWfManagerService().addTaskListener(processDefinitionKey, tenantId);
 		
 	}
+	
+	@Override
+	public List<String> getBindModuleIdsByProcessDefKeyAndTenant(
+			String processDefinitionKey, String tenantId) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

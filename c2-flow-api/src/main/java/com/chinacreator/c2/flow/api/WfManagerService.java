@@ -528,4 +528,15 @@ public interface WfManagerService {
 	 */
 	public Date getDueDateAfterExecute(Date begineDate, Integer duration, String durationUnit, String tenantId) throws Exception;
 	
+	
+	/**
+	 * 查询租户下流程标识对应的所有已绑定事项
+	 * 
+	 * @param processDefinitionKey
+	 *            流程定义key
+	 * @param tenantId
+	 * @return List<String> 事项ID集合 throws Exception
+	 */
+	public List<String> getBindModuleIdsByProcessDefKeyAndTenant(String processDefinitionKey,String tenantId) throws Exception;
+	
 }

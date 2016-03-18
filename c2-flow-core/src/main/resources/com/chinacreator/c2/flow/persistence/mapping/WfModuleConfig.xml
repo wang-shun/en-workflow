@@ -120,6 +120,25 @@
 		IS_LATEST = '1' AND PROC_DEF_KEY=#{parameter}
 	</select>
 	
+	<select id="getBindModuleIdsByProcessDefKeyAndTenant" resultType="string" parameterType="java.util.HashMap">
+		SELECT
+			module_id
+		FROM
+			${prefix}WF_MOD_PROC_CONFIG c,
+			${prefix}ACT_RE_PROCDEF p
+		WHERE
+			c.PROC_DEF_ID = p.ID_
+		AND c.IS_LATEST = '1'
+		AND c.PROC_DEF_KEY = #{processDefinitionKey}
+		<if test="tenantId!=null">
+				<![CDATA[AND p.TENANT_ID_ = #{tenantId}]]>
+		</if>
+		<if test="tenantId==null">
+				<![CDATA[AND (TENANT_ID_ = '' or TENANT_ID_ is null)]]>
+		</if>
+		
+	</select>
+	
 	<select id="findProcessConfigProperty" resultMap="WfProcessConfigPropertyResultMap">
 		SELECT <include refid="Proc_Prop_Column_List"/>
 		FROM ${prefix}WF_MOD_PROC_PROP t inner join ${prefix}WF_MOD_PROC_CONFIG t1 on t1.ID = t.CONFIG_ID
