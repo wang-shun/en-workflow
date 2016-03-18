@@ -27,7 +27,8 @@ public class GetBindModuleIdsByProcessDefKeyAndTenantCmd implements
 		Map<String,Object> params=new HashMap<String, Object>();
 		params.put("processDefinitionKey",this.processDefinitionKey);
 		params.put("tenantId",this.tenantId);
-		return dbSqlSession.selectList("getBindModuleIdsByProcessDefKeyAndTenant",params);
+		return dbSqlSession.selectListWithRawParameter("getBindModuleIdsByProcessDefKeyAndTenant",params,0, Integer.MAX_VALUE);
+
 	}
 
 }
