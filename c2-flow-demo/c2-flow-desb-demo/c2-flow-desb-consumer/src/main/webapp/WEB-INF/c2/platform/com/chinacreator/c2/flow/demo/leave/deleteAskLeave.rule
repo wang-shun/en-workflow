@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomRule xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns="http://www.chinacreator.com/platform/mvc/rule" sn="leave/deleteAskLeave" log="false" className="com.chinacreator.c2.flow.demo.leave.services.AskLeaveService" method="deleteAskLeave">
+  <name>删作请假条</name>
+  <desc>删除请假条</desc>
+  <inputs>
+    <input collection="false" desc="" id="id" required="true"/>
+  </inputs>
+  <outputs/>
+  <params>
+    <param autoValue="Input.id" name="id" signature="QString;" type="java.lang.String"/>
+  </params>
+  <return signature="V" type="void"/>
+</CustomRule>

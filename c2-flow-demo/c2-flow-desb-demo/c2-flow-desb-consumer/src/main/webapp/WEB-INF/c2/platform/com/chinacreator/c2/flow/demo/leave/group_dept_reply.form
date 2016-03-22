@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form:Form xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dync="http://www.chinacreator.com/platform/mvc/ui/dync" xmlns:form="http://www.chinacreator.com/platform/mvc/form" name="审批[组长或部门]" sn="group_dept_reply" type="form">
+  <form:control type="page/normal">
+    <form:attributes source="page/normal">
+      <dync:attribute default="" group="HTML" id="showHead" name="显示标题" value="">
+        <dync:render/>
+        <dync:children/>
+      </dync:attribute>
+      <dync:attribute default="" group="HTML" id="title" name="标题" value="">
+        <dync:render/>
+        <dync:children/>
+      </dync:attribute>
+      <dync:attribute default="" group="HTML" id="desc" name="描述" value="">
+        <dync:render/>
+        <dync:children/>
+      </dync:attribute>
+      <dync:attribute default="false" group="HTML" id="fixedHeight" name="自动高度" value="false">
+        <dync:render/>
+        <dync:children/>
+      </dync:attribute>
+      <dync:attribute default="false" group="HTML" id="compact" name="紧凑页面" value="false">
+        <dync:render/>
+        <dync:children/>
+      </dync:attribute>
+      <dync:attribute default="false" group="HTML" id="dirtyCheck" name="脏检查" value="false">
+        <dync:render/>
+        <dync:children/>
+      </dync:attribute>
+      <dync:attribute default="" group="注入配置" id="angularJsServices" name="注入服务" value="">
+        <dync:render/>
+        <dync:children/>
+      </dync:attribute>
+      <dync:attribute default="" group="事件" id="beforeDataSourceLoad" name="数据源加载前" value="page_beforeDataSourceLoad($params)">
+        <dync:render/>
+        <dync:children/>
+      </dync:attribute>
+      <dync:attribute default="" group="事件" id="afterDataSourceLoad" name="数据源加载后" value="">
+        <dync:render/>
+        <dync:children/>
+      </dync:attribute>
+      <dync:attribute default="" group="事件" id="onload" name="页面加载完成" value="">
+        <dync:render/>
+        <dync:children/>
+      </dync:attribute>
+    </form:attributes>
+  </form:control>
+  <form:child xsi:type="form:Group" id="newGroup1" name="简单容器(DIV)">
+    <form:control type="container/div">
+      <form:attributes source="container/div">
+        <dync:attribute default="" group="高级自定义" id="html" name="自定义HTML" value="newGroup1_html">
+          <dync:render/>
+          <dync:children/>
+        </dync:attribute>
+      </form:attributes>
+    </form:control>
+  </form:child>
+  <form:child xsi:type="form:Group" id="entity7" name="实体数据">
+    <form:control type="container/div">
+      <form:attributes source="container/div"/>
+    </form:control>
+    <form:child xsi:type="form:Field" binding="$params.leave.askUserName" id="askUserId7" name="申请人">
+      <form:control type="widget/text">
+        <form:attributes source="widget/text">
+          <dync:attribute default="false" group="文本框设置" id="disabled" name="禁用" value="true">
+            <dync:render/>
+            <dync:children/>
+          </dync:attribute>
+        </form:attributes>
+      </form:control>
+    </form:child>
+    <form:child xsi:type="form:Field" binding="$params.leave.askType" id="askType7" name="请假类型">
+      <form:control type="widget/select_simple">
+        <form:attributes source="widget/select_simple">
+          <dync:attribute default="" group="下拉框设置" id="selectOptions" name="选项" value="{1:&quot;事假&quot;,2:&quot;病假&quot;,3:&quot;年休假&quot;,4:&quot;婚假&quot;,5:&quot;产假&quot;,6:&quot;陪产假&quot;,7:&quot;工伤假&quot;}">
+            <dync:render/>
+            <dync:children/>
+          </dync:attribute>
+          <dync:attribute default="false" group="基本设置" id="selectRequired" name="必填项" value="true">
+            <dync:render/>
+            <dync:children/>
+          </dync:attribute>
+          <dync:attribute default="false" group="基本设置" id="selectDisabled" name="禁用" value="true">
+            <dync:render/>
+            <dync:children/>
+          </dync:attribute>
+        </form:attributes>
+      </form:control>
+    </form:child>
+    <form:child xsi:type="form:Field" binding="" id="askStartTime7" name="请假范围">
+      <form:control type="widget/date_time_range_picker">
+        <form:attributes source="widget/date_time_range_picker">
+          <dync:attribute default="" group="时间设置" id="endBind" name="结束时间数据绑定" value="$params.leave.askEndTime">
+            <dync:render/>
+            <dync:children/>
+          </dync:attribute>
+          <dync:attribute default="" group="时间设置" id="startBind" name="开始时间数据绑定" value="$params.leave.askStartTime">
+            <dync:render/>
+            <dync:children/>
+          </dync:attribute>
+          <dync:attribute default="6" group="基本设置" id="span" name="空间宽度" value="12">
+            <dync:render/>
+            <dync:children/>
+          </dync:attribute>
+          <dync:attribute default="false" group="时间设置" id="ngRequired" name="必填" value="true">
+            <dync:render/>
+            <dync:children/>
+          </dync:attribute>
+          <dync:attribute default="" group="事件设置" id="startOnChange" name="开始时间改变" value="askStartTime1_startOnChange($event)">
+            <dync:render/>
+            <dync:children/>
+          </dync:attribute>
+          <dync:attribute default="" group="事件设置" id="endOnChange" name="结束时间改变" value="askStartTime1_endOnChange($event)">
+            <dync:render/>
+            <dync:children/>
+          </dync:attribute>
+          <dync:attribute default="false" group="时间设置" id="readonly" name="控件禁用" value="true">
+            <dync:render/>
+            <dync:children/>
+          </dync:attribute>
+        </form:attributes>
+      </form:control>
+    </form:child>
+    <form:child xsi:type="form:Field" binding="$params.leave.askDays" id="newField12" name="请假天数" customize="true">
+      <form:control type="widget/text">
+        <form:attributes source="widget/text">
+          <dync:attribute default="false" group="数据校验" id="required" name="必填项" value="true">
+            <dync:render/>
+            <dync:children/>
+          </dync:attribute>
+          <dync:attribute default="false" group="文本框设置" id="disabled" name="禁用" value="true">
+            <dync:render/>
+            <dync:children/>
+          </dync:attribute>
+        </form:attributes>
+      </form:control>
+      <form:validation/>
+    </form:child>
+    <form:child xsi:type="form:Field" binding="$params.leave.askReasons" id="askReasons7" name="请假原因">
+      <form:control type="widget/textarea">
+        <form:attributes source="widget/textarea">
+          <dync:attribute default="false" group="数据校验" id="required" name="必填项" value="true">
+            <dync:render/>
+            <dync:children/>
+          </dync:attribute>
+          <dync:attribute default="false" group="HTML设置" id="disabled" name="禁用" value="true">
+            <dync:render/>
+            <dync:children/>
+          </dync:attribute>
+        </form:attributes>
+      </form:control>
+    </form:child>
+    <form:child xsi:type="form:Field" binding="$params.leave.comment" id="newField" name="申批意见" customize="true">
+      <form:control type="widget/textarea">
+        <form:attributes source="widget/textarea"/>
+      </form:control>
+      <form:validation/>
+    </form:child>
+  </form:child>
+  <form:child xsi:type="form:Group" id="newGroup" name="简单容器(DIV)">
+    <form:control type="container/div">
+      <form:attributes source="container/div">
+        <dync:attribute default="" group="高级自定义" id="style" name="自定义style" value="text-align: center;">
+          <dync:render/>
+          <dync:children/>
+        </dync:attribute>
+      </form:attributes>
+    </form:control>
+    <form:child xsi:type="form:Field" id="newField4" name="同意" customize="true">
+      <form:control type="widget/button">
+        <form:attributes source="widget/button">
+          <dync:attribute default="" group="事件设置" id="click" name="点击事件" value="newField4_click($event)">
+            <dync:render/>
+            <dync:children/>
+          </dync:attribute>
+        </form:attributes>
+      </form:control>
+      <form:validation/>
+    </form:child>
+    <form:child xsi:type="form:Field" id="newField5" name="不同意" customize="true">
+      <form:control type="widget/button">
+        <form:attributes source="widget/button">
+          <dync:attribute default="" group="事件设置" id="click" name="点击事件" value="newField5_click($event)">
+            <dync:render/>
+            <dync:children/>
+          </dync:attribute>
+        </form:attributes>
+      </form:control>
+      <form:validation/>
+    </form:child>
+  </form:child>
+  <form:datasources>
+    <form:datasource xsi:type="form:Inputs"/>
+  </form:datasources>
+  <form:scripts>
+
+page_beforeDataSourceLoad:function($params){
+
+	$params.leave={};
+
+	$scope.monitorUrl=&quot;f/leave_monitor_process?processInstanceId=&quot;+$params.processInstanceId+&quot;&amp;processDefinitionId=&quot;+$params.processDefinitionId;
+	
+	$http.post(&quot;ws/leave/getAskLeave&quot;,{id:$params.businessKey}).success(function(data){
+		$params.leave.askUserName=data.result.askUserName;
+		$params.leave.askType=data.result.askType;
+		$params.leave.askStartTime=data.result.askStartTime;
+		$params.leave.askEndTime=data.result.askEndTime;
+		$params.leave.askDays=data.result.askDays;
+		$params.leave.askReasons=data.result.askReasons;
+		$params.leave.assignToUserName=data.result.assignToUserName;
+	});
+},
+showHideMonitor:function(){
+	$scope.taskDown=!$scope.taskDown;
+},
+
+newField4_click:function($event){
+	$http.post(&quot;ws/leave/commonReply&quot;,{
+									  businessKey:$params.businessKey,
+									  taskId:$params.taskId,
+									  moduleId:$params.moduleId,
+									  isPass:true}).success(function(data){
+		Messenger.post({
+			    'message': &quot;审批完成！&quot;,
+			    'type': 'success',
+				});
+		
+		window.location.href=&quot;#f/leave_detail?askLeaveId=&quot;+$params.businessKey;
+	});
+},
+
+newField5_click:function($event){
+	if(!$params.leave.comment){
+		Messenger.error(&quot;请在申批意见一栏填写原因！&quot;);
+		return;
+	}
+	
+	$http.post(&quot;ws/leave/commonReply&quot;,{
+									  businessKey:$params.businessKey,
+									  taskId:$params.taskId,
+									  moduleId:$params.moduleId,
+									  isPass:false,
+									  comment:$params.leave.comment}).success(function(data){
+		Messenger.post({
+			    'message': &quot;审批完成！&quot;,
+			    'type': 'success',
+				});
+				
+		window.location.href=&quot;#f/leave_detail?askLeaveId=&quot;+$params.businessKey;
+	});
+}</form:scripts>
+  <form:htmls>&lt;script type=&quot;text/ng-template&quot; id=&quot;newGroup1_html&quot;>
+&lt;div id=&quot;monitorDiv&quot; ng-show=&quot;!taskDown&quot; ng-include=&quot;monitorUrl&quot;>&lt;/div>
+&lt;/script></form:htmls>
+</form:Form>

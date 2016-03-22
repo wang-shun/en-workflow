@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomRule xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns="http://www.chinacreator.com/platform/mvc/rule" sn="leave/getCurrentUserInfo" log="false" className="com.chinacreator.c2.flow.demo.leave.services.AskLeaveService" method="getCurrentUserInfo">
+  <name>获取当前登陆用户信息</name>
+  <desc>获取当前登陆用户信息</desc>
+  <inputs/>
+  <outputs>
+    <output autoValue="Result" desc="" id="result" name="方法返回值" type="java.util.Map"/>
+  </outputs>
+  <params/>
+  <return signature="QMap&lt;QString;QObject;>;" type="java.util.Map"/>
+</CustomRule>

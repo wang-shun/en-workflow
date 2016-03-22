@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomRule xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns="http://www.chinacreator.com/platform/mvc/rule" sn="leave/doneReply" log="false" className="com.chinacreator.c2.flow.demo.leave.services.AskLeaveService" method="doneReply">
+  <name>最后环节申批</name>
+  <desc>最后环节审批处理</desc>
+  <inputs>
+    <input collection="false" desc="当前任务id" id="taskId" required="true"/>
+    <input collection="false" desc="当前任务id" id="moduleId" required="true"/>
+    <input collection="false" desc="是否审批通过" id="isPass" required="true" type="java.lang.Boolean"/>
+    <input collection="false" desc="" id="comment" required="false"/>
+  </inputs>
+  <outputs/>
+  <params>
+    <param autoValue="Input.taskId" name="taskId" signature="QString;" type="java.lang.String"/>
+    <param autoValue="Input.moduleId" name="moduleId" signature="QString;" type="java.lang.String"/>
+    <param autoValue="Input.isPass" name="isPass" signature="QBoolean;" type="java.lang.Boolean"/>
+    <param autoValue="Input.comment" name="comment" signature="QString;" type="java.lang.String"/>
+  </params>
+  <return signature="V" type="void"/>
+</CustomRule>

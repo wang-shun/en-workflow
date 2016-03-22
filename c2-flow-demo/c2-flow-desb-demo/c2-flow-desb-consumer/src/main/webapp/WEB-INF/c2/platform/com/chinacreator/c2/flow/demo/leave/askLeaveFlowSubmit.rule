@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomRule xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns="http://www.chinacreator.com/platform/mvc/rule" sn="leave/askLeaveFlowSubmit" log="false" className="com.chinacreator.c2.flow.demo.leave.services.AskLeaveService" method="askLeaveFlowSubmit">
+  <name>开始审批</name>
+  <desc>提交审批</desc>
+  <inputs>
+    <input collection="false" desc="" id="businessKey" required="true"/>
+    <input collection="false" desc="" id="taskId" required="true"/>
+    <input collection="false" desc="" id="moduleKey" required="true"/>
+  </inputs>
+  <outputs/>
+  <params>
+    <param autoValue="Input.businessKey" name="businessKey" signature="QString;" type="java.lang.String"/>
+    <param autoValue="Input.taskId" name="taskId" signature="QString;" type="java.lang.String"/>
+    <param autoValue="Input.moduleKey" name="moduleKey" signature="QString;" type="java.lang.String"/>
+  </params>
+  <return signature="V" type="void"/>
+</CustomRule>
