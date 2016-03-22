@@ -1,50 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<form:Form xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dync="http://www.chinacreator.com/platform/mvc/ui/dync" xmlns:form="http://www.chinacreator.com/platform/mvc/form" name="公司审批" sn="company_reply" type="form">
-  <form:control type="page/normal">
-    <form:attributes source="page/normal">
-      <dync:attribute default="" group="HTML" id="showHead" name="显示标题" value="">
-        <dync:render/>
-        <dync:children/>
-      </dync:attribute>
-      <dync:attribute default="" group="HTML" id="title" name="标题" value="">
-        <dync:render/>
-        <dync:children/>
-      </dync:attribute>
-      <dync:attribute default="" group="HTML" id="desc" name="描述" value="">
-        <dync:render/>
-        <dync:children/>
-      </dync:attribute>
-      <dync:attribute default="false" group="HTML" id="fixedHeight" name="自动高度" value="false">
-        <dync:render/>
-        <dync:children/>
-      </dync:attribute>
-      <dync:attribute default="false" group="HTML" id="compact" name="紧凑页面" value="false">
-        <dync:render/>
-        <dync:children/>
-      </dync:attribute>
-      <dync:attribute default="false" group="HTML" id="dirtyCheck" name="脏检查" value="false">
-        <dync:render/>
-        <dync:children/>
-      </dync:attribute>
-      <dync:attribute default="" group="注入配置" id="angularJsServices" name="注入服务" value="">
-        <dync:render/>
-        <dync:children/>
-      </dync:attribute>
+<form:Form xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dync="http://www.chinacreator.com/platform/mvc/ui/dync" xmlns:form="http://www.chinacreator.com/platform/mvc/form" name="请假提交申批" sn="leave_detail_submit_dialog" type="form">
+  <form:control type="page/modal">
+    <form:attributes source="page/modal">
       <dync:attribute default="" group="事件" id="beforeDataSourceLoad" name="数据源加载前" value="page_beforeDataSourceLoad($params)">
         <dync:render/>
         <dync:children/>
       </dync:attribute>
-      <dync:attribute default="" group="事件" id="afterDataSourceLoad" name="数据源加载后" value="">
+      <dync:attribute default="" group="HTML" id="title" name="标题" value="请假提交申批">
         <dync:render/>
         <dync:children/>
       </dync:attribute>
-      <dync:attribute default="" group="事件" id="onload" name="页面加载完成" value="">
+      <dync:attribute default="" group="HTML" id="width" name="页面宽度" value="80%">
         <dync:render/>
         <dync:children/>
       </dync:attribute>
     </form:attributes>
   </form:control>
-  <form:child xsi:type="form:Group" id="newGroup2" name="简单容器(DIV)">
+  <form:child xsi:type="form:Group" id="newGroup3" name="简单容器(DIV)">
     <form:control type="container/div">
       <form:attributes source="container/div">
         <dync:attribute default="" group="高级自定义" id="html" name="自定义HTML" value="newGroup1_html">
@@ -54,11 +26,11 @@
       </form:attributes>
     </form:control>
   </form:child>
-  <form:child xsi:type="form:Group" id="entity8" name="实体数据">
+  <form:child xsi:type="form:Group" id="entity5" name="实体数据">
     <form:control type="container/div">
       <form:attributes source="container/div"/>
     </form:control>
-    <form:child xsi:type="form:Field" binding="$params.leave.askUserName" id="askUserId8" name="申请人">
+    <form:child xsi:type="form:Field" binding="$params.leave.askUserName" id="askUserId5" name="申请人">
       <form:control type="widget/text">
         <form:attributes source="widget/text">
           <dync:attribute default="false" group="文本框设置" id="disabled" name="禁用" value="true">
@@ -68,7 +40,7 @@
         </form:attributes>
       </form:control>
     </form:child>
-    <form:child xsi:type="form:Field" binding="$params.leave.askType" id="askType8" name="请假类型">
+    <form:child xsi:type="form:Field" binding="$params.leave.askType" id="askType5" name="请假类型">
       <form:control type="widget/select_simple">
         <form:attributes source="widget/select_simple">
           <dync:attribute default="" group="下拉框设置" id="selectOptions" name="选项" value="{1:&quot;事假&quot;,2:&quot;病假&quot;,3:&quot;年休假&quot;,4:&quot;婚假&quot;,5:&quot;产假&quot;,6:&quot;陪产假&quot;,7:&quot;工伤假&quot;}">
@@ -86,7 +58,7 @@
         </form:attributes>
       </form:control>
     </form:child>
-    <form:child xsi:type="form:Field" binding="" id="askStartTime8" name="请假范围">
+    <form:child xsi:type="form:Field" binding="" id="askStartTime5" name="请假范围">
       <form:control type="widget/date_time_range_picker">
         <form:attributes source="widget/date_time_range_picker">
           <dync:attribute default="" group="时间设置" id="endBind" name="结束时间数据绑定" value="$params.leave.askEndTime">
@@ -120,7 +92,7 @@
         </form:attributes>
       </form:control>
     </form:child>
-    <form:child xsi:type="form:Field" binding="$params.leave.askDays" id="newField13" name="请假天数" customize="true">
+    <form:child xsi:type="form:Field" binding="$params.leave.askDays" id="newField10" name="请假天数" customize="true">
       <form:control type="widget/text">
         <form:attributes source="widget/text">
           <dync:attribute default="false" group="数据校验" id="required" name="必填项" value="true">
@@ -135,7 +107,18 @@
       </form:control>
       <form:validation/>
     </form:child>
-    <form:child xsi:type="form:Field" binding="$params.leave.askReasons" id="askReasons8" name="请假原因">
+    <form:child xsi:type="form:Field" binding="$params.leave.assignToUserName" id="assginTo2" name="申批人" customize="true">
+      <form:control type="widget/text">
+        <form:attributes source="widget/text">
+          <dync:attribute default="false" group="文本框设置" id="disabled" name="禁用" value="true">
+            <dync:render/>
+            <dync:children/>
+          </dync:attribute>
+        </form:attributes>
+      </form:control>
+      <form:validation/>
+    </form:child>
+    <form:child xsi:type="form:Field" binding="$params.leave.askReasons" id="askReasons5" name="请假原因">
       <form:control type="widget/textarea">
         <form:attributes source="widget/textarea">
           <dync:attribute default="false" group="数据校验" id="required" name="必填项" value="true">
@@ -149,26 +132,15 @@
         </form:attributes>
       </form:control>
     </form:child>
-    <form:child xsi:type="form:Field" binding="$params.leave.comment" id="newField1" name="申批意见" customize="true">
-      <form:control type="widget/textarea">
-        <form:attributes source="widget/textarea"/>
-      </form:control>
-      <form:validation/>
-    </form:child>
   </form:child>
-  <form:child xsi:type="form:Group" id="newGroup3" name="简单容器(DIV)">
-    <form:control type="container/div">
-      <form:attributes source="container/div">
-        <dync:attribute default="" group="高级自定义" id="style" name="自定义style" value="text-align: center;">
-          <dync:render/>
-          <dync:children/>
-        </dync:attribute>
-      </form:attributes>
+  <form:child xsi:type="form:Group" id="newGroup4" name="对话框工具条">
+    <form:control type="container/toolbar_modal_footer">
+      <form:attributes source="container/toolbar_modal_footer"/>
     </form:control>
-    <form:child xsi:type="form:Field" id="newField6" name="同意" customize="true">
+    <form:child xsi:type="form:Field" id="newField" name="提交申批" customize="true">
       <form:control type="widget/button">
         <form:attributes source="widget/button">
-          <dync:attribute default="" group="事件设置" id="click" name="点击事件" value="newField4_click($event)">
+          <dync:attribute default="" group="事件设置" id="click" name="点击事件" value="newField_click($event)">
             <dync:render/>
             <dync:children/>
           </dync:attribute>
@@ -176,10 +148,10 @@
       </form:control>
       <form:validation/>
     </form:child>
-    <form:child xsi:type="form:Field" id="newField7" name="不同意" customize="true">
+    <form:child xsi:type="form:Field" id="newField12" name="关闭" customize="true">
       <form:control type="widget/button">
         <form:attributes source="widget/button">
-          <dync:attribute default="" group="事件设置" id="click" name="点击事件" value="newField5_click($event)">
+          <dync:attribute default="" group="事件设置" id="click" name="点击事件" value="newField1_click($event)">
             <dync:render/>
             <dync:children/>
           </dync:attribute>
@@ -191,63 +163,49 @@
   <form:datasources>
     <form:datasource xsi:type="form:Inputs"/>
   </form:datasources>
-  <form:scripts>&#xD;
-&#xD;
-page_beforeDataSourceLoad:function($params){&#xD;
-&#xD;
-	$params.leave={};&#xD;
-&#xD;
-	$scope.monitorUrl=&quot;f/leave_monitor_process?processInstanceId=&quot;+$params.processInstanceId+&quot;&amp;processDefinitionId=&quot;+$params.processDefinitionId;&#xD;
-	&#xD;
-	$http.post(&quot;ws/leave/getAskLeave&quot;,{id:$params.businessKey}).success(function(data){&#xD;
-		$params.leave.askUserName=data.result.askUserName;&#xD;
-		$params.leave.askType=data.result.askType;&#xD;
-		$params.leave.askStartTime=data.result.askStartTime;&#xD;
-		$params.leave.askEndTime=data.result.askEndTime;&#xD;
-		$params.leave.askDays=data.result.askDays;&#xD;
-		$params.leave.askReasons=data.result.askReasons;&#xD;
-		$params.leave.assignToUserName=data.result.assignToUserName;&#xD;
-	});&#xD;
-},&#xD;
-showHideMonitor:function(){&#xD;
-	$scope.taskDown=!$scope.taskDown;&#xD;
-},&#xD;
-&#xD;
-newField4_click:function($event){&#xD;
-	$http.post(&quot;ws/leave/doneReply&quot;,{&#xD;
-									  taskId:$params.taskId,&#xD;
-									  moduleId:$params.moduleId,&#xD;
-									  isPass:true}).success(function(data){&#xD;
-		Messenger.post({&#xD;
-			    'message': &quot;审批完成！&quot;,&#xD;
-			    'type': 'success',&#xD;
-				});&#xD;
-		&#xD;
-		window.location.href=&quot;#f/leave_detail?askLeaveId=&quot;+$params.businessKey;&#xD;
-	});&#xD;
-},&#xD;
-&#xD;
-newField5_click:function($event){&#xD;
-	if(!$params.leave.comment){&#xD;
-		Messenger.error(&quot;请在申批意见一栏填写原因！&quot;);&#xD;
-		return;&#xD;
-	}&#xD;
-	&#xD;
-	$http.post(&quot;ws/leave/doneReply&quot;,{&#xD;
-									  taskId:$params.taskId,&#xD;
-									  moduleId:$params.moduleId,&#xD;
-									  isPass:false,&#xD;
-									  comment:$params.leave.comment}).success(function(data){&#xD;
-		Messenger.post({&#xD;
-			    'message': &quot;审批完成！&quot;,&#xD;
-			    'type': 'success',&#xD;
-				});&#xD;
-				&#xD;
-		window.location.href=&quot;#f/leave_detail?askLeaveId=&quot;+$params.businessKey;&#xD;
-	});&#xD;
+  <form:scripts>
+
+page_beforeDataSourceLoad:function($params){
+	
+	$params.leave={};
+	
+	$http.post(&quot;ws/leave/getAskLeave&quot;,{id:$params.businessKey,moduleKey:$params.moduleKey}).success(function(data){
+		$params.leave.askUserName=data.result.askUserName;
+		$params.leave.askType=data.result.askType;
+		$params.leave.askStartTime=data.result.askStartTime;
+		$params.leave.askEndTime=data.result.askEndTime;
+		$params.leave.askDays=data.result.askDays;
+		$params.leave.askReasons=data.result.askReasons;
+		$params.leave.assignToUserName=data.result.assignToUserName;
+		
+		$params.processInstanceId=data.result.processInstanceId;
+		$params.processDefinitionId=data.result.processDefinitionId;
+		
+		//有流程实例则详细页显示流程监控图
+		if($params.processInstanceId&amp;&amp;$params.processDefinitionId){
+			$scope.monitorUrl=&quot;f/leave_monitor_process?processInstanceId=&quot;+$params.processInstanceId+&quot;&amp;processDefinitionId=&quot;+$params.processDefinitionId;
+		}
+	});
+	
+
+},
+
+newField1_click:function($event){
+	Modal.instance.dismiss();
+},
+
+newField_click:function($event){
+	  $http.post(&quot;ws/leave/askLeaveFlowSubmit&quot;,{
+		businessKey:$params.businessKey,
+		taskId:$params.taskId,
+		moduleKey:$params.moduleKey
+	  }
+	  ).success(function(data){
+		  Modal.instance.close();
+	  });
 }</form:scripts>
   <form:htmls>
 &lt;script type=&quot;text/ng-template&quot; id=&quot;newGroup1_html&quot;>
-&lt;div id=&quot;monitorDiv&quot; ng-show=&quot;!taskDown&quot; ng-include=&quot;monitorUrl&quot;>&lt;/div>
+&lt;div id=&quot;monitorDiv&quot; ng-include=&quot;monitorUrl&quot;>&lt;/div>
 &lt;/script></form:htmls>
 </form:Form>
