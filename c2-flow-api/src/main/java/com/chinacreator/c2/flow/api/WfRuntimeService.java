@@ -729,4 +729,14 @@ public interface WfRuntimeService {
 	public WfResult operateTaskTmp(WfOperator wfOperator, String taskId,
 			String action, String userToDelegateTo,
 			Map<String, Object> variables) throws Exception;
+	
+	
+	/**
+	 * 获取executionId的活动集合
+	 * @param executionId
+	 *          执行ID，不能为空
+	 * @return 活动ID集合
+	 * @throws Exception
+	 */
+	public List<String> getActiveActivityIds(String executionId) throws Exception;
 }

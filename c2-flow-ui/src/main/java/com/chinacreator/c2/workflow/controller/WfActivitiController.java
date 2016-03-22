@@ -1,8 +1,8 @@
 package com.chinacreator.c2.workflow.controller;
 
+import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,23 +10,15 @@ import java.util.zip.ZipInputStream;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.xml.stream.XMLInputFactory;
-import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
 
 import org.activiti.bpmn.converter.BpmnXMLConverter;
 import org.activiti.bpmn.model.BpmnModel;
 import org.activiti.editor.constants.ModelDataJsonConstants;
 import org.activiti.editor.language.json.converter.BpmnJsonConverter;
-import org.activiti.engine.ManagementService;
-import org.activiti.engine.RepositoryService;
-import org.activiti.engine.RuntimeService;
-import org.activiti.engine.TaskService;
 import org.activiti.engine.impl.bpmn.diagram.ProcessDiagramGenerator;
 import org.activiti.engine.impl.context.Context;
-import org.activiti.engine.repository.Deployment;
-import org.activiti.engine.repository.Model;
 import org.activiti.engine.repository.ProcessDefinition;
-import org.activiti.engine.runtime.ProcessInstance;
 import org.activiti.spring.ProcessEngineFactoryBean;
 import org.apache.commons.io.FilenameUtils;
 import org.codehaus.jackson.map.ObjectMapper;
@@ -43,13 +35,25 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.chinacreator.c2.context.OperationContextHolder;
+import com.chinacreator.c2.context.WebOperationContext;
 import com.chinacreator.c2.flow.WfApiFactory;
+import com.chinacreator.c2.flow.Exception.C2FlowRuntimeException;
 import com.chinacreator.c2.flow.api.WfManagerService;
 import com.chinacreator.c2.flow.api.WfRepositoryService;
+import com.chinacreator.c2.flow.api.WfRuntimeService;
+import com.chinacreator.c2.flow.detail.WfConstants;
+import com.chinacreator.c2.flow.detail.WfDeployment;
+import com.chinacreator.c2.flow.detail.WfDeploymentParam;
+import com.chinacreator.c2.flow.detail.WfModel;
+import com.chinacreator.c2.flow.detail.WfOperator;
 import com.chinacreator.c2.flow.detail.WfPageList;
 import com.chinacreator.c2.flow.detail.WfProcessDefinition;
 import com.chinacreator.c2.flow.detail.WfProcessDefinitionParam;
+import com.chinacreator.c2.flow.detail.WfProcessInstance;
+import com.chinacreator.c2.flow.util.CommonUtil;
 import com.chinacreator.c2.web.controller.ResponseFactory;
+import com.chinacreator.c2.web.exception.EntityBusinessException;
 
 /**
  * 流程管理控制器
@@ -61,15 +65,8 @@ import com.chinacreator.c2.web.controller.ResponseFactory;
 public class WfActivitiController {
 
 	protected Logger logger = LoggerFactory.getLogger(getClass());
-
-	protected RepositoryService repositoryService;
-
-	@Autowired
-	protected ManagementService managementService;
-
-	protected RuntimeService runtimeService;
-
-	protected TaskService taskService;
+	
+	private WfRuntimeService wfRuntimeService = WfApiFactory.getWfRuntimeService();
 
 	private WfManagerService wfManagerService = WfApiFactory.getWfManagerService();
 
@@ -145,17 +142,10 @@ public class WfActivitiController {
 			@RequestParam("processDefinitionId") String processDefinitionId,
 			@RequestParam("resourceType") String resourceType,
 			HttpServletResponse response) throws Exception {
-		ProcessDefinition processDefinition = repositoryService
-				.createProcessDefinitionQuery()
-				.processDefinitionId(processDefinitionId).singleResult();
-		String resourceName = "";
-		if (resourceType.equals("image")) {
-			resourceName = processDefinition.getDiagramResourceName();
-		} else if (resourceType.equals("xml")) {
-			resourceName = processDefinition.getResourceName();
-		}
-		InputStream resourceAsStream = repositoryService.getResourceAsStream(
-				processDefinition.getDeploymentId(), resourceName);
+
+		String bpmnStr=wfRepositoryService.getProcessDefinitionBPMN(processDefinitionId);
+		InputStream resourceAsStream=new ByteArrayInputStream(bpmnStr.getBytes(WfConstants.WF_CHARSET_UTF_8));
+
 		byte[] b = new byte[1024];
 		int len = -1;
 		while ((len = resourceAsStream.read(b, 0, 1024)) != -1) {
@@ -178,23 +168,11 @@ public class WfActivitiController {
 			@RequestParam("type") String resourceType,
 			@RequestParam("pid") String processInstanceId,
 			HttpServletResponse response) throws Exception {
-		InputStream resourceAsStream = null;
-		ProcessInstance processInstance = runtimeService
-				.createProcessInstanceQuery()
-				.processInstanceId(processInstanceId).singleResult();
-		ProcessDefinition processDefinition = repositoryService
-				.createProcessDefinitionQuery()
-				.processDefinitionId(processInstance.getProcessDefinitionId())
-				.singleResult();
-
-		String resourceName = "";
-		if (resourceType.equals("image")) {
-			resourceName = processDefinition.getDiagramResourceName();
-		} else if (resourceType.equals("xml")) {
-			resourceName = processDefinition.getResourceName();
-		}
-		resourceAsStream = repositoryService.getResourceAsStream(
-				processDefinition.getDeploymentId(), resourceName);
+		
+		WfProcessInstance wfProcessInstance=wfRuntimeService.getProcessInstanceById(processInstanceId);
+		String bpmnStr=wfRepositoryService.getProcessDefinitionBPMN(wfProcessInstance.getProcessDefinitionId());
+		InputStream resourceAsStream=new ByteArrayInputStream(bpmnStr.getBytes(WfConstants.WF_CHARSET_UTF_8));
+		
 		byte[] b = new byte[1024];
 		int len = -1;
 		while ((len = resourceAsStream.read(b, 0, 1024)) != -1) {
@@ -236,12 +214,41 @@ public class WfActivitiController {
 		return new ResponseFactory().createResponseBodyHtml(result);
 	}
 
+	
 	private void deleteDelopymentIdsByKey(String key, boolean cascade) {
-		List<Deployment> list = repositoryService.createDeploymentQuery()
-				.processDefinitionKey(key).orderByDeploymenTime().desc().list();
-		for (Deployment deployment : list) {
-			repositoryService.deleteDeployment(deployment.getId(), cascade);
+		WfDeploymentParam wfDeploymentParam=new WfDeploymentParam();
+		wfDeploymentParam.setProcessDefinitionKey(key);
+		
+		String tenantId=WfApiFactory.getWfTenant();
+		
+		WebOperationContext context = (WebOperationContext)OperationContextHolder.getContext();
+		WfOperator wfOperator = new WfOperator(context.getUser().getId(),context.getUser().getName(),context.getUser().getName(),context.getRequest().getRemoteHost(),WfApiFactory.getWfTenant());
+		
+		try {
+			
+			//不同租户下key有可能相同
+			if(!CommonUtil.stringNullOrEmpty(tenantId)){
+				wfDeploymentParam.setTenantId(tenantId);
+			}else{
+				wfDeploymentParam.setWithoutTenantId(true);
+			}
+			
+			WfPageList<WfDeployment, WfDeploymentParam> wfPageList=wfRepositoryService.queryDeployments(wfDeploymentParam);
+			for (WfDeployment wfDeployment : wfPageList.getDatas()) {
+				wfRepositoryService.deleteDeploymentsById(wfOperator, cascade,wfDeployment.getId());
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new EntityBusinessException("获取流程部署出错",e);
 		}
+		
+//		List<Deployment> list = repositoryService.createDeploymentQuery()
+//				.processDefinitionKey(key).orderByDeploymenTime().desc().list();
+//		
+//		for (Deployment deployment : list) {
+//			repositoryService.deleteDeployment(deployment.getId(), cascade);
+//		}
 
 	}
 
@@ -267,13 +274,18 @@ public class WfActivitiController {
 	@RequestMapping(value = "/process/trace/auto/{executionId}")
 	public void readResource(@PathVariable("executionId") String executionId,
 			HttpServletResponse response) throws Exception {
-		ProcessInstance processInstance = runtimeService
-				.createProcessInstanceQuery().processInstanceId(executionId)
-				.singleResult();
-		BpmnModel bpmnModel = repositoryService.getBpmnModel(processInstance
-				.getProcessDefinitionId());
-		List<String> activeActivityIds = runtimeService
-				.getActiveActivityIds(executionId);
+		
+		WfProcessInstance processInstance = wfRuntimeService.getProcessInstanceById(executionId);
+
+		String bpmnStr=wfRepositoryService.getProcessDefinitionBPMN(processInstance.getProcessDefinitionId());
+		InputStream resourceAsStream=new ByteArrayInputStream(bpmnStr.getBytes(WfConstants.WF_CHARSET_UTF_8));
+		
+		XMLInputFactory xif = XMLInputFactory.newInstance();
+		InputStreamReader in = new InputStreamReader(resourceAsStream, "UTF-8");
+		XMLStreamReader xtr = xif.createXMLStreamReader(in);
+		BpmnModel bpmnModel = new BpmnXMLConverter().convertToBpmnModel(xtr);
+		
+		List<String> activeActivityIds = wfRuntimeService.getActiveActivityIds(executionId);
 		// 不使用spring请使用下面的两行代码
 		// ProcessEngineImpl defaultProcessEngine = (ProcessEngineImpl)
 		// ProcessEngines.getDefaultProcessEngine();
@@ -283,8 +295,7 @@ public class WfActivitiController {
 		Context.setProcessEngineConfiguration(processEngine
 				.getProcessEngineConfiguration());
 
-		InputStream imageStream = ProcessDiagramGenerator.generateDiagram(
-				bpmnModel, "png", activeActivityIds);
+		InputStream imageStream = ProcessDiagramGenerator.generateDiagram(bpmnModel, "png", activeActivityIds);
 
 		// 输出资源内容到相应对象
 		byte[] b = new byte[1024];
@@ -301,21 +312,25 @@ public class WfActivitiController {
 		String fileName = file.getOriginalFilename();
 
 		try {
-			InputStream fileInputStream = file.getInputStream();
-			Deployment deployment = null;
-
+			
+			//如果开启了分布式，将分布式应用名称作为tenantId
+			String tenantId=WfApiFactory.getWfTenant();
+			
+			WebOperationContext context = (WebOperationContext)OperationContextHolder.getContext();
+			WfOperator wfOperator = new WfOperator(context.getUser().getId(),context.getUser().getName(),context.getUser().getName(),context.getRequest().getRemoteHost(),tenantId);
+			
+			WfDeployment wfDeployment = null;
+		
 			String extension = FilenameUtils.getExtension(fileName);
 			if (extension.equals("zip") || extension.equals("bar")) {
-				ZipInputStream zip = new ZipInputStream(fileInputStream);
-				deployment = repositoryService.createDeployment()
-						.addZipInputStream(zip).deploy();
+				ZipInputStream zip = new ZipInputStream(file.getInputStream());
+				wfDeployment=wfRepositoryService.deployZip(wfOperator,null,null,zip);
 			} else {
-				deployment = repositoryService.createDeployment()
-						.addInputStream(fileName, fileInputStream).deploy();
+				wfDeployment=wfRepositoryService.deployByte(wfOperator,file.getBytes(),fileName,null);
 			}
 
 			// 部署成功后需要更新绑定关系为当前的最新版本的流程
-			reBindModuleAndProcess(deployment.getId());
+			reBindModuleAndProcess(wfDeployment.getId());
 
 			/*
 			 * List<ProcessDefinition> list =
@@ -328,16 +343,26 @@ public class WfActivitiController {
 			 */
 			Map<String, Object> model = new HashMap<String, Object>();
 			model.put("result", "success");
-			model.put("deployId", deployment.getId());
+			model.put("deployId", wfDeployment.getId());
 			// return deployment.getId();
 			// return model;
-			ProcessDefinition pdf = repositoryService.createProcessDefinitionQuery().deploymentId(deployment.getId()).singleResult();
-			wfManagerService.addTaskListener(pdf.getKey());//防止分布式部署没有给服务提供端加监听导致流程执行不正常
+			
+			WfProcessDefinitionParam wfProcessDefinitionParam=new WfProcessDefinitionParam();
+			wfProcessDefinitionParam.setDeploymentId(wfDeployment.getId());
+			WfPageList<WfProcessDefinition, WfProcessDefinitionParam> wfList=wfRepositoryService.queryProcessDefinitions(wfProcessDefinitionParam);
+			WfProcessDefinition pdf = wfList.getDatas().get(0);
+			
+			if(null==tenantId){
+				wfManagerService.addTaskListener(pdf.getKey());//防止分布式部署没有给服务提供端加监听导致流程执行不正常
+			}else{
+				wfManagerService.addTaskListener(pdf.getKey(),tenantId);//防止分布式部署没有给服务提供端加监听导致流程执行不正常
+			}
+			
 //			AddTaskListenerUtil.addTaskListener(repositoryService, managementService, pdf.getKey());
 			return new ResponseFactory().createResponseBodyJSONObject(model);
 		} catch (Exception e) {
-			logger.error(
-					"error on deploy process, because of file input stream", e);
+			logger.error("error on deploy process, because of file input stream", e);
+			
 		}
 		return null;
 
@@ -347,13 +372,12 @@ public class WfActivitiController {
 	@RequestMapping(value = "/process/convert-to-model/{processDefinitionId}")
 	public String convertToModel(
 			@PathVariable("processDefinitionId") String processDefinitionId)
-			throws UnsupportedEncodingException, XMLStreamException {
-		ProcessDefinition processDefinition = repositoryService
-				.createProcessDefinitionQuery()
-				.processDefinitionId(processDefinitionId).singleResult();
-		InputStream bpmnStream = repositoryService.getResourceAsStream(
-				processDefinition.getDeploymentId(),
-				processDefinition.getResourceName());
+			throws Exception {
+		
+		WfProcessDefinition wfProcessDefinition= wfRepositoryService.getProcessDefinition(processDefinitionId);
+		String bpmnStr=wfRepositoryService.getProcessDefinitionBPMN(processDefinitionId);
+		InputStream bpmnStream=new ByteArrayInputStream(bpmnStr.getBytes(WfConstants.WF_CHARSET_UTF_8));
+		
 		XMLInputFactory xif = XMLInputFactory.newInstance();
 		InputStreamReader in = new InputStreamReader(bpmnStream, "UTF-8");
 		XMLStreamReader xtr = xif.createXMLStreamReader(in);
@@ -361,23 +385,27 @@ public class WfActivitiController {
 
 		BpmnJsonConverter converter = new BpmnJsonConverter();
 		ObjectNode modelNode = converter.convertToJson(bpmnModel);
-		Model modelData = repositoryService.newModel();
-		modelData.setKey(processDefinition.getKey());
-		modelData.setName(processDefinition.getResourceName());
-		modelData.setCategory(processDefinition.getDeploymentId());
+		WfModel modelData = new WfModel();
+		modelData.setKey(wfProcessDefinition.getKey());
+		modelData.setName(wfProcessDefinition.getResourceName());
+		modelData.setCategory(wfProcessDefinition.getDeploymentId());
 
 		ObjectNode modelObjectNode = new ObjectMapper().createObjectNode();
 		modelObjectNode.put(ModelDataJsonConstants.MODEL_NAME,
-				processDefinition.getName());
+				wfProcessDefinition.getName());
 		modelObjectNode.put(ModelDataJsonConstants.MODEL_REVISION, 1);
 		modelObjectNode.put(ModelDataJsonConstants.MODEL_DESCRIPTION,
-				processDefinition.getDescription());
+				wfProcessDefinition.getDescription());
 		modelData.setMetaInfo(modelObjectNode.toString());
 
-		repositoryService.saveModel(modelData);
+		WebOperationContext context = (WebOperationContext)OperationContextHolder.getContext();
+		WfOperator wfOperator = new WfOperator(context.getUser().getId(),context.getUser().getName(),context.getUser().getName(),context.getRequest().getRemoteHost(),WfApiFactory.getWfTenant());
+		
+		modelData=wfRepositoryService.insertModel(wfOperator,modelData);
+		//repositoryService.saveModel(modelData);
 
-		repositoryService.addModelEditorSource(modelData.getId(), modelNode
-				.toString().getBytes("utf-8"));
+		wfRepositoryService.saveModelEditorSource(wfOperator,modelData.getId(),modelNode.toString());
+		//repositoryService.addModelEditorSource(modelData.getId(), modelNode.toString().getBytes("utf-8"));
 
 		return "redirect:/workflow/model/list";
 	}
@@ -444,17 +472,34 @@ public class WfActivitiController {
 	public String updateState(@PathVariable("state") String state,
 			@PathVariable("processDefinitionId") String processDefinitionId,
 			RedirectAttributes redirectAttributes) {
+		
+		WebOperationContext context = (WebOperationContext)OperationContextHolder.getContext();
+		WfOperator wfOperator = new WfOperator(context.getUser().getId(),context.getUser().getName(),context.getUser().getName(),context.getRequest().getRemoteHost(),WfApiFactory.getWfTenant());
+
 		if (state.equals("active")) {
-			redirectAttributes.addFlashAttribute("message", "已激活ID为["
-					+ processDefinitionId + "]的流程定义。");
-			repositoryService.activateProcessDefinitionById(
-					processDefinitionId, true, null);
+			
+			try{
+				wfRepositoryService.activateProcessDefinition(wfOperator,processDefinitionId);
+			}catch(Exception e){
+				logger.error("流程激活异常：processDefinitionId={}", processDefinitionId, e);
+				throw new C2FlowRuntimeException("流程激活异常：processDefinitionId="+processDefinitionId,e);
+			}
+			
+			redirectAttributes.addFlashAttribute("message", "已激活ID为["+ processDefinitionId + "]的流程定义。");
+			//repositoryService.activateProcessDefinitionById(processDefinitionId, true, null);
 		} else if (state.equals("suspend")) {
-			repositoryService.suspendProcessDefinitionById(processDefinitionId,
-					true, null);
-			redirectAttributes.addFlashAttribute("message", "已挂起ID为["
-					+ processDefinitionId + "]的流程定义。");
+			
+			try{
+				wfRepositoryService.suspendProcessDefinition(wfOperator, processDefinitionId);
+			}catch(Exception e){
+				logger.error("挂起异常：processDefinitionId={}", processDefinitionId, e);
+				throw new C2FlowRuntimeException("挂起异常：processDefinitionId="+processDefinitionId,e);
+			}
+			
+			//repositoryService.suspendProcessDefinitionById(processDefinitionId,true, null);
+			redirectAttributes.addFlashAttribute("message", "已挂起ID为["+ processDefinitionId + "]的流程定义。");
 		}
+			
 		return "redirect:/workflow/process-list";
 	}
 
@@ -485,25 +530,10 @@ public class WfActivitiController {
 	 * = workflowProcessDefinitionService; }
 	 */
 
-	@Autowired
-	public void setRepositoryService(RepositoryService repositoryService) {
-		this.repositoryService = repositoryService;
-	}
-
-	@Autowired
-	public void setRuntimeService(RuntimeService runtimeService) {
-		this.runtimeService = runtimeService;
-	}
-
 	/*
 	 * @Autowired public void setTraceService(WorkflowTraceService traceService)
 	 * { this.traceService = traceService; }
 	 */
-
-	@Autowired
-	public void setTaskService(TaskService taskService) {
-		this.taskService = taskService;
-	}
 
 	private void reBindModuleAndProcess(String deployId) throws Exception {
 		if (null != deployId && !"".equals(deployId.trim())) {
@@ -532,14 +562,6 @@ public class WfActivitiController {
 			}
 
 		}
-	}
-
-	public ManagementService getManagementService() {
-		return managementService;
-	}
-
-	public void setManagementService(ManagementService managementService) {
-		this.managementService = managementService;
 	}
 
 }

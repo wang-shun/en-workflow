@@ -1032,5 +1032,74 @@ public class C2FlowRuleService implements WfRuntimeService,
 	public void setDefaultYearHoliday(String yHoliday) throws Exception {
 		WfApiFactory.getWfManagerService().setDefaultYearHoliday(yHoliday);
 	}
+	
+	@Override
+	public List<WfActivity> getActivitiesByDefinition(String processDefinitionId)
+			throws Exception {
+		return WfApiFactory.getWfRepositoryService().getActivitiesByDefinition(processDefinitionId);
+	}
+	
+	@Override
+	public WfModel insertModel(WfOperator wfOperator, WfModel wfModel)
+			throws Exception {
+		return WfApiFactory.getWfRepositoryService().insertModel(wfOperator, wfModel);
+	}
 
+	@Override
+	public WfDeployment deployClassPath(WfOperator wfOperator, String name,
+			String category, String resourceClassPath) throws Exception {
+		return WfApiFactory.getWfRepositoryService().deployClassPath(wfOperator, name, category, resourceClassPath);
+	}
+	
+	
+	@Override
+	public WfDeployment deployContent(WfOperator wfOperator, String name,
+			String category, String resourceName, String resourceContent)
+			throws Exception {
+		return WfApiFactory.getWfRepositoryService().deployContent(wfOperator, name, category, resourceName, resourceContent);
+	}
+	
+	
+	@Override
+	public WfDeployment deployZip(WfOperator wfOperator, String name,
+			String category, InputStream inputStream) throws Exception {
+		return WfApiFactory.getWfRepositoryService().deployZip(wfOperator, name, category, inputStream);
+	}
+	
+	@Override
+	public WfDeployment deployByte(WfOperator wfOperator, byte[] bytes,
+			String name, String category) throws Exception {
+		return WfApiFactory.getWfRepositoryService().deployByte(wfOperator, bytes, name, category);
+	}
+	
+	@Override
+	public List<String> getActiveActivityIds(String executionId)
+			throws Exception {
+		return WfApiFactory.getWfRuntimeService().getActiveActivityIds(executionId);
+	}
+	
+	@Override
+	public String getStartFormKey(String processDefinitionId) {
+		return WfApiFactory.getWfFormService().getStartFormKey(processDefinitionId);
+	}
+	
+	@Override
+	public String getTaskFormKey(String processDefinitionId,
+			String taskDefinitionKey) {
+		return WfApiFactory.getWfFormService().getTaskFormKey(processDefinitionId, taskDefinitionKey);
+	}
+	
+	@Override
+	public void addTaskListener(String processDefinitionKey, String tenantId)
+			throws Exception {
+		WfApiFactory.getWfManagerService().addTaskListener(processDefinitionKey, tenantId);
+		
+	}
+	
+	@Override
+	public List<String> getBindModuleIdsByProcessDefKeyAndTenant(
+			String processDefinitionKey, String tenantId) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

@@ -65,4 +65,20 @@ public interface WfFormService {
 	 */
 	public String saveTaskFormData(WfOperator wfOperator, WfFormData data)
 			throws Exception;
+	
+	/**
+	 * 获取流程定义中任务的表单
+	 * @param processDefinitionId
+	 * @param taskDefinitionKey
+	 * @return
+	 */
+	public String getTaskFormKey(String processDefinitionId, String taskDefinitionKey);
+	
+	
+	/**
+	 * 获取流程定义中开始节点表单
+	 * @param processDefinitionId
+	 * @return
+	 */
+	public String getStartFormKey(String processDefinitionId);
 }

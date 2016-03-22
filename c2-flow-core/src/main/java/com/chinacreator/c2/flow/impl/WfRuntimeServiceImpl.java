@@ -1888,4 +1888,9 @@ public class WfRuntimeServiceImpl implements WfRuntimeService {
 		}
 		return null;
 	}
+	
+	
+	public List<String> getActiveActivityIds(String executionId) {
+		return runtimeService.getActiveActivityIds(executionId);
+	}
 }

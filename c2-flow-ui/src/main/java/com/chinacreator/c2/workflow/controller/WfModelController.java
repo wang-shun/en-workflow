@@ -4,7 +4,6 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,10 +18,6 @@ import org.activiti.bpmn.converter.BpmnXMLConverter;
 import org.activiti.bpmn.model.BpmnModel;
 import org.activiti.editor.constants.ModelDataJsonConstants;
 import org.activiti.editor.language.json.converter.BpmnJsonConverter;
-import org.activiti.engine.RepositoryService;
-import org.activiti.engine.repository.Deployment;
-import org.activiti.engine.repository.Model;
-import org.activiti.engine.repository.ProcessDefinition;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.codehaus.jackson.JsonNode;
@@ -30,7 +25,6 @@ import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.node.ObjectNode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -40,9 +34,17 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.chinacreator.c2.context.OperationContextHolder;
+import com.chinacreator.c2.context.WebOperationContext;
 import com.chinacreator.c2.flow.WfApiFactory;
+import com.chinacreator.c2.flow.Exception.C2FlowRuntimeException;
 import com.chinacreator.c2.flow.api.WfManagerService;
 import com.chinacreator.c2.flow.api.WfRepositoryService;
+import com.chinacreator.c2.flow.detail.WfConstants;
+import com.chinacreator.c2.flow.detail.WfDeployment;
+import com.chinacreator.c2.flow.detail.WfModel;
+import com.chinacreator.c2.flow.detail.WfModelParam;
+import com.chinacreator.c2.flow.detail.WfOperator;
 import com.chinacreator.c2.flow.detail.WfPageList;
 import com.chinacreator.c2.flow.detail.WfProcessDefinition;
 import com.chinacreator.c2.flow.detail.WfProcessDefinitionParam;
@@ -59,9 +61,6 @@ public class WfModelController {
 
 	protected Logger logger = LoggerFactory.getLogger(getClass());
 
-	@Autowired
-	RepositoryService repositoryService;
-
 	private WfManagerService wfManagerService = WfApiFactory.getWfManagerService();
 
 	private WfRepositoryService wfRepositoryService = WfApiFactory.getWfRepositoryService();
@@ -72,8 +71,18 @@ public class WfModelController {
 	@RequestMapping(value = "list")
 	public ModelAndView modelList() {
 		ModelAndView mav = new ModelAndView("workflow/model-list");
-		List<Model> list = repositoryService.createModelQuery().list();
-		mav.addObject("list", list);
+		WfModelParam wfModelParam=new WfModelParam();
+		
+		WfPageList<WfModel, WfModelParam> wfPageList=new WfPageList<WfModel, WfModelParam>();
+		try{
+			wfPageList=wfRepositoryService.queryModels(wfModelParam);
+		}catch(Exception e){
+			e.printStackTrace();
+			throw new C2FlowRuntimeException("获取工作流模型异常",e);
+		}
+		
+		//List<Model> list = wfRepositoryService.createModelQuery().list();
+		mav.addObject("list", wfPageList.getDatas());
 		return mav;
 	}
 
@@ -101,7 +110,9 @@ public class WfModelController {
 			propertiesNode.put("documentation", description);
 			propertiesNode.put("description", description);
 			editorNode.put("properties", propertiesNode);
-			Model modelData = repositoryService.newModel();
+			
+			WfModel modelData=new WfModel();
+			//Model modelData = repositoryService.newModel();
 
 			ObjectNode modelObjectNode = objectMapper.createObjectNode();
 			modelObjectNode.put(ModelDataJsonConstants.MODEL_NAME, name);
@@ -112,15 +123,21 @@ public class WfModelController {
 			modelData.setMetaInfo(modelObjectNode.toString());
 			modelData.setName(name);
 			modelData.setKey(StringUtils.defaultString(key));
+			
+			WebOperationContext context = (WebOperationContext)OperationContextHolder.getContext();
+			WfOperator wfOperator = new WfOperator(context.getUser().getId(),context.getUser().getName(),context.getUser().getName(),context.getRequest().getRemoteHost(),WfApiFactory.getWfTenant());
+			
+			modelData=wfRepositoryService.insertModel(wfOperator,modelData);
 
-			repositoryService.saveModel(modelData);
-			repositoryService.addModelEditorSource(modelData.getId(),
-					editorNode.toString().getBytes("utf-8"));
+			//repositoryService.saveModel(modelData);
+			
+			wfRepositoryService.saveModelEditorSource(wfOperator,modelData.getId(),editorNode.toString());
+			//repositoryService.addModelEditorSource(modelData.getId(),editorNode.toString().getBytes("utf-8"));
 
-			response.sendRedirect(request.getContextPath()
-					+ "/workflow/service/editor?id=" + modelData.getId());
+			response.sendRedirect(request.getContextPath()+ "/workflow/service/editor?id=" + modelData.getId());
 		} catch (Exception e) {
 			logger.error("创建模型失败：", e);
+			throw new C2FlowRuntimeException("创建模型失败,请检查服务是否可!",e);
 		}
 	}
 
@@ -131,22 +148,27 @@ public class WfModelController {
 	public String deploy(@PathVariable("modelId") String modelId,
 			RedirectAttributes redirectAttributes) {
 		try {
-			Model modelData = repositoryService.getModel(modelId);
+			
+			WfModel modelData=wfRepositoryService.getModelById(modelId);
+			
 			ObjectNode modelNode = (ObjectNode) new ObjectMapper()
-					.readTree(repositoryService.getModelEditorSource(modelData
-							.getId()));
+					.readTree(wfRepositoryService.getModelEditorSource(modelData.getId()));
 			byte[] bpmnBytes = null;
 
-			BpmnModel model = new BpmnJsonConverter()
-					.convertToBpmnModel(modelNode);
+			BpmnModel model = new BpmnJsonConverter().convertToBpmnModel(modelNode);
 			bpmnBytes = new BpmnXMLConverter().convertToXML(model);
 
 			String processName = modelData.getName() + ".bpmn20.xml";
-			Deployment deployment = repositoryService.createDeployment()
-					.name(modelData.getName())
-					.addString(processName, new String(bpmnBytes)).deploy();
-			redirectAttributes.addFlashAttribute("message", "部署成功，部署ID="
-					+ deployment.getId());
+			
+			//如果开启了分布式，将分布式应用名称作为tenantId
+			String tenantId=WfApiFactory.getWfTenant();
+			
+			WebOperationContext context = (WebOperationContext)OperationContextHolder.getContext();
+			WfOperator wfOperator = new WfOperator(context.getUser().getId(),context.getUser().getName(),context.getUser().getName(),context.getRequest().getRemoteHost(),tenantId);
+			
+			WfDeployment wfDeployment=wfRepositoryService.deployContent(wfOperator,modelData.getName(),null,processName,new String(bpmnBytes));
+
+			redirectAttributes.addFlashAttribute("message", "部署成功，部署ID="+ wfDeployment.getId());
 		} catch (Exception e) {
 			logger.error("根据模型部署流程失败：modelId={}", modelId, e);
 		}
@@ -160,10 +182,9 @@ public class WfModelController {
 	public void export(@PathVariable("modelId") String modelId,
 			HttpServletResponse response) {
 		try {
-			Model modelData = repositoryService.getModel(modelId);
+			WfModel modelData = wfRepositoryService.getModelById(modelId);
 			BpmnJsonConverter jsonConverter = new BpmnJsonConverter();
-			JsonNode editorNode = new ObjectMapper().readTree(repositoryService
-					.getModelEditorSource(modelData.getId()));
+			JsonNode editorNode = new ObjectMapper().readTree(wfRepositoryService.getModelEditorSource(modelData.getId()));
 			BpmnModel bpmnModel = jsonConverter.convertToBpmnModel(editorNode);
 			BpmnXMLConverter xmlConverter = new BpmnXMLConverter();
 			byte[] bpmnBytes = xmlConverter.convertToXML(bpmnModel);
@@ -180,21 +201,29 @@ public class WfModelController {
 		}
 	}
 
+	
 	/**
 	 * 导出model的xml文件,含转换为模型
+	 * @throws Exception 
 	 */
 	@RequestMapping(value = "exportBpmnFile/{processDefinitionId}")
 	public void exportBpmnFile(
 			@PathVariable("processDefinitionId") String processDefinitionId,
-			HttpServletResponse response) throws UnsupportedEncodingException,
-			XMLStreamException {
+			HttpServletResponse response) throws Exception {
 
-		ProcessDefinition processDefinition = repositoryService
-				.createProcessDefinitionQuery()
-				.processDefinitionId(processDefinitionId).singleResult();
-		InputStream bpmnStream = repositoryService.getResourceAsStream(
-				processDefinition.getDeploymentId(),
-				processDefinition.getResourceName());
+		//转换为model
+		WfProcessDefinition wfProcessDefinition=null;
+		String bpmnStr=null;
+		try {
+			wfProcessDefinition = wfRepositoryService.getProcessDefinition(processDefinitionId);
+			bpmnStr=wfRepositoryService.getProcessDefinitionBPMN(processDefinitionId);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new C2FlowRuntimeException("获取流程定义异常",e);
+		}
+
+		InputStream bpmnStream=new ByteArrayInputStream(bpmnStr.getBytes(WfConstants.WF_CHARSET_UTF_8));
+		
 		XMLInputFactory xif = XMLInputFactory.newInstance();
 		InputStreamReader in = new InputStreamReader(bpmnStream, "UTF-8");
 		XMLStreamReader xtr = xif.createXMLStreamReader(in);
@@ -202,30 +231,35 @@ public class WfModelController {
 
 		BpmnJsonConverter converter = new BpmnJsonConverter();
 		ObjectNode modelNode = converter.convertToJson(bpmnModel);
-		Model modelData = repositoryService.newModel();
-		modelData.setKey(processDefinition.getKey());
-		modelData.setName(processDefinition.getResourceName());
-		modelData.setCategory(processDefinition.getDeploymentId());
+		WfModel modelData = new WfModel();
+		modelData.setKey(wfProcessDefinition.getKey());
+		modelData.setName(wfProcessDefinition.getResourceName());
+		modelData.setCategory(wfProcessDefinition.getDeploymentId());
 
 		ObjectNode modelObjectNode = new ObjectMapper().createObjectNode();
 		modelObjectNode.put(ModelDataJsonConstants.MODEL_NAME,
-				processDefinition.getName());
+				wfProcessDefinition.getName());
 		modelObjectNode.put(ModelDataJsonConstants.MODEL_REVISION, 1);
 		modelObjectNode.put(ModelDataJsonConstants.MODEL_DESCRIPTION,
-				processDefinition.getDescription());
+				wfProcessDefinition.getDescription());
 		modelData.setMetaInfo(modelObjectNode.toString());
 
-		repositoryService.saveModel(modelData);
+		WebOperationContext context = (WebOperationContext)OperationContextHolder.getContext();
+		WfOperator wfOperator = new WfOperator(context.getUser().getId(),context.getUser().getName(),context.getUser().getName(),context.getRequest().getRemoteHost(),WfApiFactory.getWfTenant());
+		
+		modelData=wfRepositoryService.insertModel(wfOperator,modelData);
+		//repositoryService.saveModel(modelData);
 
-		repositoryService.addModelEditorSource(modelData.getId(), modelNode
-				.toString().getBytes("utf-8"));
+		wfRepositoryService.saveModelEditorSource(wfOperator,modelData.getId(),modelNode.toString());
+		//repositoryService.addModelEditorSource(modelData.getId(), modelNode.toString().getBytes("utf-8"));
 
 		String modelId = modelData.getId();
 		try {
-			Model mData = repositoryService.getModel(modelId);
+			
+			WfModel wfModel = wfRepositoryService.getModelById(modelId);
 			BpmnJsonConverter jsonConverter = new BpmnJsonConverter();
-			JsonNode editorNode = new ObjectMapper().readTree(repositoryService
-					.getModelEditorSource(mData.getId()));
+			JsonNode editorNode = new ObjectMapper().readTree(wfRepositoryService
+					.getModelEditorSource(wfModel.getId()));
 			BpmnModel bModel = jsonConverter.convertToBpmnModel(editorNode);
 			BpmnXMLConverter xmlConverter = new BpmnXMLConverter();
 			byte[] bpmnBytes = xmlConverter.convertToXML(bModel);
@@ -238,6 +272,7 @@ public class WfModelController {
 			response.flushBuffer();
 		} catch (Exception e) {
 			logger.error("导出model的xml文件失败：modelId={}", modelId, e);
+			throw new C2FlowRuntimeException("导出model的xml文件失败：modelId="+modelId,e);
 		}
 
 	}
@@ -246,14 +281,29 @@ public class WfModelController {
 	public void editProcessByConvert(
 			@PathVariable("processDefinitionId") String processDefinitionId,
 			HttpServletRequest request, HttpServletResponse response)
-			throws IOException, XMLStreamException {
-		// 转换为model
-		ProcessDefinition processDefinition = repositoryService
-				.createProcessDefinitionQuery()
-				.processDefinitionId(processDefinitionId).singleResult();
-		InputStream bpmnStream = repositoryService.getResourceAsStream(
-				processDefinition.getDeploymentId(),
-				processDefinition.getResourceName());
+			throws Exception {
+		
+		//转换为model
+		WfProcessDefinition wfProcessDefinition=null;
+		String bpmnStr=null;
+		try {
+			wfProcessDefinition = wfRepositoryService.getProcessDefinition(processDefinitionId);
+			bpmnStr=wfRepositoryService.getProcessDefinitionBPMN(processDefinitionId);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new C2FlowRuntimeException("获取流程定义异常",e);
+		}
+		
+//		ProcessDefinition processDefinition = repositoryService
+//				.createProcessDefinitionQuery()
+//				.processDefinitionId(processDefinitionId).singleResult();
+		
+//		InputStream bpmnStream = repositoryService.getResourceAsStream(
+//				wfProcessDefinition.getDeploymentId(),
+//				wfProcessDefinition.getResourceName());
+		
+		InputStream bpmnStream=new ByteArrayInputStream(bpmnStr.getBytes(WfConstants.WF_CHARSET_UTF_8));
+		
 		XMLInputFactory xif = XMLInputFactory.newInstance();
 		InputStreamReader in = new InputStreamReader(bpmnStream, "UTF-8");
 		XMLStreamReader xtr = xif.createXMLStreamReader(in);
@@ -261,23 +311,31 @@ public class WfModelController {
 
 		BpmnJsonConverter converter = new BpmnJsonConverter();
 		ObjectNode modelNode = converter.convertToJson(bpmnModel);
-		Model modelData = repositoryService.newModel();
-		modelData.setKey(processDefinition.getKey());
-		modelData.setName(processDefinition.getResourceName());
-		modelData.setCategory(processDefinition.getDeploymentId());
+		
+		WfModel modelData=new WfModel();
+		//Model modelData = repositoryService.newModel();
+		modelData.setKey(wfProcessDefinition.getKey());
+		modelData.setName(wfProcessDefinition.getResourceName());
+		modelData.setCategory(wfProcessDefinition.getDeploymentId());
 
 		ObjectNode modelObjectNode = new ObjectMapper().createObjectNode();
 		modelObjectNode.put(ModelDataJsonConstants.MODEL_NAME,
-				processDefinition.getName());
+				wfProcessDefinition.getName());
 		modelObjectNode.put(ModelDataJsonConstants.MODEL_REVISION, 1);
 		modelObjectNode.put(ModelDataJsonConstants.MODEL_DESCRIPTION,
-				processDefinition.getDescription());
+				wfProcessDefinition.getDescription());
 		modelData.setMetaInfo(modelObjectNode.toString());
 
-		repositoryService.saveModel(modelData);
-
-		repositoryService.addModelEditorSource(modelData.getId(), modelNode
-				.toString().getBytes("utf-8"));
+		WebOperationContext context = (WebOperationContext)OperationContextHolder.getContext();
+		WfOperator wfOperator = new WfOperator(context.getUser().getId(),context.getUser().getName(),context.getUser().getName(),context.getRequest().getRemoteHost(),WfApiFactory.getWfTenant());
+		
+		modelData=wfRepositoryService.insertModel(wfOperator,modelData);
+		
+		//repositoryService.saveModel(modelData);
+		
+		//repositoryService.addModelEditorSource(modelData.getId(), modelNode.toString().getBytes("utf-8"));
+		
+		wfRepositoryService.saveModelEditorSource(wfOperator,modelData.getId(),modelNode.toString());
 
 		// 获取modelId
 		String modelId = modelData.getId();
@@ -290,68 +348,80 @@ public class WfModelController {
 	@RequestMapping(value = "/republishToLatest", method = RequestMethod.POST)
 	public Object republishToLatest(@RequestBody Map<String, String> body)
 			throws IOException, XMLStreamException {
-		// 转换为model
+		
 		String processDefinitionId = body.get("processDefinitionId");
-		ProcessDefinition processDefinition = repositoryService
-				.createProcessDefinitionQuery()
-				.processDefinitionId(processDefinitionId).singleResult();
-		InputStream bpmnStream = repositoryService.getResourceAsStream(
-				processDefinition.getDeploymentId(),
-				processDefinition.getResourceName());
-		XMLInputFactory xif = XMLInputFactory.newInstance();
-		InputStreamReader in = new InputStreamReader(bpmnStream, "UTF-8");
-		XMLStreamReader xtr = xif.createXMLStreamReader(in);
-		BpmnModel bpmnModel = new BpmnXMLConverter().convertToBpmnModel(xtr);
-
-		BpmnJsonConverter converter = new BpmnJsonConverter();
-		ObjectNode modelNode = converter.convertToJson(bpmnModel);
-		Model modelData = repositoryService.newModel();
-		modelData.setKey(processDefinition.getKey());
-		modelData.setName(processDefinition.getResourceName());
-		modelData.setCategory(processDefinition.getDeploymentId());
-
-		ObjectNode modelObjectNode = new ObjectMapper().createObjectNode();
-		modelObjectNode.put(ModelDataJsonConstants.MODEL_NAME,
-				processDefinition.getName());
-		modelObjectNode.put(ModelDataJsonConstants.MODEL_REVISION, 1);
-		modelObjectNode.put(ModelDataJsonConstants.MODEL_DESCRIPTION,
-				processDefinition.getDescription());
-		modelData.setMetaInfo(modelObjectNode.toString());
-
-		repositoryService.saveModel(modelData);
-
-		repositoryService.addModelEditorSource(modelData.getId(), modelNode
-				.toString().getBytes("utf-8"));
-
-		// 获取modelId
-		String modelId = modelData.getId();
-
-		Map<String, Object> map = new HashMap<String, Object>();
+		
 		try {
-			Model modelDataNew = repositoryService.getModel(modelId);
-			ObjectNode modelNodeNew = (ObjectNode) new ObjectMapper()
-					.readTree(repositoryService
-							.getModelEditorSource(modelDataNew.getId()));
-			byte[] bpmnBytes = null;
+			
+			WebOperationContext context = (WebOperationContext)OperationContextHolder.getContext();
+			WfOperator wfOperator = new WfOperator(context.getUser().getId(),context.getUser().getName(),context.getUser().getName(),context.getRequest().getRemoteHost(),WfApiFactory.getWfTenant());
+			
+			//转换为model
+			WfProcessDefinition wfProcessDefinition=null;
+			String bpmnStr=null;
+			wfProcessDefinition = wfRepositoryService.getProcessDefinition(processDefinitionId);
+			bpmnStr=wfRepositoryService.getProcessDefinitionBPMN(processDefinitionId);
+			InputStream bpmnStream=new ByteArrayInputStream(bpmnStr.getBytes(WfConstants.WF_CHARSET_UTF_8));
+			
+			XMLInputFactory xif = XMLInputFactory.newInstance();
+			InputStreamReader in = new InputStreamReader(bpmnStream, "UTF-8");
+			XMLStreamReader xtr = xif.createXMLStreamReader(in);
+			BpmnModel bpmnModel = new BpmnXMLConverter().convertToBpmnModel(xtr);
 
-			BpmnModel model = new BpmnJsonConverter()
-					.convertToBpmnModel(modelNodeNew);
-			bpmnBytes = new BpmnXMLConverter().convertToXML(model);
+			BpmnJsonConverter converter = new BpmnJsonConverter();
+			ObjectNode modelNode = converter.convertToJson(bpmnModel);
+			WfModel modelData = new WfModel();
+			modelData.setKey(wfProcessDefinition.getKey());
+			modelData.setName(wfProcessDefinition.getResourceName());
+			modelData.setCategory(wfProcessDefinition.getDeploymentId());
+			
+			ObjectNode modelObjectNode = new ObjectMapper().createObjectNode();
+			modelObjectNode.put(ModelDataJsonConstants.MODEL_NAME,wfProcessDefinition.getName());
+			modelObjectNode.put(ModelDataJsonConstants.MODEL_REVISION, 1);
+			modelObjectNode.put(ModelDataJsonConstants.MODEL_DESCRIPTION,
+					wfProcessDefinition.getDescription());
+			modelData.setMetaInfo(modelObjectNode.toString());
 
-			String processName = modelData.getName() + ".bpmn20.xml";
-			Deployment deployment = repositoryService.createDeployment()
-					.name(modelData.getName())
-					.addString(processName, new String(bpmnBytes, "UTF-8"))
-					.deploy();
-			map.put("result", "success");
-			map.put("deployId", deployment.getId());
+			modelData=wfRepositoryService.insertModel(wfOperator,modelData);
+			//repositoryService.saveModel(modelData);
 
-			// 部署成功后需要更新绑定关系为当前的最新版本的流程
-			reBindModuleAndProcess(deployment.getId());
+			wfRepositoryService.saveModelEditorSource(wfOperator,modelData.getId(),modelNode.toString());
+			//repositoryService.addModelEditorSource(modelData.getId(), modelNode.toString().getBytes("utf-8"));
+
+			// 获取modelId
+			String modelId = modelData.getId();
+
+			Map<String, Object> map = new HashMap<String, Object>();
+			try {
+				WfModel modelDataNew = wfRepositoryService.getModelById(modelId);
+				ObjectNode modelNodeNew = (ObjectNode) new ObjectMapper()
+						.readTree(wfRepositoryService.getModelEditorSource(modelDataNew.getId()));
+				byte[] bpmnBytes = null;
+
+				BpmnModel model = new BpmnJsonConverter()
+						.convertToBpmnModel(modelNodeNew);
+				bpmnBytes = new BpmnXMLConverter().convertToXML(model);
+
+				String processName = modelData.getName() + ".bpmn20.xml";
+				
+				WfDeployment wfDeployment=wfRepositoryService.deployContent(wfOperator,modelData.getName(),null,processName,new String(bpmnBytes, "UTF-8"));
+				
+				map.put("result", "success");
+				map.put("deployId", wfDeployment.getId());
+
+				// 部署成功后需要更新绑定关系为当前的最新版本的流程
+				reBindModuleAndProcess(wfDeployment.getId());
+			} catch (Exception e) {
+				logger.error("根据模型部署流程失败：modelId={}", modelId, e);
+				throw new C2FlowRuntimeException("根据模型部署流程失败：modelId="+modelId,e);
+			}
+			
+			return new ResponseFactory().createResponseBodyJSONObject(map);
+			
 		} catch (Exception e) {
-			logger.error("根据模型部署流程失败：modelId={}", modelId, e);
+			logger.error("发布工作流模型异常：processDefinitionId={}", processDefinitionId, e);
+			throw new C2FlowRuntimeException("发布工作流模型异常：processDefinitionId="+processDefinitionId,e);
 		}
-		return new ResponseFactory().createResponseBodyJSONObject(map);
 
 	}
 

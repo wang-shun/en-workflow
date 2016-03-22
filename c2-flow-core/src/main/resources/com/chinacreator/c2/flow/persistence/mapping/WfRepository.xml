@@ -32,7 +32,17 @@
                <trim prefix="WHERE" prefixOverrides="AND |OR ">
                	RES.VERSION_ = (select max(VERSION_)
                                     from ACT_RE_PROCDEF
-                                   where KEY_ = RES.KEY_)
+                                   where KEY_ = RES.KEY_
+                             <if test="wfProcessDefinitionParam.tenantId != null">
+					           AND TENANT_ID_ = #{wfProcessDefinitionParam.tenantId}
+					         </if>
+					         <if test="wfProcessDefinitionParam.tenantIdLike != null">
+					           AND TENANT_ID_ like #{wfProcessDefinitionParam.tenantIdLike}
+					         </if>
+					         <if test="wfProcessDefinitionParam.withoutTenantId">
+					           AND (TENANT_ID_ = '' or TENANT_ID_ is null)
+					         </if>
+                    )
                   <if test="wfProcessDefinitionParam.keyLike!=null">
 						<![CDATA[AND  RES.KEY_ like '%${wfProcessDefinitionParam.keyLike}%']]>
 					</if>
@@ -48,6 +58,16 @@
 					<if test="wfProcessDefinitionParam.id!=null">
 						<![CDATA[AND  RES.ID_=#{wfProcessDefinitionParam.id}]]>
 					</if>
+					<if test="wfProcessDefinitionParam.tenantId!=null">
+						<![CDATA[AND RES.TENANT_ID_=#{wfProcessDefinitionParam.tenantId}]]>
+					</if>
+			      	<if test="wfProcessDefinitionParam.tenantIdLike != null">
+			      		<![CDATA[AND RES.TENANT_ID_ like #{wfProcessDefinitionParam.tenantIdLike}]]>
+			     	 </if>
+			      	<if test="wfProcessDefinitionParam.withoutTenantId">
+			       		<![CDATA[AND (RES.TENANT_ID_ = '' or RES.TENANT_ID_ is null)]]>
+			      	</if>
+					
 				order by DEP.DEPLOY_TIME_ desc
                </trim>
 	</select>
@@ -60,7 +80,17 @@
                <trim prefix="WHERE" prefixOverrides="AND |OR ">
                	RES.VERSION_ = (select max(VERSION_)
                                     from ACT_RE_PROCDEF
-                                   where KEY_ = RES.KEY_)
+                                   where KEY_ = RES.KEY_
+                             <if test="wfProcessDefinitionParam.tenantId != null">
+					           AND TENANT_ID_ = #{wfProcessDefinitionParam.tenantId}
+					         </if>
+					         <if test="wfProcessDefinitionParam.tenantIdLike != null">
+					           AND TENANT_ID_ like #{wfProcessDefinitionParam.tenantIdLike}
+					         </if>
+					         <if test="wfProcessDefinitionParam.withoutTenantId">
+					           AND (TENANT_ID_ = '' or TENANT_ID_ is null)
+					         </if>
+                    )
                   <if test="wfProcessDefinitionParam.keyLike!=null">
 						<![CDATA[AND  RES.KEY_ like '%${wfProcessDefinitionParam.keyLike}%']]>
 					</if>
@@ -76,7 +106,15 @@
 					<if test="wfProcessDefinitionParam.id!=null">
 						<![CDATA[AND  RES.ID_=#{wfProcessDefinitionParam.id}]]>
 					</if>
-				
+					<if test="wfProcessDefinitionParam.tenantId!=null">
+						<![CDATA[AND RES.TENANT_ID_=#{wfProcessDefinitionParam.tenantId}]]>
+					</if>
+			      	<if test="wfProcessDefinitionParam.tenantIdLike != null">
+			      		<![CDATA[AND RES.TENANT_ID_ like #{wfProcessDefinitionParam.tenantIdLike}]]>
+			     	 </if>
+			      	<if test="wfProcessDefinitionParam.withoutTenantId">
+			       		<![CDATA[AND (RES.TENANT_ID_ = '' or RES.TENANT_ID_ is null)]]>
+			      	</if>
                </trim>
 	</select>
 	
