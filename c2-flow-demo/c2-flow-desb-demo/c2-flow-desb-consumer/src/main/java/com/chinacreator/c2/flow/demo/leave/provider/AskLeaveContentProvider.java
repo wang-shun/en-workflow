@@ -19,6 +19,7 @@ import com.chinacreator.c2.flow.api.WfRuntimeService;
 import com.chinacreator.c2.flow.demo.leave.AskLeave;
 import com.chinacreator.c2.flow.detail.WfModuleBean;
 import com.chinacreator.c2.flow.detail.WfUniteTaskResult;
+import com.chinacreator.c2.flow.util.CommonUtil;
 import com.chinacreator.c2.ioc.ApplicationContextManager;
 import com.chinacreator.c2.web.ds.ArrayContentProvider;
 import com.chinacreator.c2.web.ds.ArrayContext;
@@ -31,11 +32,13 @@ public class AskLeaveContentProvider implements
 	@Override
 	public Page<Object> getElements(ArrayContext arg0){
 		
-		String moduleKey="qj_A";
+		String moduleKey=(String)arg0.getCondition().get("moduleKey");
 	
 		 Pageable pageable=arg0.getPageable();
 		 
 		try{
+			
+			if(CommonUtil.stringNullOrEmpty(moduleKey)) throw new RuntimeException("流程启动失败，流程菜单事项moduleKey不能为空！");
 			
 			WfExtendService wfExtendService = (WfExtendService) ApplicationContextManager.getContext().getBean(WfExtendService.class);
 			WfModuleBean wfModuleBean = wfExtendService.queryByMenuCode(moduleKey);
