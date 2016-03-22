@@ -33,6 +33,12 @@
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
+		    <groupId>com.chinacreator.c2</groupId>
+		    <artifactId>c2-flow-resources</artifactId>
+		    <version>${project.version}</version>
+		    <type>war</type>
+		</dependency>
+		<dependency>
 			<groupId>com.chinacreator.c2</groupId>
 			<artifactId>c2-flow-modeler</artifactId>
 			<version>${project.version}</version>
