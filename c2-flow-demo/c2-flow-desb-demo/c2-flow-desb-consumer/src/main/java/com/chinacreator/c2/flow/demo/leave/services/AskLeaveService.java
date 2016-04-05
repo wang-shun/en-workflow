@@ -168,7 +168,7 @@ public class AskLeaveService {
 			
 			Map<String,Object> variables=new HashMap<String, Object>();
 			variables.put("assignTo",askLeave.getAssignTo());
-			wfRuntimeService.operateTask(wf,taskId, WfTaskAction.COMPLETE,null, variables);
+			wfRuntimeService.operateTask(wf,taskId, WfTaskAction.CLAIM_COMPLETE,null, variables);
 			
 			//修改审批中状态
 			askLeave.setStatus(1);
@@ -284,10 +284,10 @@ public class AskLeaveService {
 			
 			WfResult wfResult=wfRuntimeService.startProcessInstanceByKey(wf,askLeaveId,wfProcessDefinition.getKey(),variables);
 			
-			wfResult=wfRuntimeService.operateTask(wf,wfResult.getNextTaskId(),WfTaskAction.COMPLETE,null,variables);
+			wfResult=wfRuntimeService.operateTask(wf,wfResult.getNextTaskId(),WfTaskAction.CLAIM_COMPLETE,null,variables);
 
 			variables.put("assignTo",askLeave.getAssignTo());
-			wfResult=wfRuntimeService.operateTask(wf,wfResult.getNextTaskId(),WfTaskAction.COMPLETE,null,variables);
+			wfResult=wfRuntimeService.operateTask(wf,wfResult.getNextTaskId(),WfTaskAction.CLAIM_COMPLETE,null,variables);
 			
 			askLeave.setStatus(1);
 			dao.update(askLeave);
@@ -357,7 +357,7 @@ public class AskLeaveService {
 			variables.put("askLeave",askLeave);
 			WfResult wfResult=null;
 			if(isPass){
-				wfResult=wfRuntimeService.operateTask(wf,taskId, WfTaskAction.COMPLETE,null, variables);
+				wfResult=wfRuntimeService.operateTask(wf,taskId, WfTaskAction.CLAIM_COMPLETE,null, variables);
 				
 				WfProcessInstance wfProcessInstance=wfRuntimeService.getProcessInstanceById(wfResult.getProcessInstanceId());
 				//流程结束
@@ -431,7 +431,7 @@ public class AskLeaveService {
 			    WfTask wfTask=wfRuntimeService.getTaskById(taskId);
 			    WfProcessInstance wfProcessInstance=wfRuntimeService.getProcessInstanceById(wfTask.getProcessInstanceId());
 			    
-			    wfRuntimeService.operateTask(wf,taskId, WfTaskAction.COMPLETE,null, variables);
+			    wfRuntimeService.operateTask(wf,taskId, WfTaskAction.CLAIM_COMPLETE,null, variables);
 			    
 			    //改变业务状态
 				Dao<AskLeave> dao=DaoFactory.create(AskLeave.class);
