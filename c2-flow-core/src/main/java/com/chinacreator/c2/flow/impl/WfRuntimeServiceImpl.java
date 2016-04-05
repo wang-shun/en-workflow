@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.activiti.bpmn.model.BpmnModel;
+import org.activiti.engine.ActivitiException;
 import org.activiti.engine.ActivitiObjectNotFoundException;
 import org.activiti.engine.HistoryService;
 import org.activiti.engine.IdentityService;
@@ -15,7 +16,6 @@ import org.activiti.engine.ManagementService;
 import org.activiti.engine.RepositoryService;
 import org.activiti.engine.RuntimeService;
 import org.activiti.engine.TaskService;
-//import org.activiti.engine.delegate.TaskListener;
 import org.activiti.engine.history.HistoricTaskInstance;
 import org.activiti.engine.impl.RepositoryServiceImpl;
 import org.activiti.engine.impl.bpmn.diagram.ProcessDiagramGenerator;
@@ -25,9 +25,7 @@ import org.activiti.engine.impl.persistence.entity.ProcessDefinitionEntity;
 import org.activiti.engine.impl.pvm.PvmActivity;
 import org.activiti.engine.impl.pvm.PvmTransition;
 import org.activiti.engine.impl.pvm.process.ActivityImpl;
-//import org.activiti.engine.impl.task.TaskDefinition;
 import org.activiti.engine.query.Query;
-//import org.activiti.engine.repository.ProcessDefinition;
 import org.activiti.engine.runtime.Execution;
 import org.activiti.engine.runtime.ProcessInstance;
 import org.activiti.engine.runtime.ProcessInstanceQuery;
@@ -1488,6 +1486,10 @@ public class WfRuntimeServiceImpl implements WfRuntimeService {
 					break;
 				}
 			}
+			
+			
+			if(null==destActiviti) throw new ActivitiException("找不到驳回的目标节点");
+			
 //			taskEntity.setDescription(rejectMessage);
 			String nextTaskIds = taskTransferOutLine(null, null, processInstanceId,
 					destActiviti.getId(), rejectMessage == null ? WfConstants.JUMPREASON_REJECT : rejectMessage,
