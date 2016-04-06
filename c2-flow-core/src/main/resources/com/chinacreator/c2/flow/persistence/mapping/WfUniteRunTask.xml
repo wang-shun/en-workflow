@@ -430,9 +430,15 @@
 		<if test="taskstate != null">
 			and b.task_state like '%${taskstate}%'
 		</if>
-		<if test="tenantid != null">
-			and b.tenant_id like '%${tenantid}%'
-		</if>
+      	<if test="tenantId != null">
+        	and b.tenant_id = #{tenantId}
+      	</if>
+      	<if test="tenantIdLike != null">
+       		and b.tenant_id like #{tenantIdLike}
+      	</if>
+      	<if test="withoutTenantId">
+      	 	and (b.tenant_id = '' or b.tenant_id is null)
+      	</if>
 		<if test="appid != null">
 			and b.app_id like '%${appid}%'
 		</if>
@@ -586,9 +592,15 @@
 		<if test="taskstate != null">
 			and b.task_state like '%${taskstate}%'
 		</if>
-		<if test="tenantid != null">
-			and b.tenant_id like '%${tenantid}%'
-		</if>
+      	<if test="tenantId != null">
+        	and b.tenant_id = #{tenantId}
+      	</if>
+      	<if test="tenantIdLike != null">
+       		and b.tenant_id like #{tenantIdLike}
+      	</if>
+      	<if test="withoutTenantId">
+      	 	and (b.tenant_id = '' or b.tenant_id is null)
+      	</if>
 		<if test="appid != null">
 			and b.app_id like '%${appid}%'
 		</if>
@@ -776,9 +788,15 @@
 		<if test="taskstate != null">
 			and b.task_state like '%${taskstate}%'
 		</if>
-		<if test="tenantid != null">
-			and b.tenant_id like '%${tenantid}%'
-		</if>
+      	<if test="tenantId != null">
+        	and b.tenant_id = #{tenantId}
+      	</if>
+      	<if test="tenantIdLike != null">
+       		and b.tenant_id like #{tenantIdLike}
+      	</if>
+      	<if test="withoutTenantId">
+      	 	and (b.tenant_id = '' or b.tenant_id is null)
+      	</if>
 		<if test="appid != null">
 			and b.app_id like '%${appid}%'
 		</if>
@@ -932,9 +950,15 @@
 		<if test="taskstate != null">
 			and b.task_state like '%${taskstate}%'
 		</if>
-		<if test="tenantid != null">
-			and b.tenant_id like '%${tenantid}%'
-		</if>
+      	<if test="tenantId != null">
+        	and b.tenant_id = #{tenantId}
+      	</if>
+      	<if test="tenantIdLike != null">
+       		and b.tenant_id like #{tenantIdLike}
+      	</if>
+      	<if test="withoutTenantId">
+      	 	and (b.tenant_id = '' or b.tenant_id is null)
+      	</if>
 		<if test="appid != null">
 			and b.app_id like '%${appid}%'
 		</if>

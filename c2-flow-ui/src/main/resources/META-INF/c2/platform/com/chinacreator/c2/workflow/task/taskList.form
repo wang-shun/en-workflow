@@ -5639,7 +5639,6 @@ todoTaskGrid_gridComplete:function(){
 	var jqGrid = $view.todoTaskGrid.getDom();
 	var param = {
 		appId:$model.appId,
-		tenantId:$model.tenantId,
 		engineName:$model.engineName,
 		taskType:'todo'
     };
@@ -5671,7 +5670,6 @@ doneTaskGrid_gridComplete:function(){
    
 	var param = {
 		appId:$model.appId,
-		tenantId:$model.tenantId,
 		engineName:$model.engineName,
 		taskType:'done'
     };
@@ -5702,7 +5700,6 @@ suspendTaskGrid_gridComplete:function(){
    
 	var param = {
 		appId:$model.appId,
-		tenantId:$model.tenantId,
 		engineName:$model.engineName,
 		taskType:'suspend'
     };

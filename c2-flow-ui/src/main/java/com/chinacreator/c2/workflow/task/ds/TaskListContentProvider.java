@@ -8,6 +8,7 @@ import com.chinacreator.c2.dao.mybatis.enhance.Pageable;
 import com.chinacreator.c2.flow.WfApiFactory;
 import com.chinacreator.c2.flow.api.WfRuntimeService;
 import com.chinacreator.c2.flow.detail.WfUniteTaskResult;
+import com.chinacreator.c2.flow.util.CommonUtil;
 import com.chinacreator.c2.ioc.ApplicationContextManager;
 import com.chinacreator.c2.sysmgr.AuthenticationProvider;
 import com.chinacreator.c2.web.ds.ArrayContentProvider;
@@ -18,14 +19,13 @@ public class TaskListContentProvider implements ArrayContentProvider {
 
 	@Override
 	public Page<Map<String,Object>> getElements(ArrayContext context) {
+		
 		WfRuntimeService wfRuntimeService = WfApiFactory.getWfRuntimeService();
 		Page<Map<String,Object>> page = new Page<Map<String,Object>>(new Pageable(),
 				new ArrayList<Map<String,Object>>());
 		Map<String, Object> map = context.getCondition();
 		String appId = (String)map.get("appId");
 		appId = appId == null ? "default" : appId;
-		String tenantId = (String)map.get("tenantId");
-		tenantId = tenantId == null ? "default" : tenantId;
 		String engineName = (String)map.get("engineName");
 		engineName = engineName == null ? "default" : engineName;
 		String taskType = (String)map.get("taskType");
@@ -34,6 +34,16 @@ public class TaskListContentProvider implements ArrayContentProvider {
 		String userId = authenticationProvider.getSubject().getId();
 		map.put("userId", userId);
 		map.put("taskType", taskType);
+		
+		
+		//处理租户待办完全隔离
+		String tenantId=WfApiFactory.getWfTenant();
+		if(!CommonUtil.stringNullOrEmpty(tenantId)){
+			map.put("tenantId",tenantId);
+		}else{
+			map.put("withoutTenantId",true);
+		}
+		
 		try {
 			int offset = context.getPageable().getOffset();
 			int pageIndex = context.getPageable().getPageIndex();
