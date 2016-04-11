@@ -45,8 +45,8 @@
 </resultMap>
 
 
-<!-- ElementName:cache,Generated=true -->
-<cache/>
+
+
 
 <!-- ElementID:insert,Generated=true -->
 <insert id="insert" parameterType="com.chinacreator.c2.flow.demo.leave.AskLeave">
@@ -136,7 +136,7 @@
 </delete>
 
 <!-- ElementID:select,Generated=true -->
-<select id="select" parameterType="com.chinacreator.c2.flow.demo.leave.AskLeave" resultMap="AskLeaveResult">
+<select id="select" parameterType="com.chinacreator.c2.flow.demo.leave.AskLeave" resultMap="AskLeaveResult" useCache="false">
 	select 
 		<include refid="column_sql"/>
 	    from wf_demo_ask_leave 
@@ -176,14 +176,14 @@
 </delete>
 
 <!-- ElementID:selectAll,Generated=true -->
-<select id="selectAll" resultMap="AskLeaveResult">
+<select id="selectAll" resultMap="AskLeaveResult" useCache="false">
 	select 
 		<include refid="column_sql"/>
 	    from wf_demo_ask_leave 
 </select>
 
 <!-- ElementID:selectByID,Generated=true -->
-<select id="selectByID" parameterType="java.lang.String" resultMap="AskLeaveResult">
+<select id="selectByID" parameterType="java.lang.String" resultMap="AskLeaveResult" useCache="false">
 	select 
 		<include refid="column_sql"/>
 	    from wf_demo_ask_leave 
@@ -191,7 +191,7 @@
 </select>
 
 <!-- ElementID:selectByPage,Generated=true -->
-<select id="selectByPage" parameterType="com.chinacreator.c2.flow.demo.leave.AskLeave" resultMap="AskLeaveResult">
+<select id="selectByPage" parameterType="com.chinacreator.c2.flow.demo.leave.AskLeave" resultMap="AskLeaveResult" useCache="false">
 	select 
 		<include refid="column_sql"/>
 	    from wf_demo_ask_leave 
@@ -202,7 +202,7 @@
 
 
 <!-- ElementID:selectMany,Generated=true -->
-<select id="selectMany" parameterType="list" resultMap="AskLeaveResult">
+<select id="selectMany" parameterType="list" resultMap="AskLeaveResult" useCache="false">
 select 
 	<include refid="column_sql"/> 
 	from wf_demo_ask_leave 
@@ -272,4 +272,7 @@ select
 	    <if test="askReasons != null">and wf_demo_ask_leave.ask_reasons = #{askReasons}</if>
 	    <if test="status != null">and wf_demo_ask_leave.status = #{status}</if>
 </select>
+
+<!--Generated=true-->
+<cache/>
 </mapper>

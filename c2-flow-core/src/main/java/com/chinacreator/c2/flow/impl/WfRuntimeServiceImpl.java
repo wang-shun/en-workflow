@@ -17,6 +17,7 @@ import org.activiti.engine.RepositoryService;
 import org.activiti.engine.RuntimeService;
 import org.activiti.engine.TaskService;
 import org.activiti.engine.history.HistoricTaskInstance;
+import org.activiti.engine.impl.HistoricTaskInstanceQueryImpl;
 import org.activiti.engine.impl.RepositoryServiceImpl;
 import org.activiti.engine.impl.bpmn.diagram.ProcessDiagramGenerator;
 import org.activiti.engine.impl.persistence.entity.AttachmentEntity;
@@ -25,6 +26,7 @@ import org.activiti.engine.impl.persistence.entity.ProcessDefinitionEntity;
 import org.activiti.engine.impl.pvm.PvmActivity;
 import org.activiti.engine.impl.pvm.PvmTransition;
 import org.activiti.engine.impl.pvm.process.ActivityImpl;
+import org.activiti.engine.impl.pvm.process.ProcessDefinitionImpl;
 import org.activiti.engine.query.Query;
 import org.activiti.engine.runtime.Execution;
 import org.activiti.engine.runtime.ProcessInstance;
@@ -1453,40 +1455,43 @@ public class WfRuntimeServiceImpl implements WfRuntimeService {
 					.singleResult();
 			// 当前任务key
 			String taskDefKey = taskEntity.getTaskDefinitionKey();
+
+			//获得当前流程的定义模型
+			ProcessDefinitionEntity processDefinition = (ProcessDefinitionEntity) repositoryService.getProcessDefinition(taskEntity.getProcessDefinitionId());
+	        if (null==processDefinition) throw new ActivitiException("流程定义["+taskEntity.getProcessDefinitionId()+"]未找到");
+			
+			//获得当前活动节点定义
+			ActivityImpl currActivity = ((ProcessDefinitionImpl) processDefinition).findActivity(taskDefKey);
+			if(null==currActivity)  throw new ActivitiException("当前环节定义["+taskDefKey+"]未找到");
+			
 			// 获得当前流程实例的历史任务,按照任务id排序，这样就可以只取上一环节最近的任务实例
 			String processInstanceId = taskEntity.getProcessInstanceId();
-			List<HistoricTaskInstance> historicTaskInstances = historyService
-					.createHistoricTaskInstanceQuery()
-					.processInstanceId(processInstanceId).orderByTaskId()
-					.desc().list();
-
-			// 获得当前流程的定义模型
-			ProcessDefinitionEntity processDefinition = (ProcessDefinitionEntity) repositoryService
-					.getProcessDefinition(taskEntity.getProcessDefinitionId());
-			// 获得当前流程定义模型的所有任务节点
-			List<ActivityImpl> activitilist = processDefinition.getActivities();
-			// 获得当前活动节点和驳回的目标节点"draft"
-			ActivityImpl currActiviti = null;// 当前活动节点
+			
+			//获得当前流程实例的已经完成的历史任务,按照任务时间降序排序
+			HistoricTaskInstanceQueryImpl historyQuery=(HistoricTaskInstanceQueryImpl)historyService.createHistoricTaskInstanceQuery().processInstanceId(processInstanceId).finished();
+			if(!taskEntity.getExecutionId().equals(taskEntity.getProcessInstanceId())) historyQuery.executionId(taskEntity.getExecutionId());
+			List<HistoricTaskInstance> historicTaskInstances =historyQuery.orderByHistoricTaskInstanceEndTime().desc().list();
+	        
 			ActivityImpl destActiviti = null;// 驳回目标节点
-			String destAssignee = null;// 驳回目标节点执行人
-			for (ActivityImpl activityImpl : activitilist) {
-				// 确定当前活动activiti节点以及回退活动activiti节点
-				if (taskDefKey.equals(activityImpl.getId())) {
-					currActiviti = activityImpl;
+			HistoricTaskInstance destHistoricTaskInstance=null;
+			String destAssignee = null;//驳回目标节点执行人
 
-					Map<ActivityImpl, String> ret = getPreUserActivity(
-							currActiviti, historicTaskInstances, null);
-					if (ret != null) {
-						for (ActivityImpl act : ret.keySet()) {
-							destActiviti = act;
-							destAssignee = ret.get(act);
-							break;
-						}
+			List<ActivityImpl> historyUserActList = getPreUserActivitys(currActivity);
+			for (ActivityImpl activityImpl : historyUserActList) {
+				HistoricTaskInstance historicTaskInstance=this.findNewHistoricUserTask(activityImpl,historicTaskInstances);
+				if(null==historicTaskInstance) continue;
+				if(null==destActiviti){
+					destHistoricTaskInstance=historicTaskInstance;
+					destActiviti=activityImpl;
+					destAssignee=historicTaskInstance.getAssignee();
+				}else{
+					if(historicTaskInstance.getEndTime().after(destHistoricTaskInstance.getEndTime())){
+						destHistoricTaskInstance=historicTaskInstance;
+						destActiviti=activityImpl;
+						destAssignee=historicTaskInstance.getAssignee();
 					}
-					break;
 				}
 			}
-			
 			
 			if(null==destActiviti) throw new ActivitiException("找不到驳回的目标节点");
 			
@@ -1551,56 +1556,49 @@ public class WfRuntimeServiceImpl implements WfRuntimeService {
 		}
 		return nextTaskIds;
 	}
-
+	
+	
 	/**
-	 * 根据当前活动寻找其上一个用户活动，并比对历史任务实例找到驳回目标活动及其历史处理人
-	 * 
-	 * @param currActiviti
-	 *            当前活动
-	 * @param historicTaskInstances
-	 *            历史任务实例
-	 * @param destTaskDefId
-	 *            目标活动
+	 * 从历史记录中获取环节最新历史数据
+	 * @param activityImpl
+	 * @param historyTaskList
 	 * @return
 	 */
-	private Map<ActivityImpl, String> getPreUserActivity(
-			ActivityImpl currActiviti,
-			List<HistoricTaskInstance> historicTaskInstances,
-			String destTaskDefId) {
-		Map<ActivityImpl, String> ret = new HashMap<ActivityImpl, String>();
+    private HistoricTaskInstance findNewHistoricUserTask(ActivityImpl activityImpl,List<HistoricTaskInstance> historyTaskList) {
+       if(null==historyTaskList||historyTaskList.size()<=0) return null;
+       HistoricTaskInstance newHistoricTaskInstance=null;
+       for(HistoricTaskInstance historicTaskInstance : historyTaskList){
+    	   if(historicTaskInstance.getTaskDefinitionKey().equals(activityImpl.getId())){
+    		   if(null==newHistoricTaskInstance){
+    			   newHistoricTaskInstance=historicTaskInstance;
+    		   }else{
+    			   if(historicTaskInstance.getEndTime().after(newHistoricTaskInstance.getEndTime())) newHistoricTaskInstance=historicTaskInstance;
+    		   }
+    	   }
+       }
+       return newHistoricTaskInstance;
+    } 
+
+	
+	/**
+	 * 根据当前活动寻找其上一个用户活动集合
+	 * @param currActiviti 当前活动
+	 * @return
+	 */
+	private List<ActivityImpl> getPreUserActivitys(ActivityImpl currActiviti) {
+
+		List<ActivityImpl> ret = new ArrayList<ActivityImpl>();
+
 		List<PvmTransition> incomings = currActiviti.getIncomingTransitions();
+
 		for (PvmTransition incoming : incomings) {
 			PvmActivity activity = incoming.getSource();
-			String type = (String) activity
-					.getProperty(WfConstants.ACTIVITY_PROPERTY_KEY_TYPE);
+			String type = (String) activity.getProperty(WfConstants.ACTIVITY_PROPERTY_KEY_TYPE);
 			if (WfConstants.ACTIVITY_TYPE_USERTASK.equals(type)) {
-				String id = activity.getId();
-				// 如果传入了目标环节，已传入的目标环节为主
-				if (destTaskDefId != null && !"".equals(destTaskDefId)) {
-					// 如果当前来源id不等于目标活动id，不执行后面逻辑，继续循环下一个
-					if (!id.equals(destTaskDefId)) {
-						continue;
-					}
-				}
-				// for寻找最近的目标环节，寻找到以后终止整个大循环
-				boolean finded = false;
-				for (HistoricTaskInstance hti : historicTaskInstances) {
-					if (id.equals(hti.getTaskDefinitionKey())) {
-						String assignee = hti.getAssignee();
-						if (assignee != null && !"".equals(assignee)) {
-							ActivityImpl destActiviti = (ActivityImpl) activity;
-							ret.put(destActiviti, assignee);
-							finded = true;
-							break;
-						}
-					}
-				}
-				if (finded)
-					break;
-			} else {
-				// TODO 出新版本包后修改成这样
-				ret.putAll(getPreUserActivity(((ActivityImpl) activity),
-						historicTaskInstances, destTaskDefId));
+				ret.add((ActivityImpl)activity);
+			} else{
+				//递归查找上一步用户节点
+				ret.addAll(getPreUserActivitys((ActivityImpl)activity));
 			}
 		}
 		return ret;

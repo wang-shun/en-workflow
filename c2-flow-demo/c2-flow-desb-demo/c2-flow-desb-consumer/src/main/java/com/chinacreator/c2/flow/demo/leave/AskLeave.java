@@ -13,7 +13,7 @@ import com.chinacreator.c2.annotation.Entity;
  */
 @Entity(id = "entity:com.chinacreator.c2.flow.demo.leave.AskLeave", table = "wf_demo_ask_leave", ds = "c2-flow-demo1")
 public class AskLeave implements Serializable {
-	private static final long serialVersionUID = 1565978126680064L;
+	private static final long serialVersionUID = 1615295579521024L;
 	/**
 	 *
 	 */

@@ -162,12 +162,13 @@ public class AskLeaveService {
 			bd.setModuleId(wfModuleBean.getId());
 			wf.setBusinessData(bd);
 			
-			
 			Dao<AskLeave> dao=DaoFactory.create(AskLeave.class);
 			AskLeave askLeave=dao.selectByID(businessKey);
 			
 			Map<String,Object> variables=new HashMap<String, Object>();
 			variables.put("assignTo",askLeave.getAssignTo());
+			
+			variables.put("askLeave",askLeave);
 			wfRuntimeService.operateTask(wf,taskId, WfTaskAction.CLAIM_COMPLETE,null, variables);
 			
 			//修改审批中状态
