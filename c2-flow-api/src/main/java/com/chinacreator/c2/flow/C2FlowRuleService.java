@@ -10,6 +10,7 @@ import com.chinacreator.c2.flow.api.WfHistoryService;
 import com.chinacreator.c2.flow.api.WfManagerService;
 import com.chinacreator.c2.flow.api.WfRepositoryService;
 import com.chinacreator.c2.flow.api.WfRuntimeService;
+import com.chinacreator.c2.flow.detail.ChooseGroup;
 import com.chinacreator.c2.flow.detail.WfActivity;
 import com.chinacreator.c2.flow.detail.WfAttachment;
 import com.chinacreator.c2.flow.detail.WfComment;
@@ -1102,4 +1103,21 @@ public class C2FlowRuleService implements WfRuntimeService,
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	@Override
+	public WfUniteTaskResult queryWfUniteHisTask(String userId,
+			List<ChooseGroup> chooseGroupList, Map<String, Object> parameters,
+			int firstResult, int maxResults) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	@Override
+	public WfUniteTaskResult queryWfUniteRunTask(String userId,
+			List<ChooseGroup> chooseGroupList, Map<String, Object> parameters,
+			int firstResult, int maxResults) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
 }

@@ -46,6 +46,7 @@ import com.chinacreator.c2.flow.cmd.JumpActivityCmd;
 import com.chinacreator.c2.flow.cmd.unitetask.FindWfUniteHisTaskByConditionCmd;
 import com.chinacreator.c2.flow.cmd.unitetask.FindWfUniteTaskByConditionCmd;
 import com.chinacreator.c2.flow.cmd.unitetask.config.FindWfUniteConfigColumnsCmd;
+import com.chinacreator.c2.flow.detail.ChooseGroup;
 import com.chinacreator.c2.flow.detail.WfActivity;
 import com.chinacreator.c2.flow.detail.WfAttachment;
 import com.chinacreator.c2.flow.detail.WfComment;
@@ -916,6 +917,7 @@ public class WfRuntimeServiceImpl implements WfRuntimeService {
 				break;
 			case COMPLETE:
 				WfTask wfTask = this.getTaskById(taskId);
+				if(null==wfTask) throw new ActivitiObjectNotFoundException(WfTask.class);
 				String processInstanceId = wfTask.getProcessInstanceId();
 				result.setProcessInstanceId(processInstanceId);
 				taskService.complete(taskId, variables);
@@ -927,7 +929,9 @@ public class WfRuntimeServiceImpl implements WfRuntimeService {
 						taskId, action, variables);
 				break;
 			case CLAIM_COMPLETE:
+				
 				WfTask wfTask1 = this.getTaskById(taskId);
+				if(null==wfTask1) throw new ActivitiObjectNotFoundException(WfTask.class);
 				String processInstanceId1 = wfTask1.getProcessInstanceId();
 				result.setProcessInstanceId(processInstanceId1);
 				taskService.claim(taskId, userId);
@@ -1892,5 +1896,29 @@ public class WfRuntimeServiceImpl implements WfRuntimeService {
 	
 	public List<String> getActiveActivityIds(String executionId) {
 		return runtimeService.getActiveActivityIds(executionId);
+	}
+	
+	@Override
+	public WfUniteTaskResult queryWfUniteRunTask(String userId,
+			List<ChooseGroup> chooseGroupList, Map<String, Object> parameters,
+			int firstResult, int maxResults) throws Exception {
+		if(null==parameters) parameters=new HashMap<String, Object>();
+		parameters.put("groups",chooseGroupList);
+		parameters.put("userId",userId);
+		return managementService
+				.executeCommand(new FindWfUniteTaskByConditionCmd(parameters,
+						firstResult, maxResults));
+	}
+	
+	@Override
+	public WfUniteTaskResult queryWfUniteHisTask(String userId,
+			List<ChooseGroup> chooseGroupList, Map<String, Object> parameters,
+			int firstResult, int maxResults) throws Exception {
+		if(null==parameters) parameters=new HashMap<String, Object>();
+		parameters.put("groups",chooseGroupList);
+		parameters.put("userId",userId);
+		return managementService
+				.executeCommand(new FindWfUniteHisTaskByConditionCmd(parameters,
+						firstResult, maxResults));
 	}
 }

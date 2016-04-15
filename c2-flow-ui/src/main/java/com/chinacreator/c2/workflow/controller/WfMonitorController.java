@@ -15,19 +15,25 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.chinacreator.asp.comp.sys.advanced.job.dto.JobDTO;
+import com.chinacreator.asp.comp.sys.advanced.job.service.JobService;
+import com.chinacreator.asp.comp.sys.advanced.user.service.UserService;
+import com.chinacreator.asp.comp.sys.core.user.dto.UserDTO;
 import com.chinacreator.c2.flow.WfApiFactory;
+import com.chinacreator.c2.flow.api.GroupType;
 import com.chinacreator.c2.flow.api.WfHistoryService;
 import com.chinacreator.c2.flow.api.WfManagerService;
 import com.chinacreator.c2.flow.api.WfRuntimeService;
-import com.chinacreator.c2.flow.detail.WfGroup;
+import com.chinacreator.c2.flow.detail.ChooseGroup;
 import com.chinacreator.c2.flow.detail.WfHistoricTask;
 import com.chinacreator.c2.flow.detail.WfHistoricTaskParam;
 import com.chinacreator.c2.flow.detail.WfIdentityLink;
 import com.chinacreator.c2.flow.detail.WfPageList;
-import com.chinacreator.c2.flow.detail.WfUser;
 import com.chinacreator.c2.flow.util.CommonUtil;
 import com.chinacreator.c2.flow.util.DateUtil;
+import com.chinacreator.c2.ioc.ApplicationContextManager;
 import com.chinacreator.c2.web.controller.ResponseFactory;
+import com.chinacreator.c2.workflow.util.WorkflowUtils;
 
 /**
  * 流程监控控制器
@@ -70,6 +76,10 @@ public class WfMonitorController {
 	private List<Map<String, Object>> formList(
 			WfPageList<WfHistoricTask, WfHistoricTaskParam> wfHistoricTaskPageList)
 			throws Exception {
+		
+		JobService jobService = ApplicationContextManager.getContext().getBean(JobService.class);
+		UserService userService = ApplicationContextManager.getContext().getBean(UserService.class);
+		
 		List<Map<String, Object>> mapList = new ArrayList<Map<String, Object>>();
 		if (null != wfHistoricTaskPageList && !wfHistoricTaskPageList.getDatas().isEmpty()) {
 			for (WfHistoricTask wfHistoricTask : wfHistoricTaskPageList.getDatas()) {
@@ -101,9 +111,7 @@ public class WfMonitorController {
 						assignee = wfHistoricTask.getAssignee();
 						if (assignee == null) {
 							assignee = "";
-							List<WfIdentityLink> idLinks = wfHistoryService
-									.getHistoricTaskCandidates(wfHistoricTask
-											.getId());
+							List<WfIdentityLink> idLinks = wfHistoryService.getHistoricTaskCandidates(wfHistoricTask.getId());
 							if (idLinks != null) {
 								Set<String> set = new HashSet<String>();
 								for (WfIdentityLink idLink : idLinks) {
@@ -111,22 +119,30 @@ public class WfMonitorController {
 								}
 								for (String userId : set) {
 									try {
-										WfUser user = wfManagerService
-												.getUserById(userId);
-										assignee += user.getLastName() + ",";
+										//WfUser user = wfManagerService.getUserById(userId);
+										//本地获取处理人信息
+										UserDTO userDto=userService.queryByPK(userId);
+										if(null!=userDto){
+											assignee += userDto.getUserRealname() + ",";
+										}else{
+											assignee += userId + ",";
+										}
+										
 									} catch (Exception e) {
 										assignee += userId + ",";
 									}
 								}
 								if (assignee.length() > 0)
-									assignee = assignee.substring(0,
-											assignee.length() - 1);
+									assignee = assignee.substring(0,assignee.length() - 1);
 							}
 						} else {
 							try {
-								WfUser user = wfManagerService
-										.getUserById(assignee);
-								assignee = user.getLastName();
+								//WfUser user = wfManagerService.getUserById(assignee);
+								//本地获取处理人信息
+								UserDTO userDto=userService.queryByPK(assignee);
+								if(null!=userDto){
+									assignee = userDto.getUserRealname();
+								}
 							} catch (Exception e) {
 
 							}
@@ -159,36 +175,46 @@ public class WfMonitorController {
 							}
 							for (String userId : userSet) {
 								try {
-									WfUser user = wfManagerService
-											.getUserById(userId);
-									assigneeUserItem += user.getLastName()
-											+ ",";
+									//WfUser user = wfManagerService.getUserById(userId);
+									//本地获取处理人信息
+									UserDTO userDto=userService.queryByPK(userId);
+									if(null!=userDto){
+										assigneeUserItem += userDto.getUserRealname()+ ",";
+									}else{
+										assigneeUserItem += userId + ",";
+									}
 								} catch (Exception e) {
 									assigneeUserItem += userId + ",";
 								}
 							}
 							if (assigneeUserItem.length() > 0) {
-								assigneeUserItem = assigneeUserItem.substring(
-										0, assigneeUserItem.length() - 1);
+								assigneeUserItem = assigneeUserItem.substring(0, assigneeUserItem.length() - 1);
 								assigneeInfo += "用户【" + assigneeUserItem + "】";
 							}
 
 							for (String groupId : groupSet) {
 								try {
-									WfGroup wfGroup = wfManagerService
-											.getGroupById(groupId);
-									assigneeGroupItem += wfGroup.getName()
-											+ ",";
+									
+									String gid=WorkflowUtils.parseToGroupId(groupId);
+									String groupPrex=WorkflowUtils.parseToGroupTypePrex(groupId);
+									GroupType groupType=WorkflowUtils.getGroupTypeByPrex(groupPrex);
+									if(null==groupType){
+										JobDTO jobDTO=jobService.queryByPK(gid);
+										assigneeGroupItem += jobDTO.getJobName()+ ",";
+									}else{
+										ChooseGroup candidateGroup=groupType.getGroup(gid);
+										assigneeGroupItem += candidateGroup.getDisplayName()+ ",";
+									}
+									
+									//WfGroup wfGroup = wfManagerService.getGroupById(groupId);
+									//assigneeGroupItem += wfGroup.getName()+ ",";
 								} catch (Exception e) {
 									assigneeGroupItem += groupId + ",";
 								}
 							}
 							if (assigneeGroupItem.length() > 0) {
-								assigneeGroupItem = assigneeGroupItem
-										.substring(0,
-												assigneeGroupItem.length() - 1);
-								assigneeInfo += "用户组【" + assigneeGroupItem
-										+ "】";
+								assigneeGroupItem = assigneeGroupItem.substring(0,assigneeGroupItem.length() - 1);
+								assigneeInfo += "用户组【" + assigneeGroupItem+ "】";
 							}
 
 							assignee = assigneeInfo;

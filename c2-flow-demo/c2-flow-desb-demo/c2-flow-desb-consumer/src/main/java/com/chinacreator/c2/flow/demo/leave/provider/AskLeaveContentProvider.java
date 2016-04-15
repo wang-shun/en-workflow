@@ -17,6 +17,7 @@ import com.chinacreator.c2.dao.mybatis.enhance.Sortable;
 import com.chinacreator.c2.flow.WfApiFactory;
 import com.chinacreator.c2.flow.api.WfRuntimeService;
 import com.chinacreator.c2.flow.demo.leave.AskLeave;
+import com.chinacreator.c2.flow.detail.ChooseGroup;
 import com.chinacreator.c2.flow.detail.WfModuleBean;
 import com.chinacreator.c2.flow.detail.WfUniteTaskResult;
 import com.chinacreator.c2.flow.util.CommonUtil;
@@ -24,6 +25,7 @@ import com.chinacreator.c2.ioc.ApplicationContextManager;
 import com.chinacreator.c2.web.ds.ArrayContentProvider;
 import com.chinacreator.c2.web.ds.ArrayContext;
 import com.chinacreator.c2.workflow.api.WfExtendService;
+import com.chinacreator.c2.workflow.util.WorkflowUtils;
 
 public class AskLeaveContentProvider implements
 		ArrayContentProvider{
@@ -57,16 +59,18 @@ public class AskLeaveContentProvider implements
 	        WebOperationContext context = (WebOperationContext)OperationContextHolder.getContext();
 	        WfRuntimeService wfRuntimeService= WfApiFactory.getWfRuntimeService();
 	        
+	        //获取当前用户工作流所有组
+	        List<ChooseGroup> candidateGroupList=WorkflowUtils.getGroupsByUserId(context.getUser().getId());
+	        
 	        //获取当前业务待办信息
 	        for (Object object : askLeaveList) {
 				Map<String,Object> askLeaveMap=(Map<String,Object>)object;
 				String businesskey=(String)askLeaveMap.get("id");
 		        Map<String, Object> params=new HashMap<String, Object>();
-		        params.put("userId",context.getUser().getId());
 		        params.put("moduleid",wfModuleBean.getId());
 		        params.put("businesskey", businesskey);
 		        params.put("taskType", "todo");
-		        WfUniteTaskResult wfUniteTaskResult = wfRuntimeService.queryWfUniteRunTask(params,0,1);
+		        WfUniteTaskResult wfUniteTaskResult = wfRuntimeService.queryWfUniteRunTask(context.getUser().getId(),candidateGroupList,params,0,1);
 		        if(null!=wfUniteTaskResult&&wfUniteTaskResult.getDatas().size()>0){
 		        	askLeaveMap.put("todo",wfUniteTaskResult.getDatas().get(0));
 		        }

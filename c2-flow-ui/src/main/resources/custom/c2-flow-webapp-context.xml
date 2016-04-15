@@ -10,4 +10,9 @@
 
 	<context:property-placeholder/>
 	<bean id="wfExtendServiceLocal" class="${c2.workflow.wfExtendServiceLocal}"/>
+	
+	<bean id="jobGroupType" class="com.chinacreator.c2.workflow.service.JobGroupType"/>
+	
+	<bean id="roleGroupType" class="com.chinacreator.c2.workflow.service.RoleGroupType"/>
+	
 </beans>

@@ -6,10 +6,16 @@ import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.chinacreator.c2.flow.api.GroupType;
+import com.chinacreator.c2.flow.detail.ChooseGroup;
+import com.chinacreator.c2.ioc.ApplicationContextManager;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -79,5 +85,58 @@ public class WorkflowUtils {
         FileUtils.writeByteArrayToFile(file, b, true);
         return diagramPath;
     }
-
+   
+    
+    public static String parseToGroupTypePrex(String typeUrl) {
+    	if(null==typeUrl) return null;
+    	if(!typeUrl.startsWith("$")) return null;
+    	return typeUrl.split(":")[0];
+    }
+    
+    
+    public static String parseToGroupId(String typeUrl) {
+    	if(null==typeUrl) return typeUrl;
+    	if(!typeUrl.startsWith("$")) return typeUrl;
+    	if(typeUrl.indexOf(":")==-1) return typeUrl;
+    	String[] typeSz=typeUrl.split(":");
+    	if(typeSz.length==2) return typeSz[1];
+    	return typeUrl;
+    }
+    
+    
+    /**
+     * 获取组类型实现
+     * @return
+     */
+    public static GroupType getGroupTypeByPrex(String groupPrex){
+    	Map<String, GroupType> groupTypes = ApplicationContextManager.getContext().getBeansOfType(GroupType.class);
+		for(GroupType groupType:groupTypes.values()){
+			if(groupType.getPrefix().equals(groupPrex)){
+				return groupType;
+			}
+		}
+		return null;
+    }
+    
+    
+    /**
+     * 获取用户所有组
+     * @param userId
+     * @return
+     */
+    public static List<ChooseGroup> getGroupsByUserId(String userId){
+    	//查询用户所有类型的组
+    	List<ChooseGroup> candidateGroupList=new ArrayList<ChooseGroup>();
+    	Map<String, GroupType> groupTypes = ApplicationContextManager.getContext().getBeansOfType(GroupType.class);
+    	for(GroupType groupType:groupTypes.values()){
+    		List<ChooseGroup> groupList=groupType.getGroupsByUserKey(userId);
+    		if(null==groupList) continue;
+    		for (ChooseGroup candidateGroup : groupList){
+    			candidateGroup.setType(groupType.getPrefix());
+    			candidateGroupList.add(candidateGroup);
+    		}
+    	}
+    	
+    	return candidateGroupList;
+    }
 }

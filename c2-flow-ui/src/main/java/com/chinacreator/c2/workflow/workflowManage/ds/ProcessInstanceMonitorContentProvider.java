@@ -15,8 +15,10 @@ import com.chinacreator.asp.comp.sys.core.user.dto.UserDTO;
 import com.chinacreator.c2.dao.mybatis.enhance.Page;
 import com.chinacreator.c2.dao.mybatis.enhance.Pageable;
 import com.chinacreator.c2.flow.WfApiFactory;
+import com.chinacreator.c2.flow.api.GroupType;
 import com.chinacreator.c2.flow.api.WfHistoryService;
 import com.chinacreator.c2.flow.api.WfRuntimeService;
+import com.chinacreator.c2.flow.detail.ChooseGroup;
 import com.chinacreator.c2.flow.detail.WfHistoricTask;
 import com.chinacreator.c2.flow.detail.WfHistoricTaskParam;
 import com.chinacreator.c2.flow.detail.WfIdentityLink;
@@ -26,6 +28,7 @@ import com.chinacreator.c2.flow.util.DateUtil;
 import com.chinacreator.c2.ioc.ApplicationContextManager;
 import com.chinacreator.c2.web.ds.ArrayContentProvider;
 import com.chinacreator.c2.web.ds.ArrayContext;
+import com.chinacreator.c2.workflow.util.WorkflowUtils;
 
 public class ProcessInstanceMonitorContentProvider implements ArrayContentProvider{
 
@@ -174,8 +177,16 @@ public class ProcessInstanceMonitorContentProvider implements ArrayContentProvid
 							
 							for (String groupId : groupSet) {
 								try {
-									JobDTO jobDTO=jobService.queryByPK(groupId);
-									assigneeGroupItem += jobDTO.getJobName()+ ",";
+									String gid=WorkflowUtils.parseToGroupId(groupId);
+									String groupPrex=WorkflowUtils.parseToGroupTypePrex(groupId);
+									GroupType groupType=WorkflowUtils.getGroupTypeByPrex(groupPrex);
+									if(null==groupType){
+										JobDTO jobDTO=jobService.queryByPK(gid);
+										assigneeGroupItem += jobDTO.getJobName()+ ",";
+									}else{
+										ChooseGroup candidateGroup=groupType.getGroup(gid);
+										assigneeGroupItem += candidateGroup.getDisplayName()+ ",";
+									}
 								} catch (Exception e) {
 									assigneeGroupItem += groupId + ",";
 								}

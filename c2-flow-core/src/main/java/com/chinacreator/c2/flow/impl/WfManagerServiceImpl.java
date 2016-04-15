@@ -2016,7 +2016,7 @@ public class WfManagerServiceImpl implements WfManagerService {
 			if (activityBehavior instanceof CallActivityBehavior) {
 				callActivityBehavior = (CallActivityBehavior) activityBehavior;
 			}
-
+			
 			if (callActivityBehavior != null) {
 				propertiesJSON.put("processDefinitonKey",
 						callActivityBehavior.getProcessDefinitonKey());
@@ -2501,7 +2501,7 @@ public class WfManagerServiceImpl implements WfManagerService {
 	public void addTaskListener(String processDefinitionKey) throws Exception {
 		ProcessDefinitionEntity pde = (ProcessDefinitionEntity) repositoryService
 				.createProcessDefinitionQuery()
-				.processDefinitionKey(processDefinitionKey).latestVersion()
+				.processDefinitionKey(processDefinitionKey).processDefinitionWithoutTenantId().latestVersion()
 				.singleResult();
 		// if (pde.getVersion() == 1) {//修改流程部署后没有监听器了
 		pde = (ProcessDefinitionEntity) repositoryService

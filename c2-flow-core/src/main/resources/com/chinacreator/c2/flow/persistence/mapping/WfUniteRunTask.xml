@@ -345,20 +345,44 @@
 		where ((b.category = 'users' and
 		b.candidate = #{userId} and
 		(b.assignee IS NULL or b.ASSIGNEE='')) or
-		(b.assignee = #{userId} or
-		(b.category = 'groups' and
-		b.assignee in
-		(select c.GROUP_ID_
-		from act_id_membership c
-		where c.USER_ID_ =
-		#{userId}))) or
-		(b.category = 'groups' and (b.assignee IS NULL or
-		b.ASSIGNEE='') and
-		b.candidate in
-		(select c.GROUP_ID_
-		from
-		act_id_membership c
-		where c.USER_ID_ = #{userId}))) and
+		(b.assignee = #{userId})
+		<if test="groups!= null and groups.size>0">
+			or (b.category = 'groups' and
+			b.assignee in
+				<trim prefix="(" suffix=")" suffixOverrides=",">
+					<foreach collection="groups" item="group" separator=",">
+						#{group.id}
+					</foreach>
+				</trim>
+			)
+			or (b.category = 'groups' and (b.assignee IS NULL or
+			b.ASSIGNEE='') and
+			b.candidate in
+				<trim prefix="(" suffix=")" suffixOverrides=",">
+					<foreach collection="groups" item="group" separator=",">
+						#{group.id}
+					</foreach>
+				</trim>
+			)
+			or (b.category = 'groups' and
+			b.assignee in
+				<trim prefix="(" suffix=")" suffixOverrides=",">
+					<foreach collection="groups" item="group" separator=",">
+						'${group.type}:${group.id}'
+					</foreach>
+				</trim>
+			)
+			or (b.category = 'groups' and (b.assignee IS NULL or
+			b.ASSIGNEE='') and
+			b.candidate in
+				<trim prefix="(" suffix=")" suffixOverrides=",">
+					<foreach collection="groups" item="group" separator=",">
+						'${group.type}:${group.id}'
+					</foreach>
+				</trim>
+			)
+		</if>
+		) and
 		b.TASK_STATE=#{taskType}
 		<if test="id != null">
 			and b.id = #{id}
@@ -493,25 +517,47 @@
 		resultType="Integer">
 		select count(1) from
 		${prefix}WF_UNITE_RUN_TASK b
-		where ((b.category =
-		'users' and
+		where ((b.category = 'users' and
 		b.candidate = #{userId} and
-		(b.assignee IS NULL or
-		b.ASSIGNEE='')) or
-		(b.assignee = #{userId} or
-		(b.category = 'groups' and
-		b.assignee in
-		(select c.GROUP_ID_
-		from act_id_membership c
-		where
-		c.USER_ID_ = #{userId}))) or
-		(b.category = 'groups' and (b.assignee IS
-		NULL or b.ASSIGNEE='') and
-		b.candidate in
-		(select c.GROUP_ID_
-		from
-		act_id_membership c
-		where c.USER_ID_ = #{userId}))) and
+		(b.assignee IS NULL or b.ASSIGNEE='')) or
+		(b.assignee = #{userId})
+		<if test="groups!= null and groups.size>0">
+			or (b.category = 'groups' and
+			b.assignee in
+				<trim prefix="(" suffix=")" suffixOverrides=",">
+					<foreach collection="groups" item="group" separator=",">
+						#{group.id}
+					</foreach>
+				</trim>
+			)
+			or (b.category = 'groups' and (b.assignee IS NULL or
+			b.ASSIGNEE='') and
+			b.candidate in
+				<trim prefix="(" suffix=")" suffixOverrides=",">
+					<foreach collection="groups" item="group" separator=",">
+						#{group.id}
+					</foreach>
+				</trim>
+			)
+			or (b.category = 'groups' and
+			b.assignee in
+				<trim prefix="(" suffix=")" suffixOverrides=",">
+					<foreach collection="groups" item="group" separator=",">
+						'${group.type}:${group.id}'
+					</foreach>
+				</trim>
+			)
+			or (b.category = 'groups' and (b.assignee IS NULL or
+			b.ASSIGNEE='') and
+			b.candidate in
+				<trim prefix="(" suffix=")" suffixOverrides=",">
+					<foreach collection="groups" item="group" separator=",">
+						'${group.type}:${group.id}'
+					</foreach>
+				</trim>
+			)
+		</if>
+		) and
 		b.TASK_STATE=#{taskType}
 		<if test="id != null">
 			and b.id = #{id}
@@ -694,20 +740,44 @@
 		where ((b.category = 'users' and
 		b.candidate = #{userId} and
 		(b.assignee IS NULL or b.ASSIGNEE='')) or
-		(b.assignee = #{userId} or
-		(b.category = 'groups' and
-		b.assignee in
-		(select c.GROUP_ID_
-		from act_id_membership c
-		where c.USER_ID_ =
-		#{userId}))) or
-		(b.category = 'groups' and (b.assignee IS NULL or
-		b.ASSIGNEE='') and
-		b.candidate in
-		(select c.GROUP_ID_
-		from
-		act_id_membership c
-		where c.USER_ID_ = #{userId}))) and
+		(b.assignee = #{userId})
+		<if test="groups!= null and groups.size>0">
+			or (b.category = 'groups' and
+			b.assignee in
+				<trim prefix="(" suffix=")" suffixOverrides=",">
+					<foreach collection="groups" item="group" separator=",">
+						#{group.id}
+					</foreach>
+				</trim>
+			)
+			or (b.category = 'groups' and (b.assignee IS NULL or
+			b.ASSIGNEE='') and
+			b.candidate in
+				<trim prefix="(" suffix=")" suffixOverrides=",">
+					<foreach collection="groups" item="group" separator=",">
+						#{group.id}
+					</foreach>
+				</trim>
+			)
+			or (b.category = 'groups' and
+			b.assignee in
+				<trim prefix="(" suffix=")" suffixOverrides=",">
+					<foreach collection="groups" item="group" separator=",">
+						'${group.type}:${group.id}'
+					</foreach>
+				</trim>
+			)
+			or (b.category = 'groups' and (b.assignee IS NULL or
+			b.ASSIGNEE='') and
+			b.candidate in
+				<trim prefix="(" suffix=")" suffixOverrides=",">
+					<foreach collection="groups" item="group" separator=",">
+						'${group.type}:${group.id}'
+					</foreach>
+				</trim>
+			)
+		</if>
+		) and
 		b.TASK_STATE=#{taskType}
 		<if test="id != null">
 			and b.id = #{id}
@@ -851,25 +921,47 @@
 		resultType="Integer">
 		select count(1) from
 		${prefix}WF_UNITE_HIS_TASK b
-		where ((b.category =
-		'users' and
+		where ((b.category = 'users' and
 		b.candidate = #{userId} and
-		(b.assignee IS NULL or
-		b.ASSIGNEE='')) or
-		(b.assignee = #{userId} or
-		(b.category = 'groups' and
-		b.assignee in
-		(select c.GROUP_ID_
-		from act_id_membership c
-		where
-		c.USER_ID_ = #{userId}))) or
-		(b.category = 'groups' and (b.assignee IS
-		NULL or b.ASSIGNEE='') and
-		b.candidate in
-		(select c.GROUP_ID_
-		from
-		act_id_membership c
-		where c.USER_ID_ = #{userId}))) and
+		(b.assignee IS NULL or b.ASSIGNEE='')) or
+		(b.assignee = #{userId})
+		<if test="groups!= null and groups.size>0">
+			or (b.category = 'groups' and
+			b.assignee in
+				<trim prefix="(" suffix=")" suffixOverrides=",">
+					<foreach collection="groups" item="group" separator=",">
+						#{group.id}
+					</foreach>
+				</trim>
+			)
+			or (b.category = 'groups' and (b.assignee IS NULL or
+			b.ASSIGNEE='') and
+			b.candidate in
+				<trim prefix="(" suffix=")" suffixOverrides=",">
+					<foreach collection="groups" item="group" separator=",">
+						#{group.id}
+					</foreach>
+				</trim>
+			)
+			or (b.category = 'groups' and
+			b.assignee in
+				<trim prefix="(" suffix=")" suffixOverrides=",">
+					<foreach collection="groups" item="group" separator=",">
+						'${group.type}:${group.id}'
+					</foreach>
+				</trim>
+			)
+			or (b.category = 'groups' and (b.assignee IS NULL or
+			b.ASSIGNEE='') and
+			b.candidate in
+				<trim prefix="(" suffix=")" suffixOverrides=",">
+					<foreach collection="groups" item="group" separator=",">
+						'${group.type}:${group.id}'
+					</foreach>
+				</trim>
+			)
+		</if>
+		) and
 		b.TASK_STATE=#{taskType}
 		<if test="id != null">
 			and b.id = #{id}

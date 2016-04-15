@@ -350,11 +350,12 @@ public class ExtendEntityEventListener implements ActivitiEventListener {
 			while(itr.hasNext()){
 				WfUniteRunTaskEntity wfUnitRunTask = itr.next();
 				//签收时忽略非签收人的同一任务
-				if(assignee != null && !assignee.equals(wfUnitRunTask.getCandidate())){
+				//if(assignee != null && !assignee.equals(wfUnitRunTask.getCandidate())){
 //					managementService.executeCommand(new DeleteWfUniteRunTaskByPkCmd(wfUnitRunTask));
-					itr.remove();
-					continue;
-				}
+					//itr.remove();
+					//continue;
+				//}
+
 				if (appId != null)
 					wfUnitRunTask.setAppId(appId);
 				wfUnitRunTask.setAssignee(assignee);

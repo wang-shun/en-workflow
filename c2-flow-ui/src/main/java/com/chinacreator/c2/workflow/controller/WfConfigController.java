@@ -17,11 +17,13 @@ import com.chinacreator.asp.comp.sys.advanced.job.service.JobService;
 import com.chinacreator.asp.comp.sys.advanced.user.service.UserService;
 import com.chinacreator.asp.comp.sys.core.user.dto.UserDTO;
 import com.chinacreator.c2.flow.WfApiFactory;
+import com.chinacreator.c2.flow.api.GroupType;
 import com.chinacreator.c2.flow.api.WfFormService;
 import com.chinacreator.c2.flow.api.WfHistoryService;
 import com.chinacreator.c2.flow.api.WfManagerService;
 import com.chinacreator.c2.flow.api.WfRepositoryService;
 import com.chinacreator.c2.flow.api.WfRuntimeService;
+import com.chinacreator.c2.flow.detail.ChooseGroup;
 import com.chinacreator.c2.flow.detail.WfActivity;
 import com.chinacreator.c2.flow.detail.WfConstants;
 import com.chinacreator.c2.flow.detail.WfHistoricTask;
@@ -33,6 +35,7 @@ import com.chinacreator.c2.flow.util.CommonUtil;
 import com.chinacreator.c2.ioc.ApplicationContextManager;
 import com.chinacreator.c2.web.controller.ResponseFactory;
 import com.chinacreator.c2.workflow.api.WfExtendService;
+import com.chinacreator.c2.workflow.util.WorkflowUtils;
 
 /**
  * 流程外围配置控制器
@@ -96,14 +99,24 @@ public class WfConfigController {
 			if (null != groupPerformer && !"".equals(groupPerformer)) {
 				String groupNames = "";
 				String[] groupArr = groupPerformer.split(",");
-				for (String gId : groupArr) {
+				
+				for (String gId : groupArr){
+					String id = WorkflowUtils.parseToGroupId(gId);
+					String groupPrex = WorkflowUtils.parseToGroupTypePrex(gId);
+					GroupType groupType=WorkflowUtils.getGroupTypeByPrex(groupPrex);
+					if(null==groupPrex){
+						groupNames += gId+ ",";
+					}else{
+						ChooseGroup candidateGroup=groupType.getGroup(id);
+						groupNames += candidateGroup.getDisplayName()+ ",";
+					}
 					
 					JobService jobService = ApplicationContextManager.getContext().getBean(JobService.class);
 					JobDTO jobDto=jobService.queryByPK(gId);
 					if(null!=jobDto){
-						groupNames += jobDto.getJobName()+ ",";
+						
 					}else{
-						groupNames += gId+ ",";
+						
 					}
 					
 				}

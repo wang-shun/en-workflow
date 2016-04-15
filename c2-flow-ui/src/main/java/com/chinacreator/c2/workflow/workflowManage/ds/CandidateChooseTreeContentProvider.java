@@ -4,26 +4,29 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import com.chinacreator.asp.comp.sys.advanced.job.dto.JobDTO;
-import com.chinacreator.asp.comp.sys.advanced.job.service.JobService;
-import com.chinacreator.asp.comp.sys.advanced.user.service.UserService;
-import com.chinacreator.asp.comp.sys.common.CommonPropertiesUtil;
-import com.chinacreator.asp.comp.sys.core.user.dto.UserDTO;
-import com.chinacreator.c2.flow.detail.WfUserParam;
+import com.chinacreator.c2.flow.api.GroupType;
+import com.chinacreator.c2.flow.detail.ChooseGroup;
+import com.chinacreator.c2.flow.detail.ChooseUser;
+import com.chinacreator.c2.flow.util.CommonUtil;
 import com.chinacreator.c2.ioc.ApplicationContextManager;
 import com.chinacreator.c2.web.ds.TreeContentProvider;
 import com.chinacreator.c2.web.ds.TreeContext;
 import com.chinacreator.c2.web.ds.TreeNode;
 import com.chinacreator.c2.web.ds.impl.DefaultTreeNode;
+import com.chinacreator.c2.workflow.util.WorkflowUtils;
 
 public class CandidateChooseTreeContentProvider implements TreeContentProvider{
 	
 	@Override
 	public TreeNode[] getElements(TreeContext context) {
+		
 		List<TreeNode> nodes = new ArrayList<TreeNode>();
 		if (null != context) {
 			Map<String, Object> map = context.getConditions();
-			String menuId = (String) map.get("id");
+			
+			String id=(String) map.get("id");
+			String gid = WorkflowUtils.parseToGroupId(id);
+			String gType = WorkflowUtils.parseToGroupTypePrex(id);
 			String selectedUserIds = (String) map.get("selectedUserIds");
 			String selectedGroupIds = (String) map.get("selectedGroupIds");
 			List<String> selectedUserIdList = new ArrayList<String>();
@@ -41,64 +44,51 @@ public class CandidateChooseTreeContentProvider implements TreeContentProvider{
 				}
 			}
 			
-			JobService jobService = ApplicationContextManager.getContext().getBean(JobService.class);
+			Map<String, GroupType> groupTypes = ApplicationContextManager.getContext().getBeansOfType(GroupType.class);
 			
-			if(null == menuId || menuId.trim().equals("")){
-				//查询所有的角色
+			//为空，查询所有组类型
+			if(CommonUtil.stringNullOrEmpty(gType)&&CommonUtil.stringNullOrEmpty(gid)){
 				try {
 					
-					//考虑到分布式环境组织机构可能不统一情况，外围配置处理人从本地获取(流程管理所在应用)
-					List<JobDTO> allJobList=jobService.queryAll();
+					TreeNode tnRoot = new DefaultTreeNode(null, "orgTree", "参与者树",true);
+					((DefaultTreeNode)tnRoot).setChkDisabled(true);
+					nodes.add(tnRoot);
 					
-					if(null!=allJobList && !allJobList.isEmpty()){
-						TreeNode tn = new DefaultTreeNode(null, "orgTree", "参与者树", true);
-						((DefaultTreeNode)tn).setChkDisabled(true);
-						nodes.add(tn);
-						for(JobDTO jobDTO : allJobList){
-							TreeNode tnRole = new DefaultTreeNode("orgTree", jobDTO.getJobId(),jobDTO.getJobName(),true);
-							if(selectedGroupIdList.contains(jobDTO.getJobId()))
-								((DefaultTreeNode)tnRole).setChecked(true);
-							nodes.add(tnRole);
-						}
+					for(GroupType groupType:groupTypes.values()){
+						TreeNode tnGroupType = new DefaultTreeNode("orgTree",groupType.getPrefix(),groupType.getGroupTypeDisplayName(),true);
+						((DefaultTreeNode)tnGroupType).setChkDisabled(true);
+						nodes.add(tnGroupType);
 					}
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}else{
 				
-				//查询角色下的用户
-				// menuId传过来是角色ID，查询角色下的用户即可
-				WfUserParam params = new WfUserParam();
-				params.setMemberOfGroup(menuId);
-				params.setOrderByUserFirstName(true);
-				params.setOrder(WfUserParam.SORT_ASC);
-				try {
-					
-					UserService userService = ApplicationContextManager.getContext().getBean(UserService.class);
-					List<UserDTO> userDtoList =null;
-					
-					//获取普通用户岗位
-					if(menuId.equals(CommonPropertiesUtil.getRoleofeveryoneJobId())){
-						userDtoList=userService.queryAll();
-					}else{
-						userDtoList = jobService.queryUsers(menuId);
-					}
-					
-					if(null!=userDtoList && !userDtoList.isEmpty()){
-						for(UserDTO userDTO : userDtoList){
-							TreeNode tn = new DefaultTreeNode(null, userDTO.getUserId(), userDTO.getUserRealname(),false);
-							if(selectedUserIdList.contains(userDTO.getUserId()))
-								((DefaultTreeNode)tn).setChecked(true);
-							nodes.add(tn);
-						}
-					}
-				} catch (Exception e) {
-					e.printStackTrace();
+				GroupType groupType=WorkflowUtils.getGroupTypeByPrex(gType);
+				if(null==groupType) throw new RuntimeException("找不到组类型["+gType+"]");
+				
+				if("".equals(gid)) gid=null;
+				
+				//查询当前组下的子组
+				List<ChooseGroup>  groupList=groupType.getChildGroups(gid);
+				for (ChooseGroup candidateGroup : groupList) {
+					TreeNode tn = new DefaultTreeNode(null,groupType.getPrefix()+":"+candidateGroup.getId(),candidateGroup.getDisplayName(),true);
+					if(selectedGroupIdList.contains(groupType.getPrefix()+":"+candidateGroup.getId())) ((DefaultTreeNode)tn).setChecked(true);
+					nodes.add(tn);
+				}
+				
+				//查询当前组下用户
+				List<ChooseUser>  userList=groupType.parseUsers(gid);
+				for (ChooseUser candidateUser : userList) {
+					TreeNode tnUser = new DefaultTreeNode(null,candidateUser.getId(),candidateUser.getDisplayName(),false);
+					if(selectedUserIdList.contains(candidateUser.getId())) ((DefaultTreeNode)tnUser).setChecked(true);
+					nodes.add(tnUser);
 				}
 			}
 			
 		}
 		return nodes.toArray(new TreeNode[nodes.size()]);
 	}
+	
 
 }
