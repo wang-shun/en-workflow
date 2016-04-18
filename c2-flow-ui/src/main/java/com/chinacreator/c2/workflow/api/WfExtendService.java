@@ -4,6 +4,7 @@ package com.chinacreator.c2.workflow.api;
 import java.util.List;
 
 import com.chinacreator.c2.flow.detail.WfModuleBean;
+import com.chinacreator.c2.flow.detail.WfProcessDefinition;
 
 public interface WfExtendService {
 	
@@ -39,5 +40,13 @@ public interface WfExtendService {
 	 * @return 事项菜单对象
 	 */
 	public WfModuleBean queryByMenuCode(String menuCode);
+	
+	
+	/**
+	 * 通过事项菜单获取最新的工作流定义
+	 * @param menuCode
+	 * @return 流程定义
+	 */
+	public WfProcessDefinition getProcessDefinitionByMenuCode(String menuCode) throws Exception;
 
 }

@@ -7,7 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.chinacreator.asp.comp.sys.basic.menu.dto.MenuDTO;
 import com.chinacreator.asp.comp.sys.basic.menu.service.MenuService;
+import com.chinacreator.c2.flow.WfApiFactory;
+import com.chinacreator.c2.flow.api.WfManagerService;
 import com.chinacreator.c2.flow.detail.WfModuleBean;
+import com.chinacreator.c2.flow.detail.WfProcessDefinition;
 import com.chinacreator.c2.workflow.api.WfExtendService;
 
 public class WfExtendServiceImpl implements WfExtendService {
@@ -16,6 +19,8 @@ public class WfExtendServiceImpl implements WfExtendService {
 
 	@Autowired
 	private MenuService menuService;
+	
+	private WfManagerService wfManagerService = WfApiFactory.getWfManagerService();
 
 	@Override
 	public List<WfModuleBean> queryChildren(String moduleId, boolean isRecursive) {
@@ -98,6 +103,15 @@ public class WfExtendServiceImpl implements WfExtendService {
 		}
 		return vmb;
 	}
+	
+	
+	@Override
+	public WfProcessDefinition getProcessDefinitionByMenuCode(String menuCode) throws Exception{
+		WfModuleBean wfModuleBean=this.queryByMenuCode(menuCode);
+		if(null==wfModuleBean) return null;
+		return wfManagerService.getBindProcessByModuleId(wfModuleBean.getId());
+	}
+	
 	
 	@Override
 	public boolean existsChildren(String moduleId) {
