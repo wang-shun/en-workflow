@@ -178,7 +178,7 @@ public class WfMonitorController {
 									//WfUser user = wfManagerService.getUserById(userId);
 									//本地获取处理人信息
 									UserDTO userDto=userService.queryByPK(userId);
-									if(null!=userDto){
+									if(null!=userDto&&!CommonUtil.stringNullOrEmpty(userDto.getUserId())){
 										assigneeUserItem += userDto.getUserRealname()+ ",";
 									}else{
 										assigneeUserItem += userId + ",";

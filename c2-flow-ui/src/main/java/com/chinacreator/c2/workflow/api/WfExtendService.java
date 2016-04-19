@@ -41,12 +41,5 @@ public interface WfExtendService {
 	 */
 	public WfModuleBean queryByMenuCode(String menuCode);
 	
-	
-	/**
-	 * 通过事项菜单获取最新的工作流定义
-	 * @param menuCode
-	 * @return 流程定义
-	 */
-	public WfProcessDefinition getProcessDefinitionByMenuCode(String menuCode) throws Exception;
 
 }

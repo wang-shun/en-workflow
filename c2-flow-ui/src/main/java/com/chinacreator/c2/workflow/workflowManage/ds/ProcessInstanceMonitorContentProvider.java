@@ -162,10 +162,15 @@ public class ProcessInstanceMonitorContentProvider implements ArrayContentProvid
 									groupSet.add(idLink.getGroupId());
 								}
 							}
+							
 							for (String userId : userSet) {
 								try {
 									UserDTO userDto=userService.queryByPK(userId);
-									assigneeUserItem += userDto.getUserRealname() + ",";
+									if(null!=userDto&&!CommonUtil.stringNullOrEmpty(userDto.getUserId())){
+										assigneeUserItem += userDto.getUserRealname() + ",";
+									}else{
+										assigneeUserItem += userId + ",";
+									}
 								} catch (Exception e) {
 									assigneeUserItem += userId + ",";
 								}
