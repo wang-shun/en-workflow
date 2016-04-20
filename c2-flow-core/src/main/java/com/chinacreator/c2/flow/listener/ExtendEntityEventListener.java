@@ -15,6 +15,8 @@ import org.activiti.engine.delegate.event.ActivitiEventType;
 import org.activiti.engine.impl.context.Context;
 import org.activiti.engine.impl.persistence.entity.HistoricTaskInstanceEntity;
 import org.activiti.engine.impl.persistence.entity.TaskEntity;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.chinacreator.c2.flow.cmd.unitetask.DeleteWfUniteRunTaskCmd;
 import com.chinacreator.c2.flow.cmd.unitetask.DeleteWfUniteRunTaskExtCmd;
@@ -34,6 +36,8 @@ import com.chinacreator.c2.flow.persistence.entity.WfUniteRunTaskExtendEntity;
 
 public class ExtendEntityEventListener implements ActivitiEventListener {
 
+	private static final Logger LOGGER = LoggerFactory.getLogger(ExtendEntityEventListener.class);
+	
 	protected boolean failOnException = false;
 	protected Set<Class<?>> entityClasses;
 
@@ -42,6 +46,9 @@ public class ExtendEntityEventListener implements ActivitiEventListener {
 	@Override
 	public void onEvent(ActivitiEvent event) {
 		if (isValidEvent(event)) {
+			
+			LOGGER.debug("执行工作流实体事件:"+event.getType());
+			
 			managementService = event.getEngineServices()
 					.getManagementService();
 			// Check if this event

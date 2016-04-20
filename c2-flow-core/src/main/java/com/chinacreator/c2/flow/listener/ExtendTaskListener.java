@@ -16,6 +16,8 @@ import org.activiti.engine.impl.persistence.entity.ExecutionEntity;
 import org.activiti.engine.impl.persistence.entity.HistoricProcessInstanceEntity;
 import org.activiti.engine.impl.persistence.entity.TaskEntity;
 import org.activiti.engine.task.IdentityLink;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 
 import com.alibaba.fastjson.JSON;
@@ -45,6 +47,9 @@ import com.chinacreator.c2.flow.util.CommonUtil;
  * 
  */
 public class ExtendTaskListener implements TaskListener {
+	
+	private static final Logger LOGGER = LoggerFactory.getLogger(ExtendEntityEventListener.class);
+	
 	private static final long serialVersionUID = 1L;
 
 	private ManagementService managementService;
@@ -60,6 +65,9 @@ public class ExtendTaskListener implements TaskListener {
 	@Override
 	public void notify(DelegateTask delegateTask) {
 		String eventName = delegateTask.getEventName();
+		
+		LOGGER.debug("执行工作流任务事件:"+eventName);
+				
 		TaskEntity taskEntity = (TaskEntity) delegateTask;
 		if (EVENTNAME_CREATE.equals(eventName)) {
 			onCreate(taskEntity);
