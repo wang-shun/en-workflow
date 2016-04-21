@@ -13,9 +13,9 @@ import org.apache.ibatis.session.RowBounds;
 
 import com.alibaba.fastjson.JSON;
 import com.chinacreator.c2.flow.cmd.unitetask.config.FindWfUniteConfigColumnsCmd;
-import com.chinacreator.c2.flow.detail.WfUniteColumn;
 import com.chinacreator.c2.flow.detail.WfUniteTaskResult;
 import com.chinacreator.c2.flow.persistence.entity.WfUniteRunTaskExtendEntity;
+import com.chinacreator.c2.flow.util.WfUtils;
 
 public class FindWfUniteTaskByConditionCmd implements
 		Command<WfUniteTaskResult> {
@@ -31,102 +31,7 @@ public class FindWfUniteTaskByConditionCmd implements
 	}
 	
 
-	public Map<String,Object> getPersistentState(Map<String,Object> data) {
-		Map<String, Object> persistentState = new HashMap<String, Object>();
-		persistentState.put("id",data.get("id"));
-		persistentState.put("appid", data.get("appId"));
-		persistentState.put("assignee",data.get("assignee"));
-		persistentState.put("businesskey",data.get("businessKey"));
-		persistentState.put("candidate", data.get("candidate"));
-		persistentState.put("category",data.get("category"));
-		persistentState.put("createtime",data.get("createTime"));
-		persistentState.put("endtime",data.get("endTime"));
-		persistentState.put("delegation",data.get("delegation"));
-		persistentState.put("deletereason",data.get("deleteReason"));
-		persistentState.put("description",data.get("description"));
-		persistentState.put("duedate",data.get("dueDate"));
-		persistentState.put("executionid",data.get("executionId"));
-		persistentState.put("formkey",data.get("formKey"));
-		persistentState.put("moduleid",data.get("moduleId"));
-		persistentState.put("modulename",data.get("moduleName"));
-		persistentState.put("name",data.get("name"));
-		persistentState.put("owner",data.get("owner"));
-		persistentState.put("parenttaskid",data.get("parentTaskId"));
-		persistentState.put("priority",data.get("priority"));
-		persistentState.put("procdefid",data.get("procDefId"));
-		persistentState.put("procinstid",data.get("procInstId"));
-		persistentState.put("revision",data.get("revision"));
-		persistentState.put("taskdefkey",data.get("taskDefKey"));
-		persistentState.put("taskid",data.get("taskId"));
-		persistentState.put("taskstate",data.get("taskState"));
-		persistentState.put("tenantId",data.get("tenantId"));
-		persistentState.put("remark1", data.get("remark1"));
-		persistentState.put("remark2", data.get("remark2"));
-		persistentState.put("remark3", data.get("remark3"));
-		persistentState.put("remark4", data.get("remark4"));
-		persistentState.put("remark5", data.get("remark5"));
-		persistentState.put("remark6", data.get("remark6"));
-		persistentState.put("remark7", data.get("remark7"));
-		persistentState.put("remark8", data.get("remark8"));
-		persistentState.put("remark9", data.get("remark9"));
-		persistentState.put("remark10",data.get("remark10"));
-		return persistentState;
-	}
-	
-	
-	private String getTaskTitle(Map<String, Object> parameters, String userCName, 
-			WfUniteTaskResult wfUniteTaskResult) {
-		String appId = (String) parameters.get("appId");
-		appId = appId == null ? "default" : appId;
-		String tenantId = (String) parameters.get("tenantId");
-		tenantId = tenantId == null ? "default" : tenantId;
-		String engineName = (String) parameters.get("engineName");
-		engineName = engineName == null ? "default" : engineName;
-		String taskTitle = "";
-		try {
-			String taskState =(String)parameters.get("taskState");
-			String taskType1 = "待办";
-			if ("todo".equals(taskState)) {
-				taskType1 = "待办";
-			}
-			if ("done".equals(taskState)) {
-				taskType1 = "已办";
-			}
-			if ("suspend".equals(taskState)) {
-				taskType1 = "挂起";
-			}
-			if (wfUniteTaskResult != null) {
-				boolean onlyTitle = wfUniteTaskResult.isOnlyTitle();
-				if (onlyTitle) {
 
-					List<WfUniteColumn> titleColumns = wfUniteTaskResult
-							.getColumns();
-
-					List<String> taskDetail = new ArrayList<String>();
-					taskTitle = "用户【" + userCName + "】的" + taskType1 + "任务："+parameters.get("name");
-					if (titleColumns != null) {
-						for (WfUniteColumn wfuc : titleColumns) {
-							int isTilte = wfuc.getIsTitle();
-							if (isTilte == 1) {
-								String columnId = wfuc.getColumnId();
-								String columnName = wfuc.getColumnName();
-								columnName = columnName == null ? wfuc
-										.getColumnId() : columnName;
-								taskDetail.add(columnName + ":"
-										+ parameters.get(columnId.toLowerCase()));
-							}
-						}
-					}
-					if (taskDetail.size() > 0) {
-						taskTitle += "，任务详情：" + taskDetail + "";
-					}
-				}
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return taskTitle;
-	}
 	
 	@SuppressWarnings("unchecked")
 	@Override
@@ -164,8 +69,8 @@ public class FindWfUniteTaskByConditionCmd implements
 					.execute(findWfUniteConfigColumnsCmd);
 			
 			for (Object obj : list) {
-				Map<String, Object> data = this.getPersistentState((Map<String, Object>) obj);
-				data.put("taskTitle", this.getTaskTitle(data, userCName, wfUniteTaskResult));
+				Map<String, Object> data = WfUtils.getPersistentState((Map<String, Object>) obj);
+				data.put("taskTitle", WfUtils.getTaskTitle(data, userCName, wfUniteTaskResult));
 				datas.add(data);
 			}
 			

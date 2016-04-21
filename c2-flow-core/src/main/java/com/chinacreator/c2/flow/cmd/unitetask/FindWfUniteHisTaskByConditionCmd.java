@@ -15,7 +15,7 @@ import com.alibaba.fastjson.JSON;
 import com.chinacreator.c2.flow.cmd.unitetask.config.FindWfUniteConfigColumnsCmd;
 import com.chinacreator.c2.flow.detail.WfUniteTaskResult;
 import com.chinacreator.c2.flow.persistence.entity.WfUniteHisTaskExtendEntity;
-import com.chinacreator.c2.flow.persistence.entity.WfUniteRunTaskEntity;
+import com.chinacreator.c2.flow.util.WfUtils;
 
 public class FindWfUniteHisTaskByConditionCmd implements Command<WfUniteTaskResult> {
 	private Map<String, Object> parameters;
@@ -102,10 +102,8 @@ public class FindWfUniteHisTaskByConditionCmd implements Command<WfUniteTaskResu
 			
 			List<Map<String, Object>> datas = new ArrayList<Map<String, Object>>();
 			for(Object obj : list){
-				Map<String, Object> data = (Map<String, Object>) ((WfUniteRunTaskEntity) obj)
-						.getPersistentState();
-				data.put("taskTitle", ((WfUniteRunTaskEntity) obj)
-						.getTaskTitle(data, userCName, wfUniteTaskResult));
+				Map<String, Object> data = WfUtils.getPersistentState((Map<String, Object>) obj);
+				data.put("taskTitle", WfUtils.getTaskTitle(data, userCName, wfUniteTaskResult));
 				datas.add(data);
 			}
 			
