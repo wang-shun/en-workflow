@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
 import org.activiti.engine.identity.User;
 import org.activiti.engine.impl.db.DbSqlSession;
 import org.activiti.engine.impl.interceptor.Command;
@@ -16,7 +15,6 @@ import com.alibaba.fastjson.JSON;
 import com.chinacreator.c2.flow.cmd.unitetask.config.FindWfUniteConfigColumnsCmd;
 import com.chinacreator.c2.flow.detail.WfUniteColumn;
 import com.chinacreator.c2.flow.detail.WfUniteTaskResult;
-import com.chinacreator.c2.flow.persistence.entity.WfUniteRunTaskEntity;
 import com.chinacreator.c2.flow.persistence.entity.WfUniteRunTaskExtendEntity;
 
 public class FindWfUniteTaskByConditionCmd implements
@@ -31,7 +29,50 @@ public class FindWfUniteTaskByConditionCmd implements
 		this.firstResult = firstResult;
 		this.maxResults = maxResults;
 	}
+	
 
+	public Map<String,Object> getPersistentState(Map<String,Object> data) {
+		Map<String, Object> persistentState = new HashMap<String, Object>();
+		persistentState.put("id",data.get("id"));
+		persistentState.put("appid", data.get("appId"));
+		persistentState.put("assignee",data.get("assignee"));
+		persistentState.put("businesskey",data.get("businessKey"));
+		persistentState.put("candidate", data.get("candidate"));
+		persistentState.put("category",data.get("category"));
+		persistentState.put("createtime",data.get("createTime"));
+		persistentState.put("endtime",data.get("endTime"));
+		persistentState.put("delegation",data.get("delegation"));
+		persistentState.put("deletereason",data.get("deleteReason"));
+		persistentState.put("description",data.get("description"));
+		persistentState.put("duedate",data.get("dueDate"));
+		persistentState.put("executionid",data.get("executionId"));
+		persistentState.put("formkey",data.get("formKey"));
+		persistentState.put("moduleid",data.get("moduleId"));
+		persistentState.put("modulename",data.get("moduleName"));
+		persistentState.put("name",data.get("name"));
+		persistentState.put("owner",data.get("owner"));
+		persistentState.put("parenttaskid",data.get("parentTaskId"));
+		persistentState.put("priority",data.get("priority"));
+		persistentState.put("procdefid",data.get("procDefId"));
+		persistentState.put("procinstid",data.get("procInstId"));
+		persistentState.put("revision",data.get("revision"));
+		persistentState.put("taskdefkey",data.get("taskDefKey"));
+		persistentState.put("taskid",data.get("taskId"));
+		persistentState.put("taskstate",data.get("taskState"));
+		persistentState.put("tenantId",data.get("tenantId"));
+		persistentState.put("remark1", data.get("remark1"));
+		persistentState.put("remark2", data.get("remark2"));
+		persistentState.put("remark3", data.get("remark3"));
+		persistentState.put("remark4", data.get("remark4"));
+		persistentState.put("remark5", data.get("remark5"));
+		persistentState.put("remark6", data.get("remark6"));
+		persistentState.put("remark7", data.get("remark7"));
+		persistentState.put("remark8", data.get("remark8"));
+		persistentState.put("remark9", data.get("remark9"));
+		persistentState.put("remark10",data.get("remark10"));
+		return persistentState;
+	}
+	
 	
 	private String getTaskTitle(Map<String, Object> parameters, String userCName, 
 			WfUniteTaskResult wfUniteTaskResult) {
@@ -123,7 +164,7 @@ public class FindWfUniteTaskByConditionCmd implements
 					.execute(findWfUniteConfigColumnsCmd);
 			
 			for (Object obj : list) {
-				Map<String, Object> data = (Map<String, Object>) obj;
+				Map<String, Object> data = this.getPersistentState((Map<String, Object>) obj);
 				data.put("taskTitle", this.getTaskTitle(data, userCName, wfUniteTaskResult));
 				datas.add(data);
 			}
