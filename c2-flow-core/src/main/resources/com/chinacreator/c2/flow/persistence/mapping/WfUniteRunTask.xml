@@ -259,10 +259,12 @@
 	</select>
 
 	<!-- WfUniteRunTask RESULTMAP -->
-	<resultMap id="WfUniteTaskResultMap"
-		type="com.chinacreator.c2.flow.persistence.entity.WfUniteRunTaskEntity">
-		<id property="id" column="ID" jdbcType="VARCHAR" />
-		<result property="taskId" column="TASK_ID" jdbcType="VARCHAR" />
+	<resultMap id="WfUniteTaskResultMap" type="java.util.HashMap">
+	
+		<id property="taskId" column="TASK_ID" jdbcType="VARCHAR" />
+		
+		<result property="assignee" column="ASSIGNEE" jdbcType="VARCHAR" />
+		<result property="id" column="ID" jdbcType="VARCHAR" />
 		<result property="businessKey" column="BUSINESS_KEY" jdbcType="VARCHAR" />
 		<result property="executionId" column="EXECUTION_ID" jdbcType="VARCHAR" />
 		<result property="procInstId" column="PROC_INST_ID" jdbcType="VARCHAR" />
@@ -273,8 +275,7 @@
 		<result property="description" column="DESCRIPTION" jdbcType="VARCHAR" />
 		<result property="taskDefKey" column="TASK_DEF_KEY" jdbcType="VARCHAR" />
 		<result property="owner" column="OWNER" jdbcType="VARCHAR" />
-		<result property="assignee" column="ASSIGNEE" jdbcType="VARCHAR" />
-		<result property="candidate" column="CANDIDATE" jdbcType="VARCHAR" />
+		
 		<result property="delegation" column="DELEGATION" jdbcType="VARCHAR" />
 		<result property="priority" column="PRIORITY" jdbcType="INTEGER" />
 		<result property="createTime" column="CREATE_TIME" jdbcType="TIMESTAMP" />
@@ -300,6 +301,12 @@
 		<result property="remark8" column="REMARK8" jdbcType="VARCHAR" />
 		<result property="remark9" column="REMARK9" jdbcType="VARCHAR" />
 		<result property="remark10" column="REMARK10" jdbcType="VARCHAR" />
+		
+		<collection property="candidate" ofType="string" javaType="list">
+			<id column="candidate" property="candidate" jdbcType="VARCHAR"/>
+		</collection>
+		
+		
 	</resultMap>
 
 	<select id="selectWfUniteRunTaskByC" parameterType="java.util.HashMap"
@@ -485,7 +492,7 @@
 	</select>
 	<select id="selectWfUniteRunTaskCountByC" parameterType="java.util.HashMap"
 		resultType="Integer">
-		select count(1) from
+		select count(distinct b.task_id) from
 		${prefix}WF_UNITE_RUN_TASK b
 		where ((b.category =
 		'users' and

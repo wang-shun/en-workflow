@@ -14,6 +14,7 @@ import org.apache.ibatis.session.RowBounds;
 
 import com.alibaba.fastjson.JSON;
 import com.chinacreator.c2.flow.cmd.unitetask.config.FindWfUniteConfigColumnsCmd;
+import com.chinacreator.c2.flow.detail.WfUniteColumn;
 import com.chinacreator.c2.flow.detail.WfUniteTaskResult;
 import com.chinacreator.c2.flow.persistence.entity.WfUniteRunTaskEntity;
 import com.chinacreator.c2.flow.persistence.entity.WfUniteRunTaskExtendEntity;
@@ -31,6 +32,61 @@ public class FindWfUniteTaskByConditionCmd implements
 		this.maxResults = maxResults;
 	}
 
+	
+	private String getTaskTitle(Map<String, Object> parameters, String userCName, 
+			WfUniteTaskResult wfUniteTaskResult) {
+		String appId = (String) parameters.get("appId");
+		appId = appId == null ? "default" : appId;
+		String tenantId = (String) parameters.get("tenantId");
+		tenantId = tenantId == null ? "default" : tenantId;
+		String engineName = (String) parameters.get("engineName");
+		engineName = engineName == null ? "default" : engineName;
+		String taskTitle = "";
+		try {
+			String taskState =(String)parameters.get("taskState");
+			String taskType1 = "待办";
+			if ("todo".equals(taskState)) {
+				taskType1 = "待办";
+			}
+			if ("done".equals(taskState)) {
+				taskType1 = "已办";
+			}
+			if ("suspend".equals(taskState)) {
+				taskType1 = "挂起";
+			}
+			if (wfUniteTaskResult != null) {
+				boolean onlyTitle = wfUniteTaskResult.isOnlyTitle();
+				if (onlyTitle) {
+
+					List<WfUniteColumn> titleColumns = wfUniteTaskResult
+							.getColumns();
+
+					List<String> taskDetail = new ArrayList<String>();
+					taskTitle = "用户【" + userCName + "】的" + taskType1 + "任务："+parameters.get("name");
+					if (titleColumns != null) {
+						for (WfUniteColumn wfuc : titleColumns) {
+							int isTilte = wfuc.getIsTitle();
+							if (isTilte == 1) {
+								String columnId = wfuc.getColumnId();
+								String columnName = wfuc.getColumnName();
+								columnName = columnName == null ? wfuc
+										.getColumnId() : columnName;
+								taskDetail.add(columnName + ":"
+										+ parameters.get(columnId.toLowerCase()));
+							}
+						}
+					}
+					if (taskDetail.size() > 0) {
+						taskTitle += "，任务详情：" + taskDetail + "";
+					}
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return taskTitle;
+	}
+	
 	@SuppressWarnings("unchecked")
 	@Override
 	public WfUniteTaskResult execute(CommandContext commandContext) {
@@ -67,10 +123,8 @@ public class FindWfUniteTaskByConditionCmd implements
 					.execute(findWfUniteConfigColumnsCmd);
 			
 			for (Object obj : list) {
-				Map<String, Object> data = (Map<String, Object>) ((WfUniteRunTaskEntity) obj)
-						.getPersistentState();
-				data.put("taskTitle", ((WfUniteRunTaskEntity) obj)
-						.getTaskTitle(data, userCName, wfUniteTaskResult));
+				Map<String, Object> data = (Map<String, Object>) obj;
+				data.put("taskTitle", this.getTaskTitle(data, userCName, wfUniteTaskResult));
 				datas.add(data);
 			}
 			

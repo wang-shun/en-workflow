@@ -1,6 +1,8 @@
 package com.chinacreator.c2.workflow.task.ds;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.chinacreator.c2.dao.mybatis.enhance.Page;
@@ -44,8 +46,10 @@ public class TaskListContentProvider implements ArrayContentProvider {
 			}else{
 				result = wfRuntimeService.queryWfUniteRunTask(map, offset, pageSize);
 			}
+			
 			if(result != null){
-				page = new Page<Map<String,Object>>(pageIndex, pageSize, result.getTotalResults(), result.getDatas());
+				//待办去重(处理人为多组或多人内某用户单独签收时，同一taskId同一用户会有多条数据)
+				page = new Page<Map<String,Object>>(pageIndex, pageSize, result.getTotalResults(),result.getDatas());
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
