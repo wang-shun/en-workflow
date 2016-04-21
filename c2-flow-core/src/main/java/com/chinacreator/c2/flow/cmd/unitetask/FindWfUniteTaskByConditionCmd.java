@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
 import org.activiti.engine.identity.User;
 import org.activiti.engine.impl.db.DbSqlSession;
 import org.activiti.engine.impl.interceptor.Command;
@@ -15,8 +14,8 @@ import org.apache.ibatis.session.RowBounds;
 import com.alibaba.fastjson.JSON;
 import com.chinacreator.c2.flow.cmd.unitetask.config.FindWfUniteConfigColumnsCmd;
 import com.chinacreator.c2.flow.detail.WfUniteTaskResult;
-import com.chinacreator.c2.flow.persistence.entity.WfUniteRunTaskEntity;
 import com.chinacreator.c2.flow.persistence.entity.WfUniteRunTaskExtendEntity;
+import com.chinacreator.c2.flow.util.WfUtils;
 
 public class FindWfUniteTaskByConditionCmd implements
 		Command<WfUniteTaskResult> {
@@ -30,7 +29,10 @@ public class FindWfUniteTaskByConditionCmd implements
 		this.firstResult = firstResult;
 		this.maxResults = maxResults;
 	}
+	
 
+
+	
 	@SuppressWarnings("unchecked")
 	@Override
 	public WfUniteTaskResult execute(CommandContext commandContext) {
@@ -67,10 +69,8 @@ public class FindWfUniteTaskByConditionCmd implements
 					.execute(findWfUniteConfigColumnsCmd);
 			
 			for (Object obj : list) {
-				Map<String, Object> data = (Map<String, Object>) ((WfUniteRunTaskEntity) obj)
-						.getPersistentState();
-				data.put("taskTitle", ((WfUniteRunTaskEntity) obj)
-						.getTaskTitle(data, userCName, wfUniteTaskResult));
+				Map<String, Object> data = WfUtils.getPersistentState((Map<String, Object>) obj);
+				data.put("taskTitle", WfUtils.getTaskTitle(data, userCName, wfUniteTaskResult));
 				datas.add(data);
 			}
 			
