@@ -278,9 +278,9 @@
 		<result property="candidate" column="CANDIDATE" jdbcType="VARCHAR" />
 		<result property="delegation" column="DELEGATION" jdbcType="VARCHAR" />
 		<result property="priority" column="PRIORITY" jdbcType="INTEGER" />
-		<result property="createTime" column="CREATE_TIME" jdbcType="TIMESTAMP" />
-		<result property="endTime" column="CREATE_TIME" jdbcType="TIMESTAMP" />
-		<result property="dueDate" column="DUE_DATE" jdbcType="TIMESTAMP" />
+		<result property="createTime" column="CREATE_TIME" jdbcType="TIMESTAMP"/>
+		<result property="endTime" column="CREATE_TIME" jdbcType="TIMESTAMP"/>
+		<result property="dueDate" column="DUE_DATE" jdbcType="TIMESTAMP"/>
 		<result property="category" column="CATEGORY" jdbcType="VARCHAR" />
 		<result property="taskState" column="TASK_STATE" jdbcType="VARCHAR" />
 		<result property="tenantId" column="TENANT_ID" jdbcType="VARCHAR" />
@@ -323,17 +323,16 @@
 		
 		<result property="delegation" column="DELEGATION" jdbcType="VARCHAR" />
 		<result property="priority" column="PRIORITY" jdbcType="INTEGER" />
-		<result property="createTime" column="CREATE_TIME" jdbcType="TIMESTAMP" />
-		<result property="endTime" column="CREATE_TIME" jdbcType="TIMESTAMP" />
-		<result property="dueDate" column="DUE_DATE" jdbcType="TIMESTAMP" />
+		<result property="createTime" column="CREATE_TIME" jdbcType="TIMESTAMP" javaType="java.sql.Timestamp"/>
+		<result property="endTime" column="CREATE_TIME" jdbcType="TIMESTAMP" javaType="java.sql.Timestamp"/>
+		<result property="dueDate" column="DUE_DATE" jdbcType="TIMESTAMP" javaType="java.sql.Timestamp"/>
 		<result property="category" column="CATEGORY" jdbcType="VARCHAR" />
 		<result property="taskState" column="TASK_STATE" jdbcType="VARCHAR" />
 		<result property="tenantId" column="TENANT_ID" jdbcType="VARCHAR" />
 		<result property="appId" column="APP_ID" jdbcType="VARCHAR" />
 		<result property="moduleId" column="MODULE_ID" jdbcType="VARCHAR" />
 		<result property="moduleName" column="MODULE_NAME" jdbcType="VARCHAR" />
-		<result property="deleteReason" column="DELETE_REASON"
-			jdbcType="VARCHAR" />
+		<result property="deleteReason" column="DELETE_REASON" jdbcType="VARCHAR" />
 		<result property="formKey" column="FORM_KEY" jdbcType="VARCHAR" />
 		<result property="revision" column="REVISION" jdbcType="INTEGER" />
 		<result property="remark1" column="REMARK1" jdbcType="VARCHAR" />
