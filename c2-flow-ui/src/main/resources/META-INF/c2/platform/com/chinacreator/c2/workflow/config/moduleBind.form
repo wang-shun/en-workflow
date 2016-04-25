@@ -997,6 +997,12 @@ btn_save:function($event){
 	var groupPerformer= $(&quot;#activity_performer_hidden_group&quot;).val();
 	//var performer= $(&quot;#activity_performer&quot;).val();// $model.activity_performer;
 	var bindForm= $(&quot;#activity_bindForm&quot;).val();// $model.activity_bindForm;
+	
+	if(!taskDefId){
+		Messenger.post({'message': &quot;请选择流程图中的环节！&quot;,'type': 'error',});
+		return false;
+	} 
+	
 	$http.get(&quot;ws/setPropertyToActivity&quot;,
 	{
 		params:
