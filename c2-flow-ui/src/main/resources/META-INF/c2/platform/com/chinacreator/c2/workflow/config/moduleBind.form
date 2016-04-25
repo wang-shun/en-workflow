@@ -773,6 +773,7 @@ operationFunction:function(cellvalue,options,rowObject){
 },
 
 moduleTree_onClick:function(event,treeId,treeNode,clickFlag){
+	debugger;
 	$scope.bindStatus=&quot;bind&quot;;
 	var selectNode = treeNode;//this.getModuleTree().getSelectedNodes()[0];
 	if(!angular.isUndefined($scope.bindProcess) || $scope.bindProcess!=&quot;&quot;){
@@ -786,6 +787,16 @@ moduleTree_onClick:function(event,treeId,treeNode,clickFlag){
 	}else{
 		var moduleId = selectNode.id;
 		$http.get(&quot;ws/getBindProcess&quot;,{params:{moduleId:moduleId}}).success(function(data){
+			
+			if(!data.result){
+				param = {
+							key:'',
+						};
+				$view.newTab1.setActive();
+				$view.newTab2.setDisabledState(true);
+				return false;
+			}
+			
 			$scope.bindProcessId=data.result.id;
 			$scope.bindProcess=data.result.key;
 			$scope.moduleId=moduleId;
