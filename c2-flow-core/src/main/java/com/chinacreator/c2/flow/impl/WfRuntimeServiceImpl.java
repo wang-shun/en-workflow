@@ -1454,11 +1454,14 @@ public class WfRuntimeServiceImpl implements WfRuntimeService {
 					}
 				}
 			}
+			
 			// 获得当前任务的对应实列
-			Task taskEntity = taskService.createTaskQuery().taskId(taskId)
-					.singleResult();
+			Task taskEntity = taskService.createTaskQuery().taskId(taskId).singleResult();
+			if (null==taskEntity) throw new ActivitiException("当前任务["+taskId+"]未找到");
+			
 			// 当前任务key
 			String taskDefKey = taskEntity.getTaskDefinitionKey();
+			
 
 			//获得当前流程的定义模型
 			ProcessDefinitionEntity processDefinition = (ProcessDefinitionEntity) repositoryService.getProcessDefinition(taskEntity.getProcessDefinitionId());

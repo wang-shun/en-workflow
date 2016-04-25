@@ -11,9 +11,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.chinacreator.c2.flow.WfApiFactory;
+import com.chinacreator.c2.flow.Exception.C2FlowRuntimeException;
 import com.chinacreator.c2.flow.api.WfFormService;
 import com.chinacreator.c2.flow.api.WfHistoryService;
 import com.chinacreator.c2.flow.api.WfManagerService;
@@ -53,32 +53,65 @@ public class WfTaskHandleController {
 			.getWfHistoryService();
 	private WfFormService wfFormService=WfApiFactory.getWfFormService();
 	
+	
 	@RequestMapping(value = "/taskHandle")
-	public ModelAndView taskHandle(@RequestParam(value = "moduleId", required = false) String moduleId,
+	public Object taskHandle(@RequestParam(value = "moduleId", required = false) String moduleId,
 			String taskId, String businessKey, String taskType,String menuCode,
-			HttpServletRequest request, HttpServletResponse response)
-			throws Exception {
+			HttpServletRequest request, HttpServletResponse response){
+		
 		String formUrl = "";
+		String tabName = "";
 		Map<String, Object> paramMap = new HashMap<String, Object>();
 		
-		if (taskId != null && !"".equals(taskId)) {// 完成任务
-			Map<String, String> body = new HashMap<String, String>();
-			body.put("taskId", taskId);
-			body.put("moduleId", moduleId);
-			body.put("taskType", taskType);
-			Map<String, Object> data = findProcessTaskConfigByTaskId(body);
+		try{
+			
+			// 完成任务
+			if (!StringUtils.isEmpty(taskId)) {
 
-			if (data != null && "success".equals(data.get("result"))) {
-				// console.log(data);
-				String moduleId1 = (String) data.get("moduleId");
-				String processDefinitionId = (String) data
-						.get("processDefinitionId");
-				String processInstanceId = (String) data
-						.get("processInstanceId");
+				String taskName="";
+				WfTask wfTask = null;
+				WfHistoricTask wfHistoricTask = null;
+				// 通过任务ID找到任务信息
+				if (WfConstants.WF_UNITE_TASK_TYPE_DONE.equals(taskType)) {
+					wfHistoricTask = wfHistoryService.getHistoricTaskById(taskId);
+					if(null==wfHistoricTask) throw new C2FlowRuntimeException("历史列表中不存在此任务！");
+				} else {
+					wfTask = wfRuntimeService.getTaskById(taskId);
+					if(null==wfTask) throw new C2FlowRuntimeException("当前任务已完成或不存在，请重新打开任务页面！");
+				}
 
-				// 待办任务的外围配置
-				WfProcessConfigProperty wfProcessConfigProperty = (WfProcessConfigProperty) data
-						.get("wfProcessConfigProperty");
+				String processDefinitionId = "";
+				String processInstanceId = "";
+				String taskDefinitionId = "";
+
+				if (WfConstants.WF_UNITE_TASK_TYPE_DONE.equals(taskType)){
+					processDefinitionId = wfHistoricTask.getProcessDefinitionId();
+					processInstanceId = wfHistoricTask.getProcessInstanceId();
+					taskDefinitionId = wfHistoricTask.getTaskDefinitionKey();
+					taskName=wfHistoricTask.getName();
+				} else {
+					processDefinitionId = wfTask.getProcessDefinitionId();
+					processInstanceId = wfTask.getProcessInstanceId();
+					taskDefinitionId = wfTask.getTaskDefinitionId();
+					taskName=wfTask.getName();
+				}
+				
+				// 通过流程定义和事项、环节定义查到外围配置信息
+				WfProcessConfigProperty wfProcessConfigProperty = wfManagerService.findProcessConfigProperty(processDefinitionId,moduleId,taskDefinitionId);
+				
+				if(null==wfProcessConfigProperty){
+					wfProcessConfigProperty=new WfProcessConfigProperty();
+				}
+				
+				//外围配置为空以流程定义中的表单为准
+				if (wfProcessConfigProperty.getBindForm() == null|| "".equals(wfProcessConfigProperty.getBindForm().trim())) {
+					String bindFormInDefinition = wfFormService.getTaskFormKey(processDefinitionId,taskDefinitionId);
+					wfProcessConfigProperty.setBindForm(bindFormInDefinition);
+				}
+				
+				if (wfProcessConfigProperty.getBindForm() == null|| "".equals(wfProcessConfigProperty.getBindForm().trim())){
+					throw new C2FlowRuntimeException("["+taskName+"]环节表单配置空，无法自动进入表单！");
+				}
 
 				String alias = wfProcessConfigProperty.getAlias();
 				String bindForm = wfProcessConfigProperty.getBindForm();
@@ -89,12 +122,12 @@ public class WfTaskHandleController {
 				String taskDefKey = wfProcessConfigProperty.getTaskDefKey();
 
 				String hrefUrlPre = "";
-				hrefUrlPre += bindForm;
+				hrefUrlPre = bindForm;
 
-
-				if (!StringUtils.isEmpty(moduleId1)) {
-					paramMap.put("moduleId", moduleId1);
+				if (!StringUtils.isEmpty(moduleId)) {
+					paramMap.put("moduleId", moduleId);
 				}
+				
 				if (!StringUtils.isEmpty(processDefinitionId)) {
 					paramMap.put("processDefinitionId", processDefinitionId);
 				}
@@ -109,7 +142,7 @@ public class WfTaskHandleController {
 					paramMap.put("alias", alias);
 				}
 				if (!StringUtils.isEmpty(bindForm)) {
-//					hrefParamArr.add("bindForm=" + bindForm);
+//						hrefParamArr.add("bindForm=" + bindForm);
 				}
 				if (!StringUtils.isEmpty(configId)) {
 					paramMap.put("configId", configId);
@@ -130,22 +163,27 @@ public class WfTaskHandleController {
 					paramMap.put("businessKey", businessKey);
 				}
 
-				formUrl = hrefUrlPre;// + "?" + hrefParam;
+				formUrl = hrefUrlPre;// + "?" + hrefParam;				
+	
+			} else {
 				
-			}
-		} else {// 启动流程
-			Map<String, String> body = new HashMap<String, String>();
-			body.put("moduleCode", menuCode);
-			Map<String, Object> data = findProcessStartConfigByMenuCode(body);
-			if (data != null && "success".equals(data.get("result"))) {
-				WfProcessConfigProperty wfProcessConfigProperty = (WfProcessConfigProperty) data
-						.get("wfProcessConfigProperty");
-				String processDefinitionId = (String) data
-						.get("processDefinitionId");
-				moduleId = (String) data.get("moduleId");
-
+				// 启动流程
+				Map<String, String> body = new HashMap<String, String>();
+				body.put("moduleCode",menuCode);
+				
+				WfModuleBean wfModuleBean = wfExtendService.queryByMenuCode(menuCode);
+				if(null==wfModuleBean)  throw new C2FlowRuntimeException("不存在流程事项Code["+menuCode+"]");
+				
+				moduleId =wfModuleBean.getId(); 
+				
+				WfProcessDefinition wfProcessDefinition = wfManagerService.getBindProcessByModuleId(moduleId);
+				if(null==wfProcessDefinition) throw new C2FlowRuntimeException("事项Code["+menuCode+"]还未和任何流程定义进行绑定！");
+				String processDefinitionId = wfProcessDefinition.getId();
+				
+				WfProcessConfigProperty wfProcessConfigProperty=findProcessStartConfig(moduleId, processDefinitionId);
+				if(null==wfProcessConfigProperty||StringUtils.isEmpty(wfProcessConfigProperty.getBindForm())) throw new C2FlowRuntimeException("流程开始环节表单配置空，无法自动进入启动表单！");
+				
 				String hrefUrlPre = "";
-
 				String alias = wfProcessConfigProperty.getAlias();
 				String bindForm = wfProcessConfigProperty.getBindForm();
 				String configId = wfProcessConfigProperty.getConfigId();
@@ -153,8 +191,7 @@ public class WfTaskHandleController {
 				String durationUnit = wfProcessConfigProperty.getDurationUnit();
 				String performer = wfProcessConfigProperty.getPerformer();
 				String taskDefKey = wfProcessConfigProperty.getTaskDefKey();
-				String groupPerformer = wfProcessConfigProperty
-						.getGroupPerformer();
+				String groupPerformer = wfProcessConfigProperty.getGroupPerformer();
 
 				hrefUrlPre += bindForm;
 				
@@ -193,202 +230,71 @@ public class WfTaskHandleController {
 				
 				formUrl = hrefUrlPre;
 			}
-		}
-		/*String path = request.getContextPath();
-		String basePath = request.getScheme() + "://"
-				+ request.getServerName() + ":" + request.getServerPort()
-				+ path + "/";
-		if(!CommonUtil.stringNullOrEmpty(formUrl)){
-			response.sendRedirect(basePath+formUrl);
-		}*/
-		
-		//forward的第二个参数当采用UI的tab样式时会进行tab名称的设置，这里将环节别名设置为名称，环节别名没配置，查出环节在流程定义中的名称作为名称
-		String aliasStr = paramMap.get("alias")==null?"": paramMap.get("alias").toString();
-		String processDefinitionIdStr = paramMap.get("processDefinitionId")==null?"":paramMap.get("processDefinitionId").toString();
-		String tabName = "";
-		if(CommonUtil.stringNullOrEmpty(aliasStr)){
-			//别名为空，需要查询任务的名称
-			if(taskId != null && !"".equals(taskId)){
-				WfTask wft = wfRuntimeService.getTaskById(taskId);
-				tabName = wft.getName();
+			
+			/*String path = request.getContextPath();
+			String basePath = request.getScheme() + "://"
+					+ request.getServerName() + ":" + request.getServerPort()
+					+ path + "/";
+			if(!CommonUtil.stringNullOrEmpty(formUrl)){
+				response.sendRedirect(basePath+formUrl);
+			}*/
+			
+			//forward的第二个参数当采用UI的tab样式时会进行tab名称的设置，这里将环节别名设置为名称，环节别名没配置，查出环节在流程定义中的名称作为名称
+			String aliasStr = paramMap.get("alias")==null?"": paramMap.get("alias").toString();
+			String processDefinitionIdStr = paramMap.get("processDefinitionId")==null?"":paramMap.get("processDefinitionId").toString();
+			
+			if(CommonUtil.stringNullOrEmpty(aliasStr)){
+				//别名为空，需要查询任务的名称
+				if(taskId != null && !"".equals(taskId)){
+					WfHistoricTask wfHistoricTask = wfHistoryService.getHistoricTaskById(taskId);
+					tabName = wfHistoricTask.getName();
+				}else{
+					WfProcessDefinition wfProcessDefinition = wfRepositoryService.getProcessDefinition(processDefinitionIdStr);
+					String wfProcessName = wfProcessDefinition.getName();
+					tabName = wfProcessName;
+				}
 			}else{
-				WfProcessDefinition wfProcessDefinition = wfRepositoryService.getProcessDefinition(processDefinitionIdStr);
-				String wfProcessName = wfProcessDefinition.getName();
-				tabName = wfProcessName;
+				tabName = aliasStr;
 			}
-		}else{
-			tabName = aliasStr;
+			
+			
+			return new ResponseFactory().forward(formUrl, tabName, paramMap);
+			
+		}catch(Exception e){
+			e.printStackTrace();
+			return new ResponseFactory().createResponseBodyException(e);
 		}
-		
-		
-		return new ResponseFactory().forward(formUrl, tabName, paramMap);
 		
 	}
 
-	public Map<String, Object> findProcessTaskConfigByTaskId(
-			Map<String, String> body) {
-		String taskId = body.get("taskId");
-		String moduleId = body.get("moduleId");
-		String taskType = body.get("taskType");
-
-		Map<String, Object> map = new HashMap<String, Object>();
-		if (!CommonUtil.stringNullOrEmpty(taskId)
-				&& !CommonUtil.stringNullOrEmpty(moduleId)) {
-
-			try {
-				WfTask wfTask = null;
-				WfHistoricTask wfHistoricTask = null;
-				// 通过任务ID找到任务信息
-				if (WfConstants.WF_UNITE_TASK_TYPE_DONE.equals(taskType)) {
-					wfHistoricTask = wfHistoryService
-							.getHistoricTaskById(taskId);
-				} else {
-					wfTask = wfRuntimeService.getTaskById(taskId);
-				}
-
-				String businessId = "";
-				String processDefinitionId = "";
-				String processInstanceId = "";
-				String taskDefinitionId = "";
-
-				if (WfConstants.WF_UNITE_TASK_TYPE_DONE.equals(taskType)) {
-					processDefinitionId = wfHistoricTask
-							.getProcessDefinitionId();
-					processInstanceId = wfHistoricTask.getProcessInstanceId();
-					taskDefinitionId = wfHistoricTask.getTaskDefinitionKey();
-				} else {
-					businessId = wfTask.getBusinessId();
-					processDefinitionId = wfTask.getProcessDefinitionId();
-					processInstanceId = wfTask.getProcessInstanceId();
-					taskDefinitionId = wfTask.getTaskDefinitionId();
-				}
-
-				// 通过流程定义和事项、环节定义查到外围配置信息
-				WfProcessConfigProperty wfProcessConfigProperty = wfManagerService
-						.findProcessConfigProperty(processDefinitionId,
-								moduleId, taskDefinitionId);
-
-				if (wfProcessConfigProperty != null) {
-					if (wfProcessConfigProperty.getBindForm() != null
-							&& !"".equals(wfProcessConfigProperty.getBindForm()
-									.trim())) {
-						// 以外围配置中的为准，不做处理
-					} else {
-						// 以流程定义中的表单为准
-						String bindFormInDefinition = wfFormService
-								.getTaskFormKey(processDefinitionId,
-										taskDefinitionId);
-						wfProcessConfigProperty
-								.setBindForm(bindFormInDefinition);
-					}
-				} else {
-					wfProcessConfigProperty = new WfProcessConfigProperty();
-					// 以流程定义中的表单为准
-					String bindFormInDefinition = wfFormService.getTaskFormKey(
-							processDefinitionId, taskDefinitionId);
-					wfProcessConfigProperty.setBindForm(bindFormInDefinition);
-				}
-				map.put("result", "success");
-				map.put("moduleId", moduleId);
-				map.put("taskId", taskId);
-				map.put("businessId", businessId);
-				map.put("processInstanceId", processInstanceId);
-				map.put("wfProcessConfigProperty", wfProcessConfigProperty);
-				map.put("processDefinitionId", processDefinitionId);
-				return map;
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-		map.put("result", "empty");
-		return map;
-	}
-
-	public Map<String, Object> findProcessStartConfigByMenuCode(
-			Map<String, String> body) {
-		String moduleCode = body.get("moduleCode");
-		Map<String, Object> map = new HashMap<String, Object>();
-		if (!StringUtils.isEmpty(moduleCode)) {
-			WfModuleBean wfModuleBean = wfExtendService
-					.queryByMenuCode(moduleCode);
-			if (null != wfModuleBean) {
-				// 事项ID，即菜单ID
-				String menuId = wfModuleBean.getId();
-				Map<String, Object> result = getStartEventConfigByModuleId(menuId);
-				map.put("result", "success");
-				map.put("moduleId", menuId);
-				map.put("processDefinitionId",
-						result.get("processDefinitionId"));
-				map.put("wfProcessConfigProperty",
-						result.get("wfProcessConfigProperty"));
-				return map;
-			}
-		}
-		map.put("result", "empty");
-		return map;
-	}
-
-	private Map<String, Object> getStartEventConfigByModuleId(String moduleId) {
-		Map<String, Object> result = new HashMap<String, Object>();
+	
+	/**
+	 * 获取开始节点流程配置
+	 * @param moduleId
+	 * @param processDefinitionId
+	 * @return
+	 * @throws Exception
+	 */
+	public WfProcessConfigProperty findProcessStartConfig(String moduleId,String processDefinitionId) throws Exception {
+		
 		WfProcessConfigProperty wfProcessConfigProperty = null;
-		if (moduleId != null && !"".equals(moduleId.trim())) {
-			// 通过事项找到流程定义
-			try {
-				WfProcessDefinition wfProcessDefinition = wfManagerService
-						.getBindProcessByModuleId(moduleId);
-				
-				// 通过流程定义查到开始环节的定义key
-				String processDefinitionId = wfProcessDefinition.getId();
-				result.put("processDefinitionId", processDefinitionId);
-				
-				List<WfActivity> wfActivityList = wfRepositoryService.getActivitiesByDefinition(processDefinitionId);
-				for (WfActivity wfActivity : wfActivityList) {
-					if ("startEvent".equals(wfActivity.getProperties().get("type"))){
-						wfProcessConfigProperty = wfManagerService.findProcessConfigProperty(processDefinitionId, moduleId,wfActivity.getId());
-					}
-				}
-				
-				
-//				ProcessDefinitionEntity processDefEntity = (ProcessDefinitionEntity) repositoryService
-//						.getProcessDefinition(processDefinitionId);
-//				List<ActivityImpl> ActivityImplList = processDefEntity
-//						.getActivities();
-//				if (null != ActivityImplList && !ActivityImplList.isEmpty()) {
-//					for (ActivityImpl ai : ActivityImplList) {
-//						if ("startEvent".equals(ai.getProperty("type"))) {
-//							wfProcessConfigProperty = wfManagerService
-//									.findProcessConfigProperty(
-//											processDefinitionId, moduleId,
-//											ai.getId());
-//						}
-//					}
-//				}
-				// 如果流程定义图中配置了表单，如果外围配置没配置表单，可以用流程定义中的表单，但是外围配置表单优先级>流程定义的表单
-				if (wfProcessConfigProperty != null) {
-					if (wfProcessConfigProperty.getBindForm() != null
-							&& !"".equals(wfProcessConfigProperty.getBindForm()
-									.trim())) {
-						// 以外围配置中的为准，不做处理
-					} else {
-						// 以流程定义中的表单为准
-						String bindFormInDefinition = wfFormService
-								.getStartFormKey(processDefinitionId);
-						wfProcessConfigProperty
-								.setBindForm(bindFormInDefinition);
-					}
-				} else {
-					wfProcessConfigProperty = new WfProcessConfigProperty();
-					// 以流程定义中的表单为准
-					String bindFormInDefinition = wfFormService
-							.getStartFormKey(processDefinitionId);
-					wfProcessConfigProperty.setBindForm(bindFormInDefinition);
-				}
-			} catch (Exception e) {
-				e.printStackTrace();
+		List<WfActivity> wfActivityList = wfRepositoryService.getActivitiesByDefinition(processDefinitionId);
+		for (WfActivity wfActivity : wfActivityList) {
+			if ("startEvent".equals(wfActivity.getProperties().get("type"))){
+				wfProcessConfigProperty = wfManagerService.findProcessConfigProperty(processDefinitionId, moduleId,wfActivity.getId());
 			}
 		}
-
-		result.put("wfProcessConfigProperty", wfProcessConfigProperty);
-		return result;
+		
+		// 如果流程定义图中配置了表单，如果外围配置没配置表单，可以用流程定义中的表单，但是外围配置表单优先级>流程定义的表单
+		if (null==wfProcessConfigProperty){
+			wfProcessConfigProperty = new WfProcessConfigProperty();
+		}
+		
+		if(StringUtils.isEmpty(wfProcessConfigProperty.getBindForm())){
+			// 以流程定义中的表单为准
+			String bindFormInDefinition = wfFormService.getStartFormKey(processDefinitionId);
+			wfProcessConfigProperty.setBindForm(bindFormInDefinition);
+		}
+		return wfProcessConfigProperty;
 	}
 }

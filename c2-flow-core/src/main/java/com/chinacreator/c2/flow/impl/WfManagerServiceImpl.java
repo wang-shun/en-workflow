@@ -415,8 +415,9 @@ public class WfManagerServiceImpl implements WfManagerService {
 		WfModuleConfigEntity eo = managementService
 				.executeCommand(new GetProcessInfoByModuleIdCmd(moduleId));
 
-		WfProcessDefinition wpd = new WfProcessDefinition();
+		WfProcessDefinition wpd = null;
 		if (eo != null) {
+			wpd=new WfProcessDefinition();
 			wpd.setId(eo.getProcDefId());
 			wpd.setKey(eo.getProcDefKey());
 			wpd.setName(eo.getProcDefName());
