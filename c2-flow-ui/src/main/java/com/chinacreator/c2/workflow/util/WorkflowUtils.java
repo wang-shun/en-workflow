@@ -3,6 +3,7 @@ package com.chinacreator.c2.workflow.util;
 import org.activiti.engine.RepositoryService;
 import org.activiti.engine.repository.ProcessDefinition;
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -87,6 +88,34 @@ public class WorkflowUtils {
     }
    
     
+    /**
+     * 转换出组的显示名 
+     * @param idUrl  组id:格式：$role:F511F416573A4B23B02E3206AF1FB924 或 F511F416573A4B23B02E3206AF1FB924
+     * @return
+     */
+    public static String parseToGroupDisplayName(String idUrl){
+    	
+		String groupPrex=WorkflowUtils.parseToGroupTypePrex(idUrl);
+		String groupId=WorkflowUtils.parseToGroupId(idUrl);
+		
+		GroupType groupType=null;
+		if(!StringUtils.isEmpty(groupPrex)){
+			groupType=WorkflowUtils.getGroupTypeByPrex(groupPrex);
+		}else{
+			groupType=WorkflowUtils.getGroupTypeByPrex("$job");
+		}
+		
+		if(null==groupType) return null;
+		ChooseGroup chooseGroup=groupType.getGroup(groupId);
+		if(null==chooseGroup) return null;
+		return chooseGroup.getDisplayName();
+    }
+    
+    /**
+     * 转换出组前缀
+     * @param typeUrl
+     * @return
+     */
     public static String parseToGroupTypePrex(String typeUrl) {
     	if(null==typeUrl) return null;
     	if(!typeUrl.startsWith("$")) return null;
@@ -94,6 +123,11 @@ public class WorkflowUtils {
     }
     
     
+    /**
+     * 转换出组ID
+     * @param typeUrl
+     * @return
+     */
     public static String parseToGroupId(String typeUrl) {
     	if(null==typeUrl) return typeUrl;
     	if(!typeUrl.startsWith("$")) return typeUrl;

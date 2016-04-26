@@ -4,6 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang.StringUtils;
+
+import com.chinacreator.asp.comp.sys.advanced.user.service.UserService;
+import com.chinacreator.asp.comp.sys.core.user.dto.UserDTO;
 import com.chinacreator.c2.dao.mybatis.enhance.Page;
 import com.chinacreator.c2.dao.mybatis.enhance.Pageable;
 import com.chinacreator.c2.flow.WfApiFactory;
@@ -59,6 +63,61 @@ public class TaskListContentProvider implements ArrayContentProvider {
 				result = wfRuntimeService.queryWfUniteRunTask(userId,candidateGroupList,map, offset, pageSize);
 			}
 			if(result != null){
+				
+				//将引擎待办中的用户和组id转换成当前应用内的中文名[考虑引擎独立布署机构不统一情况]
+				List<Map<String,Object>> dataList=result.getDatas();
+				for (Object object : dataList) {
+					
+					@SuppressWarnings("unchecked")
+					Map<String,Object> rowObj=(Map<String, Object>)object;
+					@SuppressWarnings("unchecked")
+					List<String> candidateList=(List<String> )rowObj.get("candidate");
+					String category=(String)rowObj.get("category");
+					String assignee=(String)rowObj.get("assignee");
+					
+					//转换处理人
+					if(StringUtils.isNotEmpty(assignee)){
+						UserService userService = ApplicationContextManager.getContext().getBean(UserService.class);
+						UserDTO userDto=userService.queryByPK(assignee);
+						if(null!=userDto&&StringUtils.isNotEmpty(userDto.getUserRealname())){
+							rowObj.put("assignee",userDto.getUserRealname());
+						}
+					}
+					
+					
+					if(null==candidateList) continue;
+					
+					
+					//候选人转换处理
+					List<String> candidateLabels=new ArrayList<String>();
+					
+					if("groups".equals(category)){
+						for (String str : candidateList) {
+							String groupDisplay=WorkflowUtils.parseToGroupDisplayName(str);
+							if(!StringUtils.isEmpty(groupDisplay)){
+								candidateLabels.add(groupDisplay);
+							}else{
+								candidateLabels.add(str);
+							}
+						}
+						
+					}else if("users".equals(category)){
+						for (String userIdStr : candidateList) {
+							UserService userService = ApplicationContextManager.getContext().getBean(UserService.class);
+							UserDTO userDto=userService.queryByPK(userIdStr);
+							if(null==userDto||StringUtils.isEmpty(userDto.getUserRealname())){
+								candidateLabels.add(userIdStr);
+							}else{
+								candidateLabels.add(userDto.getUserRealname());
+							}
+						}
+						
+					}else{
+						candidateLabels=candidateList;
+					}
+					
+					rowObj.put("candidate", candidateLabels);
+				}
 				page = new Page<Map<String,Object>>(pageIndex, pageSize, result.getTotalResults(), result.getDatas());
 			}
 		} catch (Exception e) {
