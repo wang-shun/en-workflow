@@ -93,7 +93,7 @@ public class WorkflowUtils {
      * @param idUrl  组id:格式：$role:F511F416573A4B23B02E3206AF1FB924 或 F511F416573A4B23B02E3206AF1FB924
      * @return
      */
-    public static String parseToGroupDisplayName(String idUrl){
+    public static ChooseGroup parseToGroupDisplayName(String idUrl){
     	
 		String groupPrex=WorkflowUtils.parseToGroupTypePrex(idUrl);
 		String groupId=WorkflowUtils.parseToGroupId(idUrl);
@@ -108,7 +108,7 @@ public class WorkflowUtils {
 		if(null==groupType) return null;
 		ChooseGroup chooseGroup=groupType.getGroup(groupId);
 		if(null==chooseGroup) return null;
-		return chooseGroup.getDisplayName();
+		return chooseGroup;
     }
     
     /**

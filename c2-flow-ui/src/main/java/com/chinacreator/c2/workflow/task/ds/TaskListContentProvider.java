@@ -93,9 +93,9 @@ public class TaskListContentProvider implements ArrayContentProvider {
 					
 					if("groups".equals(category)){
 						for (String str : candidateList) {
-							String groupDisplay=WorkflowUtils.parseToGroupDisplayName(str);
-							if(!StringUtils.isEmpty(groupDisplay)){
-								candidateLabels.add(groupDisplay);
+							ChooseGroup chooseGroup=WorkflowUtils.parseToGroupDisplayName(str);
+							if(null!=chooseGroup){
+								candidateLabels.add(chooseGroup.getDisplayName());
 							}else{
 								candidateLabels.add(str);
 							}
