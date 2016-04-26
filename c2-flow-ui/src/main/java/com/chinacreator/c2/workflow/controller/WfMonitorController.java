@@ -22,7 +22,6 @@ import com.chinacreator.asp.comp.sys.core.user.dto.UserDTO;
 import com.chinacreator.c2.flow.WfApiFactory;
 import com.chinacreator.c2.flow.api.GroupType;
 import com.chinacreator.c2.flow.api.WfHistoryService;
-import com.chinacreator.c2.flow.api.WfManagerService;
 import com.chinacreator.c2.flow.api.WfRuntimeService;
 import com.chinacreator.c2.flow.detail.ChooseGroup;
 import com.chinacreator.c2.flow.detail.WfHistoricTask;
@@ -31,9 +30,9 @@ import com.chinacreator.c2.flow.detail.WfIdentityLink;
 import com.chinacreator.c2.flow.detail.WfPageList;
 import com.chinacreator.c2.flow.util.CommonUtil;
 import com.chinacreator.c2.flow.util.DateUtil;
+import com.chinacreator.c2.flow.util.WfUtils;
 import com.chinacreator.c2.ioc.ApplicationContextManager;
 import com.chinacreator.c2.web.controller.ResponseFactory;
-import com.chinacreator.c2.workflow.util.WorkflowUtils;
 
 /**
  * 流程监控控制器
@@ -47,7 +46,6 @@ public class WfMonitorController {
 	protected Logger logger = LoggerFactory.getLogger(getClass());
 
 	private WfHistoryService wfHistoryService = WfApiFactory.getWfHistoryService();
-	private WfManagerService wfManagerService = WfApiFactory.getWfManagerService();
 	private WfRuntimeService wfRuntimeService = WfApiFactory.getWfRuntimeService();
 
 	@RequestMapping(value = "/wfmonitor", method = RequestMethod.POST)
@@ -195,9 +193,9 @@ public class WfMonitorController {
 							for (String groupId : groupSet) {
 								try {
 									
-									String gid=WorkflowUtils.parseToGroupId(groupId);
-									String groupPrex=WorkflowUtils.parseToGroupTypePrex(groupId);
-									GroupType groupType=WorkflowUtils.getGroupTypeByPrex(groupPrex);
+									String gid=WfUtils.parseToGroupId(groupId);
+									String groupPrex=WfUtils.parseToGroupTypePrex(groupId);
+									GroupType groupType=WfUtils.getGroupTypeByPrex(groupPrex);
 									if(null==groupType){
 										JobDTO jobDTO=jobService.queryByPK(gid);
 										assigneeGroupItem += jobDTO.getJobName()+ ",";

@@ -25,10 +25,10 @@ import com.chinacreator.c2.flow.detail.WfIdentityLink;
 import com.chinacreator.c2.flow.detail.WfPageList;
 import com.chinacreator.c2.flow.util.CommonUtil;
 import com.chinacreator.c2.flow.util.DateUtil;
+import com.chinacreator.c2.flow.util.WfUtils;
 import com.chinacreator.c2.ioc.ApplicationContextManager;
 import com.chinacreator.c2.web.ds.ArrayContentProvider;
 import com.chinacreator.c2.web.ds.ArrayContext;
-import com.chinacreator.c2.workflow.util.WorkflowUtils;
 
 public class ProcessInstanceMonitorContentProvider implements ArrayContentProvider{
 
@@ -182,9 +182,9 @@ public class ProcessInstanceMonitorContentProvider implements ArrayContentProvid
 							
 							for (String groupId : groupSet) {
 								try {
-									String gid=WorkflowUtils.parseToGroupId(groupId);
-									String groupPrex=WorkflowUtils.parseToGroupTypePrex(groupId);
-									GroupType groupType=WorkflowUtils.getGroupTypeByPrex(groupPrex);
+									String gid=WfUtils.parseToGroupId(groupId);
+									String groupPrex=WfUtils.parseToGroupTypePrex(groupId);
+									GroupType groupType=WfUtils.getGroupTypeByPrex(groupPrex);
 									if(null==groupType){
 										JobDTO jobDTO=jobService.queryByPK(gid);
 										assigneeGroupItem += jobDTO.getJobName()+ ",";

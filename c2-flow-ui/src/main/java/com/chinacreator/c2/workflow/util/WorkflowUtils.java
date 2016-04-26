@@ -1,23 +1,16 @@
 package com.chinacreator.c2.workflow.util;
 
-import org.activiti.engine.RepositoryService;
-import org.activiti.engine.repository.ProcessDefinition;
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.lang.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import com.chinacreator.c2.flow.api.GroupType;
-import com.chinacreator.c2.flow.detail.ChooseGroup;
-import com.chinacreator.c2.ioc.ApplicationContextManager;
-
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+
+import org.activiti.engine.RepositoryService;
+import org.activiti.engine.repository.ProcessDefinition;
+import org.apache.commons.io.FileUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author HenryYan
@@ -87,90 +80,4 @@ public class WorkflowUtils {
         return diagramPath;
     }
    
-    
-    /**
-     * 转换出组的显示名 
-     * @param idUrl  组id:格式：$role:F511F416573A4B23B02E3206AF1FB924 或 F511F416573A4B23B02E3206AF1FB924
-     * @return
-     */
-    public static ChooseGroup parseToGroupDisplayName(String idUrl){
-    	
-		String groupPrex=WorkflowUtils.parseToGroupTypePrex(idUrl);
-		String groupId=WorkflowUtils.parseToGroupId(idUrl);
-		
-		GroupType groupType=null;
-		if(!StringUtils.isEmpty(groupPrex)){
-			groupType=WorkflowUtils.getGroupTypeByPrex(groupPrex);
-		}else{
-			groupType=WorkflowUtils.getGroupTypeByPrex("$job");
-		}
-		
-		if(null==groupType) return null;
-		ChooseGroup chooseGroup=groupType.getGroup(groupId);
-		if(null==chooseGroup) return null;
-		return chooseGroup;
-    }
-    
-    /**
-     * 转换出组前缀
-     * @param typeUrl
-     * @return
-     */
-    public static String parseToGroupTypePrex(String typeUrl) {
-    	if(null==typeUrl) return null;
-    	if(!typeUrl.startsWith("$")) return null;
-    	return typeUrl.split(":")[0];
-    }
-    
-    
-    /**
-     * 转换出组ID
-     * @param typeUrl
-     * @return
-     */
-    public static String parseToGroupId(String typeUrl) {
-    	if(null==typeUrl) return typeUrl;
-    	if(!typeUrl.startsWith("$")) return typeUrl;
-    	if(typeUrl.indexOf(":")==-1) return typeUrl;
-    	String[] typeSz=typeUrl.split(":");
-    	if(typeSz.length==2) return typeSz[1];
-    	return typeUrl;
-    }
-    
-    
-    /**
-     * 获取组类型实现
-     * @return
-     */
-    public static GroupType getGroupTypeByPrex(String groupPrex){
-    	Map<String, GroupType> groupTypes = ApplicationContextManager.getContext().getBeansOfType(GroupType.class);
-		for(GroupType groupType:groupTypes.values()){
-			if(groupType.getPrefix().equals(groupPrex)){
-				return groupType;
-			}
-		}
-		return null;
-    }
-    
-    
-    /**
-     * 获取用户所有组
-     * @param userId
-     * @return
-     */
-    public static List<ChooseGroup> getGroupsByUserId(String userId){
-    	//查询用户所有类型的组
-    	List<ChooseGroup> candidateGroupList=new ArrayList<ChooseGroup>();
-    	Map<String, GroupType> groupTypes = ApplicationContextManager.getContext().getBeansOfType(GroupType.class);
-    	for(GroupType groupType:groupTypes.values()){
-    		List<ChooseGroup> groupList=groupType.getGroupsByUserKey(userId);
-    		if(null==groupList) continue;
-    		for (ChooseGroup candidateGroup : groupList){
-    			candidateGroup.setType(groupType.getPrefix());
-    			candidateGroupList.add(candidateGroup);
-    		}
-    	}
-    	
-    	return candidateGroupList;
-    }
 }

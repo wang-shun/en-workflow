@@ -32,10 +32,10 @@ import com.chinacreator.c2.flow.detail.WfProcessConfigProperty;
 import com.chinacreator.c2.flow.detail.WfProcessDefinition;
 import com.chinacreator.c2.flow.detail.WfTask;
 import com.chinacreator.c2.flow.util.CommonUtil;
+import com.chinacreator.c2.flow.util.WfUtils;
 import com.chinacreator.c2.ioc.ApplicationContextManager;
 import com.chinacreator.c2.web.controller.ResponseFactory;
 import com.chinacreator.c2.workflow.api.WfExtendService;
-import com.chinacreator.c2.workflow.util.WorkflowUtils;
 
 /**
  * 流程外围配置控制器
@@ -101,9 +101,9 @@ public class WfConfigController {
 				String[] groupArr = groupPerformer.split(",");
 				
 				for (String gId : groupArr){
-					String id = WorkflowUtils.parseToGroupId(gId);
-					String groupPrex = WorkflowUtils.parseToGroupTypePrex(gId);
-					GroupType groupType=WorkflowUtils.getGroupTypeByPrex(groupPrex);
+					String id = WfUtils.parseToGroupId(gId);
+					String groupPrex = WfUtils.parseToGroupTypePrex(gId);
+					GroupType groupType=WfUtils.getGroupTypeByPrex(groupPrex);
 					if(null==groupPrex){
 						groupNames += gId+ ",";
 					}else{

@@ -15,11 +15,11 @@ import com.chinacreator.c2.flow.api.WfRuntimeService;
 import com.chinacreator.c2.flow.detail.ChooseGroup;
 import com.chinacreator.c2.flow.detail.WfUniteTaskResult;
 import com.chinacreator.c2.flow.util.CommonUtil;
+import com.chinacreator.c2.flow.util.WfUtils;
 import com.chinacreator.c2.ioc.ApplicationContextManager;
 import com.chinacreator.c2.sysmgr.AuthenticationProvider;
 import com.chinacreator.c2.web.ds.ArrayContentProvider;
 import com.chinacreator.c2.web.ds.ArrayContext;
-import com.chinacreator.c2.workflow.util.WorkflowUtils;
 
 public class TaskListContentProvider implements ArrayContentProvider {
 	private AuthenticationProvider authenticationProvider = (AuthenticationProvider)ApplicationContextManager.getContext().getBean(AuthenticationProvider.class);
@@ -50,7 +50,7 @@ public class TaskListContentProvider implements ArrayContentProvider {
 		}
 		
 		//获取当前用户工作流所有组
-		List<ChooseGroup> candidateGroupList=WorkflowUtils.getGroupsByUserId(userId);
+		List<ChooseGroup> candidateGroupList=WfUtils.getGroupsByUserId(userId);
 		
 		try {
 			int offset = context.getPageable().getOffset();
@@ -93,7 +93,7 @@ public class TaskListContentProvider implements ArrayContentProvider {
 					
 					if("groups".equals(category)){
 						for (String str : candidateList) {
-							ChooseGroup chooseGroup=WorkflowUtils.parseToGroupDisplayName(str);
+							ChooseGroup chooseGroup=WfUtils.parseToGroupById(str);
 							if(null!=chooseGroup){
 								candidateLabels.add(chooseGroup.getDisplayName());
 							}else{

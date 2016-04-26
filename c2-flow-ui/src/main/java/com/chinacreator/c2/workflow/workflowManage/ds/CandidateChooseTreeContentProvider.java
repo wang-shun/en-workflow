@@ -8,12 +8,12 @@ import com.chinacreator.c2.flow.api.GroupType;
 import com.chinacreator.c2.flow.detail.ChooseGroup;
 import com.chinacreator.c2.flow.detail.ChooseUser;
 import com.chinacreator.c2.flow.util.CommonUtil;
+import com.chinacreator.c2.flow.util.WfUtils;
 import com.chinacreator.c2.ioc.ApplicationContextManager;
 import com.chinacreator.c2.web.ds.TreeContentProvider;
 import com.chinacreator.c2.web.ds.TreeContext;
 import com.chinacreator.c2.web.ds.TreeNode;
 import com.chinacreator.c2.web.ds.impl.DefaultTreeNode;
-import com.chinacreator.c2.workflow.util.WorkflowUtils;
 
 public class CandidateChooseTreeContentProvider implements TreeContentProvider{
 	
@@ -25,8 +25,8 @@ public class CandidateChooseTreeContentProvider implements TreeContentProvider{
 			Map<String, Object> map = context.getConditions();
 			
 			String id=(String) map.get("id");
-			String gid = WorkflowUtils.parseToGroupId(id);
-			String gType = WorkflowUtils.parseToGroupTypePrex(id);
+			String gid = WfUtils.parseToGroupId(id);
+			String gType = WfUtils.parseToGroupTypePrex(id);
 			String selectedUserIds = (String) map.get("selectedUserIds");
 			String selectedGroupIds = (String) map.get("selectedGroupIds");
 			List<String> selectedUserIdList = new ArrayList<String>();
@@ -64,7 +64,7 @@ public class CandidateChooseTreeContentProvider implements TreeContentProvider{
 				}
 			}else{
 				
-				GroupType groupType=WorkflowUtils.getGroupTypeByPrex(gType);
+				GroupType groupType=WfUtils.getGroupTypeByPrex(gType);
 				if(null==groupType) throw new RuntimeException("找不到组类型["+gType+"]");
 				
 				if("".equals(gid)) gid=null;
