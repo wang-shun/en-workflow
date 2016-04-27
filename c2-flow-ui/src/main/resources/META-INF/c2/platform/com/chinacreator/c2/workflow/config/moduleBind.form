@@ -773,7 +773,6 @@ operationFunction:function(cellvalue,options,rowObject){
 },
 
 moduleTree_onClick:function(event,treeId,treeNode,clickFlag){
-	debugger;
 	$scope.bindStatus=&quot;bind&quot;;
 	var selectNode = treeNode;//this.getModuleTree().getSelectedNodes()[0];
 	if(!angular.isUndefined($scope.bindProcess) || $scope.bindProcess!=&quot;&quot;){
