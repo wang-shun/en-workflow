@@ -110,7 +110,7 @@ public class WfTaskHandleController {
 				}
 				
 				if (wfProcessConfigProperty.getBindForm() == null|| "".equals(wfProcessConfigProperty.getBindForm().trim())){
-					throw new C2FlowRuntimeException("["+taskName+"]环节表单配置空，无法自动进入表单！");
+					throw new C2FlowRuntimeException("["+taskName+"]环节表单配置为空，无法自动进入表单！");
 				}
 
 				String alias = wfProcessConfigProperty.getAlias();
@@ -181,7 +181,7 @@ public class WfTaskHandleController {
 				String processDefinitionId = wfProcessDefinition.getId();
 				
 				WfProcessConfigProperty wfProcessConfigProperty=findProcessStartConfig(moduleId, processDefinitionId);
-				if(null==wfProcessConfigProperty||StringUtils.isEmpty(wfProcessConfigProperty.getBindForm())) throw new C2FlowRuntimeException("流程开始环节表单配置空，无法自动进入启动表单！");
+				if(null==wfProcessConfigProperty||StringUtils.isEmpty(wfProcessConfigProperty.getBindForm())) throw new C2FlowRuntimeException("流程开始环节表单配置为空，无法自动进入启动表单！");
 				
 				String hrefUrlPre = "";
 				String alias = wfProcessConfigProperty.getAlias();

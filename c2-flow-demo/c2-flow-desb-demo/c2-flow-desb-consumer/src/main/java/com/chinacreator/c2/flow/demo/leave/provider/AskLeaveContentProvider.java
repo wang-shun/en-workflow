@@ -21,11 +21,11 @@ import com.chinacreator.c2.flow.detail.ChooseGroup;
 import com.chinacreator.c2.flow.detail.WfModuleBean;
 import com.chinacreator.c2.flow.detail.WfUniteTaskResult;
 import com.chinacreator.c2.flow.util.CommonUtil;
+import com.chinacreator.c2.flow.util.WfUtils;
 import com.chinacreator.c2.ioc.ApplicationContextManager;
 import com.chinacreator.c2.web.ds.ArrayContentProvider;
 import com.chinacreator.c2.web.ds.ArrayContext;
 import com.chinacreator.c2.workflow.api.WfExtendService;
-import com.chinacreator.c2.workflow.util.WorkflowUtils;
 
 public class AskLeaveContentProvider implements
 		ArrayContentProvider{
@@ -60,7 +60,7 @@ public class AskLeaveContentProvider implements
 	        WfRuntimeService wfRuntimeService= WfApiFactory.getWfRuntimeService();
 	        
 	        //获取当前用户工作流所有组
-	        List<ChooseGroup> candidateGroupList=WorkflowUtils.getGroupsByUserId(context.getUser().getId());
+	        List<ChooseGroup> candidateGroupList=WfUtils.getGroupsByUserId(context.getUser().getId());
 	        
 	        //获取当前业务待办信息
 	        for (Object object : askLeaveList) {
