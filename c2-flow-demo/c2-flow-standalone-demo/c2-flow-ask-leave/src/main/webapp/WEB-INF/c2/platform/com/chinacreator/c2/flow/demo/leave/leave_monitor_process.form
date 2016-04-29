@@ -173,6 +173,12 @@
       </form:control>
       <form:validation/>
     </form:child>
+    <form:child xsi:type="form:Field" binding="deletereason" id="deletereason" name="完成理由" customize="true">
+      <form:control type="widget/col_jqgrid">
+        <form:attributes source="widget/col_jqgrid"/>
+      </form:control>
+      <form:validation/>
+    </form:child>
     <form:child xsi:type="form:Field" binding="description" id="newField1" name="描述" customize="true">
       <form:control type="widget/col_jqgrid">
         <form:attributes source="widget/col_jqgrid">
