@@ -191,11 +191,11 @@ public class WfTaskHandleController {
 				moduleId =wfModuleBean.getId(); 
 				
 				WfProcessDefinition wfProcessDefinition = wfManagerService.getBindProcessByModuleId(moduleId);
-				if(null==wfProcessDefinition) throw new C2FlowRuntimeException("事项菜单["+wfModuleBean.getName()+menuCode+"]还未和任何流程定义进行绑定！");
+				if(null==wfProcessDefinition) throw new C2FlowRuntimeException("事项菜单["+wfModuleBean.getName()+"]还未和任何流程定义进行绑定！");
 				String processDefinitionId = wfProcessDefinition.getId();
 				
 				WfProcessConfigProperty wfProcessConfigProperty=findProcessStartConfig(moduleId, processDefinitionId);
-				if(null==wfProcessConfigProperty||StringUtils.isEmpty(wfProcessConfigProperty.getBindForm())) throw new C2FlowRuntimeException("["+wfModuleBean.getName()+menuCode+"]开始环节表单配置为空，无法自动进入启动表单！");
+				if(null==wfProcessConfigProperty||StringUtils.isEmpty(wfProcessConfigProperty.getBindForm())) throw new C2FlowRuntimeException("事项["+wfModuleBean.getName()+"]起始节点表单配置为空，无法自动进入启动表单！");
 				
 				String hrefUrlPre = "";
 				String alias = wfProcessConfigProperty.getAlias();
