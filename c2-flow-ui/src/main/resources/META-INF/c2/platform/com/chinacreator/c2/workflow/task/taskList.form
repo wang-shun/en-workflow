@@ -5736,7 +5736,7 @@ handTask:function(taskId,moduleId,businesskey,taskType){
 operation2_customFormatter:function(cellvalue,options,rowObject){
 	if(!angular.isUndefined(rowObject))
 	{
-		var moduleId = rowObject.moduleid;
+		var moduleId = rowObject.moduleid?rowObject.moduleid:&quot;&quot;;
 		var taskId = rowObject.taskid;
 		var taskType = rowObject.taskstate;
 		var businesskey = rowObject.businesskey;

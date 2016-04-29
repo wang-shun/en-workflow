@@ -106,6 +106,7 @@ public class ProcessInstanceMonitorContentProvider implements ArrayContentProvid
 					}
 					
 					String description = wfHistoricTask.getDescription();//.getDeleteReason();
+					String deleteReason=wfHistoricTask.getDeleteReason();
 					String assignee = "";
 					if (wfHistoricTask.getEndTime() != null) {
 						mapItem.put("status", "已完成");
@@ -207,6 +208,7 @@ public class ProcessInstanceMonitorContentProvider implements ArrayContentProvid
 					}
 					mapItem.put("assignee", assignee);
 					mapItem.put("description", description);
+					mapItem.put("deletereason", deleteReason);
 					mapList.add(mapItem);
 				}
 			}

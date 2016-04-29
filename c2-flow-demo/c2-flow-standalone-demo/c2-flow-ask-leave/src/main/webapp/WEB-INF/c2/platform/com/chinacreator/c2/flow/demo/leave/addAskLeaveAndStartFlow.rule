@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomRule xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns="http://www.chinacreator.com/platform/mvc/rule" sn="leave/addAskLeaveAndStartFlow" log="false" className="com.chinacreator.c2.flow.demo.leave.services.AskLeaveService" method="addAskLeaveAndStartFlow">
+  <instanceCreator>
+    <params/>
+  </instanceCreator>
+  <name>添加请假及启动流程</name>
+  <desc>添加请假条启动工作流</desc>
+  <inputs>
+    <input collection="false" desc="" id="askLeave" required="true" type="com.chinacreator.c2.flow.demo.leave.AskLeave"/>
+    <input collection="false" desc="请假信息" id="moduleKey" required="true"/>
+  </inputs>
+  <outputs>
+    <output autoValue="Result" desc="" id="result" name="方法返回值" type="com.chinacreator.c2.flow.demo.leave.AskLeave"/>
+  </outputs>
+  <params>
+    <param autoValue="Input.askLeave" name="askLeave" signature="QAskLeave;" type="com.chinacreator.c2.flow.demo.leave.AskLeave"/>
+    <param autoValue="Input.moduleKey" name="moduleKey" signature="QString;" type="java.lang.String"/>
+  </params>
+  <return signature="QAskLeave;" type="com.chinacreator.c2.flow.demo.leave.AskLeave"/>
+</CustomRule>

@@ -105,8 +105,9 @@ public class ExtendEntityEventListener implements ActivitiEventListener {
 	 */
 	protected void onCreate(ActivitiEvent event) {
 		ActivitiEntityEvent entityEvent = (ActivitiEntityEvent) event;
-		String entityEventClassName = entityEvent.getEntity().getClass()
-				.getName();
+		String entityEventClassName = entityEvent.getEntity().getClass().getName();
+		
+		LOGGER.debug("创建实体:"+entityEventClassName);
 
 		// if (WfConstants.EVENT_ENTITY_TASKENTITY.equals(entityEventClassName))
 		// {
@@ -147,8 +148,10 @@ public class ExtendEntityEventListener implements ActivitiEventListener {
 	 */
 	protected void onDelete(ActivitiEvent event) {
 		ActivitiEntityEvent entityEvent = (ActivitiEntityEvent) event;
-		String entityEventClassName = entityEvent.getEntity().getClass()
-				.getName();
+		String entityEventClassName = entityEvent.getEntity().getClass().getName();
+		
+		LOGGER.debug("删除实体:"+entityEventClassName);
+		
 		// 运行时任务删除时
 		if (WfConstants.EVENT_ENTITY_TASKENTITY.equals(entityEventClassName)) {
 			TaskEntity taskEntity = (TaskEntity) entityEvent.getEntity();
@@ -216,8 +219,10 @@ public class ExtendEntityEventListener implements ActivitiEventListener {
 	 */
 	protected void onSuspend(ActivitiEvent event) {
 		ActivitiEntityEvent entityEvent = (ActivitiEntityEvent) event;
-		String entityEventClassName = entityEvent.getEntity().getClass()
-				.getName();
+		String entityEventClassName = entityEvent.getEntity().getClass().getName();
+		
+		LOGGER.debug("挂起实体:"+entityEventClassName);
+		
 		if (WfConstants.EVENT_ENTITY_TASKENTITY.equals(entityEventClassName)) {
 			TaskEntity taskEntity = (TaskEntity) entityEvent.getEntity();
 			List<WfUniteRunTaskEntity> wfUniteRunTaskEntitys = managementService
@@ -238,8 +243,8 @@ public class ExtendEntityEventListener implements ActivitiEventListener {
 
 	protected void onActivated(ActivitiEvent event) {
 		ActivitiEntityEvent entityEvent = (ActivitiEntityEvent) event;
-		String entityEventClassName = entityEvent.getEntity().getClass()
-				.getName();
+		String entityEventClassName = entityEvent.getEntity().getClass().getName();
+		LOGGER.debug("激活实体:"+entityEventClassName);
 		if (WfConstants.EVENT_ENTITY_TASKENTITY.equals(entityEventClassName)) {
 			TaskEntity taskEntity = (TaskEntity) entityEvent.getEntity();
 			List<WfUniteRunTaskEntity> wfUniteRunTaskEntitys = managementService
@@ -258,8 +263,8 @@ public class ExtendEntityEventListener implements ActivitiEventListener {
 
 	protected void onUpdate(ActivitiEvent event) {
 		ActivitiEntityEvent entityEvent = (ActivitiEntityEvent) event;
-		String entityEventClassName = entityEvent.getEntity().getClass()
-				.getName();
+		String entityEventClassName = entityEvent.getEntity().getClass().getName();
+		LOGGER.debug("修改实体:"+entityEventClassName);
 		if (WfConstants.EVENT_ENTITY_TASKENTITY.equals(entityEventClassName)) {
 			TaskEntity taskEntity = (TaskEntity) entityEvent.getEntity();
 			List<WfUniteRunTaskEntity> wfUniteRunTasks = coventWfUniteRunTask(

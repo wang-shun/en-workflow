@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomRule xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns="http://www.chinacreator.com/platform/mvc/rule" sn="leave/addAskLeave" log="false" className="com.chinacreator.c2.flow.demo.leave.services.AskLeaveService" method="addAskLeave">
+  <name>添加请假条</name>
+  <desc>添加请假条</desc>
+  <inputs>
+    <input collection="false" desc="" id="askLeave" required="true" type="com.chinacreator.c2.flow.demo.leave.AskLeave"/>
+  </inputs>
+  <outputs/>
+  <params>
+    <param autoValue="Input.askLeave" name="askLeave" signature="QAskLeave;" type="com.chinacreator.c2.flow.demo.leave.AskLeave"/>
+  </params>
+  <return signature="V" type="void"/>
+</CustomRule>

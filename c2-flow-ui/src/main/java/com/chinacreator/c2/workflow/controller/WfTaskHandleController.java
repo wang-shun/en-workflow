@@ -25,6 +25,7 @@ import com.chinacreator.c2.flow.detail.WfHistoricTask;
 import com.chinacreator.c2.flow.detail.WfModuleBean;
 import com.chinacreator.c2.flow.detail.WfProcessConfigProperty;
 import com.chinacreator.c2.flow.detail.WfProcessDefinition;
+import com.chinacreator.c2.flow.detail.WfProcessInstance;
 import com.chinacreator.c2.flow.detail.WfTask;
 import com.chinacreator.c2.flow.util.CommonUtil;
 import com.chinacreator.c2.ioc.ApplicationContextManager;
@@ -52,7 +53,6 @@ public class WfTaskHandleController {
 	private WfHistoryService wfHistoryService = WfApiFactory
 			.getWfHistoryService();
 	private WfFormService wfFormService=WfApiFactory.getWfFormService();
-	
 	
 	@RequestMapping(value = "/taskHandle")
 	public Object taskHandle(@RequestParam(value = "moduleId", required = false) String moduleId,
@@ -96,6 +96,20 @@ public class WfTaskHandleController {
 					taskName=wfTask.getName();
 				}
 				
+				if(StringUtils.isEmpty(moduleId)&&StringUtils.isEmpty(menuCode)) throw new C2FlowRuntimeException("任务["+taskName+"]流程事项参数不正确，无法打开任务！");
+				
+				if(StringUtils.isEmpty(moduleId)) {
+					WfModuleBean wfModuleBean = wfExtendService.queryByMenuCode(menuCode);
+					if(null==wfModuleBean)  throw new C2FlowRuntimeException("不存在流程事项菜单["+menuCode+"]");
+					moduleId =wfModuleBean.getId(); 
+				}
+				
+				//获取当前任务实例的业务id
+				if(StringUtils.isEmpty(businessKey)){
+					WfProcessInstance wfProcessInstance=wfRuntimeService.getProcessInstanceById(processInstanceId);
+					businessKey=wfProcessInstance.getBusinessKey();
+				}
+				
 				// 通过流程定义和事项、环节定义查到外围配置信息
 				WfProcessConfigProperty wfProcessConfigProperty = wfManagerService.findProcessConfigProperty(processDefinitionId,moduleId,taskDefinitionId);
 				
@@ -110,7 +124,7 @@ public class WfTaskHandleController {
 				}
 				
 				if (wfProcessConfigProperty.getBindForm() == null|| "".equals(wfProcessConfigProperty.getBindForm().trim())){
-					throw new C2FlowRuntimeException("["+taskName+"]环节表单配置为空，无法自动进入表单！");
+					throw new C2FlowRuntimeException("任务["+taskName+"]表单配置为空，无法自动进入表单！");
 				}
 
 				String alias = wfProcessConfigProperty.getAlias();
@@ -159,7 +173,7 @@ public class WfTaskHandleController {
 				if (!StringUtils.isEmpty(taskDefKey)) {
 					paramMap.put("taskDefKey", taskDefKey);
 				}
-				if (!StringUtils.isEmpty(businessKey)) {
+				if (!StringUtils.isEmpty(businessKey)){
 					paramMap.put("businessKey", businessKey);
 				}
 
@@ -172,16 +186,16 @@ public class WfTaskHandleController {
 				body.put("moduleCode",menuCode);
 				
 				WfModuleBean wfModuleBean = wfExtendService.queryByMenuCode(menuCode);
-				if(null==wfModuleBean)  throw new C2FlowRuntimeException("不存在流程事项Code["+menuCode+"]");
+				if(null==wfModuleBean)  throw new C2FlowRuntimeException("不存在流程事项菜单["+menuCode+"]");
 				
 				moduleId =wfModuleBean.getId(); 
 				
 				WfProcessDefinition wfProcessDefinition = wfManagerService.getBindProcessByModuleId(moduleId);
-				if(null==wfProcessDefinition) throw new C2FlowRuntimeException("事项Code["+menuCode+"]还未和任何流程定义进行绑定！");
+				if(null==wfProcessDefinition) throw new C2FlowRuntimeException("事项菜单["+wfModuleBean.getName()+menuCode+"]还未和任何流程定义进行绑定！");
 				String processDefinitionId = wfProcessDefinition.getId();
 				
 				WfProcessConfigProperty wfProcessConfigProperty=findProcessStartConfig(moduleId, processDefinitionId);
-				if(null==wfProcessConfigProperty||StringUtils.isEmpty(wfProcessConfigProperty.getBindForm())) throw new C2FlowRuntimeException("流程开始环节表单配置为空，无法自动进入启动表单！");
+				if(null==wfProcessConfigProperty||StringUtils.isEmpty(wfProcessConfigProperty.getBindForm())) throw new C2FlowRuntimeException("["+wfModuleBean.getName()+menuCode+"]开始环节表单配置为空，无法自动进入启动表单！");
 				
 				String hrefUrlPre = "";
 				String alias = wfProcessConfigProperty.getAlias();
