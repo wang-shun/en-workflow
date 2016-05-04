@@ -9,8 +9,4 @@
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
 		http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
 	
-	<dubbo:protocol id="desbProtocol" name="dubbo"  port="20880"/>
-	
-	<dubbo:monitor protocol="registry"></dubbo:monitor>
-	
 </beans>

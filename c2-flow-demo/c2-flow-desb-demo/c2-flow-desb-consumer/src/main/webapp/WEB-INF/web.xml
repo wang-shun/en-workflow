@@ -11,6 +11,10 @@
         <param-name>contextConfigLocation</param-name>
         <param-value>classpath:c2-core-context.xml,classpath*:context/*-context.xml,classpath*:custom/*-context.xml</param-value>
     </context-param>
+    <context-param>
+        <param-name>spring.profiles.active</param-name>
+        <param-value>c2_flow_consumer</param-value>
+    </context-param>
     
     <!-- 平台全局属性初始化 -->
     <listener>
