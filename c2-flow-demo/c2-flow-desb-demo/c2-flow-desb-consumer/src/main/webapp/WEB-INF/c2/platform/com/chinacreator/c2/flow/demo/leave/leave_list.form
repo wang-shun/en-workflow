@@ -93,6 +93,7 @@
       <form:control type="container/table_jqgrid">
         <form:attributes source="container/table_jqgrid">
           <dync:attribute default="true" group="表格设置" id="firstRequest" name="自动加载数据" value="false">
+            <dync:render/>
             <dync:children/>
           </dync:attribute>
         </form:attributes>
@@ -355,7 +356,7 @@ monitor:function(askLeaveId){
 },
 
 page_beforeDataSourceLoad:function($params){
-	$scope.moduleKey=&quot;demo_leave&quot;;
+	$scope.moduleKey=&quot;qj&quot;;
 },
 
 page_onload:function(){

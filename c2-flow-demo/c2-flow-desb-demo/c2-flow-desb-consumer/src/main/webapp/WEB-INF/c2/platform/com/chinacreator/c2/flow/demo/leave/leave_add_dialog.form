@@ -214,7 +214,7 @@ newField_click:function($event){
 },
 
 page_beforeDataSourceLoad:function($params){
-	$scope.moduleKey=&quot;demo_leave&quot;;
+	$scope.moduleKey=&quot;qj&quot;;
 	$params.leave={};
 	$http.get(&quot;ws/leave/getCurrentUserInfo&quot;).success(function(data){
 		$params.leave.askUserName=data.result.userRealName;

@@ -132,7 +132,7 @@
 
 page_beforeDataSourceLoad:function($params){
 
-	var moduleKey=&quot;demo_leave&quot;;//事项
+	var moduleKey=&quot;qj&quot;;//事项
 	
 	$params.leave={};
 	

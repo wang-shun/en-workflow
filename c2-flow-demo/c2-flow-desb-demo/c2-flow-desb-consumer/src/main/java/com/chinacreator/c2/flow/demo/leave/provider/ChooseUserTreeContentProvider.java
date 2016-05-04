@@ -8,7 +8,6 @@ import com.chinacreator.asp.comp.sys.advanced.org.service.OrgService;
 import com.chinacreator.asp.comp.sys.basic.org.dto.OrgDTO;
 import com.chinacreator.asp.comp.sys.core.user.dto.UserDTO;
 import com.chinacreator.asp.sysmgmt.common.CommonTreeNode;
-import com.chinacreator.asp.sysmgmt.sysset.jobmenumgt.JobMenuMgtMessages;
 import com.chinacreator.c2.ioc.ApplicationContextManager;
 import com.chinacreator.c2.web.ds.TreeContentProvider;
 import com.chinacreator.c2.web.ds.TreeContext;
@@ -32,7 +31,7 @@ public class ChooseUserTreeContentProvider implements TreeContentProvider{
 			if (null == orgId || orgId.trim().equals("")) {
 				CommonTreeNode rootOrgTreeNode = new CommonTreeNode();
 				rootOrgTreeNode.setId("0");
-				rootOrgTreeNode.setName(JobMenuMgtMessages.getString("JOBMENUMGT.ORG_ROOT_TREENAME"));
+				rootOrgTreeNode.setName("机构");
 				rootOrgTreeNode.setPid(null);
 				rootOrgTreeNode.setNocheck(true);
 				rootOrgTreeNode.setChkDisabled(true);

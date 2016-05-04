@@ -20,9 +20,9 @@
     <poolAttribute key="removeAbandonedTimeout" value="300" desc="弃用连接超时时间(毫秒)"/>
     <poolAttribute key="logAbandoned" value="false" desc="记录弃用连接日志"/>
     <driverClassName>com.mysql.jdbc.Driver</driverClassName>
-    <url>jdbc:mysql://127.0.0.1:3306/flow_demo_a?zeroDateTimeBehavior=convertToNull&amp;useUnicode=true&amp;characterEncoding=utf-8</url>
+    <url>jdbc:mysql://172.17.32.101:32301/flow?zeroDateTimeBehavior=convertToNull&amp;useUnicode=true&amp;characterEncoding=utf-8</url>
     <username>root</username>
-    <password>root</password>
+    <password>123456</password>
     <dataSourceFactory>com.chinacreator.c2.dao.datasource.impl.DBCPDataSourceFactory</dataSourceFactory>
   </datasource>
 </DataSources>
