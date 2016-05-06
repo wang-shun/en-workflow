@@ -49,18 +49,20 @@ public class TaskListContentProvider implements ArrayContentProvider {
 			map.put("withoutTenantId",true);
 		}
 		
+		
 		//获取当前用户工作流所有组
 		List<ChooseGroup> candidateGroupList=WfUtils.getGroupsByUserId(userId);
 		
 		try {
+			
 			int offset = context.getPageable().getOffset();
 			int pageIndex = context.getPageable().getPageIndex();
 			int pageSize = context.getPageable().getPageSize();
 			WfUniteTaskResult result = null;
 			if("done".equals(taskType)){
-				result = wfRuntimeService.queryWfUniteHisTask(userId,candidateGroupList,map, offset, pageSize);
+				result = wfRuntimeService.queryWfUniteHisTask(userId,candidateGroupList,map, offset, pageSize,null);
 			}else{
-				result = wfRuntimeService.queryWfUniteRunTask(userId,candidateGroupList,map, offset, pageSize);
+				result = wfRuntimeService.queryWfUniteRunTask(userId,candidateGroupList,map, offset, pageSize,null);
 			}
 			if(result != null){
 				

@@ -70,7 +70,7 @@ public class AskLeaveContentProvider implements
 		        params.put("moduleid",wfModuleBean.getId());
 		        params.put("businesskey", businesskey);
 		        params.put("taskType", "todo");
-		        WfUniteTaskResult wfUniteTaskResult = wfRuntimeService.queryWfUniteRunTask(context.getUser().getId(),candidateGroupList,params,0,1);
+		        WfUniteTaskResult wfUniteTaskResult = wfRuntimeService.queryWfUniteRunTask(context.getUser().getId(),candidateGroupList,params,0,1,null);
 		        if(null!=wfUniteTaskResult&&wfUniteTaskResult.getDatas().size()>0){
 		        	askLeaveMap.put("todo",wfUniteTaskResult.getDatas().get(0));
 		        }

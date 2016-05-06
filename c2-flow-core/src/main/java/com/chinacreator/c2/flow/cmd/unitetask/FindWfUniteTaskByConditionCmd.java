@@ -9,6 +9,7 @@ import org.activiti.engine.identity.User;
 import org.activiti.engine.impl.db.DbSqlSession;
 import org.activiti.engine.impl.interceptor.Command;
 import org.activiti.engine.impl.interceptor.CommandContext;
+import org.apache.commons.lang.StringUtils;
 import org.apache.ibatis.session.RowBounds;
 
 import com.alibaba.fastjson.JSON;
@@ -16,12 +17,14 @@ import com.chinacreator.c2.flow.cmd.unitetask.config.FindWfUniteConfigColumnsCmd
 import com.chinacreator.c2.flow.detail.WfUniteTaskResult;
 import com.chinacreator.c2.flow.persistence.entity.WfUniteRunTaskExtendEntity;
 import com.chinacreator.c2.flow.util.WfUtils;
+import com.chinacreator.c2.flow.util.WfUtils.OrderDirection;
 
 public class FindWfUniteTaskByConditionCmd implements
 		Command<WfUniteTaskResult> {
 	private Map<String, Object> parameters;
 	private int firstResult = 0;
 	private int maxResults = 10;
+	private Map<String,OrderDirection> orderBys;
 
 	public FindWfUniteTaskByConditionCmd(Map<String, Object> parameters,
 			int firstResult, int maxResults) {
@@ -30,6 +33,14 @@ public class FindWfUniteTaskByConditionCmd implements
 		this.maxResults = maxResults;
 	}
 	
+	
+	public FindWfUniteTaskByConditionCmd(Map<String, Object> parameters,
+			int firstResult, int maxResults,Map<String,OrderDirection> orderBys) {
+		this.parameters = parameters;
+		this.firstResult = firstResult;
+		this.maxResults = maxResults;
+		this.orderBys=orderBys;
+	}
 
 
 	
@@ -41,8 +52,24 @@ public class FindWfUniteTaskByConditionCmd implements
 		parameters.put("firstResult", firstResult);
 		parameters.put("maxResults", maxResults);
 		RowBounds rowBounds = new RowBounds(firstResult, maxResults);
-		List<?> list = dbSqlSession.getSqlSession().selectList(
-				"selectWfUniteRunTaskByC", parameters, rowBounds);
+		
+		//组装排序sql
+		List<String> orderByList=new ArrayList<String>();
+		if(null!=orderBys&&orderBys.size()>0){
+			for (Map.Entry<String,OrderDirection> entry : orderBys.entrySet()) {
+				String key=entry.getKey();
+				OrderDirection value=entry.getValue();
+				if(StringUtils.isNotEmpty(key)&&null!=value){
+					orderByList.add("b."+key+" "+value.name());
+				}
+			}
+		}
+		
+		if(orderByList.size()>0){
+			parameters.put("orderByStr",StringUtils.join(orderByList,","));
+		}
+		
+		List<?> list = dbSqlSession.getSqlSession().selectList("selectWfUniteRunTaskByC",parameters,rowBounds);
 		result.setFirstResult(firstResult);
 		result.setMaxResults(maxResults);
 		if (list != null && list.size() > 0) {

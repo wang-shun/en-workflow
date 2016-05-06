@@ -17,7 +17,11 @@ import com.chinacreator.c2.ioc.ApplicationContextManager;
  * @author hushowly
  */
 public class WfUtils {
- 
+	
+	public enum OrderDirection{
+		ASC,
+		DESC
+	}
 	
 	public static Map<String,Object> getPersistentState(Map<String,Object> datas) {
 		Map<String, Object> persistentState = new HashMap<String, Object>();

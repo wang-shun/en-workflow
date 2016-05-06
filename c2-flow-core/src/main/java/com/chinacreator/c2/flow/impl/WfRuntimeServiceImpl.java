@@ -68,6 +68,7 @@ import com.chinacreator.c2.flow.detail.WfVariable.VariableScope;
 import com.chinacreator.c2.flow.util.CommonUtil;
 import com.chinacreator.c2.flow.util.LoggerManager;
 import com.chinacreator.c2.flow.util.LoggerManager.LoggerType;
+import com.chinacreator.c2.flow.util.WfUtils.OrderDirection;
 
 public class WfRuntimeServiceImpl implements WfRuntimeService {
 	private RepositoryService repositoryService;
@@ -1904,24 +1905,28 @@ public class WfRuntimeServiceImpl implements WfRuntimeService {
 	@Override
 	public WfUniteTaskResult queryWfUniteRunTask(String userId,
 			List<ChooseGroup> chooseGroupList, Map<String, Object> parameters,
-			int firstResult, int maxResults) throws Exception {
+			int firstResult, int maxResults,Map<String,OrderDirection> orderBys) throws Exception {
+
 		if(null==parameters) parameters=new HashMap<String, Object>();
 		parameters.put("groups",chooseGroupList);
 		parameters.put("userId",userId);
+		
+		
 		return managementService
 				.executeCommand(new FindWfUniteTaskByConditionCmd(parameters,
-						firstResult, maxResults));
+						firstResult, maxResults,orderBys));
 	}
+	
 	
 	@Override
 	public WfUniteTaskResult queryWfUniteHisTask(String userId,
 			List<ChooseGroup> chooseGroupList, Map<String, Object> parameters,
-			int firstResult, int maxResults) throws Exception {
+			int firstResult, int maxResults,Map<String,OrderDirection> orderBys) throws Exception {
 		if(null==parameters) parameters=new HashMap<String, Object>();
 		parameters.put("groups",chooseGroupList);
 		parameters.put("userId",userId);
 		return managementService
 				.executeCommand(new FindWfUniteHisTaskByConditionCmd(parameters,
-						firstResult, maxResults));
+						firstResult, maxResults,orderBys));
 	}
 }

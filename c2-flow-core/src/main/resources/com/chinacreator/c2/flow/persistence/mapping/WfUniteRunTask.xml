@@ -562,7 +562,14 @@
 		<if test="remark10 != null">
 			and b.remark10 like '%${remark10}%'
 		</if>
-		order by b.create_time desc
+		
+		<if test="orderByStr != null">
+			order by ${orderByStr}
+		</if>
+		
+		<if test="orderByStr== null">
+			order by b.create_time desc
+		</if>
 	</select>
 	<select id="selectWfUniteRunTaskCountByC" parameterType="java.util.HashMap"
 		resultType="Integer">
@@ -966,7 +973,14 @@
 		<if test="remark10 != null">
 			and b.remark10 like '%${remark10}%'
 		</if>
-		order by b.create_time desc
+		
+		<if test="orderByStr != null">
+			order by ${orderByStr}
+		</if>
+		
+		<if test="orderByStr== null">
+			order by b.create_time desc
+		</if>
 	</select>
 	<select id="selectWfUniteHisTaskCountByC" parameterType="java.util.HashMap"
 		resultType="Integer">

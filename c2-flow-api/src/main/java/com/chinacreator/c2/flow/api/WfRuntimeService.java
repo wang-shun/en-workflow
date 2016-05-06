@@ -20,6 +20,7 @@ import com.chinacreator.c2.flow.detail.WfTaskParam;
 import com.chinacreator.c2.flow.detail.WfUniteTaskResult;
 import com.chinacreator.c2.flow.detail.WfVariable;
 import com.chinacreator.c2.flow.detail.WfVariable.VariableScope;
+import com.chinacreator.c2.flow.util.WfUtils.OrderDirection;
 
 /**
  * 
@@ -756,11 +757,13 @@ public interface WfRuntimeService {
 	 *            分页：起始记录数
 	 * @param maxResults
 	 *            分页：每页最大记录数
+	 * @param orderBys
+	 * 			  排序参数，为空默认CREATE_TIME desc
 	 * @return
 	 * @throws Exception
 	 */
 	public WfUniteTaskResult queryWfUniteRunTask(String userId,List<ChooseGroup> chooseGroupList,Map<String, Object> parameters,
-			int firstResult, int maxResults)
+			int firstResult, int maxResults,Map<String,OrderDirection> orderBys)
 			throws Exception;
 	
 	
@@ -779,9 +782,11 @@ public interface WfRuntimeService {
 	 *            分页：起始记录数
 	 * @param maxResults
 	 *            分页：每页最大记录数
+	 * @param orderBys
+	 * 			  排序参数，为空默认CREATE_TIME desc
 	 * @return
 	 * @throws Exception
 	 */
 	public WfUniteTaskResult queryWfUniteHisTask(String userId,List<ChooseGroup> chooseGroupList, Map<String, Object> parameters,
-			int firstResult, int maxResults) throws Exception ;
+			int firstResult, int maxResults,Map<String,OrderDirection> orderBys) throws Exception ;
 }

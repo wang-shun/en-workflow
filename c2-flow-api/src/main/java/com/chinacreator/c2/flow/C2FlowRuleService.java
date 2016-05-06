@@ -57,6 +57,7 @@ import com.chinacreator.c2.flow.detail.WfVariable.VariableScope;
 import com.chinacreator.c2.flow.detail.WfVariableParam;
 import com.chinacreator.c2.flow.detail.WfWorkDate;
 import com.chinacreator.c2.flow.detail.WfWorkDateParam;
+import com.chinacreator.c2.flow.util.WfUtils.OrderDirection;
 
 /**
  * c2平台规则服务类，注意：所有XXX.rule文件都通过该类调用工作流接口，而不要直接调用WfRepositoryService,
@@ -1107,7 +1108,8 @@ public class C2FlowRuleService implements WfRuntimeService,
 	@Override
 	public WfUniteTaskResult queryWfUniteHisTask(String userId,
 			List<ChooseGroup> chooseGroupList, Map<String, Object> parameters,
-			int firstResult, int maxResults) throws Exception {
+			int firstResult, int maxResults,
+			Map<String, OrderDirection> orderBys) throws Exception {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -1115,7 +1117,8 @@ public class C2FlowRuleService implements WfRuntimeService,
 	@Override
 	public WfUniteTaskResult queryWfUniteRunTask(String userId,
 			List<ChooseGroup> chooseGroupList, Map<String, Object> parameters,
-			int firstResult, int maxResults) throws Exception {
+			int firstResult, int maxResults,
+			Map<String, OrderDirection> orderBys) throws Exception {
 		// TODO Auto-generated method stub
 		return null;
 	}
