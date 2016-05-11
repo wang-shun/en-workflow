@@ -9,7 +9,7 @@ import com.chinacreator.asp.comp.sys.advanced.job.service.JobService;
 import com.chinacreator.asp.comp.sys.advanced.user.service.UserService;
 import com.chinacreator.asp.comp.sys.common.CommonPropertiesUtil;
 import com.chinacreator.asp.comp.sys.core.user.dto.UserDTO;
-import com.chinacreator.c2.flow.api.GroupType;
+import com.chinacreator.c2.flow.api.WfGroupType;
 import com.chinacreator.c2.flow.detail.ChooseGroup;
 import com.chinacreator.c2.flow.detail.ChooseUser;
 import com.chinacreator.c2.ioc.ApplicationContextManager;
@@ -20,16 +20,11 @@ import com.chinacreator.c2.ioc.ApplicationContextManager;
  * @author hushow
  *
  */
-public class JobGroupType implements GroupType {
+public class JobGroupType extends WfGroupType {
 
 	@Override
 	public String getPrefix() {
 		return "$job";
-	}
-	
-	@Override
-	public String getGroupTypeDisplayName() {
-		return "岗位组";
 	}
 
 	@Override

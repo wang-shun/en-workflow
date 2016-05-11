@@ -8,6 +8,7 @@ import com.chinacreator.c2.flow.api.GroupType;
 import com.chinacreator.c2.flow.detail.ChooseGroup;
 import com.chinacreator.c2.flow.detail.ChooseUser;
 import com.chinacreator.c2.flow.util.CommonUtil;
+import com.chinacreator.c2.flow.util.WfConfig;
 import com.chinacreator.c2.flow.util.WfUtils;
 import com.chinacreator.c2.ioc.ApplicationContextManager;
 import com.chinacreator.c2.web.ds.TreeContentProvider;
@@ -44,7 +45,7 @@ public class CandidateChooseTreeContentProvider implements TreeContentProvider{
 				}
 			}
 			
-			Map<String, GroupType> groupTypes = ApplicationContextManager.getContext().getBeansOfType(GroupType.class);
+			WfConfig groupTypeConfig  = (WfConfig)ApplicationContextManager.getContext().getBean("wfConfig");
 			
 			//为空，查询所有组类型
 			if(CommonUtil.stringNullOrEmpty(gType)&&CommonUtil.stringNullOrEmpty(gid)){
@@ -54,7 +55,7 @@ public class CandidateChooseTreeContentProvider implements TreeContentProvider{
 					((DefaultTreeNode)tnRoot).setChkDisabled(true);
 					nodes.add(tnRoot);
 					
-					for(GroupType groupType:groupTypes.values()){
+					for(GroupType groupType:groupTypeConfig.getGroupTypes()){
 						TreeNode tnGroupType = new DefaultTreeNode("orgTree",groupType.getPrefix(),groupType.getGroupTypeDisplayName(),true);
 						((DefaultTreeNode)tnGroupType).setChkDisabled(true);
 						nodes.add(tnGroupType);

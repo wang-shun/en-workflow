@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context-3.2.xsd">
+    
+	<bean id="wfConfig" class="com.chinacreator.c2.flow.util.WfConfig">
+		<property name="groupTypes">
+			<list>
+				<bean id="jobGroupType" class="com.chinacreator.c2.workflow.service.JobGroupType">
+					<property name="groupTypeDisplayName" value="岗位组"/>
+				</bean>
+				<bean id="orgGroupType" class="com.chinacreator.c2.workflow.service.OrgGroupType">
+					<property name="groupTypeDisplayName" value="部门组"/>
+				</bean>
+			</list>
+		</property>
+	</bean>
+</beans>

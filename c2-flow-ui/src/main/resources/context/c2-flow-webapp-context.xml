@@ -11,8 +11,21 @@
 	<context:property-placeholder/>
 	<bean id="wfExtendServiceLocal" class="${c2.workflow.wfExtendServiceLocal}"/>
 	
-	<bean id="jobGroupType" class="com.chinacreator.c2.workflow.service.JobGroupType"/>
+	<bean id="wfConfig" class="com.chinacreator.c2.flow.util.WfConfig">
+		<property name="groupTypes">
+			<list>
+				<bean id="jobGroupType" class="com.chinacreator.c2.workflow.service.JobGroupType">
+					<property name="groupTypeDisplayName" value="岗位组"/>
+				</bean>
+				<bean id="orgGroupType" class="com.chinacreator.c2.workflow.service.OrgGroupType">
+					<property name="groupTypeDisplayName" value="机构组"/>
+				</bean>
+				<bean id="roleGroupType" class="com.chinacreator.c2.workflow.service.RoleGroupType">
+					<property name="groupTypeDisplayName" value="角色组"/>
+				</bean>
+			</list>
+		</property>
+	</bean>
 	
-	<bean id="roleGroupType" class="com.chinacreator.c2.workflow.service.RoleGroupType"/>
 	
 </beans>

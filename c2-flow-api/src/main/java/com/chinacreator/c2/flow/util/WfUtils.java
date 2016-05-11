@@ -175,12 +175,13 @@ public class WfUtils {
      * @return
      */
     public static GroupType getGroupTypeByPrex(String groupPrex){
-    	Map<String, GroupType> groupTypes = ApplicationContextManager.getContext().getBeansOfType(GroupType.class);
-		for(GroupType groupType:groupTypes.values()){
+    	WfConfig groupTypeConfig  = (WfConfig)ApplicationContextManager.getContext().getBean("wfConfig");
+		for(GroupType groupType:groupTypeConfig.getGroupTypes()){
 			if(groupType.getPrefix().equals(groupPrex)){
 				return groupType;
 			}
 		}
+		
 		return null;
     }
     
@@ -193,8 +194,8 @@ public class WfUtils {
     public static List<ChooseGroup> getGroupsByUserId(String userId){
     	//查询用户所有类型的组
     	List<ChooseGroup> candidateGroupList=new ArrayList<ChooseGroup>();
-    	Map<String, GroupType> groupTypes = ApplicationContextManager.getContext().getBeansOfType(GroupType.class);
-    	for(GroupType groupType:groupTypes.values()){
+    	WfConfig groupTypeConfig  = (WfConfig)ApplicationContextManager.getContext().getBean("wfConfig");
+    	for(GroupType groupType:groupTypeConfig.getGroupTypes()){
     		List<ChooseGroup> groupList=groupType.getGroupsByUserKey(userId);
     		if(null==groupList) continue;
     		for (ChooseGroup candidateGroup : groupList){

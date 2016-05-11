@@ -8,7 +8,7 @@ import com.chinacreator.asp.comp.sys.advanced.role.service.RoleService;
 import com.chinacreator.asp.comp.sys.advanced.user.service.UserService;
 import com.chinacreator.asp.comp.sys.core.role.dto.RoleDTO;
 import com.chinacreator.asp.comp.sys.core.user.dto.UserDTO;
-import com.chinacreator.c2.flow.api.GroupType;
+import com.chinacreator.c2.flow.api.WfGroupType;
 import com.chinacreator.c2.flow.detail.ChooseGroup;
 import com.chinacreator.c2.flow.detail.ChooseUser;
 import com.chinacreator.c2.ioc.ApplicationContextManager;
@@ -20,19 +20,13 @@ import com.chinacreator.c2.ioc.ApplicationContextManager;
  *
  */
 
-public class RoleGroupType implements GroupType {
+public class RoleGroupType extends WfGroupType {
 
 	@Override
 	public String getPrefix() {
 		return "$role";
 	}
-	
-	@Override
-	public String getGroupTypeDisplayName() {
-		return "角色组";
-	}
 
-	
 	@Override
 	public List<ChooseUser> parseUsers(String groupId) {
 		
