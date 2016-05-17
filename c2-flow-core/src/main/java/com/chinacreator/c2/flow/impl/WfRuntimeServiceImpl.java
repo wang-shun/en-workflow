@@ -2,6 +2,7 @@ package com.chinacreator.c2.flow.impl;
 
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -1477,7 +1478,7 @@ public class WfRuntimeServiceImpl implements WfRuntimeService {
 			
 			//获得当前流程实例的已经完成的历史任务,按照任务时间降序排序
 			HistoricTaskInstanceQueryImpl historyQuery=(HistoricTaskInstanceQueryImpl)historyService.createHistoricTaskInstanceQuery().processInstanceId(processInstanceId).finished();
-			if(!taskEntity.getExecutionId().equals(taskEntity.getProcessInstanceId())) historyQuery.executionId(taskEntity.getExecutionId());
+			//if(!taskEntity.getExecutionId().equals(taskEntity.getProcessInstanceId())) historyQuery.executionId(taskEntity.getExecutionId());
 			List<HistoricTaskInstance> historicTaskInstances =historyQuery.orderByHistoricTaskInstanceEndTime().desc().list();
 	        
 			ActivityImpl destActiviti = null;// 驳回目标节点
@@ -1873,6 +1874,7 @@ public class WfRuntimeServiceImpl implements WfRuntimeService {
 	public WfResult operateTaskTmp(WfOperator wfOperator, String taskId,
 			String action, String userToDelegateTo,
 			Map<String, Object> variables) throws Exception {
+		
 		if(action.equals(WfTaskAction.CLAIM.toString())){
 			return operateTask(wfOperator, taskId,
 					WfTaskAction.CLAIM,  userToDelegateTo,

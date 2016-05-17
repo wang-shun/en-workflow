@@ -69,6 +69,7 @@ public class JumpActivityCmd implements Command<String> {
 				executionEntity.setVariables(variables);
 			}
 			executionEntity.executeActivity(activity);
+			if(!executionEntity.isActive()) executionEntity.setActive(true);
 		}
 
 
