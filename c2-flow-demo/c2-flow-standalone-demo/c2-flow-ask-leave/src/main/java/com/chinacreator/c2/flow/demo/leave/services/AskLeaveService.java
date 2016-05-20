@@ -402,58 +402,6 @@ public class AskLeaveService {
 		}
 
 	}
-	
-	
-	
-	
-	/**
-	 * 最后环节审批处理
-	 * @param taskId      当前任务id
-	 * @param businessKey 表单业务id
-	 * @param isPass      是否审批通过
-	 * @param comment     退回原因
-	 */
-	public void doneReply(String taskId,String moduleId,Boolean isPass,String comment){
-		
-		try{
-			
-			WfRuntimeService wfRuntimeService = WfApiFactory.getWfRuntimeService();
-			
-			WebOperationContext context = (WebOperationContext)OperationContextHolder.getContext();
-			WfOperator wf=new WfOperator(context.getUser().getId(),context.getUser().getName(),context.getUser().getName(),null,null);
-			wf.setTenantId(WfApiFactory.getWfTenant());
-			
-			//流程和业务关联数据
-			WfBusinessData bd=new WfBusinessData();
-			bd.setModuleId(moduleId);
-			wf.setBusinessData(bd);
-			
-			Map<String,Object> variables=new HashMap<String, Object>();
-			
-			if(isPass){
-			
-				//根据taskId找业务id，这里其实可以从前台传过来
-			    WfTask wfTask=wfRuntimeService.getTaskById(taskId);
-			    WfProcessInstance wfProcessInstance=wfRuntimeService.getProcessInstanceById(wfTask.getProcessInstanceId());
-			    
-			    wfRuntimeService.operateTask(wf,taskId, WfTaskAction.CLAIM_COMPLETE,null, variables);
-			    
-			    //改变业务状态
-				Dao<AskLeave> dao=DaoFactory.create(AskLeave.class);
-				AskLeave askLeave=dao.selectByID(wfProcessInstance.getBusinessKey());
-				askLeave.setStatus(100);
-				dao.update(askLeave);
-			}else{
-				wfRuntimeService.reject(wf, taskId, comment,variables);
-			}
-		}catch(ActivitiTaskAlreadyClaimedException fe){
-			throw new RuntimeException("任务已签收，需要签收人才能处理！",fe);
-		}catch(Exception e){
-			e.printStackTrace();
-			throw new RuntimeException("流程任务处理异常",e);
-		}
 
-	}
-	
 	
 }

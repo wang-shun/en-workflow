@@ -70,6 +70,12 @@ public class AskLeaveContentProvider implements
 		        params.put("moduleid",wfModuleBean.getId());
 		        params.put("businesskey", businesskey);
 		        params.put("taskType", "todo");
+		        
+		        /**
+		         * 调用接口查工作流待办
+		         * 建议在for循环外层一次查出再关联，效率会更好
+		         * 当然，如果项目永远不考虑引擎独立部署，那你可以使用业务表和工作流待办进行关联sql查询更灵活
+		         */
 		        WfUniteTaskResult wfUniteTaskResult = wfRuntimeService.queryWfUniteRunTask(context.getUser().getId(),candidateGroupList,params,0,1,null);
 		        if(null!=wfUniteTaskResult&&wfUniteTaskResult.getDatas().size()>0){
 		        	askLeaveMap.put("todo",wfUniteTaskResult.getDatas().get(0));
