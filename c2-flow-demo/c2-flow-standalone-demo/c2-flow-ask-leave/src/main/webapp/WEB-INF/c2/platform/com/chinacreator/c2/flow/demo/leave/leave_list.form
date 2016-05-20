@@ -327,12 +327,15 @@ newField_customFormatter:function(cellvalue,options,rowObject){
 	}
 },
 commonReplyDialog:function(taskId,businessKey,moduleId){
-	Modal.open(&quot;f/common_reply_dialog&quot;,{taskId:taskId,businessKey:businessKey,moduleKey:$scope.moduleKey,moduleId:moduleId},
-	function(){
-		$view.list.refresh();
-	},function(){
-		
-	});
+
+	//以弹出框方式打开工作流待办任务表单
+	Modal.open(&quot;f/include_form_dialog&quot;,{formUrl:&quot;wf/taskHandle?taskId=&quot;+taskId+&quot;&amp;moduleId=&quot;+moduleId+&quot;&amp;businessKey=&quot;+businessKey},
+	    function(AA){
+			$view.list.refresh();
+	    },
+	    function(){
+	    	$view.list.refresh();
+    });
 },
 leaveSubmit:function(taskId,moduleId,businessKey){
 	//以弹出框方式打开工作流待办任务表单

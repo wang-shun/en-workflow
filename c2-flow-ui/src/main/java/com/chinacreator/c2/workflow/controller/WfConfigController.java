@@ -104,7 +104,8 @@ public class WfConfigController {
 					String id = WfUtils.parseToGroupId(gId);
 					String groupPrex = WfUtils.parseToGroupTypePrex(gId);
 					GroupType groupType=WfUtils.getGroupTypeByPrex(groupPrex);
-					if(null==groupPrex){
+					if(null==groupType) groupType=WfUtils.getDefaultGroupType();  //获取系统默认组类型
+					if(null==groupType){
 						groupNames += gId+ ",";
 					}else{
 						ChooseGroup candidateGroup=groupType.getGroup(id);

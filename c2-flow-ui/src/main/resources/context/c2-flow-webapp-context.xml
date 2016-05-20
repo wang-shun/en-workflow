@@ -14,18 +14,26 @@
 	<bean id="wfConfig" class="com.chinacreator.c2.flow.util.WfConfig">
 		<property name="groupTypes">
 			<list>
-				<bean id="jobGroupType" class="com.chinacreator.c2.workflow.service.JobGroupType">
-					<property name="groupTypeDisplayName" value="岗位组"/>
-				</bean>
-				<bean id="orgGroupType" class="com.chinacreator.c2.workflow.service.OrgGroupType">
-					<property name="groupTypeDisplayName" value="机构组"/>
-				</bean>
-				<bean id="roleGroupType" class="com.chinacreator.c2.workflow.service.RoleGroupType">
-					<property name="groupTypeDisplayName" value="角色组"/>
-				</bean>
+				<ref bean="jobGroupType"/>
+				<ref bean="orgGroupType"/>
+				<ref bean="roleGroupType"/>
 			</list>
 		</property>
+		
+		<!--默认组类型为岗位，如果act_id_group视图关联的是角色请覆盖配置为roleGroupType-->
+		<property name="defaultGroupType" ref="jobGroupType"/>
 	</bean>
 	
+	<bean id="jobGroupType" class="com.chinacreator.c2.workflow.service.JobGroupType">
+		<property name="groupTypeDisplayName" value="岗位组"/>
+	</bean>
+	
+	<bean id="orgGroupType" class="com.chinacreator.c2.workflow.service.OrgGroupType">
+		<property name="groupTypeDisplayName" value="部门组"/>
+	</bean>
+	
+	<bean id="roleGroupType" class="com.chinacreator.c2.workflow.service.RoleGroupType">
+		<property name="groupTypeDisplayName" value="角色组"/>
+	</bean>
 	
 </beans>

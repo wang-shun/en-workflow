@@ -76,12 +76,13 @@ public class WfTaskHandleController {
 		WfTask wfTask = null;
 		WfHistoricTask wfHistoricTask = null;
 		// 通过任务ID找到任务信息
-		if (WfConstants.WF_UNITE_TASK_TYPE_DONE.equals(taskType)) {
-			wfHistoricTask = wfHistoryService.getHistoricTaskById(taskId);
-			if(null==wfHistoricTask) throw new C2FlowRuntimeException("历史列表中不存在此任务！");
-		} else {
+		if(WfConstants.WF_UNITE_TASK_TYPE_TODO.equals(taskType)) {
 			wfTask = wfRuntimeService.getTaskById(taskId);
 			if(null==wfTask) throw new C2FlowRuntimeException("当前任务已完成或不存在，请重新打开任务页面！");
+		}else{
+			wfHistoricTask = wfHistoryService.getHistoricTaskById(taskId);
+			taskType=WfConstants.WF_UNITE_TASK_TYPE_DONE;
+			if(null==wfHistoricTask) throw new C2FlowRuntimeException("历史列表中不存在此任务！");
 		}
 
 		String processDefinitionId = "";

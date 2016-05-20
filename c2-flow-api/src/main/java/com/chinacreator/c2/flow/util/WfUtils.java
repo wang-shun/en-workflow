@@ -206,4 +206,13 @@ public class WfUtils {
     	
     	return candidateGroupList;
     }
+    
+    
+    /**
+     * 获取系统默认用户组类型
+     */
+    public static GroupType getDefaultGroupType(){
+    	WfConfig groupTypeConfig  = (WfConfig)ApplicationContextManager.getContext().getBean("wfConfig");
+    	return groupTypeConfig.getDefaultGroupType();
+    }
 }
