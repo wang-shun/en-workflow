@@ -59,7 +59,7 @@ public class AskLeaveContentProvider implements
 	        WebOperationContext context = (WebOperationContext)OperationContextHolder.getContext();
 	        WfRuntimeService wfRuntimeService= WfApiFactory.getWfRuntimeService();
 	        
-	        //获取当前用户工作流所有组
+	        //获取当前用户工作流所有组,用于去引擎获取属于当前用户的组的待办
 	        List<ChooseGroup> candidateGroupList=WfUtils.getGroupsByUserId(context.getUser().getId());
 	        
 	        //获取当前业务待办信息
