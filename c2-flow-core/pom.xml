@@ -70,6 +70,13 @@
 			<artifactId>activiti-modeler</artifactId>
 			<version>${activiti.version}</version>
 		</dependency>
+		
+		<dependency>
+		    <groupId>org.activiti</groupId>
+		    <artifactId>activiti-cxf</artifactId>
+		    <version>${activiti.version}</version>
+		</dependency>
+		
 		<dependency>
 			<groupId>com.oracle</groupId>
 			<artifactId>ojdbc6</artifactId>
