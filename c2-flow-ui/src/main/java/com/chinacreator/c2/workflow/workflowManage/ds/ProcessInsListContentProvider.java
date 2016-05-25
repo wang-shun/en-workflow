@@ -47,6 +47,14 @@ public class ProcessInsListContentProvider implements ArrayContentProvider {
 		// 增加排序条件
 		wfHis.setOrderByProcessInstanceStartTime(true);
 		wfHis.setOrder(WfHistoricProcessInstanceParam.SORT_DESC);
+		
+		//处理租户完全隔离
+		String tenantId=WfApiFactory.getWfTenant();
+		if(!CommonUtil.stringNullOrEmpty(tenantId)){
+			wfHis.setTenantId(tenantId);
+		}else{
+			wfHis.setWithoutTenantId(true);
+		}
 
 		Map<String, Object> map = context.getCondition();
 		if (null != map && !map.isEmpty()) {

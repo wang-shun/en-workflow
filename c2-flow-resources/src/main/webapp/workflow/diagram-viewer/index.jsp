@@ -216,25 +216,99 @@ $(document).ready(function(){
     diagramHolderId: "diagramHolder",
     diagramInfoId: "diagramInfo",
     on: {
-      click: function(canvas, element, contextObject){
+    	click: function(canvas, element, contextObject){
+
         var mouseEvent = this;
+        
+  	  	var taskType=contextObject.getProperty("type");
+  	  	var heightOfObject=contextObject.height;
+  	  	var taskDefKey=contextObject.id;
+  	  	
+  	  	console.log("yyc debug-->"+"流程实例ID:"+processInstanceId+",流程定义ID:"+processDefinitionId+",任务定义key:"+taskDefKey+",任务类型:"+taskType);
+
         console.log("[CLICK] mouseEvent: %o, canvas: %o, clicked element: %o, contextObject: %o", mouseEvent, canvas, element, contextObject);
 
-        if (contextObject.getProperty("type") == "callActivity") {
-          var processDefinitonKey = contextObject.getProperty("processDefinitonKey");
-          var processDefinitons = contextObject.getProperty("processDefinitons");
-          var processDefiniton = processDefinitons[0];
-          console.log("Load callActivity '" + processDefiniton.processDefinitionKey + "', contextObject: ", contextObject);
-
-          // Load processDefinition
-        ProcessDiagramGenerator.drawDiagram(processDefiniton.processDefinitionId);
+	  	if(taskType == "userTask"){
+			  //$ajax()
+			  //var htmlStr = "<table><tr><td>id</td><td>名称</td></tr><tr><td>1</td><td>一</td></tr></table>";
+			 // $('#tipDivInner').html(htmlStr);
+			  //handlegrid
+			  var objOfDiv = $('#tipDiv');
+			  
+			  if(objOfDiv[0]){
+				  $('#tipDiv').css("top",heightOfObject+contextObject.y+11+28+"px");
+				  $('#tipDiv').css("left",contextObject.x+11+"px");
+				  $('#tipDiv').show();
+	//			  console.log(dataUrl);
+				  $('#tipDivInner').datagrid({
+						url: dataUrl+"&taskDefinitionKey="+taskDefKey,
+						//title: '未办任务',
+						//width:setWidth(),
+						//height: '300px',
+						fitColumns: true,
+						rownumbers : true,
+						pagination : false,
+						singleSelect :true,
+						columns : [ [/* {
+							field : 'taskDefinitionKey',
+							title: '活动定义ID',
+							width : fixWidth(0.2)
+						},*/ {
+							field: 'name',
+							title : '活动名称',
+							width :fixWidth(0.2)
+						}, {
+							field : 'assignee',
+							title: '任务处理人',
+							width : fixWidth(0.2)
+						},{
+							field : 'candidate',
+							title: '候选人',
+							width : fixWidth(0.2)
+						}, {
+							field: 'status',
+							title : '任务状态',
+							width :fixWidth(0.1)
+						}, {
+							field : 'startTime',
+							title: '任务开始时间',
+							width : fixWidth(0.2)
+						}, {
+							field: 'dueDate',
+							title : '任务到期时间',
+							width :fixWidth(0.2)
+						}, {
+							field : 'endTime',
+							title: '任务结束时间',
+							width : fixWidth(0.2)
+						}, {
+							field: 'overDue',
+							title : '是否超期',
+							width :fixWidth(0.2)
+						}/*, {
+							field : 'description',
+							title: '描述',
+							width :fixWidth(0.2)
+						}*/ ] ]
+					});
+			  }
+		  }else if (taskType == "callActivity") {
+	          var processDefinitonKey = contextObject.getProperty("processDefinitonKey");
+	          var processDefinitons = contextObject.getProperty("processDefinitons");
+	          var processDefiniton = processDefinitons[0];
+	          console.log("Load callActivity '" + processDefiniton.processDefinitionKey + "', contextObject: ", contextObject);
+	
+	          // Load processDefinition
+	        ProcessDiagramGenerator.drawDiagram(processDefiniton.processDefinitionId);
         }
       },
       rightClick: function(canvas, element, contextObject){
+
         var mouseEvent = this;
         console.log("[RIGHTCLICK] mouseEvent: %o, canvas: %o, clicked element: %o, contextObject: %o", mouseEvent, canvas, element, contextObject);
       },
       over: function(canvas, element, contextObject){
+
         var mouseEvent = this;
         //console.log("[OVER] mouseEvent: %o, canvas: %o, clicked element: %o, contextObject: %o", mouseEvent, canvas, element, contextObject);
 
@@ -242,10 +316,16 @@ $(document).ready(function(){
         ProcessDiagramGenerator.showActivityInfo(contextObject);
       },
       out: function(canvas, element, contextObject){
+
         var mouseEvent = this;
         //console.log("[OUT] mouseEvent: %o, canvas: %o, clicked element: %o, contextObject: %o", mouseEvent, canvas, element, contextObject);
 
         ProcessDiagramGenerator.hideInfo();
+        
+ 	    if($("#tipDiv").css("display")=='block'){
+		   //$("#tipDiv").hide();
+	    }
+ 	   
       }
     }
   };

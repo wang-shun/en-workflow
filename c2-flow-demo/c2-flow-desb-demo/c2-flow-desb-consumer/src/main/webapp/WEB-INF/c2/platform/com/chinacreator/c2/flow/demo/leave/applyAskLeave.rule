@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomRule xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns="http://www.chinacreator.com/platform/mvc/rule" sn="leave/applyAskLeave" log="false" className="com.chinacreator.c2.flow.demo.leave.services.AskLeaveService" method="applyAskLeave">
+  <instanceCreator>
+    <params/>
+  </instanceCreator>
+  <name>递交请假条</name>
+  <desc>申请申批，启动流程</desc>
+  <inputs>
+    <input collection="false" desc="" id="askLeaveId" required="true"/>
+    <input collection="false" desc="" id="moduleKey" required="true"/>
+  </inputs>
+  <outputs/>
+  <params>
+    <param autoValue="Input.askLeaveId" name="askLeaveId" signature="QString;" type="java.lang.String"/>
+    <param autoValue="Input.moduleKey" name="moduleKey" signature="QString;" type="java.lang.String"/>
+  </params>
+  <return signature="V" type="void"/>
+</CustomRule>

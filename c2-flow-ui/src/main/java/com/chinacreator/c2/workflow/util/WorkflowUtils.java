@@ -1,16 +1,16 @@
 package com.chinacreator.c2.workflow.util;
 
-import org.activiti.engine.RepositoryService;
-import org.activiti.engine.repository.ProcessDefinition;
-import org.apache.commons.io.FileUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
+
+import org.activiti.engine.RepositoryService;
+import org.activiti.engine.repository.ProcessDefinition;
+import org.apache.commons.io.FileUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author HenryYan
@@ -79,5 +79,5 @@ public class WorkflowUtils {
         FileUtils.writeByteArrayToFile(file, b, true);
         return diagramPath;
     }
-
+   
 }

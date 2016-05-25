@@ -68,10 +68,6 @@
     <form:child xsi:type="form:Field" binding="$model.appId" id="appId" name="选择应用" customize="true">
       <form:control type="widget/select_simple">
         <form:attributes source="widget/select_simple">
-          <dync:attribute default="6" desc="网格布局中占位数" group="布局属性" hidden="false" id="span" name="占位数" required="false" value="4">
-            <dync:render colSpan="1" height="0" multi="false" name="text"/>
-            <dync:children/>
-          </dync:attribute>
           <dync:attribute default="" desc="指定下拉框的默认值。&#xA;                &#xA;                @attention 下拉框控件初始化指定值有3种方式。按优先级排列为：  &#xA;                1. 数据绑定未赋值。  &#xA;                2. 当数据绑定未赋值时，按默认值设置的值。  &#xA;                3. 如果选项通过数据源绑定。当数据绑定未赋值且没有设置默认值时，按选中属性名设置的属性值为`true`的选项为准。  &#xA;                &#x9;如果有多个设值为`true`的选项，只有最后一个生效！" group="HTML设置" hidden="false" id="value" name="默认值" required="false" value="default">
             <dync:render colSpan="1" height="0" multi="false" name="text"/>
             <dync:children/>
@@ -94,42 +90,9 @@
       </form:control>
       <form:validation/>
     </form:child>
-    <form:child xsi:type="form:Field" binding="$model.tenantId" id="tenantId" name="选择租户" customize="true">
-      <form:control type="widget/select_simple">
-        <form:attributes source="widget/select_simple">
-          <dync:attribute default="6" desc="网格布局中占位数" group="布局属性" hidden="false" id="span" name="占位数" required="false" value="4">
-            <dync:render colSpan="1" height="0" multi="false" name="text"/>
-            <dync:children/>
-          </dync:attribute>
-          <dync:attribute default="" desc="设置下拉框的可选项。有三种设置形式：  &#xA;                1.使用json对象的格式；只能用双引号。如：{&quot;key&quot;:&quot;value&quot;,&quot;xx&quot;,&quot;xxx&quot;}。  &#xA;                2.使用数据源进行数据绑定，数据源必须返回列表,可以实现后台设定默认选项。  &#xA;                3.使用远程地址获取下拉选项数据，远程地址必须返回对象数组。如：[{&quot;id&quot;:&quot;xx&quot;,&quot;text&quot;:&quot;xxx&quot;},{&quot;id&quot;:&quot;xx2&quot;,&quot;text&quot;:&quot;xxx2&quot;}]&#xA;                &#xA;                @attention 只有通过数据源绑定和远程地址使用*值属性名*，*显示属性名*和*选中属性名*才生效，而且必须指定*值属性名*和*显示属性名。&#xA;                &#x9;使用json格式设置的下拉选项不能通过指定*选中属性名*来默认选中，只能通过默认值进行默认选中。" group="HTML设置" hidden="false" id="selectOptions" name="选项" required="false" value="{&quot;default&quot;:&quot;默认租户&quot;}">
-            <dync:render colSpan="1" height="0" multi="false" name="text"/>
-            <dync:children/>
-          </dync:attribute>
-          <dync:attribute default="" desc="指定下拉框的默认值。&#xA;                &#xA;                @attention 下拉框控件初始化指定值有3种方式。按优先级排列为：  &#xA;                1. 数据绑定未赋值。  &#xA;                2. 当数据绑定未赋值时，按默认值设置的值。  &#xA;                3. 如果选项通过数据源绑定。当数据绑定未赋值且没有设置默认值时，按选中属性名设置的属性值为`true`的选项为准。  &#xA;                &#x9;如果有多个设值为`true`的选项，只有最后一个生效！" group="HTML设置" hidden="false" id="value" name="默认值" required="false" value="default">
-            <dync:render colSpan="1" height="0" multi="false" name="text"/>
-            <dync:children/>
-          </dync:attribute>
-          <dync:attribute default="" desc="下拉框值变换事件" group="事件设置" hidden="false" id="change" name="值变换事件" required="false" value="tenantId_change()">
-            <dync:render colSpan="2" height="0" multi="false" name="event">
-              <dync:item name="params" value=""/>
-            </dync:render>
-            <dync:children/>
-          </dync:attribute>
-          <dync:attribute default="" desc="指定下拉框的默认值。&#xA;                &#xA;                @attention 下拉框控件初始化指定值有3种方式。按优先级排列为：  &#xA;                1. 数据绑定赋值。  &#xA;                2. 当数据绑定未赋值时，按默认值设置的值。  &#xA;                3. 如果选项通过数据源绑定。当数据绑定未赋值且没有设置默认值时，按选中属性名设置的属性值为`true`的选项为准。  &#xA;                &#x9;如果有多个设值为`true`的选项，只有最后一个生效！" group="HTML设置" hidden="false" id="defaultValue" name="默认值" required="false" value="default">
-            <dync:render colSpan="1" height="0" multi="false" name="text"/>
-            <dync:children/>
-          </dync:attribute>
-        </form:attributes>
-      </form:control>
-      <form:validation/>
-    </form:child>
     <form:child xsi:type="form:Field" binding="$model.engineName" id="engineName" name="流程引擎" customize="true">
       <form:control type="widget/select_simple">
         <form:attributes source="widget/select_simple">
-          <dync:attribute default="6" desc="网格布局中占位数" group="布局属性" hidden="false" id="span" name="占位数" required="false" value="4">
-            <dync:render colSpan="1" height="0" multi="false" name="text"/>
-            <dync:children/>
-          </dync:attribute>
           <dync:attribute default="" desc="设置下拉框的可选项。有三种设置形式：  &#xA;                1.使用json对象的格式；只能用双引号。如：{&quot;key&quot;:&quot;value&quot;,&quot;xx&quot;,&quot;xxx&quot;}。  &#xA;                2.使用数据源进行数据绑定，数据源必须返回列表,可以实现后台设定默认选项。  &#xA;                3.使用远程地址获取下拉选项数据，远程地址必须返回对象数组。如：[{&quot;id&quot;:&quot;xx&quot;,&quot;text&quot;:&quot;xxx&quot;},{&quot;id&quot;:&quot;xx2&quot;,&quot;text&quot;:&quot;xxx2&quot;}]&#xA;                &#xA;                @attention 只有通过数据源绑定和远程地址使用*值属性名*，*显示属性名*和*选中属性名*才生效，而且必须指定*值属性名*和*显示属性名。&#xA;                &#x9;使用json格式设置的下拉选项不能通过指定*选中属性名*来默认选中，只能通过默认值进行默认选中。" group="HTML设置" hidden="false" id="selectOptions" name="选项" required="false" value="{&quot;default&quot;:&quot;默认引擎&quot;}">
             <dync:render colSpan="1" height="0" multi="false" name="text"/>
             <dync:children/>
@@ -155,10 +118,6 @@
     <form:child xsi:type="form:Field" binding="$model.taskList" id="taskList" name="任务类型" customize="true">
       <form:control type="widget/select_simple">
         <form:attributes source="widget/select_simple">
-          <dync:attribute default="6" desc="网格布局中占位数" group="布局属性" hidden="false" id="span" name="占位数" required="false" value="4">
-            <dync:render colSpan="1" height="0" multi="false" name="text"/>
-            <dync:children/>
-          </dync:attribute>
           <dync:attribute default="" desc="指定下拉框的默认值。&#xA;                &#xA;                @attention 下拉框控件初始化指定值有3种方式。按优先级排列为：  &#xA;                1. 数据绑定未赋值。  &#xA;                2. 当数据绑定未赋值时，按默认值设置的值。  &#xA;                3. 如果选项通过数据源绑定。当数据绑定未赋值且没有设置默认值时，按选中属性名设置的属性值为`true`的选项为准。  &#xA;                &#x9;如果有多个设值为`true`的选项，只有最后一个生效！" group="HTML设置" hidden="false" id="value" name="默认值" required="false" value="todo">
             <dync:render colSpan="1" height="0" multi="false" name="text"/>
             <dync:children/>
@@ -184,7 +143,7 @@
     <form:child xsi:type="form:Field" binding="$model.onlyTitle" id="onlyTitle" name="只显示标题" customize="true">
       <form:control type="widget/checkbox">
         <form:attributes source="widget/checkbox">
-          <dync:attribute default="2" desc="checkbox在网格布局中占列数" group="HTML设置" hidden="false" id="span" name="控件宽度" required="false" value="4">
+          <dync:attribute default="2" desc="checkbox在网格布局中占列数" group="HTML设置" hidden="false" id="span" name="控件宽度" required="false" value="6">
             <dync:render colSpan="1" height="0" multi="false" name="text"/>
             <dync:children/>
           </dync:attribute>
@@ -673,6 +632,7 @@
   <form:scripts>
 
 page_onload:function(){
+	
 },
 
 taskType_change:function(){
@@ -694,7 +654,6 @@ flowEngine_change:function(){
 onlyTitle_onChange:function($event){
 	var param = {
 		appId:$model.appId,
-		tenantId:$model.tenantId,
 		engineName:$model.engineName,
 		taskType:$model.taskList,
 		onlyTitle:$model.onlyTitle
@@ -711,7 +670,6 @@ onlyTitle_onChange:function($event){
 fieldConfigGroup_loadComplete:function(data){
 	var param = {
 		appId:$model.appId,
-		tenantId:$model.tenantId,
 		engineName:$model.engineName,
 		taskType:$model.taskList
     };

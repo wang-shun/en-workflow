@@ -100,7 +100,6 @@ var SIGNAL_CATCH_IMAGE = 	"images/deployer/signal_catch.png";
 var SIGNAL_THROW_IMAGE = 	"images/deployer/signal_throw.png";
 var MULTIPLE_CATCH_IMAGE = 	"images/deployer/multiple_catch.png";
 
-var processInstanceId = "";
 
 var ObjectType = {
 	ELLIPSE: "ellipse",
@@ -239,86 +238,9 @@ ProcessDiagramCanvas.prototype = {
 		object.data("contextObject", contextObject);
 	},
 	onClick: function(event, instance, element){
-		//console.log(processInstanceId);
-	  // 流程实例ID
-	  var pInstanceId = processInstanceId;
-	  // 流程定义ID
-	  var pDefId = instance.processDefinitionId;
-	 
-	  
 	  var overlay = element;
 	  var set = overlay.data("set");
 	  var contextObject = overlay.data("contextObject");
-	  // 任务定义key
-	  var taskDefKey = contextObject.id;
-	  // 任务类型
-	  var taskType = contextObject.getProperty("type");
-	  var heightOfObject = contextObject.height;
-	  
-	  console.log("yyc debug-->"+"流程实例ID:"+pInstanceId+",流程定义ID:"+pDefId+",任务定义key:"+taskDefKey+",任务类型:"+taskType);
-	  if("userTask"==taskType){
-		  //$ajax()
-		  //var htmlStr = "<table><tr><td>id</td><td>名称</td></tr><tr><td>1</td><td>一</td></tr></table>";
-		 // $('#tipDivInner').html(htmlStr);
-		  //handlegrid
-		  var objOfDiv = $('#tipDiv');
-		  if(objOfDiv[0]){
-			  $('#tipDiv').css("top",heightOfObject+contextObject.y+11+28+"px");
-			  $('#tipDiv').css("left",contextObject.x+11+"px");
-			  $('#tipDiv').show();
-//			  console.log(dataUrl);
-			  $('#tipDivInner').datagrid({
-					url: dataUrl+"&taskDefinitionKey="+taskDefKey,
-					//title: '未办任务',
-					//width:setWidth(),
-					//height: '300px',
-					fitColumns: true,
-					rownumbers : true,
-					pagination : false,
-					singleSelect :true,
-					columns : [ [/* {
-						field : 'taskDefinitionKey',
-						title: '活动定义ID',
-						width : fixWidth(0.2)
-					},*/ {
-						field: 'name',
-						title : '活动名称',
-						width :fixWidth(0.2)
-					}, {
-						field : 'assignee',
-						title: '任务处理人',
-						width : fixWidth(0.2)
-					}, {
-						field: 'status',
-						title : '任务状态',
-						width :fixWidth(0.2)
-					}, {
-						field : 'startTime',
-						title: '任务开始时间',
-						width : fixWidth(0.2)
-					}, {
-						field: 'dueDate',
-						title : '任务到期时间',
-						width :fixWidth(0.2)
-					}, {
-						field : 'endTime',
-						title: '任务结束时间',
-						width : fixWidth(0.2)
-					}, {
-						field: 'overDue',
-						title : '是否超期',
-						width :fixWidth(0.2)
-					}/*, {
-						field : 'description',
-						title: '描述',
-						width :fixWidth(0.2)
-					}*/ ] ]
-				});
-		  }
-		  
-		  
-	  }
-	  
 	  //console.log("["+contextObject.getProperty("type")+"], activityId: " + contextObject.getId());
 	  if (ProcessDiagramGenerator.options && ProcessDiagramGenerator.options.on && ProcessDiagramGenerator.options.on.click) {
 	    var args = [instance, element, contextObject];
@@ -329,6 +251,7 @@ ProcessDiagramCanvas.prototype = {
 	  var overlay = element;
 	  var set = overlay.data("set");
 	  var contextObject = overlay.data("contextObject");
+	  //console.log("[%s], activityId: %s (RIGHTCLICK)", contextObject.getProperty("type"), contextObject.getId());
 
 	  if (ProcessDiagramGenerator.options && ProcessDiagramGenerator.options.on && ProcessDiagramGenerator.options.on.rightClick) {
 	    var args = [instance, element, contextObject];
@@ -356,10 +279,6 @@ ProcessDiagramCanvas.prototype = {
 
 	   var border = instance.g.getById(contextObject.id + "_border");
 	   border.attr("opacity", 0.0);
-	   
-	   if($("#tipDiv").css("display")=='block'){
-		   //$("#tipDiv").hide();
-	   }
 	   // provide callback
 	   if (ProcessDiagramGenerator.options && ProcessDiagramGenerator.options.on && ProcessDiagramGenerator.options.on.out) {
 	     var args = [instance, element, contextObject];
@@ -1701,7 +1620,7 @@ ProcessDiagramCanvas.prototype = {
 	
 	drawCollapsedCallActivity: function(name, x, y, width, height) {
 	  this.g.setStart();
-		this.drawCollapsedTask(name, x, y, width, height, true);
+		this._drawCollapsedTask(name, x, y, width, height, true);
 		var set = this.g.setFinish();
     this.addHandlers(set, x, y, width, height, "task");
 	},

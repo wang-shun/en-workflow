@@ -3,6 +3,7 @@ package com.chinacreator.c2.workflow.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.chinacreator.asp.comp.sys.basic.menu.dto.MenuDTO;
@@ -43,7 +44,7 @@ public class WfExtendServiceImpl implements WfExtendService {
 					wmBean.setId(menuDTO.getMenuId());
 					wmBean.setName(menuDTO.getMenuName());
 					wmBean.setParentId(menuDTO.getParentId());
-					if(("4".equals(type) && href == null) || ("4".equals(type) && href != null && href.contains("wf/taskHandle"))){
+					if(("4".equals(type) && StringUtils.isEmpty(href)) || ("4".equals(type) && href != null && href.contains("wf/taskHandle"))){
 						list.add(wmBean);
 					}
 				}
@@ -53,11 +54,12 @@ public class WfExtendServiceImpl implements WfExtendService {
 		return list;
 	}
 
+	
 	@Override
 	public boolean existsWfChildren(String moduleId) {
 		MenuDTO mdto = menuService.queryByPK(moduleId);
 		String href0 = mdto.getHref();
-		if("4".equals(mdto.getType()) && href0 != null && href0.contains("wf/taskHandle")){
+		if("4".equals(mdto.getType()) && StringUtils.isNotEmpty(href0) && href0.contains("wf/taskHandle")){
 			return true;
 		}
 		List<MenuDTO> menuDTOList = menuService.queryChildren(moduleId, false);
@@ -72,7 +74,7 @@ public class WfExtendServiceImpl implements WfExtendService {
 					wmBean.setId(mId);
 					wmBean.setName(menuDTO.getMenuName());
 					wmBean.setParentId(menuDTO.getParentId());
-					if(("4".equals(type) && href != null && href.contains("wf/taskHandle"))){
+					if(("4".equals(type) && StringUtils.isNotEmpty(href) && href.contains("wf/taskHandle"))){
 						return true;
 					}else if(("4".equals(type) && href == null)){
 						boolean ret = existsWfChildren(mId);
@@ -98,6 +100,7 @@ public class WfExtendServiceImpl implements WfExtendService {
 		}
 		return vmb;
 	}
+	
 	
 	@Override
 	public boolean existsChildren(String moduleId) {

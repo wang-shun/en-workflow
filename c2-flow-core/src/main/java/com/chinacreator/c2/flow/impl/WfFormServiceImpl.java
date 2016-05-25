@@ -175,5 +175,18 @@ public class WfFormServiceImpl implements WfFormService {
 		}
 		return null;
 	}
+	
+	
+	@Override
+	public String getTaskFormKey(String processDefinitionId,
+			String taskDefinitionKey) {
+		return formService.getTaskFormKey(processDefinitionId, taskDefinitionKey);
+	}
+	
+	
+	@Override
+	public String getStartFormKey(String processDefinitionId) {
+		return formService.getStartFormKey(processDefinitionId);
+	}
 
 }

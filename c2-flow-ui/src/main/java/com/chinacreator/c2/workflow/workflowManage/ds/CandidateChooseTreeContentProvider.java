@@ -4,28 +4,30 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import com.chinacreator.c2.flow.WfApiFactory;
-import com.chinacreator.c2.flow.api.WfManagerService;
-import com.chinacreator.c2.flow.detail.WfGroup;
-import com.chinacreator.c2.flow.detail.WfGroupParam;
-import com.chinacreator.c2.flow.detail.WfPageList;
-import com.chinacreator.c2.flow.detail.WfUser;
-import com.chinacreator.c2.flow.detail.WfUserParam;
+import com.chinacreator.c2.flow.api.GroupType;
+import com.chinacreator.c2.flow.detail.ChooseGroup;
+import com.chinacreator.c2.flow.detail.ChooseUser;
+import com.chinacreator.c2.flow.util.CommonUtil;
+import com.chinacreator.c2.flow.util.WfConfig;
+import com.chinacreator.c2.flow.util.WfUtils;
+import com.chinacreator.c2.ioc.ApplicationContextManager;
 import com.chinacreator.c2.web.ds.TreeContentProvider;
 import com.chinacreator.c2.web.ds.TreeContext;
 import com.chinacreator.c2.web.ds.TreeNode;
 import com.chinacreator.c2.web.ds.impl.DefaultTreeNode;
 
 public class CandidateChooseTreeContentProvider implements TreeContentProvider{
-
-	private WfManagerService wfManagerService = WfApiFactory.getWfManagerService();
 	
 	@Override
 	public TreeNode[] getElements(TreeContext context) {
+		
 		List<TreeNode> nodes = new ArrayList<TreeNode>();
 		if (null != context) {
 			Map<String, Object> map = context.getConditions();
-			String menuId = (String) map.get("id");
+			
+			String id=(String) map.get("id");
+			String gid = WfUtils.parseToGroupId(id);
+			String gType = WfUtils.parseToGroupTypePrex(id);
 			String selectedUserIds = (String) map.get("selectedUserIds");
 			String selectedGroupIds = (String) map.get("selectedGroupIds");
 			List<String> selectedUserIdList = new ArrayList<String>();
@@ -43,51 +45,51 @@ public class CandidateChooseTreeContentProvider implements TreeContentProvider{
 				}
 			}
 			
-			if(null == menuId || menuId.trim().equals("")){
-				//查询所有的角色
+			WfConfig groupTypeConfig  = (WfConfig)ApplicationContextManager.getContext().getBean("wfConfig");
+			
+			//为空，查询所有组类型
+			if(CommonUtil.stringNullOrEmpty(gType)&&CommonUtil.stringNullOrEmpty(gid)){
 				try {
-					WfGroupParam params = new WfGroupParam();
-					params.setPaged(false);
-					params.setOrderByName(true);
-					params.setOrder(WfGroupParam.SORT_ASC);
-					WfPageList<WfGroup, WfGroupParam> list = wfManagerService.queryGroups(params);
-					if(null!=list && !list.getDatas().isEmpty()){
-						TreeNode tn = new DefaultTreeNode(null, "orgTree", "参与者树", true);
-						nodes.add(tn);
-						for(WfGroup wfGroup : list.getDatas()){
-							TreeNode tnRole = new DefaultTreeNode("orgTree", wfGroup.getId(), wfGroup.getName(), true);
-							if(selectedGroupIdList.contains(wfGroup.getId()))
-								((DefaultTreeNode)tnRole).setChecked(true);
-							nodes.add(tnRole);
-						}
+					
+					TreeNode tnRoot = new DefaultTreeNode(null, "orgTree", "参与者树",true);
+					((DefaultTreeNode)tnRoot).setChkDisabled(true);
+					nodes.add(tnRoot);
+					
+					for(GroupType groupType:groupTypeConfig.getGroupTypes()){
+						TreeNode tnGroupType = new DefaultTreeNode("orgTree",groupType.getPrefix(),groupType.getGroupTypeDisplayName(),true);
+						((DefaultTreeNode)tnGroupType).setChkDisabled(true);
+						nodes.add(tnGroupType);
 					}
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}else{
-				//查询角色下的用户
-				// menuId传过来是角色ID，查询角色下的用户即可
-				WfUserParam params = new WfUserParam();
-				params.setMemberOfGroup(menuId);
-				params.setOrderByUserFirstName(true);
-				params.setOrder(WfUserParam.SORT_ASC);
-				try {
-					WfPageList<WfUser, WfUserParam> wfUserPageList = wfManagerService.queryUsers(params);
-					if(null!=wfUserPageList && !wfUserPageList.getDatas().isEmpty()){
-						for(WfUser wfUser : wfUserPageList.getDatas()){
-							TreeNode tn = new DefaultTreeNode(null, wfUser.getId(), wfUser.getLastName(), false);
-							if(selectedUserIdList.contains(wfUser.getId()))
-								((DefaultTreeNode)tn).setChecked(true);
-							nodes.add(tn);
-						}
-					}
-				} catch (Exception e) {
-					e.printStackTrace();
+				
+				GroupType groupType=WfUtils.getGroupTypeByPrex(gType);
+				if(null==groupType) throw new RuntimeException("找不到组类型["+gType+"]");
+				
+				if("".equals(gid)) gid=null;
+				
+				//查询当前组下的子组
+				List<ChooseGroup>  groupList=groupType.getChildGroups(gid);
+				for (ChooseGroup candidateGroup : groupList) {
+					TreeNode tn = new DefaultTreeNode(null,groupType.getPrefix()+":"+candidateGroup.getId(),candidateGroup.getDisplayName(),true);
+					if(selectedGroupIdList.contains(groupType.getPrefix()+":"+candidateGroup.getId())) ((DefaultTreeNode)tn).setChecked(true);
+					nodes.add(tn);
+				}
+				
+				//查询当前组下用户
+				List<ChooseUser>  userList=groupType.parseUsers(gid);
+				for (ChooseUser candidateUser : userList) {
+					TreeNode tnUser = new DefaultTreeNode(null,candidateUser.getId(),candidateUser.getDisplayName(),false);
+					if(selectedUserIdList.contains(candidateUser.getId())) ((DefaultTreeNode)tnUser).setChecked(true);
+					nodes.add(tnUser);
 				}
 			}
 			
 		}
 		return nodes.toArray(new TreeNode[nodes.size()]);
 	}
+	
 
 }

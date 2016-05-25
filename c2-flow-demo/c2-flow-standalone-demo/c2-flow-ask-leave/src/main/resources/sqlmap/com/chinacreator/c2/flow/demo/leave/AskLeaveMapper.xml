@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"><mapper namespace="com.chinacreator.c2.flow.demo.leave.AskLeaveMapper">	
+
+<!-- ElementID:column_sql,Generated=true -->
+<sql id="column_sql">
+		  wf_demo_ask_leave.id ,
+		  wf_demo_ask_leave.ask_user_id ,
+		  wf_demo_ask_leave.create_time ,
+		  wf_demo_ask_leave.ask_start_time ,
+		  wf_demo_ask_leave.ask_end_time ,
+		  wf_demo_ask_leave.ask_type ,
+		  wf_demo_ask_leave.assign_to ,
+		  wf_demo_ask_leave.ask_days ,
+		  wf_demo_ask_leave.ask_reasons ,
+		  wf_demo_ask_leave.status 
+</sql>
+
+<!-- ElementID:whereClause_sql,Generated=true -->
+<sql id="whereClause_sql">
+	    <if test="id != null">and wf_demo_ask_leave.id = #{id}</if>
+	    <if test="askUserId != null">and wf_demo_ask_leave.ask_user_id = #{askUserId}</if>
+	    <if test="createTime != null">and wf_demo_ask_leave.create_time = #{createTime}</if>
+	    <if test="askStartTime != null">and wf_demo_ask_leave.ask_start_time = #{askStartTime}</if>
+	    <if test="askEndTime != null">and wf_demo_ask_leave.ask_end_time = #{askEndTime}</if>
+	    <if test="askType != null">and wf_demo_ask_leave.ask_type = #{askType}</if>
+	    <if test="assignTo != null">and wf_demo_ask_leave.assign_to = #{assignTo}</if>
+	    <if test="askDays != null">and wf_demo_ask_leave.ask_days = #{askDays}</if>
+	    <if test="askReasons != null">and wf_demo_ask_leave.ask_reasons = #{askReasons}</if>
+	    <if test="status != null">and wf_demo_ask_leave.status = #{status}</if>
+</sql>
+
+
+<!-- ElementID:AskLeaveResult,Generated=true -->
+<resultMap id="AskLeaveResult" type="com.chinacreator.c2.flow.demo.leave.AskLeave">
+	<id property="id" column="id"/>
+	<result property="askUserId" column="ask_user_id"/>
+	<result property="createTime" column="create_time"/>
+	<result property="askStartTime" column="ask_start_time"/>
+	<result property="askEndTime" column="ask_end_time"/>
+	<result property="askType" column="ask_type"/>
+	<result property="assignTo" column="assign_to"/>
+	<result property="askDays" column="ask_days"/>
+	<result property="askReasons" column="ask_reasons"/>
+	<result property="status" column="status"/>
+</resultMap>
+
+
+
+
+
+<!-- ElementID:insert,Generated=true -->
+<insert id="insert" parameterType="com.chinacreator.c2.flow.demo.leave.AskLeave">
+	insert into wf_demo_ask_leave(
+	         <if test="id != null">id</if>
+	         <if test="askUserId != null">,ask_user_id</if>
+	         <if test="createTime != null">,create_time</if>
+	         <if test="askStartTime != null">,ask_start_time</if>
+	         <if test="askEndTime != null">,ask_end_time</if>
+	         <if test="askType != null">,ask_type</if>
+	         <if test="assignTo != null">,assign_to</if>
+	         <if test="askDays != null">,ask_days</if>
+	         <if test="askReasons != null">,ask_reasons</if>
+	         <if test="status != null">,status</if>
+	 	 	 )
+	 values (
+	         <if test="id != null">#{id,jdbcType=VARCHAR}</if>
+	         <if test="askUserId != null">,#{askUserId,jdbcType=VARCHAR}</if>
+	         <if test="createTime != null">,#{createTime,jdbcType=TIMESTAMP}</if>
+	         <if test="askStartTime != null">,#{askStartTime,jdbcType=TIMESTAMP}</if>
+	         <if test="askEndTime != null">,#{askEndTime,jdbcType=TIMESTAMP}</if>
+	         <if test="askType != null">,#{askType,jdbcType=VARCHAR}</if>
+	         <if test="assignTo != null">,#{assignTo,jdbcType=VARCHAR}</if>
+	         <if test="askDays != null">,#{askDays,jdbcType=NUMERIC}</if>
+	         <if test="askReasons != null">,#{askReasons,jdbcType=VARCHAR}</if>
+	         <if test="status != null">,#{status,jdbcType=NUMERIC}</if>
+	 	 	 )
+</insert>
+
+<!-- ElementID:count,Generated=true -->
+<select id="count" parameterType="com.chinacreator.c2.flow.demo.leave.AskLeave" resultType="int">
+	select count(*) from wf_demo_ask_leave 
+		 <where>
+			<include refid="whereClause_sql"/>
+		</where>
+</select>
+
+<!-- ElementID:update,Generated=true -->
+<update id="update" parameterType="com.chinacreator.c2.flow.demo.leave.AskLeave">
+	update wf_demo_ask_leave
+<set>
+	<if test="askUserId != null">ask_user_id=#{askUserId,jdbcType=VARCHAR},</if>
+	<if test="createTime != null">create_time=#{createTime,jdbcType=TIMESTAMP},</if>
+	<if test="askStartTime != null">ask_start_time=#{askStartTime,jdbcType=TIMESTAMP},</if>
+	<if test="askEndTime != null">ask_end_time=#{askEndTime,jdbcType=TIMESTAMP},</if>
+	<if test="askType != null">ask_type=#{askType,jdbcType=VARCHAR},</if>
+	<if test="assignTo != null">assign_to=#{assignTo,jdbcType=VARCHAR},</if>
+	<if test="askDays != null">ask_days=#{askDays,jdbcType=NUMERIC},</if>
+	<if test="askReasons != null">ask_reasons=#{askReasons,jdbcType=VARCHAR},</if>
+	<if test="status != null">status=#{status,jdbcType=NUMERIC}</if>
+</set>
+<where>
+	<choose>
+        <when test="id != null">and id = #{id}</when>
+        <otherwise>and id = </otherwise>
+    </choose>
+</where>
+</update>
+
+<!-- ElementID:updateNull,Generated=true -->
+<update id="updateNull" parameterType="map">
+	update wf_demo_ask_leave
+	<set>
+		<trim suffixOverrides=",">
+		    <if test="askUserId==null">ask_user_id = null,</if>
+		    <if test="createTime==null">create_time = null,</if>
+		    <if test="askStartTime==null">ask_start_time = null,</if>
+		    <if test="askEndTime==null">ask_end_time = null,</if>
+		    <if test="askType==null">ask_type = null,</if>
+		    <if test="assignTo==null">assign_to = null,</if>
+		    <if test="askDays==null">ask_days = null,</if>
+		    <if test="askReasons==null">ask_reasons = null,</if>
+		    <if test="status==null">status = null,</if>
+		</trim>
+	</set>
+	<where>
+		<choose>
+			<when test="id != null">and id = #{id}</when>
+			<otherwise>and id = </otherwise>
+		</choose>
+	</where>
+</update>
+
+<!-- ElementID:delete,Generated=true -->
+<delete id="delete" parameterType="com.chinacreator.c2.flow.demo.leave.AskLeave">
+    delete from wf_demo_ask_leave where 1=1 and id = #{id}
+</delete>
+
+<!-- ElementID:select,Generated=true -->
+<select id="select" parameterType="com.chinacreator.c2.flow.demo.leave.AskLeave" resultMap="AskLeaveResult" useCache="false">
+	select 
+		<include refid="column_sql"/>
+	    from wf_demo_ask_leave 
+		 <where>
+			<include refid="whereClause_sql"/>
+		</where>
+</select>
+
+
+<!-- ElementID:insertBatch,Generated=true -->
+<insert id="insertBatch" parameterType="list">
+	insert into wf_demo_ask_leave (id,ask_user_id,create_time,ask_start_time,ask_end_time,ask_type,assign_to,ask_days,ask_reasons,status) 
+<foreach collection="list" item="entity" index="index" separator="union all">
+		select 
+		#{entity.id,jdbcType = VARCHAR},
+				#{entity.askUserId,jdbcType = VARCHAR},
+				#{entity.createTime,jdbcType = TIMESTAMP},
+				#{entity.askStartTime,jdbcType = TIMESTAMP},
+				#{entity.askEndTime,jdbcType = TIMESTAMP},
+				#{entity.askType,jdbcType = VARCHAR},
+				#{entity.assignTo,jdbcType = VARCHAR},
+				#{entity.askDays,jdbcType = NUMERIC},
+				#{entity.askReasons,jdbcType = VARCHAR},
+				#{entity.status,jdbcType = NUMERIC}
+		from dual
+</foreach>
+</insert>
+
+<!-- ElementID:deleteBatch,Generated=true -->
+<delete id="deleteBatch" parameterType="List">
+	delete from wf_demo_ask_leave where id in
+<trim prefix="(" suffix=")" suffixOverrides=",">
+<foreach collection="list" item="entity" separator=",">
+	#{entity.id}
+</foreach>
+</trim>
+</delete>
+
+<!-- ElementID:selectAll,Generated=true -->
+<select id="selectAll" resultMap="AskLeaveResult" useCache="false">
+	select 
+		<include refid="column_sql"/>
+	    from wf_demo_ask_leave 
+</select>
+
+<!-- ElementID:selectByID,Generated=true -->
+<select id="selectByID" parameterType="java.lang.String" resultMap="AskLeaveResult" useCache="false">
+	select 
+		<include refid="column_sql"/>
+	    from wf_demo_ask_leave 
+		 where wf_demo_ask_leave.id = #{id,jdbcType=VARCHAR}
+</select>
+
+<!-- ElementID:selectByPage,Generated=true -->
+<select id="selectByPage" parameterType="com.chinacreator.c2.flow.demo.leave.AskLeave" resultMap="AskLeaveResult" useCache="false">
+	select 
+		<include refid="column_sql"/>
+	    from wf_demo_ask_leave 
+		 <where>
+			<include refid="whereClause_sql"/>
+		</where>
+</select>
+
+
+<!-- ElementID:selectMany,Generated=true -->
+<select id="selectMany" parameterType="list" resultMap="AskLeaveResult" useCache="false">
+select 
+	<include refid="column_sql"/> 
+	from wf_demo_ask_leave 
+	where wf_demo_ask_leave.id in (
+		select distinct id from wf_demo_ask_leave inner join
+<foreach collection="list" item="entity" separator="inner join">
+		(select 
+			distinct id
+			from wf_demo_ask_leave 
+			<where>
+	        <if test="entity.id != null">and wf_demo_ask_leave.id = #{entity.id}</if>
+	        <if test="entity.askUserId != null">and wf_demo_ask_leave.ask_user_id = #{entity.askUserId}</if>
+	        <if test="entity.createTime != null">and wf_demo_ask_leave.create_time = #{entity.createTime}</if>
+	        <if test="entity.askStartTime != null">and wf_demo_ask_leave.ask_start_time = #{entity.askStartTime}</if>
+	        <if test="entity.askEndTime != null">and wf_demo_ask_leave.ask_end_time = #{entity.askEndTime}</if>
+	        <if test="entity.askType != null">and wf_demo_ask_leave.ask_type = #{entity.askType}</if>
+	        <if test="entity.assignTo != null">and wf_demo_ask_leave.assign_to = #{entity.assignTo}</if>
+	        <if test="entity.askDays != null">and wf_demo_ask_leave.ask_days = #{entity.askDays}</if>
+	        <if test="entity.askReasons != null">and wf_demo_ask_leave.ask_reasons = #{entity.askReasons}</if>
+	        <if test="entity.status != null">and wf_demo_ask_leave.status = #{entity.status}</if>
+			</where>
+		) ${entity.tableAlias} using (id)
+</foreach>
+)
+</select>
+
+
+<resultMap id="AskLeaveInfoResult" type="java.util.HashMap">
+
+	<id property="id" column="id"/>
+	<result property="askUserId" column="ask_user_id"/>
+	<result property="createTime" column="create_time"/>
+	<result property="askStartTime" column="ask_start_time"/>
+	<result property="askEndTime" column="ask_end_time"/>
+	<result property="askType" column="ask_type"/>
+	<result property="askDays" column="ask_days"/>
+	<result property="askReasons" column="ask_reasons"/>
+	<result property="status" column="status"/>
+	<result property="assignToRealname" column="assign_to_realname"/>
+	<result property="askUserRealname" column="ask_user_realname"/>
+
+</resultMap>
+
+
+<select id="selectAskLeave" parameterType="java.util.HashMap" resultMap="AskLeaveInfoResult" useCache="false">
+	select
+		  wf_demo_ask_leave.id,
+		  wf_demo_ask_leave.ask_user_id,
+		  wf_demo_ask_leave.create_time,
+		  wf_demo_ask_leave.ask_start_time,
+		  wf_demo_ask_leave.ask_end_time,
+		  wf_demo_ask_leave.ask_type,
+		  wf_demo_ask_leave.assign_to,
+		  wf_demo_ask_leave.ask_days,
+		  wf_demo_ask_leave.ask_reasons,
+		  wf_demo_ask_leave.status,
+		  u1.user_realname as ask_user_realname,
+		  u2.user_realname as assign_to_realname
+	    from wf_demo_ask_leave,td_sm_user u1,td_sm_user u2 where u1.user_id=wf_demo_ask_leave.ask_user_id and u2.user_id=wf_demo_ask_leave.assign_to
+	    <if test="id != null">and wf_demo_ask_leave.id = #{id}</if>
+	    <if test="askUserId != null">and wf_demo_ask_leave.ask_user_id = #{askUserId}</if>
+	    <if test="createTime != null">and wf_demo_ask_leave.create_time = #{createTime}</if>
+	    <if test="askStartTime != null">and wf_demo_ask_leave.ask_start_time = #{askStartTime}</if>
+	    <if test="askEndTime != null">and wf_demo_ask_leave.ask_end_time = #{askEndTime}</if>
+	    <if test="askType != null">and wf_demo_ask_leave.ask_type = #{askType}</if>
+	    <if test="askDays != null">and wf_demo_ask_leave.ask_days = #{askDays}</if>
+	    <if test="askReasons != null">and wf_demo_ask_leave.ask_reasons = #{askReasons}</if>
+	    <if test="status != null">and wf_demo_ask_leave.status = #{status}</if>
+</select>
+
+<!--Generated=true-->
+<cache/>
+</mapper>

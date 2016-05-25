@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<form:Form xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dync="http://www.chinacreator.com/platform/mvc/ui/dync" xmlns:form="http://www.chinacreator.com/platform/mvc/form" xmlns:template="http://www.chinacreator.com/c2/ui/template" name="创建流程定义" sn="createProcDefPop" type="form">
+<form:Form xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dync="http://www.chinacreator.com/platform/mvc/ui/dync" xmlns:form="http://www.chinacreator.com/platform/mvc/form" name="创建流程定义" sn="createProcDefPop" type="form">
   <form:control type="page/modal">
     <form:attributes source="page/modal">
       <dync:attribute default="" desc="页面宽度，支持px和%" group="HTML" hidden="false" id="width" name="页面宽度" required="false" value="40%">
@@ -83,82 +83,10 @@
             <dync:render colSpan="1" height="0" multi="false" name="text"/>
             <dync:children/>
           </dync:attribute>
-          <dync:attribute default="custom" desc="验证的数据类型。" group="数据校验" hidden="false" id="valitype" name="数据类型" required="true" value="combiOne">
-            <dync:render colSpan="2" height="0" multi="false" name="select">
-              <dync:item name="自定义" value="custom"/>
-              <dync:item name="手机号" value="mobile"/>
-              <dync:item name="电话号码" value="phone"/>
-              <dync:item name="QQ" value="qq"/>
-              <dync:item name="身份证" value="idCard"/>
-              <dync:item name="邮件" value="email"/>
-              <dync:item name="URL" value="url"/>
-              <dync:item name="数字|字母|下划线" value="combiOne"/>
-              <dync:item name="中文|数字|字母|下划线" value="combiTwo"/>
-            </dync:render>
-            <dync:children/>
-            <dync:onChange>
-              <template:case value="custom">
-                <template:set param="pattern" value=""/>
-                <template:set param="patternError" value=""/>
-                <template:hide param="pattern" value="false"/>
-                <template:hide param="patternError" value="false"/>
-              </template:case>
-              <template:case value="mobile">
-                <template:set param="pattern" value="/^1[3-8][0-9]\d{8}$/"/>
-                <template:set param="patternError" value="手机号码格式不正确!"/>
-                <template:hide param="pattern" value="false"/>
-                <template:hide param="patternError" value="false"/>
-              </template:case>
-              <template:case value="phone">
-                <template:set param="pattern" value="/((\d{11})|^((\d{7,8})|(\d{4}|\d{3})-(\d{7,8})|(\d{4}|\d{3})-(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1})|(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1}))$)/"/>
-                <template:set param="patternError" value="电话号码格式不正确!"/>
-                <template:hide param="pattern" value="false"/>
-                <template:hide param="patternError" value="false"/>
-              </template:case>
-              <template:case value="qq">
-                <template:set param="pattern" value="/^\d{5,10}$/"/>
-                <template:set param="patternError" value="QQ号码格式不正确!"/>
-                <template:hide param="pattern" value="false"/>
-                <template:hide param="patternError" value="false"/>
-              </template:case>
-              <template:case value="idCard">
-                <template:set param="pattern" value="/^\d{6}(18|19|20)?\d{2}(0[1-9]|1[12])(0[1-9]|[12]\d|3[01])\d{3}(\d|X)$/"/>
-                <template:set param="patternError" value="身份证格式不正确!"/>
-                <template:hide param="pattern" value="false"/>
-                <template:hide param="patternError" value="false"/>
-              </template:case>
-              <template:case value="email">
-                <template:set param="pattern" value="/\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/"/>
-                <template:set param="patternError" value="邮件格式不正确!"/>
-                <template:hide param="pattern" value="false"/>
-                <template:hide param="patternError" value="false"/>
-              </template:case>
-              <template:case value="url">
-                <template:set param="pattern" value="/[a-zA-z]+://[^s]*/"/>
-                <template:set param="patternError" value="url格式不正确!"/>
-                <template:hide param="pattern" value="false"/>
-                <template:hide param="patternError" value="false"/>
-              </template:case>
-              <template:case value="combiOne">
-                <template:set param="pattern" value="/^[\w]+$/"/>
-                <template:set param="patternError" value="只能输入数字、字母、下划线!"/>
-                <template:hide param="pattern" value="false"/>
-                <template:hide param="patternError" value="false"/>
-              </template:case>
-              <template:case value="combiTwo">
-                <template:set param="pattern" value="/^[\w\u4e00-\u9fa5]+$/"/>
-                <template:set param="patternError" value="只能输入中文、数字、字母、下划线!"/>
-                <template:hide param="pattern" value="false"/>
-                <template:hide param="patternError" value="false"/>
-              </template:case>
-            </dync:onChange>
-          </dync:attribute>
-          <dync:attribute default="" desc="验证正则表达式，注意正则表达式必须包含在“//”内：“/^\\d+$/”" group="数据校验" hidden="false" id="pattern" name="正则验证" required="false" value="/^[\w]+$/">
-            <dync:render colSpan="1" height="0" multi="false" name="text"/>
+          <dync:attribute default="" group="数据校验" id="pattern" name="正则验证" value="/^[a-zA-Z_][\w]*$/">
             <dync:children/>
           </dync:attribute>
-          <dync:attribute default="" desc="验证正则表达式失败后的提示。" group="数据校验" hidden="false" id="patternError" name="正则验证失败提示" required="false" value="只能输入数字、字母、下划线!">
-            <dync:render colSpan="1" height="0" multi="false" name="text"/>
+          <dync:attribute default="" group="数据校验" id="patternError" name="正则验证失败提示" value="请以字母或下划线开头和含下划线的单词字符组成">
             <dync:children/>
           </dync:attribute>
         </form:attributes>

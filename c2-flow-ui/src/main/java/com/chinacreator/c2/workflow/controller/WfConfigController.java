@@ -4,32 +4,35 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.activiti.engine.FormService;
-import org.activiti.engine.RepositoryService;
-import org.activiti.engine.impl.persistence.entity.ProcessDefinitionEntity;
-import org.activiti.engine.impl.pvm.process.ActivityImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.chinacreator.asp.comp.sys.advanced.job.dto.JobDTO;
+import com.chinacreator.asp.comp.sys.advanced.job.service.JobService;
+import com.chinacreator.asp.comp.sys.advanced.user.service.UserService;
+import com.chinacreator.asp.comp.sys.core.user.dto.UserDTO;
 import com.chinacreator.c2.flow.WfApiFactory;
+import com.chinacreator.c2.flow.api.GroupType;
+import com.chinacreator.c2.flow.api.WfFormService;
 import com.chinacreator.c2.flow.api.WfHistoryService;
 import com.chinacreator.c2.flow.api.WfManagerService;
+import com.chinacreator.c2.flow.api.WfRepositoryService;
 import com.chinacreator.c2.flow.api.WfRuntimeService;
+import com.chinacreator.c2.flow.detail.ChooseGroup;
+import com.chinacreator.c2.flow.detail.WfActivity;
 import com.chinacreator.c2.flow.detail.WfConstants;
-import com.chinacreator.c2.flow.detail.WfGroup;
 import com.chinacreator.c2.flow.detail.WfHistoricTask;
 import com.chinacreator.c2.flow.detail.WfModuleBean;
 import com.chinacreator.c2.flow.detail.WfProcessConfigProperty;
 import com.chinacreator.c2.flow.detail.WfProcessDefinition;
 import com.chinacreator.c2.flow.detail.WfTask;
-import com.chinacreator.c2.flow.detail.WfUser;
 import com.chinacreator.c2.flow.util.CommonUtil;
+import com.chinacreator.c2.flow.util.WfUtils;
 import com.chinacreator.c2.ioc.ApplicationContextManager;
 import com.chinacreator.c2.web.controller.ResponseFactory;
 import com.chinacreator.c2.workflow.api.WfExtendService;
@@ -50,10 +53,10 @@ public class WfConfigController {
 			.getContext().getBean(WfExtendService.class);
 	private WfRuntimeService wfRuntimeService = WfApiFactory.getWfRuntimeService();
 	private WfHistoryService wfHistoryService = WfApiFactory.getWfHistoryService();
+	
+	private WfRepositoryService wfRepositoryService = WfApiFactory.getWfRepositoryService();
 
-	protected RepositoryService repositoryService;
-
-	protected FormService formService;
+	private WfFormService wfFormService=WfApiFactory.getWfFormService();
 
 	@RequestMapping(value = "/findProcessConfigProperty", method = RequestMethod.POST)
 	public Object findProcessConfigProperty(
@@ -69,13 +72,21 @@ public class WfConfigController {
 			map.put("result", "success");
 			map.put("wfProcessConfigProperty", wfProcessConfigProperty);
 
+			
+			UserService userService = ApplicationContextManager.getContext().getBean(UserService.class);
+			
 			String userIds = wfProcessConfigProperty.getPerformer();
 			if (null != userIds && !"".equals(userIds)) {
 				String userNames = "";
 				String[] userArr = userIds.split(",");
 				for (String uId : userArr) {
-					WfUser wfUser = wfManagerService.getUserById(uId);
-					userNames += wfUser.getLastName() + ",";
+					
+					UserDTO userDto=userService.queryByPK(uId);
+					if(null!=userDto){
+						userNames += userDto.getUserRealname() + ",";
+					}else{
+						userNames += uId + ",";
+					}
 				}
 				if (!"".equals(userNames)) {
 					map.put("userNames",
@@ -88,9 +99,27 @@ public class WfConfigController {
 			if (null != groupPerformer && !"".equals(groupPerformer)) {
 				String groupNames = "";
 				String[] groupArr = groupPerformer.split(",");
-				for (String gId : groupArr) {
-					WfGroup wfGroup = wfManagerService.getGroupById(gId);
-					groupNames += wfGroup.getName() + ",";
+				
+				for (String gId : groupArr){
+					String id = WfUtils.parseToGroupId(gId);
+					String groupPrex = WfUtils.parseToGroupTypePrex(gId);
+					GroupType groupType=WfUtils.getGroupTypeByPrex(groupPrex);
+					if(null==groupType) groupType=WfUtils.getDefaultGroupType();  //获取系统默认组类型
+					if(null==groupType){
+						groupNames += gId+ ",";
+					}else{
+						ChooseGroup candidateGroup=groupType.getGroup(id);
+						groupNames += candidateGroup.getDisplayName()+ ",";
+					}
+					
+					JobService jobService = ApplicationContextManager.getContext().getBean(JobService.class);
+					JobDTO jobDto=jobService.queryByPK(gId);
+					if(null!=jobDto){
+						
+					}else{
+						
+					}
+					
 				}
 				if (!"".equals(groupNames)) {
 					map.put("groupNames",
@@ -155,8 +184,9 @@ public class WfConfigController {
 									.trim())) {
 						// 以外围配置中的为准，不做处理
 					} else {
+						
 						// 以流程定义中的表单为准
-						String bindFormInDefinition = formService
+						String bindFormInDefinition = wfFormService
 								.getTaskFormKey(processDefinitionId,
 										taskDefinitionId);
 						wfProcessConfigProperty
@@ -165,7 +195,7 @@ public class WfConfigController {
 				} else {
 					wfProcessConfigProperty = new WfProcessConfigProperty();
 					// 以流程定义中的表单为准
-					String bindFormInDefinition = formService.getTaskFormKey(
+					String bindFormInDefinition = wfFormService.getTaskFormKey(
 							processDefinitionId, taskDefinitionId);
 					wfProcessConfigProperty.setBindForm(bindFormInDefinition);
 				}
@@ -222,13 +252,12 @@ public class WfConfigController {
 				// 通过流程定义查到开始环节的定义key
 				String processDefinitionId = wfProcessDefinition.getId();
 				result.put("processDefinitionId", processDefinitionId);
-				ProcessDefinitionEntity processDefEntity = (ProcessDefinitionEntity) repositoryService
-						.getProcessDefinition(processDefinitionId);
-				List<ActivityImpl> ActivityImplList = processDefEntity
-						.getActivities();
-				if (null != ActivityImplList && !ActivityImplList.isEmpty()) {
-					for (ActivityImpl ai : ActivityImplList) {
-						if ("startEvent".equals(ai.getProperty("type"))) {
+				
+				List<WfActivity> wfActivityList=wfRepositoryService.getActivitiesByDefinition(processDefinitionId);
+
+				if (null != wfActivityList && !wfActivityList.isEmpty()) {
+					for (WfActivity ai : wfActivityList) {
+						if ("startEvent".equals(ai.getProperties().get("type"))) {
 							wfProcessConfigProperty = wfManagerService
 									.findProcessConfigProperty(
 											processDefinitionId, moduleId,
@@ -244,7 +273,7 @@ public class WfConfigController {
 						// 以外围配置中的为准，不做处理
 					} else {
 						// 以流程定义中的表单为准
-						String bindFormInDefinition = formService
+						String bindFormInDefinition = wfFormService
 								.getStartFormKey(processDefinitionId);
 						wfProcessConfigProperty
 								.setBindForm(bindFormInDefinition);
@@ -252,7 +281,7 @@ public class WfConfigController {
 				} else {
 					wfProcessConfigProperty = new WfProcessConfigProperty();
 					// 以流程定义中的表单为准
-					String bindFormInDefinition = formService
+					String bindFormInDefinition = wfFormService
 							.getStartFormKey(processDefinitionId);
 					wfProcessConfigProperty.setBindForm(bindFormInDefinition);
 				}
@@ -263,15 +292,5 @@ public class WfConfigController {
 
 		result.put("wfProcessConfigProperty", wfProcessConfigProperty);
 		return result;
-	}
-
-	@Autowired
-	public void setRepositoryService(RepositoryService repositoryService) {
-		this.repositoryService = repositoryService;
-	}
-
-	@Autowired
-	public void setFormService(FormService formService) {
-		this.formService = formService;
 	}
 }

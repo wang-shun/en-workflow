@@ -5639,7 +5639,6 @@ todoTaskGrid_gridComplete:function(){
 	var jqGrid = $view.todoTaskGrid.getDom();
 	var param = {
 		appId:$model.appId,
-		tenantId:$model.tenantId,
 		engineName:$model.engineName,
 		taskType:'todo'
     };
@@ -5671,7 +5670,6 @@ doneTaskGrid_gridComplete:function(){
    
 	var param = {
 		appId:$model.appId,
-		tenantId:$model.tenantId,
 		engineName:$model.engineName,
 		taskType:'done'
     };
@@ -5702,7 +5700,6 @@ suspendTaskGrid_gridComplete:function(){
    
 	var param = {
 		appId:$model.appId,
-		tenantId:$model.tenantId,
 		engineName:$model.engineName,
 		taskType:'suspend'
     };
@@ -5739,7 +5736,7 @@ handTask:function(taskId,moduleId,businesskey,taskType){
 operation2_customFormatter:function(cellvalue,options,rowObject){
 	if(!angular.isUndefined(rowObject))
 	{
-		var moduleId = rowObject.moduleid;
+		var moduleId = rowObject.moduleid?rowObject.moduleid:&quot;&quot;;
 		var taskId = rowObject.taskid;
 		var taskType = rowObject.taskstate;
 		var businesskey = rowObject.businesskey;

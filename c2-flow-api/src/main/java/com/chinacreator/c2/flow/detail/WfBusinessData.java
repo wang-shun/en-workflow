@@ -20,7 +20,7 @@ public class WfBusinessData implements Serializable {
 	 */
 	private String appId = "module";
 	/**
-	 * 事项id
+	 * 事项id，必须参数
 	 */
 	private String moduleId;
 	/**

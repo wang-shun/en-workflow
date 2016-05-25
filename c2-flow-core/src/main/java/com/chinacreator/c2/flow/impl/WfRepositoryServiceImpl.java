@@ -1,5 +1,6 @@
 package com.chinacreator.c2.flow.impl;
 
+import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -26,7 +27,9 @@ import org.activiti.engine.repository.ProcessDefinition;
 import org.activiti.engine.repository.ProcessDefinitionQuery;
 import org.activiti.engine.task.IdentityLink;
 
+import com.chinacreator.c2.flow.Exception.C2FlowRuntimeException;
 import com.chinacreator.c2.flow.api.WfRepositoryService;
+import com.chinacreator.c2.flow.detail.WfActivity;
 import com.chinacreator.c2.flow.detail.WfConstants;
 import com.chinacreator.c2.flow.detail.WfDeployment;
 import com.chinacreator.c2.flow.detail.WfDeploymentParam;
@@ -224,6 +227,13 @@ public class WfRepositoryServiceImpl implements WfRepositoryService {
 				.getOrderByProcessDefinitionId();
 		Boolean orderByTenantId = wfProcessDefinitionParam.getOrderByTenantId();
 		Boolean orderByVersion = wfProcessDefinitionParam.getOrderByVersion();
+		
+		String tenantId=wfProcessDefinitionParam.getTenantId();
+		String tenantIdLike=wfProcessDefinitionParam.getTenantIdLike();
+		
+		Boolean withoutTenantId=wfProcessDefinitionParam.getWithoutTenantId();
+		if(!CommonUtil.stringNullOrEmpty(tenantId))  withoutTenantId=false;
+		
 		if (id != null) {
 			processDefinitionQuery.processDefinitionId(id);
 		}
@@ -270,6 +280,18 @@ public class WfRepositoryServiceImpl implements WfRepositoryService {
 		}
 		if (suspended) {
 			processDefinitionQuery.suspended();
+		}
+		
+		if (tenantId != null) {
+			processDefinitionQuery.processDefinitionTenantId(tenantId);
+		}
+		
+		if (tenantIdLike != null) {
+			processDefinitionQuery.processDefinitionTenantIdLike(tenantIdLike);
+		}
+		
+		if (null!=withoutTenantId&&withoutTenantId) {
+			processDefinitionQuery.processDefinitionWithoutTenantId();
 		}
 
 		if (orderByDeploymentId) {
@@ -761,6 +783,32 @@ public class WfRepositoryServiceImpl implements WfRepositoryService {
 		}
 		return WfConstants.WF_CONTROL_EXE_SUCCESS;
 	}
+	
+	@Override
+	public WfModel insertModel(WfOperator wfOperator, WfModel wfModel) throws Exception {
+		
+		
+		try {
+			Model model = new ModelEntity();
+			model.setCategory(wfModel.getCategory());
+			model.setDeploymentId(wfModel.getDeploymentId());
+			model.setKey(wfModel.getKey());
+			model.setMetaInfo(wfModel.getMetaInfo());
+			model.setName(wfModel.getName());
+			model.setVersion(wfModel.getVersion());
+			model.setTenantId(wfModel.getTenantId());
+			repositoryService.saveModel(model);
+			wfModel.setId(model.getId());
+			
+			LoggerManager.log(getClass(), LoggerType.DEBUG, wfOperator, null,
+					"添加模型成功:模型={}", wfModel);
+		} catch (Exception e) {
+			LoggerManager.log(getClass(), LoggerType.ERROR, wfOperator, e,
+					"添加模型失败:模型={}", wfModel);
+			throw e;
+		}
+		return wfModel;
+	}
 
 	@Override
 	public String updateModel(WfOperator wfOper, String modelId, WfModel wfModel)
@@ -814,7 +862,7 @@ public class WfRepositoryServiceImpl implements WfRepositoryService {
 			String modelSource) throws Exception {
 		try {
 			if (modelSource != null) {
-				byte[] bytes = modelSource.getBytes();
+				byte[] bytes = modelSource.getBytes("utf-8");
 				repositoryService.addModelEditorSource(modelId, bytes);
 				LoggerManager.log(getClass(), LoggerType.DEBUG, wfOper, null,
 						"保存模型源码成功:模型id={}, 源码={}", modelId, modelSource);
@@ -928,5 +976,159 @@ public class WfRepositoryServiceImpl implements WfRepositoryService {
 //		map.put("candidateUserIdExpressions", set.);
 		return map;
 	}
+	
+	
+	@Override
+	public List<WfActivity> getActivitiesByDefinition(String processDefinitionId)
+			throws Exception {
+		List<WfActivity> result = new ArrayList<WfActivity>();
+
+		// 获得当前流程的定义模型
+		ProcessDefinitionEntity processDefinition = (ProcessDefinitionEntity) repositoryService.getProcessDefinition(processDefinitionId);
+		
+		// 获得当前流程定义模型的所有任务节点
+		List<ActivityImpl> activitilist = processDefinition.getActivities();
+		for (ActivityImpl activity : activitilist) {
+			WfActivity wai = new WfActivity();
+			wai.setHeight(activity.getHeight());
+			wai.setId(activity.getId());
+			wai.setVariables(activity.getVariables());
+			wai.setWidth(activity.getWidth());
+			wai.setX(activity.getX());
+			wai.setY(activity.getY());
+			
+			//排除非序列化的属性
+			Map<String, Object> properties=new HashMap<String, Object>();
+			properties.put("type", activity.getProperties().get("type"));
+			wai.setProperties(properties);
+			
+			result.add(wai);
+		}
+		return result;
+	}
+	
+	
+	@Override
+	public WfDeployment deployContent(WfOperator wfOperator, String name,
+			String category, String resourceName, String resourceContent)
+			throws Exception {
+		WfDeployment ret = new WfDeployment();
+		String tenantId = wfOperator.getTenantId();
+		DeploymentBuilder deploymentBuilder = repositoryService.createDeployment();
+		Deployment deployment = deploymentBuilder.name(name).category(category)
+				.tenantId(tenantId).addString(resourceName, resourceContent)
+				.deploy();
+		
+		if (deployment != null) {// 部署成功
+			
+			ret.setId(deployment.getId());
+			ret.setCategory(deployment.getCategory());
+			ret.setDeploymentTime(deployment.getDeploymentTime());
+			ret.setId(deployment.getId());
+			ret.setName(deployment.getName());
+			ret.setTenantId(deployment.getTenantId());
+			LoggerManager.log(getClass(), LoggerType.DEBUG, wfOperator, null,
+					"部署流程(deployDiagramContent)成功:名称={},类别={},资源名称={}", name,
+					category, resourceName);
+			
+			return ret;
+		}
+		
+		LoggerManager.log(getClass(), LoggerType.DEBUG, wfOperator, null,
+				"部署流程(deployDiagramContent)失败:名称={},类别={},资源名称={}", name,
+				category, resourceName);
+		
+		throw new C2FlowRuntimeException("部署流程(deployDiagramContent)失败:名称="+name+",类别="+category+",资源名称="+resourceName);
+	}
+	
+	@Override
+	public WfDeployment deployClassPath(WfOperator wfOperator, String name,
+			String category, String resourceClassPath) throws Exception {
+		
+		WfDeployment ret = new WfDeployment();
+		DeploymentBuilder deploymentBuilder = repositoryService
+				.createDeployment();
+		Deployment deployment = deploymentBuilder.name(name).category(category)
+				.tenantId(wfOperator.getTenantId())
+				.addClasspathResource(resourceClassPath).deploy();
+		if (deployment != null) {// 部署成功
+			ret.setId(deployment.getId());
+			ret.setCategory(deployment.getCategory());
+			ret.setDeploymentTime(deployment.getDeploymentTime());
+			ret.setId(deployment.getId());
+			ret.setName(deployment.getName());
+			ret.setTenantId(deployment.getTenantId());
+
+			LoggerManager.log(getClass(), LoggerType.DEBUG, wfOperator, null,
+					"部署流程(deployDiagramClassPath)成功:名称={},类别={},资源路径={}",
+					name, category, resourceClassPath);
+			return ret;
+		}
+		
+		LoggerManager.log(getClass(), LoggerType.DEBUG, wfOperator, null,
+				"部署流程(deployDiagramClassPath)失败:名称={},类别={},资源路径={}",
+				name, category, resourceClassPath);
+		
+		throw new C2FlowRuntimeException("部署流程(deployDiagramClassPath)失败:名称="+name+",类别="+category+",资源路径="+resourceClassPath);
+	}
+	
+	
+	@Override
+	public WfDeployment deployZip(WfOperator wfOperator, String name,
+			String category, InputStream inputStream) throws Exception {
+		WfDeployment ret = new WfDeployment();
+		String tenantId = wfOperator.getTenantId();
+		DeploymentBuilder deploymentBuilder = repositoryService
+				.createDeployment();
+		ZipInputStream zis = new ZipInputStream(inputStream);
+		Deployment deployment = deploymentBuilder.name(name).category(category)
+				.tenantId(tenantId).addZipInputStream(zis).deploy();
+		if (deployment != null) {// 部署成功
+			ret.setId(deployment.getId());
+			ret.setCategory(deployment.getCategory());
+			ret.setDeploymentTime(deployment.getDeploymentTime());
+			ret.setId(deployment.getId());
+			ret.setName(deployment.getName());
+			ret.setTenantId(deployment.getTenantId());
+			LoggerManager.log(getClass(), LoggerType.DEBUG, wfOperator, null,
+					"部署流程(deployDiagramZip)成功:名称={},类别={}", name, category);
+			return ret;
+		}
+		
+		LoggerManager.log(getClass(), LoggerType.DEBUG, wfOperator, null,
+				"部署流程(deployDiagramZip)失败:名称={},类别={}", name, category);
+		
+		throw new C2FlowRuntimeException("部署流程(deployDiagramZip)失败:名称="+name+",类别="+category);
+	}
+	
+
+	public WfDeployment deployByte(WfOperator wfOperator,byte[] bytes,String name,
+			String category) throws Exception {
+		WfDeployment ret = new WfDeployment();
+		String tenantId = wfOperator.getTenantId();
+		DeploymentBuilder deploymentBuilder = repositoryService
+				.createDeployment();
+		
+		ByteArrayInputStream byteStream=new ByteArrayInputStream(bytes);
+		
+		Deployment deployment = deploymentBuilder.name(name).category(category).tenantId(tenantId).addInputStream(name,byteStream).deploy();
+		if (deployment != null) {// 部署成功
+			ret.setId(deployment.getId());
+			ret.setCategory(deployment.getCategory());
+			ret.setDeploymentTime(deployment.getDeploymentTime());
+			ret.setId(deployment.getId());
+			ret.setName(deployment.getName());
+			ret.setTenantId(deployment.getTenantId());
+			LoggerManager.log(getClass(), LoggerType.DEBUG, wfOperator, null,
+					"部署流程(deployDiagramZip)成功:名称={},类别={}", name, category);
+			return ret;
+		}
+		
+		LoggerManager.log(getClass(), LoggerType.DEBUG, wfOperator, null,
+				"部署流程(deployDiagramZip)失败:名称={},类别={}", name, category);
+		
+		throw new C2FlowRuntimeException("部署流程(deployDiagramZip)失败:名称="+name+",类别="+category);
+	}
+	
 	
 }

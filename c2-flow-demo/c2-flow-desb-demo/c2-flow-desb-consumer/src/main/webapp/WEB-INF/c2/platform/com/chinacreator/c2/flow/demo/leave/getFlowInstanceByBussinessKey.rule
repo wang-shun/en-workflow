@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomRule xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns="http://www.chinacreator.com/platform/mvc/rule" sn="leave/getFlowInstanceByBussinessKey" log="false" className="com.chinacreator.c2.flow.demo.leave.services.AskLeaveService" method="getFlowInstanceByBussinessKey">
+  <name>获取流程实现信息</name>
+  <desc>根据业务ID获取关联的流程实现</desc>
+  <inputs>
+    <input collection="false" desc="" id="askLeaveId" required="true"/>
+  </inputs>
+  <outputs>
+    <output autoValue="Result" desc="" id="result" name="方法返回值" type="com.chinacreator.c2.flow.detail.WfProcessInstance"/>
+  </outputs>
+  <params>
+    <param autoValue="Input.askLeaveId" name="askLeaveId" signature="QString;" type="java.lang.String"/>
+  </params>
+  <return signature="QWfProcessInstance;" type="com.chinacreator.c2.flow.detail.WfProcessInstance"/>
+</CustomRule>

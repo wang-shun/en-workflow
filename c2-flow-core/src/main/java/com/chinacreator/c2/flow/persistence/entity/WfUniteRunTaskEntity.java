@@ -365,7 +365,7 @@ public class WfUniteRunTaskEntity implements HasRevision, PersistentObject,
 		persistentState.put("taskdefkey", this.taskDefKey);
 		persistentState.put("taskid", this.taskId);
 		persistentState.put("taskstate", this.taskState);
-		persistentState.put("tenantId", this.tenantId);
+		persistentState.put("tenantid", this.tenantId);
 		persistentState.put("remark1", this.remark1);
 		persistentState.put("remark2", this.remark2);
 		persistentState.put("remark3", this.remark3);

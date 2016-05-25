@@ -784,6 +784,7 @@ create table WF_UNITE_HIS_TASK_EXT
 alter table WF_UNITE_HIS_TASK_EXT
   add constraint FK_WF_HISTASK_REFERENCE_WF_EXT foreign key (UNITE_TASK_HIS_ID)
   references WF_UNITE_HIS_TASK (ID);
+
 create or replace view v_wf_todolist as
 select a.id_ task_id_,
        a.proc_inst_id_,

@@ -5,7 +5,7 @@
   <parent>
     <groupId>com.chinacreator.c2</groupId>
     <artifactId>c2-flow-parent</artifactId>
-    <version>4.1.5.4</version>
+    <version>4.1.6</version>
   </parent>
   <artifactId>c2-flow-ui</artifactId>
   <name>c2-flow-ui</name>
@@ -31,6 +31,12 @@
 			<artifactId>servlet-api</artifactId>
 			<version>2.5</version>
 			<scope>provided</scope>
+		</dependency>
+		<dependency>
+		    <groupId>com.chinacreator.c2</groupId>
+		    <artifactId>c2-flow-resources</artifactId>
+		    <version>${project.version}</version>
+		    <type>war</type>
 		</dependency>
 		<dependency>
 			<groupId>com.chinacreator.c2</groupId>
@@ -61,7 +67,7 @@
 		</dependency>
 		<dependency>
 			<groupId>com.chinacreator.c2</groupId>
-			<artifactId>c2-sys-basic-serviceapi</artifactId>
+			<artifactId>c2-sys-advanced-service</artifactId>
 			<version>4.1.3</version>
 			<scope>provided</scope>
 		</dependency>

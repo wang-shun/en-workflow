@@ -786,6 +786,16 @@ moduleTree_onClick:function(event,treeId,treeNode,clickFlag){
 	}else{
 		var moduleId = selectNode.id;
 		$http.get(&quot;ws/getBindProcess&quot;,{params:{moduleId:moduleId}}).success(function(data){
+			
+			if(!data.result){
+				param = {
+							key:'',
+						};
+				$view.newTab1.setActive();
+				$view.newTab2.setDisabledState(true);
+				return false;
+			}
+			
 			$scope.bindProcessId=data.result.id;
 			$scope.bindProcess=data.result.key;
 			$scope.moduleId=moduleId;
@@ -997,6 +1007,12 @@ btn_save:function($event){
 	var groupPerformer= $(&quot;#activity_performer_hidden_group&quot;).val();
 	//var performer= $(&quot;#activity_performer&quot;).val();// $model.activity_performer;
 	var bindForm= $(&quot;#activity_bindForm&quot;).val();// $model.activity_bindForm;
+	
+	if(!taskDefId){
+		Messenger.post({'message': &quot;请选择流程图中的环节！&quot;,'type': 'error',});
+		return false;
+	} 
+	
 	$http.get(&quot;ws/setPropertyToActivity&quot;,
 	{
 		params:

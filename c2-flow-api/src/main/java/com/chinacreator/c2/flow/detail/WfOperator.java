@@ -32,7 +32,7 @@ public class WfOperator implements Serializable {
 	private String ip;
 	
 	/**
-	 * 统一任务业务数据
+	 * 统一任务业务数据，必须参数
 	 */
 	private WfBusinessData businessData;
 	

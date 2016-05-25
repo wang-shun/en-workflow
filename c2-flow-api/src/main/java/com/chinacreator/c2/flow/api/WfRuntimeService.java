@@ -4,6 +4,7 @@ import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
 
+import com.chinacreator.c2.flow.detail.ChooseGroup;
 import com.chinacreator.c2.flow.detail.WfActivity;
 import com.chinacreator.c2.flow.detail.WfAttachment;
 import com.chinacreator.c2.flow.detail.WfComment;
@@ -19,6 +20,7 @@ import com.chinacreator.c2.flow.detail.WfTaskParam;
 import com.chinacreator.c2.flow.detail.WfUniteTaskResult;
 import com.chinacreator.c2.flow.detail.WfVariable;
 import com.chinacreator.c2.flow.detail.WfVariable.VariableScope;
+import com.chinacreator.c2.flow.util.WfUtils.OrderDirection;
 
 /**
  * 
@@ -729,4 +731,62 @@ public interface WfRuntimeService {
 	public WfResult operateTaskTmp(WfOperator wfOperator, String taskId,
 			String action, String userToDelegateTo,
 			Map<String, Object> variables) throws Exception;
+	
+	
+	/**
+	 * 获取executionId的活动集合
+	 * @param executionId
+	 *          执行ID，不能为空
+	 * @return 活动ID集合
+	 * @throws Exception
+	 */
+	public List<String> getActiveActivityIds(String executionId) throws Exception;
+	
+	
+	/**
+	 * 查询某用户统一待办任务列表
+	 * 注：查询所属组待办需要传chooseGroupList参数
+	 * @param userId
+	 *            用户id 
+	 * @param chooseGroupList
+	 *            用户所属组 
+	 *            示例: List<ChooseGroup> chooseGroupList=WorkflowUtils.getGroupsByUserId(userId);
+	 * @param parameters
+	 *            其它查询条件
+	 * @param firstResult
+	 *            分页：起始记录数
+	 * @param maxResults
+	 *            分页：每页最大记录数
+	 * @param orderBys
+	 * 			  排序参数，为空默认CREATE_TIME desc
+	 * @return
+	 * @throws Exception
+	 */
+	public WfUniteTaskResult queryWfUniteRunTask(String userId,List<ChooseGroup> chooseGroupList,Map<String, Object> parameters,
+			int firstResult, int maxResults,Map<String,OrderDirection> orderBys)
+			throws Exception;
+	
+	
+	
+	/**
+	 * 查询统一已办任务列表
+	 * 注：查询所属组待办需要传chooseGroupList参数
+	 * @param userId
+	 *            用户id 
+	 * @param chooseGroupList
+	 *            用户所属组 
+	 *            示例: List<ChooseGroup> chooseGroupList=WorkflowUtils.getGroupsByUserId(userId);
+	 * @param parameters
+	 *            查询条件
+	 * @param firstResult
+	 *            分页：起始记录数
+	 * @param maxResults
+	 *            分页：每页最大记录数
+	 * @param orderBys
+	 * 			  排序参数，为空默认CREATE_TIME desc
+	 * @return
+	 * @throws Exception
+	 */
+	public WfUniteTaskResult queryWfUniteHisTask(String userId,List<ChooseGroup> chooseGroupList, Map<String, Object> parameters,
+			int firstResult, int maxResults,Map<String,OrderDirection> orderBys) throws Exception ;
 }

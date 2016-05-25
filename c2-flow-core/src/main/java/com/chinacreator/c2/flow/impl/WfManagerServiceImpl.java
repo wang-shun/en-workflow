@@ -75,7 +75,7 @@ import org.codehaus.jackson.node.ObjectNode;
 import org.springframework.context.ApplicationContext;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.chinacreator.c2.flow.WfApiFactory;
+import com.chinacreator.c2.config.ConfigManager;
 import com.chinacreator.c2.flow.api.WfManagerService;
 import com.chinacreator.c2.flow.api.WfRepositoryService;
 import com.chinacreator.c2.flow.cmd.aspect.FindWfOperateLogByConditionCmd;
@@ -96,6 +96,7 @@ import com.chinacreator.c2.flow.cmd.holiday.GetHolidaysCmd;
 import com.chinacreator.c2.flow.cmd.holiday.InsertHolidayCmd;
 import com.chinacreator.c2.flow.cmd.moduleconfig.DeleteProcessConfigPropertyByConfigIdAndTaskDefIdCommand;
 import com.chinacreator.c2.flow.cmd.moduleconfig.FindProcessConfigProperty;
+import com.chinacreator.c2.flow.cmd.moduleconfig.GetBindModuleIdsByProcessDefKeyAndTenantCmd;
 import com.chinacreator.c2.flow.cmd.moduleconfig.GetBindModuleIdsByProcessDefKeyCmd;
 import com.chinacreator.c2.flow.cmd.moduleconfig.GetProcessInfoByModuleIdCmd;
 import com.chinacreator.c2.flow.cmd.moduleconfig.InsertModuleConfigCmd;
@@ -147,7 +148,6 @@ import com.chinacreator.c2.flow.persistence.entity.WfProcessDefinitionAndDeployI
 import com.chinacreator.c2.flow.persistence.entity.WfUniteColumnsEntity;
 import com.chinacreator.c2.flow.persistence.entity.WfUniteConfigEntity;
 import com.chinacreator.c2.flow.persistence.entity.WfWorkDateEntity;
-import com.chinacreator.c2.flow.util.AddTaskListenerUtil;
 import com.chinacreator.c2.flow.util.CommonUtil;
 import com.chinacreator.c2.flow.util.DateUtil;
 import com.chinacreator.c2.flow.util.PKGenerator;
@@ -415,8 +415,9 @@ public class WfManagerServiceImpl implements WfManagerService {
 		WfModuleConfigEntity eo = managementService
 				.executeCommand(new GetProcessInfoByModuleIdCmd(moduleId));
 
-		WfProcessDefinition wpd = new WfProcessDefinition();
+		WfProcessDefinition wpd = null;
 		if (eo != null) {
+			wpd=new WfProcessDefinition();
 			wpd.setId(eo.getProcDefId());
 			wpd.setKey(eo.getProcDefKey());
 			wpd.setName(eo.getProcDefName());
@@ -703,6 +704,17 @@ public class WfManagerServiceImpl implements WfManagerService {
 						processDefinitionKey));
 	}
 
+	@Override
+	public List<String> getBindModuleIdsByProcessDefKeyAndTenant(String processDefinitionKey,String tenantId) throws Exception {
+		if (CommonUtil.stringNullOrEmpty(processDefinitionKey)) {
+			throw new NullPointerException("processDefinitionKey不能为空！");
+		}
+
+		return managementService
+				.executeCommand(new GetBindModuleIdsByProcessDefKeyAndTenantCmd(processDefinitionKey,tenantId));
+	}
+	
+	
 	@Override
 	public List<WfUniteColumn> findWfUniteColumns(String appId,
 			String tenantId, String engineName, String taskType)
@@ -1461,6 +1473,7 @@ public class WfManagerServiceImpl implements WfManagerService {
 	@Override
 	public WfPageList<WfProcessDefinition, WfProcessDefinitionParam> queryProcessDefinitionsAndDeployInfoList(
 			WfProcessDefinitionParam wfProcessDefinitionParam) throws Exception {
+		
 		WfPageList<WfProcessDefinition, WfProcessDefinitionParam> resultPageList = null;
 		WfPageList<WfProcessDefinitionAndDeployInfoEntity, WfProcessDefinitionParam> wfPageList = managementService
 				.executeCommand(new GetProcessDefinitionAndDeployInfoListCmd(
@@ -1542,16 +1555,25 @@ public class WfManagerServiceImpl implements WfManagerService {
 				.name(modelData.getName()).tenantId(tenantId)
 				.addString(processName, new String(bpmnBytes, "UTF-8"))
 				.deploy();
-		reBindModuleAndProcess(deployment.getId());
-		// yicheng.yang add end
-		ApplicationContext context = ((SpringProcessEngineConfiguration) ((ProcessEngineImpl) processEngine)
-				.getProcessEngineConfiguration()).getApplicationContext();
-		// add by minghua.guo 新增时部署自动添加任务监听器，判断新增依据，版本号为1
-		AddTaskListenerUtil.addTaskListener(repositoryService,
-				managementService, context, modelData.getKey());
+		
+		reBindModuleAndProcess(deployment.getId(),tenantId);
+		
+//		// yicheng.yang add end
+//		ApplicationContext context = ((SpringProcessEngineConfiguration) ((ProcessEngineImpl) processEngine)
+//				.getProcessEngineConfiguration()).getApplicationContext();
+//		// add by minghua.guo 新增时部署自动添加任务监听器，判断新增依据，版本号为1
+//		AddTaskListenerUtil.addTaskListener(repositoryService,
+//				managementService, context, modelData.getKey());
+		
+		//新增时部署自动添加任务监听器，判断新增依据，版本号为1
+		if(null==tenantId){
+			this.addTaskListener(modelData.getKey());         
+		}else{
+			this.addTaskListener(modelData.getKey(),tenantId);
+		}
 	}
 
-	private void reBindModuleAndProcess(String deployId) throws Exception {
+	private void reBindModuleAndProcess(String deployId,String tenantId) throws Exception {
 
 		if (null != deployId && !"".equals(deployId.trim())) {
 			// 根据部署id查询流程定义
@@ -1563,8 +1585,7 @@ public class WfManagerServiceImpl implements WfManagerService {
 			if (null != wPageList && wPageList.getDatas().size() > 0) {
 				WfProcessDefinition pd = wPageList.getDatas().get(0);
 				// 查询流程绑定的事项，如果有绑定事项，则将所有与事项的绑定关系更新为此最新的流程定义
-				List<String> moduleIds = getBindModuleIdsByProcessDefKey(pd
-						.getKey());
+				List<String> moduleIds =getBindModuleIdsByProcessDefKeyAndTenant(pd.getKey(),tenantId);
 				if (null != moduleIds && !moduleIds.isEmpty()) {
 					for (String module : moduleIds) {
 						/*
@@ -1996,7 +2017,7 @@ public class WfManagerServiceImpl implements WfManagerService {
 			if (activityBehavior instanceof CallActivityBehavior) {
 				callActivityBehavior = (CallActivityBehavior) activityBehavior;
 			}
-
+			
 			if (callActivityBehavior != null) {
 				propertiesJSON.put("processDefinitonKey",
 						callActivityBehavior.getProcessDefinitonKey());
@@ -2481,6 +2502,28 @@ public class WfManagerServiceImpl implements WfManagerService {
 	public void addTaskListener(String processDefinitionKey) throws Exception {
 		ProcessDefinitionEntity pde = (ProcessDefinitionEntity) repositoryService
 				.createProcessDefinitionQuery()
+				.processDefinitionKey(processDefinitionKey).processDefinitionWithoutTenantId().latestVersion()
+				.singleResult();
+		// if (pde.getVersion() == 1) {//修改流程部署后没有监听器了
+		pde = (ProcessDefinitionEntity) repositoryService
+				.getProcessDefinition(pde.getId());
+		Map<String, TaskDefinition> taskDefinitions = pde.getTaskDefinitions();
+		ApplicationContext context = ((SpringProcessEngineConfiguration) ((ProcessEngineImpl) processEngine)
+				.getProcessEngineConfiguration()).getApplicationContext();
+		if (taskDefinitions != null) {
+			for (String key : taskDefinitions.keySet()) {
+				TaskDefinition taskDefinition = taskDefinitions.get(key);
+				taskDefinition.addTaskListener(
+						TaskListener.EVENTNAME_ALL_EVENTS,
+						new ExtendTaskListener(managementService, context));
+			}
+		}
+	}
+	
+	@Override
+	public void addTaskListener(String processDefinitionKey,String tenantId) throws Exception {
+		ProcessDefinitionEntity pde = (ProcessDefinitionEntity) repositoryService
+				.createProcessDefinitionQuery().processDefinitionTenantId(tenantId)
 				.processDefinitionKey(processDefinitionKey).latestVersion()
 				.singleResult();
 		// if (pde.getVersion() == 1) {//修改流程部署后没有监听器了
@@ -3466,13 +3509,15 @@ public class WfManagerServiceImpl implements WfManagerService {
 		}
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(begineDate);
+		
+		String holidayWorkDayFlag = ConfigManager.getInstance().getConfig("c2.flow.core.holidayworkday.flag");
 		if (WfConstants.WF_DURATION_UNIT_DAY.equals(durationUnit)
-				&& "true".equals(WfApiFactory.getHolidayWorkdayFlag())) {
+				&& "true".equals(holidayWorkDayFlag)) {
 			// 通过作息时间查询真实的天数，通过真实的天数计算期限
 			int realDays = getRealdays(begineDate, duration);
 			cal.add(Calendar.DAY_OF_MONTH, realDays);
 		} else if (WfConstants.WF_DURATION_UNIT_HOUR.equals(durationUnit)
-				&& "true".equals(WfApiFactory.getHolidayWorkdayFlag())) {
+				&& "true".equals(holidayWorkDayFlag)) {
 
 			Date date1 = getOverTimes(begineDate, duration);
 			cal.setTime(date1);

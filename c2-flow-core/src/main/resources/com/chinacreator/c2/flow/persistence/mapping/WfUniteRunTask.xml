@@ -396,20 +396,44 @@
 		where ((b.category = 'users' and
 		b.candidate = #{userId} and
 		(b.assignee IS NULL or b.ASSIGNEE='')) or
-		(b.assignee = #{userId} or
-		(b.category = 'groups' and
-		b.assignee in
-		(select c.GROUP_ID_
-		from act_id_membership c
-		where c.USER_ID_ =
-		#{userId}))) or
-		(b.category = 'groups' and (b.assignee IS NULL or
-		b.ASSIGNEE='') and
-		b.candidate in
-		(select c.GROUP_ID_
-		from
-		act_id_membership c
-		where c.USER_ID_ = #{userId}))) and
+		(b.assignee = #{userId})
+		<if test="groups!= null and groups.size>0">
+			or (b.category = 'groups' and
+			b.assignee in
+				<trim prefix="(" suffix=")" suffixOverrides=",">
+					<foreach collection="groups" item="group" separator=",">
+						#{group.id}
+					</foreach>
+				</trim>
+			)
+			or (b.category = 'groups' and (b.assignee IS NULL or
+			b.ASSIGNEE='') and
+			b.candidate in
+				<trim prefix="(" suffix=")" suffixOverrides=",">
+					<foreach collection="groups" item="group" separator=",">
+						#{group.id}
+					</foreach>
+				</trim>
+			)
+			or (b.category = 'groups' and
+			b.assignee in
+				<trim prefix="(" suffix=")" suffixOverrides=",">
+					<foreach collection="groups" item="group" separator=",">
+						'${group.type}:${group.id}'
+					</foreach>
+				</trim>
+			)
+			or (b.category = 'groups' and (b.assignee IS NULL or
+			b.ASSIGNEE='') and
+			b.candidate in
+				<trim prefix="(" suffix=")" suffixOverrides=",">
+					<foreach collection="groups" item="group" separator=",">
+						'${group.type}:${group.id}'
+					</foreach>
+				</trim>
+			)
+		</if>
+		) and
 		b.TASK_STATE=#{taskType}
 		<if test="id != null">
 			and b.id = #{id}
@@ -481,9 +505,15 @@
 		<if test="taskstate != null">
 			and b.task_state like '%${taskstate}%'
 		</if>
-		<if test="tenantid != null">
-			and b.tenant_id like '%${tenantid}%'
-		</if>
+      	<if test="tenantId != null">
+        	and b.tenant_id = #{tenantId}
+      	</if>
+      	<if test="tenantIdLike != null">
+       		and b.tenant_id like #{tenantIdLike}
+      	</if>
+      	<if test="withoutTenantId">
+      	 	and (b.tenant_id = '' or b.tenant_id is null)
+      	</if>
 		<if test="appid != null">
 			and b.app_id like '%${appid}%'
 		</if>
@@ -532,31 +562,60 @@
 		<if test="remark10 != null">
 			and b.remark10 like '%${remark10}%'
 		</if>
-		order by b.create_time desc
+		
+		<if test="orderByStr != null">
+			order by ${orderByStr}
+		</if>
+		
+		<if test="orderByStr== null">
+			order by b.create_time desc
+		</if>
 	</select>
 	<select id="selectWfUniteRunTaskCountByC" parameterType="java.util.HashMap"
 		resultType="Integer">
 		select count(distinct b.task_id) from
 		${prefix}WF_UNITE_RUN_TASK b
-		where ((b.category =
-		'users' and
+		where ((b.category = 'users' and
 		b.candidate = #{userId} and
-		(b.assignee IS NULL or
-		b.ASSIGNEE='')) or
-		(b.assignee = #{userId} or
-		(b.category = 'groups' and
-		b.assignee in
-		(select c.GROUP_ID_
-		from act_id_membership c
-		where
-		c.USER_ID_ = #{userId}))) or
-		(b.category = 'groups' and (b.assignee IS
-		NULL or b.ASSIGNEE='') and
-		b.candidate in
-		(select c.GROUP_ID_
-		from
-		act_id_membership c
-		where c.USER_ID_ = #{userId}))) and
+		(b.assignee IS NULL or b.ASSIGNEE='')) or
+		(b.assignee = #{userId})
+		<if test="groups!= null and groups.size>0">
+			or (b.category = 'groups' and
+			b.assignee in
+				<trim prefix="(" suffix=")" suffixOverrides=",">
+					<foreach collection="groups" item="group" separator=",">
+						#{group.id}
+					</foreach>
+				</trim>
+			)
+			or (b.category = 'groups' and (b.assignee IS NULL or
+			b.ASSIGNEE='') and
+			b.candidate in
+				<trim prefix="(" suffix=")" suffixOverrides=",">
+					<foreach collection="groups" item="group" separator=",">
+						#{group.id}
+					</foreach>
+				</trim>
+			)
+			or (b.category = 'groups' and
+			b.assignee in
+				<trim prefix="(" suffix=")" suffixOverrides=",">
+					<foreach collection="groups" item="group" separator=",">
+						'${group.type}:${group.id}'
+					</foreach>
+				</trim>
+			)
+			or (b.category = 'groups' and (b.assignee IS NULL or
+			b.ASSIGNEE='') and
+			b.candidate in
+				<trim prefix="(" suffix=")" suffixOverrides=",">
+					<foreach collection="groups" item="group" separator=",">
+						'${group.type}:${group.id}'
+					</foreach>
+				</trim>
+			)
+		</if>
+		) and
 		b.TASK_STATE=#{taskType}
 		<if test="id != null">
 			and b.id = #{id}
@@ -637,9 +696,15 @@
 		<if test="taskstate != null">
 			and b.task_state like '%${taskstate}%'
 		</if>
-		<if test="tenantid != null">
-			and b.tenant_id like '%${tenantid}%'
-		</if>
+      	<if test="tenantId != null">
+        	and b.tenant_id = #{tenantId}
+      	</if>
+      	<if test="tenantIdLike != null">
+       		and b.tenant_id like #{tenantIdLike}
+      	</if>
+      	<if test="withoutTenantId">
+      	 	and (b.tenant_id = '' or b.tenant_id is null)
+      	</if>
 		<if test="appid != null">
 			and b.app_id like '%${appid}%'
 		</if>
@@ -733,20 +798,44 @@
 		where ((b.category = 'users' and
 		b.candidate = #{userId} and
 		(b.assignee IS NULL or b.ASSIGNEE='')) or
-		(b.assignee = #{userId} or
-		(b.category = 'groups' and
-		b.assignee in
-		(select c.GROUP_ID_
-		from act_id_membership c
-		where c.USER_ID_ =
-		#{userId}))) or
-		(b.category = 'groups' and (b.assignee IS NULL or
-		b.ASSIGNEE='') and
-		b.candidate in
-		(select c.GROUP_ID_
-		from
-		act_id_membership c
-		where c.USER_ID_ = #{userId}))) and
+		(b.assignee = #{userId})
+		<if test="groups!= null and groups.size>0">
+			or (b.category = 'groups' and
+			b.assignee in
+				<trim prefix="(" suffix=")" suffixOverrides=",">
+					<foreach collection="groups" item="group" separator=",">
+						#{group.id}
+					</foreach>
+				</trim>
+			)
+			or (b.category = 'groups' and (b.assignee IS NULL or
+			b.ASSIGNEE='') and
+			b.candidate in
+				<trim prefix="(" suffix=")" suffixOverrides=",">
+					<foreach collection="groups" item="group" separator=",">
+						#{group.id}
+					</foreach>
+				</trim>
+			)
+			or (b.category = 'groups' and
+			b.assignee in
+				<trim prefix="(" suffix=")" suffixOverrides=",">
+					<foreach collection="groups" item="group" separator=",">
+						'${group.type}:${group.id}'
+					</foreach>
+				</trim>
+			)
+			or (b.category = 'groups' and (b.assignee IS NULL or
+			b.ASSIGNEE='') and
+			b.candidate in
+				<trim prefix="(" suffix=")" suffixOverrides=",">
+					<foreach collection="groups" item="group" separator=",">
+						'${group.type}:${group.id}'
+					</foreach>
+				</trim>
+			)
+		</if>
+		) and
 		b.TASK_STATE=#{taskType}
 		<if test="id != null">
 			and b.id = #{id}
@@ -827,9 +916,15 @@
 		<if test="taskstate != null">
 			and b.task_state like '%${taskstate}%'
 		</if>
-		<if test="tenantid != null">
-			and b.tenant_id like '%${tenantid}%'
-		</if>
+      	<if test="tenantId != null">
+        	and b.tenant_id = #{tenantId}
+      	</if>
+      	<if test="tenantIdLike != null">
+       		and b.tenant_id like #{tenantIdLike}
+      	</if>
+      	<if test="withoutTenantId">
+      	 	and (b.tenant_id = '' or b.tenant_id is null)
+      	</if>
 		<if test="appid != null">
 			and b.app_id like '%${appid}%'
 		</if>
@@ -878,31 +973,60 @@
 		<if test="remark10 != null">
 			and b.remark10 like '%${remark10}%'
 		</if>
-		order by b.create_time desc
+		
+		<if test="orderByStr != null">
+			order by ${orderByStr}
+		</if>
+		
+		<if test="orderByStr== null">
+			order by b.create_time desc
+		</if>
 	</select>
 	<select id="selectWfUniteHisTaskCountByC" parameterType="java.util.HashMap"
 		resultType="Integer">
 		select count(distinct b.task_id) from
 		${prefix}WF_UNITE_HIS_TASK b
-		where ((b.category =
-		'users' and
+		where ((b.category = 'users' and
 		b.candidate = #{userId} and
-		(b.assignee IS NULL or
-		b.ASSIGNEE='')) or
-		(b.assignee = #{userId} or
-		(b.category = 'groups' and
-		b.assignee in
-		(select c.GROUP_ID_
-		from act_id_membership c
-		where
-		c.USER_ID_ = #{userId}))) or
-		(b.category = 'groups' and (b.assignee IS
-		NULL or b.ASSIGNEE='') and
-		b.candidate in
-		(select c.GROUP_ID_
-		from
-		act_id_membership c
-		where c.USER_ID_ = #{userId}))) and
+		(b.assignee IS NULL or b.ASSIGNEE='')) or
+		(b.assignee = #{userId})
+		<if test="groups!= null and groups.size>0">
+			or (b.category = 'groups' and
+			b.assignee in
+				<trim prefix="(" suffix=")" suffixOverrides=",">
+					<foreach collection="groups" item="group" separator=",">
+						#{group.id}
+					</foreach>
+				</trim>
+			)
+			or (b.category = 'groups' and (b.assignee IS NULL or
+			b.ASSIGNEE='') and
+			b.candidate in
+				<trim prefix="(" suffix=")" suffixOverrides=",">
+					<foreach collection="groups" item="group" separator=",">
+						#{group.id}
+					</foreach>
+				</trim>
+			)
+			or (b.category = 'groups' and
+			b.assignee in
+				<trim prefix="(" suffix=")" suffixOverrides=",">
+					<foreach collection="groups" item="group" separator=",">
+						'${group.type}:${group.id}'
+					</foreach>
+				</trim>
+			)
+			or (b.category = 'groups' and (b.assignee IS NULL or
+			b.ASSIGNEE='') and
+			b.candidate in
+				<trim prefix="(" suffix=")" suffixOverrides=",">
+					<foreach collection="groups" item="group" separator=",">
+						'${group.type}:${group.id}'
+					</foreach>
+				</trim>
+			)
+		</if>
+		) and
 		b.TASK_STATE=#{taskType}
 		<if test="id != null">
 			and b.id = #{id}
@@ -983,9 +1107,15 @@
 		<if test="taskstate != null">
 			and b.task_state like '%${taskstate}%'
 		</if>
-		<if test="tenantid != null">
-			and b.tenant_id like '%${tenantid}%'
-		</if>
+      	<if test="tenantId != null">
+        	and b.tenant_id = #{tenantId}
+      	</if>
+      	<if test="tenantIdLike != null">
+       		and b.tenant_id like #{tenantIdLike}
+      	</if>
+      	<if test="withoutTenantId">
+      	 	and (b.tenant_id = '' or b.tenant_id is null)
+      	</if>
 		<if test="appid != null">
 			and b.app_id like '%${appid}%'
 		</if>

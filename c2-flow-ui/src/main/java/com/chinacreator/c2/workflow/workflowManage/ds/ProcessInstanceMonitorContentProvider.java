@@ -8,27 +8,32 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.commons.lang.StringUtils;
+
+import com.chinacreator.asp.comp.sys.advanced.job.service.JobService;
+import com.chinacreator.asp.comp.sys.advanced.user.service.UserService;
+import com.chinacreator.asp.comp.sys.core.user.dto.UserDTO;
 import com.chinacreator.c2.dao.mybatis.enhance.Page;
 import com.chinacreator.c2.dao.mybatis.enhance.Pageable;
 import com.chinacreator.c2.flow.WfApiFactory;
+import com.chinacreator.c2.flow.api.GroupType;
 import com.chinacreator.c2.flow.api.WfHistoryService;
-import com.chinacreator.c2.flow.api.WfManagerService;
 import com.chinacreator.c2.flow.api.WfRuntimeService;
-import com.chinacreator.c2.flow.detail.WfGroup;
+import com.chinacreator.c2.flow.detail.ChooseGroup;
 import com.chinacreator.c2.flow.detail.WfHistoricTask;
 import com.chinacreator.c2.flow.detail.WfHistoricTaskParam;
 import com.chinacreator.c2.flow.detail.WfIdentityLink;
 import com.chinacreator.c2.flow.detail.WfPageList;
-import com.chinacreator.c2.flow.detail.WfUser;
 import com.chinacreator.c2.flow.util.CommonUtil;
 import com.chinacreator.c2.flow.util.DateUtil;
+import com.chinacreator.c2.flow.util.WfUtils;
+import com.chinacreator.c2.ioc.ApplicationContextManager;
 import com.chinacreator.c2.web.ds.ArrayContentProvider;
 import com.chinacreator.c2.web.ds.ArrayContext;
 
 public class ProcessInstanceMonitorContentProvider implements ArrayContentProvider{
 
 	private WfHistoryService wfHistoryService = WfApiFactory.getWfHistoryService();
-	private WfManagerService wfManagerService = WfApiFactory.getWfManagerService();
 	private WfRuntimeService wfRuntimeService = WfApiFactory.getWfRuntimeService();
 	
 	@Override
@@ -75,6 +80,10 @@ public class ProcessInstanceMonitorContentProvider implements ArrayContentProvid
 
 	private List<Map<String, Object>> formList(
 			WfPageList<WfHistoricTask, WfHistoricTaskParam> wfHistoricTaskPageList) throws Exception{
+		
+		UserService userService = ApplicationContextManager.getContext().getBean(UserService.class);
+		JobService jobService = ApplicationContextManager.getContext().getBean(JobService.class);
+		
 		List<Map<String,Object>> mapList = new ArrayList<Map<String,Object>>();
 		if(null!=wfHistoricTaskPageList && !wfHistoricTaskPageList.getDatas().isEmpty()){
 			for(WfHistoricTask wfHistoricTask:wfHistoricTaskPageList.getDatas()){
@@ -98,95 +107,89 @@ public class ProcessInstanceMonitorContentProvider implements ArrayContentProvid
 					}
 					
 					String description = wfHistoricTask.getDescription();//.getDeleteReason();
-					String assignee = "";
+					String deleteReason=wfHistoricTask.getDeleteReason();
+					
 					if (wfHistoricTask.getEndTime() != null) {
 						mapItem.put("status", "已完成");
-						assignee = wfHistoricTask.getAssignee();
-						if (assignee == null) {
-							assignee = "";
-							List<WfIdentityLink> idLinks = wfHistoryService
-									.getHistoricTaskCandidates(wfHistoricTask
-											.getId());
-							if (idLinks != null) {
-								Set<String> set = new HashSet<String>();
-								for (WfIdentityLink idLink : idLinks) {
-									set.add(idLink.getUserId());
-								}
-								for (String userId : set) {
-									try {
-										WfUser user = wfManagerService.getUserById(userId);
-										assignee += user.getLastName() + ",";
-									} catch (Exception e) {
-										assignee += userId + ",";
-									}
-								}
-								if (assignee.length() > 0)
-									assignee = assignee.substring(0,
-											assignee.length() - 1);
-							}
-						} else {
-							try {
-								WfUser user = wfManagerService.getUserById(assignee);
-								assignee = user.getLastName();
-							} catch (Exception e) {
-
-							}
-						}
-					} else {
+					}else{
 						mapItem.put("status", "待处理");
-						List<WfIdentityLink> idLinks = wfRuntimeService.getTaskCandidates(wfHistoricTask.getId());
-								
 						boolean isSuspend = wfRuntimeService.getTaskById(wfHistoricTask.getId()).isSuspended();
-						if (isSuspend)
-							description = description == null ? "挂起"
-									: description;
+						if (isSuspend) description = description == null ? "挂起": description;
+					}
+					
+					//签收人
+					String assignee = wfHistoricTask.getAssignee();
+					if(StringUtils.isEmpty(assignee)){
+						assignee="";
+					}else{
+						UserDTO userDto=userService.queryByPK(assignee);
+						if(null!=userDto&&!CommonUtil.stringNullOrEmpty(userDto.getUserRealname())){
+							assignee = userDto.getUserRealname();
+						}
+					}
+					
+					//候选人
+					String candidates="";
+					List<WfIdentityLink> idLinks = wfHistoryService.getHistoricTaskCandidates(wfHistoricTask.getId());
+					if (idLinks != null) {
+						
 						Set<String> userSet = new HashSet<String>();
 						Set<String> groupSet = new HashSet<String>();
 						String assigneeUserItem = "";
 						String assigneeGroupItem = "";
-						if (idLinks != null) {
-							String assigneeInfo = "";
-							for (WfIdentityLink idLink : idLinks) {
-								if(!CommonUtil.stringNullOrEmpty(idLink.getUserId())){
-									userSet.add(idLink.getUserId());
-								}
-								if(!CommonUtil.stringNullOrEmpty(idLink.getGroupId())){
-									groupSet.add(idLink.getGroupId());
-								}
-							}
-							for (String userId : userSet) {
-								try {
-									WfUser user =  wfManagerService.getUserById(userId);
-									assigneeUserItem += user.getLastName() + ",";
-								} catch (Exception e) {
-									assigneeUserItem += userId + ",";
-								}
-							}
-							if (assigneeUserItem.length() > 0){
-								assigneeUserItem = assigneeUserItem.substring(0, assigneeUserItem.length() - 1);
-								assigneeInfo += "用户【"+assigneeUserItem+"】";
-							}
+						
+						String assigneeInfo = "";
+						for (WfIdentityLink idLink : idLinks) {
 							
+							if(idLink.getType()=="assignee") continue;
 							
-							for (String groupId : groupSet) {
-								try {
-									WfGroup wfGroup =  wfManagerService.getGroupById(groupId);
-									assigneeGroupItem += wfGroup.getName() + ",";
-								} catch (Exception e) {
-									assigneeGroupItem += groupId + ",";
-								}
+							if(!CommonUtil.stringNullOrEmpty(idLink.getUserId())){
+								userSet.add(idLink.getUserId());
 							}
-							if (assigneeGroupItem.length() > 0){
-								assigneeGroupItem = assigneeGroupItem.substring(0, assigneeGroupItem.length() - 1);
-								assigneeInfo += "用户组【"+assigneeGroupItem+"】";
+							if(!CommonUtil.stringNullOrEmpty(idLink.getGroupId())){
+								groupSet.add(idLink.getGroupId());
 							}
-							
-							assignee = assigneeInfo;
-							
 						}
+						
+						for (String userId : userSet) {
+							UserDTO userDto=userService.queryByPK(userId);
+							if(null!=userDto&&!CommonUtil.stringNullOrEmpty(userDto.getUserRealname())){
+								assigneeUserItem += userDto.getUserRealname() + ",";
+							}else{
+								assigneeUserItem += userId + ",";
+							}
+						}
+						
+						if (assigneeUserItem.length() > 0){
+							assigneeUserItem = assigneeUserItem.substring(0, assigneeUserItem.length() - 1);
+							assigneeInfo += "用户【"+assigneeUserItem+"】";
+						}
+						
+						for (String groupId : groupSet) {
+							try {
+								String gid=WfUtils.parseToGroupId(groupId);
+								String groupPrex=WfUtils.parseToGroupTypePrex(groupId);
+								GroupType groupType=WfUtils.getGroupTypeByPrex(groupPrex);
+								if(null==groupType) groupType=WfUtils.getDefaultGroupType();  //获取系统默认组类型
+								ChooseGroup candidateGroup=groupType.getGroup(gid);
+								assigneeGroupItem += candidateGroup.getDisplayName()+ ",";
+							} catch (Exception e) {
+								assigneeGroupItem += groupId + ",";
+							}
+						}
+						if (assigneeGroupItem.length() > 0){
+							assigneeGroupItem = assigneeGroupItem.substring(0, assigneeGroupItem.length() - 1);
+							assigneeInfo += "用户组【"+assigneeGroupItem+"】";
+						}
+						
+						candidates = assigneeInfo;
+						
 					}
+					
+					mapItem.put("candidate", candidates);
 					mapItem.put("assignee", assignee);
 					mapItem.put("description", description);
+					mapItem.put("deletereason", deleteReason);
 					mapList.add(mapItem);
 				}
 			}

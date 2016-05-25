@@ -24,10 +24,14 @@ public class WfUniteConfigController {
 	WfRuntimeService wfRuntimeService = WfApiFactory.getWfRuntimeService();
 
 	@RequestMapping(value = "/loadconfig", method = RequestMethod.GET)
-	public Object loadMainConfig(String appId, String tenantId,
+	public Object loadMainConfig(String appId,
 			String engineName, String taskType) {
 		appId = appId == null ? "default" : appId;
+		
+		//处理租户隔离
+		String tenantId=WfApiFactory.getWfTenant();
 		tenantId = tenantId == null ? "default" : tenantId;
+		
 		engineName = engineName == null ? "default" : engineName;
 		taskType = taskType == null ? "todo" : taskType;
 		Boolean result = false;
@@ -44,16 +48,17 @@ public class WfUniteConfigController {
 	}
 
 	@RequestMapping(value = "/loadcloumns", method = RequestMethod.GET)
-	public Object loadCloumnsConfig(String appId, String tenantId,
-			String engineName, String taskType) {
+	public Object loadCloumnsConfig(String appId,String engineName, String taskType) {
 		appId = appId == null ? "default" : appId;
+		
+		//处理租户隔离
+		String tenantId=WfApiFactory.getWfTenant();
 		tenantId = tenantId == null ? "default" : tenantId;
 		engineName = engineName == null ? "default" : engineName;
 		taskType = taskType == null ? "todolist" : taskType;
 		WfUniteTaskResult result = null;
 		try {
-			result = wfRuntimeService.queryWfUniteConfig(appId, tenantId,
-					engineName, taskType);
+			result = wfRuntimeService.queryWfUniteConfig(appId,tenantId,engineName,taskType);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -83,7 +88,10 @@ public class WfUniteConfigController {
 	@RequestMapping(value = "/saveconfig", method = RequestMethod.POST)
 	public Object saveMainConfig(@RequestBody Map<String, Object> body) {
 		String appId = (String) body.get("appId");
-		String tenantId = (String) body.get("tenantId");
+		//String tenantId = (String) body.get("tenantId");
+		
+		//处理租户隔离
+		String tenantId=WfApiFactory.getWfTenant();
 		String engineName = (String) body.get("engineName");
 		String taskType = (String) body.get("taskType");
 		Boolean onlyTitle = (Boolean) body.get("onlyTitle");

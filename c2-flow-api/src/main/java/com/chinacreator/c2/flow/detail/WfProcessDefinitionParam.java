@@ -98,6 +98,15 @@ public class WfProcessDefinitionParam extends WfPageParam {
 	 * 根据租户id排序，需要结合order一起使用
 	 */
 	private Boolean orderByTenantId = false;
+	
+	/**
+	 * 租户id
+	 */
+	private String tenantId;
+	
+	private String tenantIdLike;
+	
+	private Boolean withoutTenantId;
 
 	public WfProcessDefinitionParam() {
 		super();
@@ -318,6 +327,34 @@ public class WfProcessDefinitionParam extends WfPageParam {
 	public void setOrderByTenantId(Boolean orderByTenantId) {
 		this.orderByTenantId = orderByTenantId;
 	}
+	
+
+	public String getTenantId() {
+		return tenantId;
+	}
+
+	public void setTenantId(String tenantId) {
+		this.tenantId = tenantId;
+	}
+
+	
+	
+	public String getTenantIdLike() {
+		return tenantIdLike;
+	}
+
+	public void setTenantIdLike(String tenantIdLike) {
+		this.tenantIdLike = tenantIdLike;
+	}
+
+	
+	public Boolean getWithoutTenantId() {
+		return withoutTenantId;
+	}
+
+	public void setWithoutTenantId(Boolean withoutTenantId) {
+		this.withoutTenantId = withoutTenantId;
+	}
 
 	@Override
 	public String toString() {
@@ -333,6 +370,9 @@ public class WfProcessDefinitionParam extends WfPageParam {
 				+ ", orderByCategory=" + orderByCategory
 				+ ", orderByProcessDefinitionId=" + orderByProcessDefinitionId
 				+ ", orderByKey=" + orderByKey + ", orderByName=" + orderByName
+				+ ", tenantId=" + tenantId
+				+ ", tenantIdLike=" + tenantIdLike
+				+ ", withoutTenantId=" + withoutTenantId
 				+ ", orderByVersion=" + orderByVersion + ", orderByTenantId="
 				+ orderByTenantId + ", toString()=" + super.toString() + "]";
 	}

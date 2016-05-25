@@ -1,13 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:util="http://www.springframework.org/schema/util" xmlns:p="http://www.springframework.org/schema/p"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans
     http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
     http://www.springframework.org/schema/context
     http://www.springframework.org/schema/context/spring-context-3.2.xsd
-	http://www.springframework.org/schema/util
-    http://www.springframework.org/schema/util/spring-util.xsd">
+    http://www.springframework.org/schema/util
+    http://www.springframework.org/schema/util/spring-util.xsd
+    http://code.alibabatech.com/schema/dubbo
+    http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+   
 	<!-- 流程引擎配置 -->
 	<bean id="processEngineConfiguration"
 		class="com.chinacreator.c2.flow.cfg.ExtendSpringProcessEngineConfiguration">
@@ -92,6 +96,26 @@
 		<property name="historyService" ref="historyService" />
 		<property name="wfRepositoryServiceLocal" ref="wfRepositoryServiceLocal" />
 	</bean>
-
+	
 	<context:component-scan base-package="com.chinacreator.c2.flow" />
+	
+	<!-- 工作流dubbo分布式服务配置 -->
+    <beans profile="c2_flow_provider">
+
+	    <dubbo:service interface="com.chinacreator.c2.flow.api.WfRepositoryService"
+			ref="wfRepositoryServiceLocal" timeout="${c2.flow.core.service.timeout}"
+			retries="${c2.flow.core.service.retries}" version="${c2.flow.core.service.version}" />
+		<dubbo:service interface="com.chinacreator.c2.flow.api.WfRuntimeService"
+			ref="wfRuntimeServiceLocal" timeout="${c2.flow.core.service.timeout}"
+			retries="${c2.flow.core.service.retries}" version="${c2.flow.core.service.version}" />
+		<dubbo:service interface="com.chinacreator.c2.flow.api.WfHistoryService"
+			ref="wfHistoryServiceLocal" timeout="${c2.flow.core.service.timeout}"
+			retries="${c2.flow.core.service.retries}" version="${c2.flow.core.service.version}" />
+		<dubbo:service interface="com.chinacreator.c2.flow.api.WfFormService"
+			ref="wfFormServiceLocal" timeout="${c2.flow.core.service.timeout}"
+			retries="${c2.flow.core.service.retries}" version="${c2.flow.core.service.version}" />
+		<dubbo:service interface="com.chinacreator.c2.flow.api.WfManagerService"
+			ref="wfManagerServiceLocal" timeout="${c2.flow.core.service.timeout}"
+			retries="${c2.flow.core.service.retries}" version="${c2.flow.core.service.version}" />
+    </beans>
 </beans>

@@ -17,7 +17,7 @@ public class AddTaskListenerUtil {
 			ManagementService managementService, ApplicationContext applicationContext, String processDefinitionKey) {
 		ProcessDefinitionEntity pde = (ProcessDefinitionEntity) repositoryService
 				.createProcessDefinitionQuery()
-				.processDefinitionKey(processDefinitionKey).latestVersion()
+				.processDefinitionKey(processDefinitionKey).processDefinitionWithoutTenantId().latestVersion()
 				.singleResult();
 		// if (pde.getVersion() == 1) {//修改流程部署后没有监听器了
 		pde = (ProcessDefinitionEntity) repositoryService

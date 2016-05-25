@@ -37,6 +37,10 @@ public class ModelSaveRestResource extends ServerResource implements
 		String tenantId = (String) getRequest().getAttributes().get("tenantId");
 		
 		try {
+			
+			//如果开启了分布式，将分布式应用名称作为tenantId
+			if(null==tenantId||"".equals(tenantId)) tenantId=WfApiFactory.getWfTenant();
+			
 			String name = modelForm.getFirstValue("name");
 			String description = modelForm.getFirstValue("description");
 			String json_xml = modelForm.getFirstValue("json_xml");
