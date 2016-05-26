@@ -47,69 +47,67 @@
 
 v4.1.3以上版本增加了表，需要手动创建如下数据厍表
 
-1. mysql下
-
+1. 在mysql下
 ```
-create table WF_UNITE_RUN_TASK_EXT
-(
-  ID              VARCHAR(64) not null,
-  UNITE_TASK_ID   VARCHAR(64),
-  EXT_FIELD_KEY   VARCHAR(64),
-  EXT_FIELD_VALUE VARCHAR(255),
-  EXT_FIELD_TYPE  VARCHAR(64),
-  primary key (ID)
-);
-
-alter table WF_UNITE_RUN_TASK_EXT
-  add constraint FK_TASK_EXT_REFERENCE_WF_TASK foreign key (UNITE_TASK_ID)
-  references WF_UNITE_RUN_TASK (ID) on delete restrict on update restrict;
-  
-create table WF_UNITE_HIS_TASK_EXT
-(
-  ID                VARCHAR(64) not null,
-  UNITE_TASK_HIS_ID VARCHAR(64),
-  EXT_FIELD_KEY     VARCHAR(64),
-  EXT_FIELD_VALUE   VARCHAR(255),
-  EXT_FIELD_TYPE    VARCHAR(64),
-  primary key (ID)
-);
-  
-alter table WF_UNITE_HIS_TASK_EXT
-  add constraint FK_WF_HISTASK_REFERENCE_WF_EXT foreign key (UNITE_TASK_HIS_ID)
-  references WF_UNITE_HIS_TASK (ID) on delete restrict on update restrict;
+	create table WF_UNITE_RUN_TASK_EXT
+	(
+	  ID              VARCHAR(64) not null,
+	  UNITE_TASK_ID   VARCHAR(64),
+	  EXT_FIELD_KEY   VARCHAR(64),
+	  EXT_FIELD_VALUE VARCHAR(255),
+	  EXT_FIELD_TYPE  VARCHAR(64),
+	  primary key (ID)
+	);
+	
+	alter table WF_UNITE_RUN_TASK_EXT
+	  add constraint FK_TASK_EXT_REFERENCE_WF_TASK foreign key (UNITE_TASK_ID)
+	  references WF_UNITE_RUN_TASK (ID) on delete restrict on update restrict;
+	  
+	create table WF_UNITE_HIS_TASK_EXT
+	(
+	  ID                VARCHAR(64) not null,
+	  UNITE_TASK_HIS_ID VARCHAR(64),
+	  EXT_FIELD_KEY     VARCHAR(64),
+	  EXT_FIELD_VALUE   VARCHAR(255),
+	  EXT_FIELD_TYPE    VARCHAR(64),
+	  primary key (ID)
+	);
+	  
+	alter table WF_UNITE_HIS_TASK_EXT
+	  add constraint FK_WF_HISTASK_REFERENCE_WF_EXT foreign key (UNITE_TASK_HIS_ID)
+	  references WF_UNITE_HIS_TASK (ID) on delete restrict on update restrict;
 
 ```
 
 2. oracle下
-
 ```
-create table WF_UNITE_RUN_TASK_EXT
-(
-  ID              VARCHAR2(64) not null,
-  UNITE_TASK_ID   VARCHAR2(64),
-  EXT_FIELD_KEY   VARCHAR2(64),
-  EXT_FIELD_VALUE VARCHAR2(255),
-  EXT_FIELD_TYPE  VARCHAR2(64),
-  constraint WF_UNITE_RUN_TASK_EXT primary key (ID)
-);
-
-alter table WF_UNITE_RUN_TASK_EXT
-  add constraint FK_TASK_EXT_REFERENCE_WF_TASK foreign key (UNITE_TASK_ID)
-  references WF_UNITE_RUN_TASK (ID);
-  
-create table WF_UNITE_HIS_TASK_EXT
-(
-  ID                VARCHAR2(64) not null,
-  UNITE_TASK_HIS_ID VARCHAR2(64),
-  EXT_FIELD_KEY     VARCHAR2(64),
-  EXT_FIELD_VALUE   VARCHAR2(255),
-  EXT_FIELD_TYPE    VARCHAR2(64),
-  constraint WF_UNITE_HIS_TASK_EXT primary key (ID)
-);
-  
-alter table WF_UNITE_HIS_TASK_EXT
-  add constraint FK_WF_HISTASK_REFERENCE_WF_EXT foreign key (UNITE_TASK_HIS_ID)
-  references WF_UNITE_HIS_TASK (ID);
+	create table WF_UNITE_RUN_TASK_EXT
+	(
+	  ID              VARCHAR2(64) not null,
+	  UNITE_TASK_ID   VARCHAR2(64),
+	  EXT_FIELD_KEY   VARCHAR2(64),
+	  EXT_FIELD_VALUE VARCHAR2(255),
+	  EXT_FIELD_TYPE  VARCHAR2(64),
+	  constraint WF_UNITE_RUN_TASK_EXT primary key (ID)
+	);
+	
+	alter table WF_UNITE_RUN_TASK_EXT
+	  add constraint FK_TASK_EXT_REFERENCE_WF_TASK foreign key (UNITE_TASK_ID)
+	  references WF_UNITE_RUN_TASK (ID);
+	  
+	create table WF_UNITE_HIS_TASK_EXT
+	(
+	  ID                VARCHAR2(64) not null,
+	  UNITE_TASK_HIS_ID VARCHAR2(64),
+	  EXT_FIELD_KEY     VARCHAR2(64),
+	  EXT_FIELD_VALUE   VARCHAR2(255),
+	  EXT_FIELD_TYPE    VARCHAR2(64),
+	  constraint WF_UNITE_HIS_TASK_EXT primary key (ID)
+	);
+	  
+	alter table WF_UNITE_HIS_TASK_EXT
+	  add constraint FK_WF_HISTASK_REFERENCE_WF_EXT foreign key (UNITE_TASK_HIS_ID)
+	  references WF_UNITE_HIS_TASK (ID);
 ```
 
 ## v4.1.0->v4.1.3
@@ -117,105 +115,104 @@ alter table WF_UNITE_HIS_TASK_EXT
 此区间的版本工作流如果想升级高版本，需要手动创建如下数据厍表
 
 1. mysql下
-
 ```
-create table WF_HOLIDAY
-(
-  HOLIDAY   VARCHAR(10) not null comment '保存假日日期',
-  YHOLIDAY  VARCHAR(4) not null comment '保存假日所属的年分，保存4位',
-  MHOLIDAY  VARCHAR(2) not null comment '保存节假日所属的月份，保存2位',
-  TENANT_ID VARCHAR(50) comment '租户ID'
-);
-
-alter table WF_HOLIDAY comment '节假日设置表';
-  
-alter table WF_HOLIDAY
-  add constraint PK_TD_SP_HOLIDAY unique (HOLIDAY, MHOLIDAY, YHOLIDAY);
-  
-create table WF_WORKDATE
-(
-  BEGIN_DATE       VARCHAR(20) comment '起始日期',
-  END_DATE         VARCHAR(20) comment '结束日期',
-  AM_END_TIME      VARCHAR(10) comment '上午班结束时间',
-  WORK_ID          VARCHAR(32) not null comment '主键ID',
-  PM_END_TIME      VARCHAR(10) comment '下午班结束时间',
-  AM_BEGIN_TIME    VARCHAR(10) comment '上午班开始时间',
-  PM_BEGIN_TIME    VARCHAR(10) comment '下午班开始时间',
-  REMARK           VARCHAR(1000) comment '备注说明',
-  LAST_MODIFY_TIME TIMESTAMP DEFAULT NOW()  comment '最后修改时间' ,
-  TENANT_ID        VARCHAR(50) comment '租户ID'
-);
-alter table WF_WORKDATE comment '作息时间表';
-
-alter table WF_WORKDATE
-  add constraint PK_WORKDATE primary key (WORK_ID);
+	create table WF_HOLIDAY
+	(
+	  HOLIDAY   VARCHAR(10) not null comment '保存假日日期',
+	  YHOLIDAY  VARCHAR(4) not null comment '保存假日所属的年分，保存4位',
+	  MHOLIDAY  VARCHAR(2) not null comment '保存节假日所属的月份，保存2位',
+	  TENANT_ID VARCHAR(50) comment '租户ID'
+	);
+	
+	alter table WF_HOLIDAY comment '节假日设置表';
+	  
+	alter table WF_HOLIDAY
+	  add constraint PK_TD_SP_HOLIDAY unique (HOLIDAY, MHOLIDAY, YHOLIDAY);
+	  
+	create table WF_WORKDATE
+	(
+	  BEGIN_DATE       VARCHAR(20) comment '起始日期',
+	  END_DATE         VARCHAR(20) comment '结束日期',
+	  AM_END_TIME      VARCHAR(10) comment '上午班结束时间',
+	  WORK_ID          VARCHAR(32) not null comment '主键ID',
+	  PM_END_TIME      VARCHAR(10) comment '下午班结束时间',
+	  AM_BEGIN_TIME    VARCHAR(10) comment '上午班开始时间',
+	  PM_BEGIN_TIME    VARCHAR(10) comment '下午班开始时间',
+	  REMARK           VARCHAR(1000) comment '备注说明',
+	  LAST_MODIFY_TIME TIMESTAMP DEFAULT NOW()  comment '最后修改时间' ,
+	  TENANT_ID        VARCHAR(50) comment '租户ID'
+	);
+	alter table WF_WORKDATE comment '作息时间表';
+	
+	alter table WF_WORKDATE
+	  add constraint PK_WORKDATE primary key (WORK_ID);
   
 ```
 
 2. oracle下
 
 ```
-create table WF_HOLIDAY
-(
-  HOLIDAY   VARCHAR2(10) not null,
-  YHOLIDAY  VARCHAR2(4) not null,
-  MHOLIDAY  VARCHAR2(2) not null,
-  TENANT_ID VARCHAR2(50)
-);
-
-comment on table WF_HOLIDAY
-  is '节假日设置表';
-comment on column WF_HOLIDAY.HOLIDAY
-  is '保存假日日期';
-comment on column WF_HOLIDAY.YHOLIDAY
-  is '保存假日所属的年分，保存4位';
-comment on column WF_HOLIDAY.MHOLIDAY
-  is '保存节假日所属的月份，保存2位';
-comment on column WF_HOLIDAY.TENANT_ID
-  is '租户ID';
-  
-alter table WF_HOLIDAY
-  add constraint PK_TD_SP_HOLIDAY unique (HOLIDAY, MHOLIDAY, YHOLIDAY);
-
-create table WF_WORKDATE
-(
-  BEGIN_DATE       VARCHAR2(20),
-  END_DATE         VARCHAR2(20),
-  AM_END_TIME      VARCHAR2(10),
-  WORK_ID          VARCHAR2(32) not null,
-  PM_END_TIME      VARCHAR2(10),
-  AM_BEGIN_TIME    VARCHAR2(10),
-  PM_BEGIN_TIME    VARCHAR2(10),
-  REMARK           VARCHAR2(1000),
-  LAST_MODIFY_TIME DATE default sysdate,
-  TENANT_ID        VARCHAR2(50)
-);
-
-
-comment on table WF_WORKDATE
-  is '作息时间表';
-comment on column WF_WORKDATE.BEGIN_DATE
-  is '起始日期';
-comment on column WF_WORKDATE.END_DATE
-  is '结束日期';
-comment on column WF_WORKDATE.AM_END_TIME
-  is '上午班结束时间';
-comment on column WF_WORKDATE.WORK_ID
-  is '主键ID';
-comment on column WF_WORKDATE.PM_END_TIME
-  is '下午班结束时间';
-comment on column WF_WORKDATE.AM_BEGIN_TIME
-  is '上午班开始时间';
-comment on column WF_WORKDATE.PM_BEGIN_TIME
-  is '下午班开始时间';
-comment on column WF_WORKDATE.REMARK
-  is '备注说明';
-comment on column WF_WORKDATE.LAST_MODIFY_TIME
-  is '最后修改时间';
-comment on column WF_WORKDATE.TENANT_ID
-  is '租户ID';
-  
-alter table WF_WORKDATE
-  add constraint PK_WORKDATE primary key (WORK_ID);
+	create table WF_HOLIDAY
+	(
+	  HOLIDAY   VARCHAR2(10) not null,
+	  YHOLIDAY  VARCHAR2(4) not null,
+	  MHOLIDAY  VARCHAR2(2) not null,
+	  TENANT_ID VARCHAR2(50)
+	);
+	
+	comment on table WF_HOLIDAY
+	  is '节假日设置表';
+	comment on column WF_HOLIDAY.HOLIDAY
+	  is '保存假日日期';
+	comment on column WF_HOLIDAY.YHOLIDAY
+	  is '保存假日所属的年分，保存4位';
+	comment on column WF_HOLIDAY.MHOLIDAY
+	  is '保存节假日所属的月份，保存2位';
+	comment on column WF_HOLIDAY.TENANT_ID
+	  is '租户ID';
+	  
+	alter table WF_HOLIDAY
+	  add constraint PK_TD_SP_HOLIDAY unique (HOLIDAY, MHOLIDAY, YHOLIDAY);
+	
+	create table WF_WORKDATE
+	(
+	  BEGIN_DATE       VARCHAR2(20),
+	  END_DATE         VARCHAR2(20),
+	  AM_END_TIME      VARCHAR2(10),
+	  WORK_ID          VARCHAR2(32) not null,
+	  PM_END_TIME      VARCHAR2(10),
+	  AM_BEGIN_TIME    VARCHAR2(10),
+	  PM_BEGIN_TIME    VARCHAR2(10),
+	  REMARK           VARCHAR2(1000),
+	  LAST_MODIFY_TIME DATE default sysdate,
+	  TENANT_ID        VARCHAR2(50)
+	);
+	
+	
+	comment on table WF_WORKDATE
+	  is '作息时间表';
+	comment on column WF_WORKDATE.BEGIN_DATE
+	  is '起始日期';
+	comment on column WF_WORKDATE.END_DATE
+	  is '结束日期';
+	comment on column WF_WORKDATE.AM_END_TIME
+	  is '上午班结束时间';
+	comment on column WF_WORKDATE.WORK_ID
+	  is '主键ID';
+	comment on column WF_WORKDATE.PM_END_TIME
+	  is '下午班结束时间';
+	comment on column WF_WORKDATE.AM_BEGIN_TIME
+	  is '上午班开始时间';
+	comment on column WF_WORKDATE.PM_BEGIN_TIME
+	  is '下午班开始时间';
+	comment on column WF_WORKDATE.REMARK
+	  is '备注说明';
+	comment on column WF_WORKDATE.LAST_MODIFY_TIME
+	  is '最后修改时间';
+	comment on column WF_WORKDATE.TENANT_ID
+	  is '租户ID';
+	  
+	alter table WF_WORKDATE
+	  add constraint PK_WORKDATE primary key (WORK_ID);
 
 ```
