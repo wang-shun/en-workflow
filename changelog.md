@@ -76,7 +76,6 @@ v4.1.3以上版本增加了表，需要手动创建如下数据厍表
 	alter table WF_UNITE_HIS_TASK_EXT
 	  add constraint FK_WF_HISTASK_REFERENCE_WF_EXT foreign key (UNITE_TASK_HIS_ID)
 	  references WF_UNITE_HIS_TASK (ID) on delete restrict on update restrict;
-
 ```
 
 
@@ -148,7 +147,6 @@ v4.1.3以上版本增加了表，需要手动创建如下数据厍表
 	
 	alter table WF_WORKDATE
 	  add constraint PK_WORKDATE primary key (WORK_ID);
-  
 ```
 
 
@@ -217,5 +215,4 @@ v4.1.3以上版本增加了表，需要手动创建如下数据厍表
 	  
 	alter table WF_WORKDATE
 	  add constraint PK_WORKDATE primary key (WORK_ID);
-
 ```
