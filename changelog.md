@@ -79,7 +79,7 @@ v4.1.3以上版本增加了表，需要手动创建如下数据厍表
 
 ```
 
-2. oracle下
+2. 在oracle下
 ```
 	create table WF_UNITE_RUN_TASK_EXT
 	(
@@ -114,7 +114,7 @@ v4.1.3以上版本增加了表，需要手动创建如下数据厍表
 
 此区间的版本工作流如果想升级高版本，需要手动创建如下数据厍表
 
-1. mysql下
+1. 在mysql下
 ```
 	create table WF_HOLIDAY
 	(
@@ -149,7 +149,7 @@ v4.1.3以上版本增加了表，需要手动创建如下数据厍表
   
 ```
 
-2. oracle下
+2. 在oracle下
 
 ```
 	create table WF_HOLIDAY
