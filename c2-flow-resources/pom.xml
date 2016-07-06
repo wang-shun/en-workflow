@@ -8,6 +8,7 @@
     <version>4.1.6</version>
   </parent>
   <artifactId>c2-flow-resources</artifactId>
+   <version>4.1.6-qyb</version>
   <packaging>war</packaging>
   <name>c2-flow-resources Maven Webapp</name>
   <url>http://maven.apache.org</url>

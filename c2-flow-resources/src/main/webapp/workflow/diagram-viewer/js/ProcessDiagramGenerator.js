@@ -743,7 +743,7 @@ var ProcessDiagramGenerator = {
 		if (activity.getProperty("multiInstance") != undefined || activity.getProperty("collapsed") != undefined) {
 			//console.log(activity.getProperty("name"), activity.properties);
 			var multiInstanceSequential = (activity.getProperty("multiInstance") == "sequential");
-			var multiInstanceParallel = (activity.getProperty("multiInstance") == "parrallel");
+			var multiInstanceParallel = (activity.getProperty("multiInstance") == "parallel");
 			var collapsed = activity.getProperty("collapsed");
 				processDiagramCanvas.drawActivityMarkers(activity.getX(), activity.getY(), activity.getWidth(), activity.getHeight(), 
 					multiInstanceSequential, multiInstanceParallel, collapsed);
