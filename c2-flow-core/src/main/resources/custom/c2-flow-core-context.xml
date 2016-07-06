@@ -15,6 +15,9 @@
 	<!-- 流程引擎配置 -->
 	<bean id="processEngineConfiguration"
 		class="com.chinacreator.c2.flow.cfg.ExtendSpringProcessEngineConfiguration">
+		<property name="customMappers">
+ 			<value>${c2.flow.db.customMappers}</value>
+ 		</property>
 		<property name="dataSource" ref="dynamicDataSource" />
 		<property name="transactionManager" ref="transactionManager" />
 		<property name="databaseSchemaUpdate" value="true" />

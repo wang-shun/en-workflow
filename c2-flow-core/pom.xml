@@ -10,6 +10,7 @@
 	</parent>
 	<artifactId>c2-flow-core</artifactId>
 	<name>c2-flow-core</name>
+	<version>4.1.6-qyb</version>
 	<url>http://maven.apache.org</url>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -31,7 +32,7 @@
 		<dependency>
 			<groupId>com.chinacreator.c2</groupId>
 			<artifactId>c2-flow-api</artifactId>
-			<version>${project.version}</version>
+			<version>4.1.6</version>
 		</dependency>
 		<dependency>
 			<groupId>org.activiti</groupId>
@@ -105,6 +106,18 @@
 			<version>1.1.39</version>
 		</dependency>
 	</dependencies>
+ 	<distributionManagement>
+ 		<repository>
+ 			<id>business-releases</id>
+ 			<name>business</name>
+ 			<url>http://172.16.25.142/nexus/content/repositories/business-releases/</url>
+ 		</repository>
+ 		<snapshotRepository>
+ 			<id>business-snapshots</id>
+ 			<name>business</name>
+ 			<url>http://172.16.25.142/nexus/content/repositories/business-snapshots</url>
+ 		</snapshotRepository>
+ 	</distributionManagement>	
 	<!-- 构建可执行包
 	<build>
 		<plugins>

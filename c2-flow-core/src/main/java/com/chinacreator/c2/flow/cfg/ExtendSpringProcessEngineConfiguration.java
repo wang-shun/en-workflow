@@ -12,6 +12,8 @@ import org.activiti.engine.impl.task.TaskDefinition;
 import org.activiti.engine.impl.util.ReflectUtil;
 import org.activiti.engine.repository.ProcessDefinition;
 import org.activiti.spring.SpringProcessEngineConfiguration;
+import org.apache.ibatis.builder.xml.XMLMapperBuilder;
+import org.apache.ibatis.session.Configuration;
 
 import com.chinacreator.c2.flow.cmd.WfExtendSchemaBuildCmd;
 import com.chinacreator.c2.flow.listener.ExtendTaskListener;
@@ -22,6 +24,7 @@ public class ExtendSpringProcessEngineConfiguration extends
 	
 	public static final String EXTEND_MYBATIS_MAPPING_FILE = "com/chinacreator/c2/flow/persistence/mapping/mappings.xml";
 
+ 	String customMappers;
 	@Override
 	public ProcessEngine buildProcessEngine() {
 		ProcessEngine processEngine = super.buildProcessEngine();
@@ -37,7 +40,21 @@ public class ExtendSpringProcessEngineConfiguration extends
 		initTaskListeners();
 		return processEngine;
 	}
-
+	
+ 	protected void initCustomMappers() {
+ 		if(customMappers!=null){
+	
+ 			String[] list = customMappers.split(",");
+ 			for (String s : list) {
+ 				Configuration configuration = this.sqlSessionFactory
+ 						.getConfiguration();
+ 				InputStream inputStream = ReflectUtil.getResourceAsStream(s);
+ 				new XMLMapperBuilder(inputStream, configuration, s,
+ 						configuration.getSqlFragments()).parse();
+ 			}			
+ 		}
+ 
+ 	}
 	@Override
 	protected InputStream getMyBatisXmlConfigurationSteam() {
 		return ReflectUtil.getResourceAsStream(EXTEND_MYBATIS_MAPPING_FILE);
@@ -90,4 +107,12 @@ public class ExtendSpringProcessEngineConfiguration extends
 	public void setSys_prefix(String sys_prefix) {
 		this.sys_prefix = sys_prefix;
 	}
+	
+ 	public String getCustomMappers() {
+ 		return customMappers;
+ 	}
+ 
+ 	public void setCustomMappers(String customMappers) {
+ 		this.customMappers = customMappers;
+ 	}
 }
