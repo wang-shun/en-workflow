@@ -15,4 +15,16 @@
   <build>
     <finalName>c2-flow-resources</finalName>
   </build>
+  	<distributionManagement>
+		<repository>
+			<id>business-releases</id>
+			<name>business</name>
+			<url>http://172.16.25.142/nexus/content/repositories/business-releases/</url>
+		</repository>
+		<snapshotRepository>
+			<id>business-snapshots</id>
+			<name>business</name>
+			<url>http://172.16.25.142/nexus/content/repositories/business-snapshots</url>
+		</snapshotRepository>
+	</distributionManagement>	
 </project>

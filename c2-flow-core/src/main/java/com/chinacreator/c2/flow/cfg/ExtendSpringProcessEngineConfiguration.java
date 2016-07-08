@@ -33,7 +33,7 @@ public class ExtendSpringProcessEngineConfiguration extends
 			commandExecutor.execute(this.getSchemaCommandConfig(),
 					new WfExtendSchemaBuildCmd(sys_prefix));
 		}
-
+		initCustomMappers();
 		/**
 		 * 初始化所有流程定义任务监听器,用于统一任务
 		 */
