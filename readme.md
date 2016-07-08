@@ -22,7 +22,7 @@ c2工作流基于开源Activiti引擎，用来处理业务系统运行过程中�
 	</dependency>
 ```
 
-[点击查看升级日志](CHANGELOG.md)
+[点击查看升级日志](changelog.md)
 
 ## 使用
 
