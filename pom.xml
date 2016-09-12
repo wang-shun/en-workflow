@@ -18,7 +18,7 @@
 	<modules>
 		<module>c2-flow-api</module>
 		<module>c2-flow-core</module>
-		<module>c2-flow-webapp</module>
+<!-- 		<module>c2-flow-webapp</module> -->
 		<module>c2-flow-modeler</module>
 		<module>c2-flow-resources</module>
 		<module>c2-flow-ui</module>

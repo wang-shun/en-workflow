@@ -9,7 +9,7 @@
     http://www.springframework.org/schema/context/spring-context-3.2.xsd">
 
 	<context:property-placeholder/>
-	<bean id="wfExtendServiceLocal" class="${c2.workflow.wfExtendServiceLocal}"/>
+<!-- 	<bean id="wfExtendServiceLocal" class="${c2.workflow.wfExtendServiceLocal}"/> -->
 	
 	<bean id="wfConfig" class="com.chinacreator.c2.flow.util.WfConfig">
 		<property name="groupTypes">
