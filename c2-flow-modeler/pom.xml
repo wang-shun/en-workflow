@@ -20,5 +20,11 @@
 			<artifactId>c2-flow-core</artifactId>
 			<version>4.1.6-qyb</version>
 		</dependency>
+		<dependency>
+			<groupId>com.cool.energy</groupId>
+			<artifactId>en-core</artifactId>
+			<version>0.2.4-SNAPSHOT</version>
+			<scope>provided</scope>
+		</dependency>		
 	</dependencies>
 </project>

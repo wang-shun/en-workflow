@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.stereotype.Service;
+
 import com.chinacreator.c2.dao.mybatis.enhance.Page;
 import com.chinacreator.c2.dao.mybatis.enhance.Pageable;
 import com.chinacreator.c2.flow.WfApiFactory;
@@ -16,12 +18,14 @@ import com.chinacreator.c2.flow.util.CommonUtil;
 import com.chinacreator.c2.web.ds.ArrayContentProvider;
 import com.chinacreator.c2.web.ds.ArrayContext;
 
+@Service("processdeflist")
 public class ProcessDefListContentProvider implements ArrayContentProvider{
 
-	private WfManagerService wfManagerService = WfApiFactory.getWfManagerService();
+	
 	
 	@Override
 	public Page<WfProcessDefinition> getElements(ArrayContext context) {
+		WfManagerService wfManagerService = WfApiFactory.getWfManagerService();
 		Page<WfProcessDefinition> page = new Page<WfProcessDefinition>(new Pageable(), new ArrayList<WfProcessDefinition>());
 
 		try {

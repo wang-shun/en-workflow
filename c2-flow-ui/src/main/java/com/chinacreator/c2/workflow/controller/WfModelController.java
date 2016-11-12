@@ -31,6 +31,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -89,8 +90,9 @@ public class WfModelController {
 	/**
 	 * 创建模型
 	 */
+	@ResponseBody
 	@RequestMapping(value = "create")
-	public void create(@RequestParam("name") String name,
+	public WfModel create(@RequestParam("name") String name,
 			@RequestParam("key") String key,
 			@RequestParam("description") String description,
 			HttpServletRequest request, HttpServletResponse response) {
@@ -130,11 +132,14 @@ public class WfModelController {
 			modelData=wfRepositoryService.insertModel(wfOperator,modelData);
 
 			//repositoryService.saveModel(modelData);
-			
-			wfRepositoryService.saveModelEditorSource(wfOperator,modelData.getId(),editorNode.toString());
+			String initXml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"+
+				"<definitions xmlns=\"http://www.omg.org/spec/BPMN/20100524/MODEL\" xmlns:bpmndi=\"http://www.omg.org/spec/BPMN/20100524/DI\" xmlns:omgdc=\"http://www.omg.org/spec/DD/20100524/DC\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" targetNamespace=\"\" xsi:schemaLocation=\"http://www.omg.org/spec/BPMN/20100524/MODEL http://www.omg.org/spec/BPMN/2.0/20100501/BPMN20.xsd\">"+
+				"<//definitions>";
+//			wfRepositoryService.saveModelEditorSource(wfOperator,modelData.getId(),initXml);
 			//repositoryService.addModelEditorSource(modelData.getId(),editorNode.toString().getBytes("utf-8"));
 
-			response.sendRedirect(request.getContextPath()+ "/workflow/service/editor?id=" + modelData.getId());
+//			response.sendRedirect(request.getContextPath()+ "/workflow/service/editor?id=" + modelData.getId());
+			return modelData;
 		} catch (Exception e) {
 			logger.error("创建模型失败：", e);
 			throw new C2FlowRuntimeException("创建模型失败,请检查服务是否可!",e);
@@ -276,9 +281,9 @@ public class WfModelController {
 		}
 
 	}
-
+	@ResponseBody
 	@RequestMapping(value = "editProcessByConvert/{processDefinitionId}")
-	public void editProcessByConvert(
+	public Map<String,Object> editProcessByConvert(
 			@PathVariable("processDefinitionId") String processDefinitionId,
 			HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
@@ -302,15 +307,15 @@ public class WfModelController {
 //				wfProcessDefinition.getDeploymentId(),
 //				wfProcessDefinition.getResourceName());
 		
-		InputStream bpmnStream=new ByteArrayInputStream(bpmnStr.getBytes(WfConstants.WF_CHARSET_UTF_8));
-		
-		XMLInputFactory xif = XMLInputFactory.newInstance();
-		InputStreamReader in = new InputStreamReader(bpmnStream, "UTF-8");
-		XMLStreamReader xtr = xif.createXMLStreamReader(in);
-		BpmnModel bpmnModel = new BpmnXMLConverter().convertToBpmnModel(xtr);
-
-		BpmnJsonConverter converter = new BpmnJsonConverter();
-		ObjectNode modelNode = converter.convertToJson(bpmnModel);
+//		InputStream bpmnStream=new ByteArrayInputStream(bpmnStr.getBytes(WfConstants.WF_CHARSET_UTF_8));
+//		
+//		XMLInputFactory xif = XMLInputFactory.newInstance();
+//		InputStreamReader in = new InputStreamReader(bpmnStream, "UTF-8");
+//		XMLStreamReader xtr = xif.createXMLStreamReader(in);
+//		BpmnModel bpmnModel = new BpmnXMLConverter().convertToBpmnModel(xtr);
+//
+//		BpmnJsonConverter converter = new BpmnJsonConverter();
+//		ObjectNode modelNode = converter.convertToJson(bpmnModel);
 		
 		WfModel modelData=new WfModel();
 		//Model modelData = repositoryService.newModel();
@@ -335,14 +340,17 @@ public class WfModelController {
 		
 		//repositoryService.addModelEditorSource(modelData.getId(), modelNode.toString().getBytes("utf-8"));
 		
-		wfRepositoryService.saveModelEditorSource(wfOperator,modelData.getId(),modelNode.toString());
-
+//		wfRepositoryService.saveModelEditorSource(wfOperator,modelData.getId(),modelNode.toString());
+		wfRepositoryService.saveModelEditorSource(wfOperator,modelData.getId(),bpmnStr);
 		// 获取modelId
-		String modelId = modelData.getId();
-
-		// 打开流程编辑器修改model
-		response.sendRedirect(request.getContextPath()
-				+ "/workflow/service/editor?id=" + modelId);
+//		String modelId = modelData.getId();
+		Map<String,Object> result = new HashMap<String,Object>();
+		result.put("model", modelData);
+		result.put("bpmn2xml", bpmnStr);
+		return result;
+//		// 打开流程编辑器修改model
+//		response.sendRedirect(request.getContextPath()
+//				+ "/workflow/service/editor?id=" + modelId);
 	}
 
 	@RequestMapping(value = "/republishToLatest", method = RequestMethod.POST)

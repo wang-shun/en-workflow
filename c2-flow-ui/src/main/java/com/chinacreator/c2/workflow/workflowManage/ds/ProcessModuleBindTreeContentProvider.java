@@ -4,20 +4,23 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.chinacreator.c2.flow.detail.WfModuleBean;
-import com.chinacreator.c2.ioc.ApplicationContextManager;
 import com.chinacreator.c2.web.ds.TreeContentProvider;
 import com.chinacreator.c2.web.ds.TreeContext;
 import com.chinacreator.c2.web.ds.TreeNode;
 import com.chinacreator.c2.web.ds.impl.DefaultTreeNode;
 import com.chinacreator.c2.workflow.api.WfExtendService;
 
+@Service("moduletreecontent")
 public class ProcessModuleBindTreeContentProvider implements
 		TreeContentProvider {
-
-	// private WfExtendService wfExtendService;
-	private WfExtendService wfExtendService = (WfExtendService) ApplicationContextManager
-			.getContext().getBean(WfExtendService.class);
+	@Autowired
+	private WfExtendService wfExtendService;
+//	private WfExtendService wfExtendService = (WfExtendService) ApplicationContextManager
+//			.getContext().getBean(WfExtendService.class);
 
 	@Override
 	public TreeNode[] getElements(TreeContext context) {

@@ -1524,7 +1524,7 @@ public class WfManagerServiceImpl implements WfManagerService {
 		repositoryService.addModelEditorSource(model.getId(),
 				json_xml.getBytes("utf-8"));
 
-		InputStream svgStream = new ByteArrayInputStream(
+/*		InputStream svgStream = new ByteArrayInputStream(
 				svg_xml.getBytes("utf-8"));
 		TranscoderInput input = new TranscoderInput(svgStream);
 
@@ -1537,23 +1537,23 @@ public class WfManagerServiceImpl implements WfManagerService {
 		transcoder.transcode(input, output);
 		final byte[] result = outStream.toByteArray();
 		repositoryService.addModelEditorSourceExtra(model.getId(), result);
-		outStream.close();
+		outStream.close();*/
 
 		// yicheng.yang add begine
-		Model modelData = repositoryService.getModel(model.getId());
-		ObjectNode modelNode = (ObjectNode) new ObjectMapper()
-				.readTree(repositoryService.getModelEditorSource(modelData
-						.getId()));
+//		Model modelData = repositoryService.getModel(model.getId());
+//		ObjectNode modelNode = (ObjectNode) new ObjectMapper()
+//				.readTree(repositoryService.getModelEditorSource(modelData
+//						.getId()));
+//
+//		byte[] bpmnBytes = null;
+//		BpmnModel bpmnModel = new BpmnJsonConverter()
+//				.convertToBpmnModel(modelNode);
+//		bpmnBytes = new BpmnXMLConverter().convertToXML(bpmnModel);
 
-		byte[] bpmnBytes = null;
-		BpmnModel bpmnModel = new BpmnJsonConverter()
-				.convertToBpmnModel(modelNode);
-		bpmnBytes = new BpmnXMLConverter().convertToXML(bpmnModel);
-
-		String processName = modelData.getName() + ".bpmn20.xml";
+		String processName = model.getName() + ".bpmn20.xml";
 		Deployment deployment = repositoryService.createDeployment()
-				.name(modelData.getName()).tenantId(tenantId)
-				.addString(processName, new String(bpmnBytes, "UTF-8"))
+				.name(model.getName()).tenantId(tenantId)
+				.addString(processName, json_xml)
 				.deploy();
 		
 		reBindModuleAndProcess(deployment.getId(),tenantId);
@@ -1567,9 +1567,9 @@ public class WfManagerServiceImpl implements WfManagerService {
 		
 		//新增时部署自动添加任务监听器，判断新增依据，版本号为1
 		if(null==tenantId){
-			this.addTaskListener(modelData.getKey());         
+			this.addTaskListener(model.getKey());         
 		}else{
-			this.addTaskListener(modelData.getKey(),tenantId);
+			this.addTaskListener(model.getKey(),tenantId);
 		}
 	}
 
