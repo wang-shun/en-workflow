@@ -296,7 +296,7 @@
       <form:input desc="id" id="id" name="id"/>
     </form:datasource>
     <form:datasource xsi:type="form:LogicDataSource" id="getWfLogDetail" name="获取流程日志明细" logic="rule:com.chinacreator.c2.flow.wfManager_getWfOperateLogById" sn="wfManager_getWfOperateLogById">
-      <form:param id="id" name="新输入参数"/>
+      <form:param id="id" name="" value="$params.id"/>
     </form:datasource>
   </form:datasources>
   <form:scripts>

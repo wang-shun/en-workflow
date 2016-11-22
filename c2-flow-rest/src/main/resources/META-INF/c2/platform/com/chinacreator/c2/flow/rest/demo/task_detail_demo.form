@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form:Form xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dync="http://www.chinacreator.com/platform/mvc/ui/dync" xmlns:form="http://www.chinacreator.com/platform/mvc/form" name="任务详细列表示例" sn="task_detail_demo" type="form">
+  <form:control type="page/modal">
+    <form:attributes source="page/modal">
+      <dync:attribute default="" group="事件" id="beforeDataSourceLoad" name="数据源加载前" value="page_beforeDataSourceLoad($params)">
+        <dync:render colSpan="2" height="0" multi="false" name="event">
+          <dync:item name="param" value="$params"/>
+        </dync:render>
+        <dync:children/>
+      </dync:attribute>
+      <dync:attribute default="" group="注入配置" id="angularJsServices" name="注入服务" value="$q ">
+        <dync:render colSpan="2" height="0" multi="true" name="editableselect">
+          <dync:item name="tab首页操作 - TabOperator" value="TabOperator"/>
+          <dync:item name="Promise工厂 - $q" value="$q"/>
+          <dync:item name="安全认证 - SecurityFactory" value="SecurityFactory"/>
+          <dync:item name="消息推送 - Notification" value="Notification"/>
+          <dync:item name="json循环依赖解析 - JsonCRParse" value="JsonCRParse"/>
+          <dync:item name="用户偏好设置 - UserPreferences" value="UserPreferences"/>
+          <dync:item name="页面滚动 - Scroller" value="Scroller"/>
+        </dync:render>
+        <dync:children/>
+      </dync:attribute>
+    </form:attributes>
+  </form:control>
+  <form:child xsi:type="form:Group" id="newGroupId" name="新分组">
+    <form:control type="container/div">
+      <form:attributes source="container/div">
+        <dync:attribute default="false" group="HTML配置" id="pure" name="简单div" value="false">
+          <dync:render/>
+          <dync:children/>
+        </dync:attribute>
+        <dync:attribute default="12" group="HTML配置" id="span" name="占位数" value="12">
+          <dync:render/>
+          <dync:children/>
+        </dync:attribute>
+        <dync:attribute default="0" group="HTML配置" id="offset" name="偏移" value="0">
+          <dync:render/>
+          <dync:children/>
+        </dync:attribute>
+        <dync:attribute default="" group="HTML配置" id="collapse" name="隐藏" value="">
+          <dync:render/>
+          <dync:children/>
+        </dync:attribute>
+        <dync:attribute default="false" group="HTML配置" id="defaultCollapse" name="隐藏默认值" value="false">
+          <dync:render/>
+          <dync:children/>
+        </dync:attribute>
+        <dync:attribute default="false" group="HTML配置" id="autoHeight" name="自动高度" value="false">
+          <dync:render/>
+          <dync:children/>
+        </dync:attribute>
+        <dync:attribute default="false" group="HTML配置" id="nopadding" name="无内边距" value="false">
+          <dync:render/>
+          <dync:children/>
+        </dync:attribute>
+        <dync:attribute default="" group="高级自定义" id="html" name="自定义HTML" value="">
+          <dync:render/>
+          <dync:children/>
+        </dync:attribute>
+        <dync:attribute default="" group="高级自定义" id="cssClass" name="自定义class" value="">
+          <dync:render/>
+          <dync:children/>
+        </dync:attribute>
+        <dync:attribute default="" group="高级自定义" id="style" name="自定义style" value="">
+          <dync:render/>
+          <dync:children/>
+        </dync:attribute>
+      </form:attributes>
+    </form:control>
+    <form:child xsi:type="form:Field" binding="taskInfo.name" id="span" name="任务名称：" customize="true">
+      <form:control type="widget/span">
+        <form:attributes source="widget/span">
+          <dync:attribute default="false" group="基础属性" id="showLable" name="显示lable" value="true">
+            <dync:render colSpan="1" height="0" multi="false" name="checkbox"/>
+            <dync:children/>
+          </dync:attribute>
+        </form:attributes>
+      </form:control>
+      <form:validation/>
+    </form:child>
+    <form:child xsi:type="form:Field" binding="taskInfo.priority" id="span1" name="优先级：" customize="true">
+      <form:control type="widget/span">
+        <form:attributes source="widget/span">
+          <dync:attribute default="false" group="基础属性" id="showLable" name="显示lable" value="true">
+            <dync:render colSpan="1" height="0" multi="false" name="checkbox"/>
+            <dync:children/>
+          </dync:attribute>
+        </form:attributes>
+      </form:control>
+      <form:validation/>
+    </form:child>
+    <form:child xsi:type="form:Field" binding="taskInfo.assignee" id="span2" name="处理人：" customize="true">
+      <form:control type="widget/span">
+        <form:attributes source="widget/span">
+          <dync:attribute default="false" group="基础属性" id="showLable" name="显示lable" value="true">
+            <dync:render colSpan="1" height="0" multi="false" name="checkbox"/>
+            <dync:children/>
+          </dync:attribute>
+        </form:attributes>
+      </form:control>
+      <form:validation/>
+    </form:child>
+    <form:child xsi:type="form:Field" binding="taskInfo.startTime" id="span3" name="创建时间：" customize="true">
+      <form:control type="widget/span">
+        <form:attributes source="widget/span">
+          <dync:attribute default="" group="格式设置" id="formats" name="格式化类别" value="date">
+            <dync:render colSpan="1" height="0" multi="false" name="select">
+              <dync:item name="不进行格式化" value=""/>
+              <dync:item name="数字" value="number"/>
+              <dync:item name="货币" value="currency"/>
+              <dync:item name="时间" value="date"/>
+              <dync:item name="JSON" value="json"/>
+              <dync:item name="小写" value="lowercase"/>
+              <dync:item name="大写" value="uppercase"/>
+              <dync:item name="截取" value="limitTo"/>
+              <dync:item name="单行模式" value="singleLine"/>
+            </dync:render>
+            <dync:children/>
+          </dync:attribute>
+          <dync:attribute default="false" group="基础属性" id="showLable" name="显示lable" value="true">
+            <dync:render colSpan="1" height="0" multi="false" name="checkbox"/>
+            <dync:children/>
+          </dync:attribute>
+        </form:attributes>
+      </form:control>
+      <form:validation/>
+    </form:child>
+    <form:child xsi:type="form:Field" binding="taskInfo.candidateUser" id="span4" name="候选人：" customize="true">
+      <form:control type="widget/span">
+        <form:attributes source="widget/span">
+          <dync:attribute default="false" group="基础属性" id="showLable" name="显示lable" value="true">
+            <dync:render colSpan="1" height="0" multi="false" name="checkbox"/>
+            <dync:children/>
+          </dync:attribute>
+        </form:attributes>
+      </form:control>
+      <form:validation/>
+    </form:child>
+    <form:child xsi:type="form:Field" binding="taskInfo.candidateGroup" id="span5" name="候选组：" customize="true">
+      <form:control type="widget/span">
+        <form:attributes source="widget/span">
+          <dync:attribute default="false" group="基础属性" id="showLable" name="显示lable" value="true">
+            <dync:render colSpan="1" height="0" multi="false" name="checkbox"/>
+            <dync:children/>
+          </dync:attribute>
+        </form:attributes>
+      </form:control>
+      <form:validation/>
+    </form:child>
+  </form:child>
+  <form:child xsi:type="form:Group" id="toolbarModalFooter" name="对话框工具条">
+    <form:control type="container/toolbar_modal_footer">
+      <form:attributes source="container/toolbar_modal_footer"/>
+    </form:control>
+    <form:child xsi:type="form:Field" id="button" name="签收" customize="true">
+      <form:control type="widget/button">
+        <form:attributes source="widget/button">
+          <dync:attribute default="" group="事件设置" id="click" name="点击事件" value="button_click($event)">
+            <dync:render colSpan="1" height="0" multi="false" name="event">
+              <dync:item name="params" value="$event"/>
+            </dync:render>
+            <dync:children/>
+          </dync:attribute>
+        </form:attributes>
+      </form:control>
+      <form:validation/>
+    </form:child>
+    <form:child xsi:type="form:Field" id="button1" name="签收并完成" customize="true">
+      <form:control type="widget/button">
+        <form:attributes source="widget/button">
+          <dync:attribute default="" group="事件设置" id="click" name="点击事件" value="button1_click($event)">
+            <dync:render colSpan="1" height="0" multi="false" name="event">
+              <dync:item name="params" value="$event"/>
+            </dync:render>
+            <dync:children/>
+          </dync:attribute>
+        </form:attributes>
+      </form:control>
+      <form:validation/>
+    </form:child>
+    <form:child xsi:type="form:Field" id="button2" name="取消" customize="true">
+      <form:control type="widget/button">
+        <form:attributes source="widget/button">
+          <dync:attribute default="" group="事件设置" id="click" name="点击事件" value="button2_click($event)">
+            <dync:render colSpan="1" height="0" multi="false" name="event">
+              <dync:item name="params" value="$event"/>
+            </dync:render>
+            <dync:children/>
+          </dync:attribute>
+        </form:attributes>
+      </form:control>
+      <form:validation/>
+    </form:child>
+  </form:child>
+  <form:datasources>
+    <form:datasource xsi:type="form:Inputs"/>
+  </form:datasources>
+  <form:scripts>
+
+page_beforeDataSourceLoad:function($params){
+	$scope.taskInfo={};
+	
+	var q1=$http.get(&quot;v1/flow/history/tasks/&quot;+$params.taskId).success(function(data){
+		$scope.taskInfo=data;
+		if(data.endTime) $view.button1.setDisabled(true);
+		if(data.assignee&amp;&amp;data.assignee!=&quot;&quot;) $view.button.setDisabled(true);
+	});
+	
+	var q2=$http.get(&quot;/v1/flow/history/tasks/&quot;+$params.taskId+&quot;/identitylinks&quot;).success(function(data){
+		debugger;
+		var candidateUser=[];
+		var candidateGroup=[];
+		if(data){
+			for(var i=0;i&lt;data.length;i++){
+				if(data[i].userId&amp;&amp;data[i].type==&quot;candidate&quot;) candidateUser.push(data[i].userId);
+				if(data[i].groupId&amp;&amp;data[i].type==&quot;candidate&quot;) candidateGroup.push(data[i].groupId);
+			}
+		}
+		$scope.taskInfo.candidateUser=candidateUser.join(&quot;,&quot;);
+		$scope.taskInfo.candidateGroup=candidateGroup.join(&quot;,&quot;);
+	});
+	
+	
+	//$q.all([q1,q2]).then(function(v){
+	//	console.log(v);
+	//});
+	
+	
+	
+},
+
+button2_click:function($event){
+	 Modal.instance.dismiss();
+},
+
+button1_click:function($event){
+var params={
+			&quot;action&quot;: &quot;CLAIM_COMPLETE&quot;,
+			&quot;variables&quot;: [
+              	{
+              		&quot;name&quot;: &quot;myparams2&quot;,
+              		&quot;type&quot;: &quot;string&quot;,
+              		&quot;variableScope&quot;: &quot;LOCAL&quot;,
+              		&quot;value&quot;: &quot;2222&quot;
+              	}
+			]
+	}
+	$http.post(&quot;v1/flow/runtime/tasks/&quot;+$params.taskId,params).success(function(data){
+		$scope.taskInfo=data;
+		Modal.instance.close();
+	});
+},
+button_click:function($event){
+	var params={
+			&quot;action&quot;: &quot;CLAIM&quot;,
+			&quot;variables&quot;: [
+              	{
+              		&quot;name&quot;: &quot;myparams1&quot;,
+              		&quot;type&quot;: &quot;string&quot;,
+              		&quot;variableScope&quot;: &quot;LOCAL&quot;,
+              		&quot;value&quot;: &quot;1111111&quot;
+              	}
+			]
+	}
+	$http.post(&quot;v1/flow/runtime/tasks/&quot;+$params.taskId,params).success(function(data){
+		$scope.taskInfo=data;
+		Modal.instance.close();
+	});
+}</form:scripts>
+</form:Form>
