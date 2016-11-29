@@ -137,15 +137,19 @@ public class TaskBaseResource {
         taskQuery.taskDelegationState(state);
       }
     }
-    if(request.getCandidateUser() != null) {
-      taskQuery.taskCandidateUser(request.getCandidateUser());
-    }
-    if(request.getInvolvedUser() != null) {
-      taskQuery.taskInvolvedUser(request.getInvolvedUser());
-    }
-    if(request.getCandidateGroup() != null) {
-      taskQuery.taskCandidateGroup(request.getCandidateGroup());
-    }
+    
+	if (request.getCandidateUser() != null) {
+		taskQuery.taskCandidateUser(request.getCandidateUser());
+	}
+	
+	if (request.getCandidateGroupIn() != null) {
+		taskQuery.taskCandidateGroupIn(request.getCandidateGroupIn());
+	}
+	
+	if (request.getInvolvedUser() != null) {
+		taskQuery.taskInvolvedUser(request.getInvolvedUser());
+	}
+	
     if(request.getProcessInstanceId() != null) {
       taskQuery.processInstanceId(request.getProcessInstanceId());
     }
@@ -245,6 +249,10 @@ public class TaskBaseResource {
     if(Boolean.TRUE.equals(request.getWithoutTenantId())) {
     	taskQuery.taskWithoutTenantId();
     }
+    
+	if(request.getCandidateOrAssigned()!=null){
+		taskQuery.taskCandidateOrAssigned(request.getCandidateOrAssigned());
+	}
     
     return new WfTaskPaginateList().paginateList(request, taskQuery, "id", properties);
   }

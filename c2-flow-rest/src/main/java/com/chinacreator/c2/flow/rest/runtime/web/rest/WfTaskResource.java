@@ -92,6 +92,8 @@ public class WfTaskResource extends TaskBaseResource {
 	@ApiOperation(value = "待办列表", tags = "runtime_task")
 	@ApiResponses(value = { @ApiResponse(code = 400, message = "错误的请求参数"),@ApiResponse(code = 404, message = "操作失败，请求资源未找到"),@ApiResponse(code = 500, message = "系统内部错误")  })
 	@GET
+	@Produces({ MediaType.APPLICATION_JSON })
+	@Consumes({ MediaType.APPLICATION_JSON })
 	public WfPageListResponse<WfTaskResponse> getTasks(@ApiParam(value = "任务名称") @QueryParam("name") String name,
 								 @ApiParam(value = "任务名称模糊匹配") @QueryParam("nameLike") String nameLike,
 								 @ApiParam(value = "任务描述") @QueryParam("description") String description,
@@ -184,11 +186,7 @@ public class WfTaskResource extends TaskBaseResource {
 		if (StringUtils.hasText(involvedUser)) {
 			request.setInvolvedUser(involvedUser);
 		}
-
-		if (StringUtils.hasText(candidateGroup)) {
-			request.setCandidateGroup(candidateGroup);
-		}
-
+		
 		if (StringUtils.hasText(processDefinitionKey)) {
 			request.setProcessDefinitionKey(processDefinitionKey);
 		}
@@ -1120,5 +1118,14 @@ public class WfTaskResource extends TaskBaseResource {
 	      }
 	    }
 	    return variableFound;
-	  }
+ }
+  
+  
+  /**
+   * 分支测试
+   * @return
+   */
+  public long getNumber(){
+	  return System.currentTimeMillis()%2;
+  }
 }

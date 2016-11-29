@@ -55,7 +55,7 @@
             <dync:render colSpan="1" height="0" multi="false" name="checkboxAndExpr"/>
             <dync:children/>
           </dync:attribute>
-          <dync:attribute default="" group="HTML设置" id="value" name="默认值" value="{&#xD;&#xA;  &quot;businessData&quot;: {&#xD;&#xA;    &quot;businessKey&quot;: &quot;123456&quot;,&#xD;&#xA;    &quot;appId&quot;: &quot;应用id&quot;,&#xD;&#xA;    &quot;moduleId&quot;: &quot;模块id&quot;,&#xD;&#xA;    &quot;moduleName&quot;: &quot;模块名称&quot;&#xD;&#xA;  },&#xD;&#xA;  &quot;processDefinitionKey&quot;: &quot;启动的流程定义key&quot;,&#xD;&#xA;  &quot;variables&quot;: [&#xD;&#xA;    {&#xD;&#xA;      &quot;name&quot;: &quot;param1&quot;,&#xD;&#xA;      &quot;type&quot;: &quot;string&quot;,&#xD;&#xA;      &quot;variableScope&quot;: &quot;LOCAL&quot;,&#xD;&#xA;      &quot;value&quot;:&quot;1111111&quot; &#xD;&#xA;    }&#xD;&#xA;  ]&#xD;&#xA;}">
+          <dync:attribute default="" group="HTML设置" id="value" name="默认值" value="{&#xD;&#xA;  &quot;businessData&quot;: {&#xD;&#xA;    &quot;businessKey&quot;: &quot;123456&quot;,&#xD;&#xA;    &quot;appId&quot;: &quot;app1&quot;,&#xD;&#xA;    &quot;moduleId&quot;: &quot;m1&quot;,&#xD;&#xA;    &quot;moduleName&quot;: &quot;模块1&quot;&#xD;&#xA;  },&#xD;&#xA;  &quot;processDefinitionKey&quot;: &quot;t2&quot;,&#xD;&#xA;  &quot;variables&quot;: [&#xD;&#xA;    {&#xD;&#xA;      &quot;name&quot;: &quot;test_param1&quot;,&#xD;&#xA;      &quot;type&quot;: &quot;string&quot;,&#xD;&#xA;      &quot;variableScope&quot;: &quot;LOCAL&quot;,&#xD;&#xA;      &quot;value&quot;:&quot;test_param1_value&quot; &#xD;&#xA;    }&#xD;&#xA;  ]&#xD;&#xA;}">
             <dync:render colSpan="1" height="0" multi="false" name="text"/>
             <dync:children/>
           </dync:attribute>

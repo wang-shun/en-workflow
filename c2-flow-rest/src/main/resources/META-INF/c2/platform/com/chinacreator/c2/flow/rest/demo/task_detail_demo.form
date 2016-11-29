@@ -147,6 +147,21 @@
       </form:control>
       <form:validation/>
     </form:child>
+    <form:child xsi:type="form:Field" binding="varJson" id="textarea" name="流程变量json：" customize="true">
+      <form:control type="widget/textarea">
+        <form:attributes source="widget/textarea">
+          <dync:attribute default="3" group="HTML设置" id="rows" name="行高" value="10">
+            <dync:render colSpan="1" height="0" multi="false" name="text"/>
+            <dync:children/>
+          </dync:attribute>
+          <dync:attribute default="" group="HTML设置" id="value" name="默认值" value="[&#xD;&#xA;  {&#xD;&#xA;        &quot;name&quot;:&quot;param1&quot;,&#xD;&#xA;        &quot;type&quot;:&quot;string&quot;,&#xD;&#xA;        &quot;value&quot;:&quot;value1&quot;&#xD;&#xA;  }&#xD;&#xA;]">
+            <dync:render colSpan="1" height="0" multi="false" name="text"/>
+            <dync:children/>
+          </dync:attribute>
+        </form:attributes>
+      </form:control>
+      <form:validation/>
+    </form:child>
   </form:child>
   <form:child xsi:type="form:Group" id="toolbarModalFooter" name="对话框工具条">
     <form:control type="container/toolbar_modal_footer">
@@ -199,6 +214,7 @@
 
 page_beforeDataSourceLoad:function($params){
 	$scope.taskInfo={};
+	$scope.varJson;
 	
 	var q1=$http.get(&quot;v1/flow/history/tasks/&quot;+$params.taskId).success(function(data){
 		$scope.taskInfo=data;
@@ -206,7 +222,7 @@ page_beforeDataSourceLoad:function($params){
 		if(data.assignee&amp;&amp;data.assignee!=&quot;&quot;) $view.button.setDisabled(true);
 	});
 	
-	var q2=$http.get(&quot;/v1/flow/history/tasks/&quot;+$params.taskId+&quot;/identitylinks&quot;).success(function(data){
+	var q2=$http.get(&quot;v1/flow/history/tasks/&quot;+$params.taskId+&quot;/identitylinks&quot;).success(function(data){
 		debugger;
 		var candidateUser=[];
 		var candidateGroup=[];
@@ -219,8 +235,7 @@ page_beforeDataSourceLoad:function($params){
 		$scope.taskInfo.candidateUser=candidateUser.join(&quot;,&quot;);
 		$scope.taskInfo.candidateGroup=candidateGroup.join(&quot;,&quot;);
 	});
-	
-	
+
 	//$q.all([q1,q2]).then(function(v){
 	//	console.log(v);
 	//});
@@ -234,33 +249,42 @@ button2_click:function($event){
 },
 
 button1_click:function($event){
-var params={
-			&quot;action&quot;: &quot;CLAIM_COMPLETE&quot;,
-			&quot;variables&quot;: [
-              	{
-              		&quot;name&quot;: &quot;myparams2&quot;,
-              		&quot;type&quot;: &quot;string&quot;,
-              		&quot;variableScope&quot;: &quot;LOCAL&quot;,
-              		&quot;value&quot;: &quot;2222&quot;
-              	}
-			]
+	
+	var variables=[];
+	try{
+		
+		if($scope.varJson){
+			variables=JSON.parse($scope.varJson)
+		}
+	}catch(e){
+		alert(&quot;流程变量转换json异常,检查json格式！&quot;);
 	}
-	$http.post(&quot;v1/flow/runtime/tasks/&quot;+$params.taskId,params).success(function(data){
-		$scope.taskInfo=data;
-		Modal.instance.close();
-	});
-},
+
+
+	var params={
+				&quot;action&quot;: &quot;CLAIM_COMPLETE&quot;,
+				&quot;variables&quot;:variables
+		}
+		$http.post(&quot;v1/flow/runtime/tasks/&quot;+$params.taskId,params).success(function(data){
+			$scope.taskInfo=data;
+			Modal.instance.close();
+		});
+	},
 button_click:function($event){
+
+	var variables=[];
+	try{
+		
+		if($scope.varJson){
+			variables=JSON.parse($scope.varJson)
+		}
+	}catch(e){
+		alert(&quot;流程变量转换json异常,检查json格式！&quot;);
+	}
+
 	var params={
 			&quot;action&quot;: &quot;CLAIM&quot;,
-			&quot;variables&quot;: [
-              	{
-              		&quot;name&quot;: &quot;myparams1&quot;,
-              		&quot;type&quot;: &quot;string&quot;,
-              		&quot;variableScope&quot;: &quot;LOCAL&quot;,
-              		&quot;value&quot;: &quot;1111111&quot;
-              	}
-			]
+			&quot;variables&quot;: variables
 	}
 	$http.post(&quot;v1/flow/runtime/tasks/&quot;+$params.taskId,params).success(function(data){
 		$scope.taskInfo=data;

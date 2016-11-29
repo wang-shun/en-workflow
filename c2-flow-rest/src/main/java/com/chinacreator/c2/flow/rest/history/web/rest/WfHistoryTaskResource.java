@@ -63,6 +63,8 @@ public class WfHistoryTaskResource extends HistoricTaskInstanceBaseResource{
   	@ApiOperation(value = "获取历史任务列表",tags = "history_task")
   	@ApiResponses(value = { @ApiResponse(code = 400, message = "错误的请求参数"),@ApiResponse(code = 404, message = "操作失败，请求资源未找到"),@ApiResponse(code = 500, message = "系统内部错误")  })
   	@GET
+    @Produces({ MediaType.APPLICATION_JSON })
+    @Consumes({ MediaType.APPLICATION_JSON })
     public WfPageListResponse<WfHistoricTaskInstanceResponse> getHistoricTaskProcessInstances(@ApiParam(value = "任务id") @QueryParam("taskId") String taskId,
     												@ApiParam(value = "流程实例") @QueryParam("processInstanceId") String processInstanceId,
     												@ApiParam(value = "业务主键") @QueryParam("processBusinessKey") String processBusinessKey,

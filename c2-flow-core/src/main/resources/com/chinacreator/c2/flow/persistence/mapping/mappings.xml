@@ -51,7 +51,7 @@
     <mapper resource="com/chinacreator/c2/flow/persistence/mapping/WfWorkDate.xml" />
     <mapper resource="com/chinacreator/c2/flow/persistence/mapping/WfUniteRunTaskExtend.xml" />
     <mapper resource="com/chinacreator/c2/flow/persistence/mapping/WfUniteHisTaskExtend.xml" />
-    
+    <mapper resource="com/chinacreator/c2/flow/persistence/mapping/WfQueryTask.xml" />
     
   </mappers>
 </configuration>

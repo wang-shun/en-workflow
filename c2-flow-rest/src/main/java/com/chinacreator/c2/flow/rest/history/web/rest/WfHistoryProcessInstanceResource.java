@@ -12,11 +12,13 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.ResponseBuilder;
 
@@ -78,6 +80,8 @@ public class WfHistoryProcessInstanceResource extends HistoricProcessInstanceBas
   	@ApiOperation(value = "获取历史工作流实例列表",tags = "history_instance")
   	@ApiResponses(value = { @ApiResponse(code = 400, message = "错误的请求参数"),@ApiResponse(code = 404, message = "操作失败，请求资源未找到"),@ApiResponse(code = 500, message = "系统内部错误")  })
   	@GET
+    @Produces({ MediaType.APPLICATION_JSON })
+    @Consumes({ MediaType.APPLICATION_JSON })
 	public WfPageListResponse<WfHistoricProcessInstanceResponse> getHistoricProcessInstances(@ApiParam(value = "流程实例id", required = false) @QueryParam("processInstanceId") String processInstanceId,
 													@ApiParam(value = "流程定义key", required = false) @QueryParam("processDefinitionKey")  String processDefinitionKey,
 													@ApiParam(value = "流程定义id", required = false) @QueryParam("processDefinitionId") String processDefinitionId,

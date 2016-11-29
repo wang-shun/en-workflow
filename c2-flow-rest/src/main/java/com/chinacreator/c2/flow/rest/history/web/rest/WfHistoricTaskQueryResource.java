@@ -6,8 +6,11 @@ import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 
+import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
 
 import org.activiti.engine.ActivitiIllegalArgumentException;
 import org.activiti.engine.ActivitiObjectNotFoundException;
@@ -40,6 +43,8 @@ public class WfHistoricTaskQueryResource extends HistoricTaskInstanceBaseResourc
   @ApiOperation(value = "查询历史任务列表", tags = "query")
   @ApiResponses(value = { @ApiResponse(code = 400, message = "错误的请求参数"),@ApiResponse(code = 404, message = "操作失败，请求资源未找到"),@ApiResponse(code = 500, message = "系统内部错误")  })
   @POST
+  @Produces({ MediaType.APPLICATION_JSON })
+  @Consumes({ MediaType.APPLICATION_JSON })
   public WfPageListResponse<WfHistoricTaskInstanceResponse> queryHistoricTaskInstances(@ApiParam(value = "查询过滤条件",required = true)  WfHistoricTaskInstanceQueryRequest queryRequest) throws Exception{
   	try{
   		return getQueryResponse(historyService.createHistoricTaskInstanceQuery(),queryRequest);

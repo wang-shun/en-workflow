@@ -91,6 +91,8 @@ public class WfProcessInstanceResource extends BaseProcessInstanceResource{
   @ApiOperation(value = "工作流实例列表",tags = "runtime_instance")
   @ApiResponses(value = { @ApiResponse(code = 400, message = "错误的请求参数"),@ApiResponse(code = 404, message = "操作失败，请求资源未找到"),@ApiResponse(code = 500, message = "系统内部错误")  })
   @GET
+  @Produces({ MediaType.APPLICATION_JSON })
+  @Consumes({ MediaType.APPLICATION_JSON })
   public WfPageListResponse<WfProcessInstanceResponse> getProcessInstances(	@ApiParam(value = "流程实例id", required = false) @QueryParam("id") String id,
 		  									@ApiParam(value = "流程定义key", required = false) @QueryParam("processDefinitionKey") String processDefinitionKey,
 		  									@ApiParam(value = "流程定义id", required = false) @QueryParam("processDefinitionId") String processDefinitionId,

@@ -106,19 +106,19 @@
     <form:datasource xsi:type="form:Inputs"/>
   </form:datasources>
   <form:scripts>loadTodoList:function(){
+
 	if($scope.subject||$scope.subject.id){
 		
-		//查询当前用户下的待办
-		$http.post(&quot;v1/flow/query/runtime/tasks&quot;,{&quot;start&quot;: 0,&quot;size&quot;:20,&quot;involvedUser&quot;:$scope.subject.id}).success(function(data){
+		//查询当前用户(处理人、候选人、所属组)的待办
+		var params={&quot;start&quot;: 0,
+					&quot;size&quot;:20,
+					&quot;candidateGroupIn&quot;:[$params.userGroups],
+					&quot;candidateOrAssigned&quot;:$scope.subject.id}
+		
+		$http.post(&quot;v1/flow/query/runtime/tasks&quot;,params).success(function(data){
 			$scope.todoList=data.data;
 		})
 		
-	    //查询当前用户所属组下待办
-	    if($params.userGroups){
-	    	$http.post(&quot;v1/flow/query/runtime/tasks&quot;,{&quot;start&quot;: 0,&quot;size&quot;:20,&quot;candidateGroup&quot;:$params.userGroups}).success(function(data){
-	    		$scope.todoList=$scope.todoList.concat(data.data);
-	    	});
-	    }
 	}else{
 		Messenger.error(&quot;当前用户id获取为空，无法获取待办列表!&quot;);
 	}

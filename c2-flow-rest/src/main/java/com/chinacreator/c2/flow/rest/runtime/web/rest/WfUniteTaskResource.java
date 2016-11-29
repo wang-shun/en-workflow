@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -45,6 +46,7 @@ public class WfUniteTaskResource {
 	@ApiOperation(value = "统一待办列表", tags = "runtime_unite_task",notes="注：只能用于查单个用户统一待办表中的数据")
 	@GET
 	@Produces({ MediaType.APPLICATION_JSON })
+	@Consumes({ MediaType.APPLICATION_JSON })
 	public WfPageListResponse<WfUniteTaskResponse> getUniteTasks(
 									  @ApiParam(value = "用户id,必传，查询此用户待办信息",required=true) @QueryParam("userId") String userId,
 									  @ApiParam(value = "当前用户所属组") @QueryParam("groups") String []groups,

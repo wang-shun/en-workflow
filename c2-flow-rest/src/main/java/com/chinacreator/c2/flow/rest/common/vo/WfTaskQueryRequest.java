@@ -44,8 +44,10 @@ public class WfTaskQueryRequest extends WfPaginateRequest {
   private String delegationState;
   @ApiModelProperty("候选人")
   private String candidateUser;
-  @ApiModelProperty("候选组")
-  private String candidateGroup;
+  @ApiModelProperty("候选组集合)")
+  private List<String> candidateGroupIn;
+  @ApiModelProperty("候选人或处理人)")
+  private String candidateOrAssigned;
   @ApiModelProperty("流程参与者(处理人、候选人、所有者)")
   private String involvedUser;
   @ApiModelProperty("任务所在流程实例id")
@@ -213,13 +215,6 @@ public class WfTaskQueryRequest extends WfPaginateRequest {
     this.candidateUser = candidateUser;
   }
   
-  public String getCandidateGroup() {
-    return candidateGroup;
-  }
-  
-  public void setCandidateGroup(String candidateGroup) {
-    this.candidateGroup = candidateGroup;
-  }
   
   public String getInvolvedUser() {
     return involvedUser;
@@ -437,4 +432,24 @@ public class WfTaskQueryRequest extends WfPaginateRequest {
   public Boolean getWithoutTenantId() {
 	  return withoutTenantId;
   }
+
+public List<String> getCandidateGroupIn() {
+	return candidateGroupIn;
+}
+
+public void setCandidateGroupIn(List<String> candidateGroupIn) {
+	this.candidateGroupIn = candidateGroupIn;
+}
+
+public String getCandidateOrAssigned() {
+	return candidateOrAssigned;
+}
+
+public void setCandidateOrAssigned(String candidateOrAssigned) {
+	this.candidateOrAssigned = candidateOrAssigned;
+}
+
+
+  
+  
 }
