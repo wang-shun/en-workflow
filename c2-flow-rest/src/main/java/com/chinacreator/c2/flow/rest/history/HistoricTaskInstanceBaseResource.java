@@ -214,7 +214,7 @@ public class HistoricTaskInstanceBaseResource {
     	query.taskWithoutTenantId();
     }
     
-    return new WfHistoricTaskInstancePaginateList().paginateList(query,"taskInstanceId", allowedSortProperties);
+    return new WfHistoricTaskInstancePaginateList().paginateList(queryRequest,query,"taskInstanceId", allowedSortProperties);
   }
 
   protected void addTaskVariables(HistoricTaskInstanceQuery taskInstanceQuery, List<WfQueryVariable> variables) {

@@ -110,12 +110,17 @@
 	if($scope.subject||$scope.subject.id){
 		
 		//查询当前用户(处理人、候选人、所属组)的待办
-		var params={&quot;start&quot;: 0,
+		var toDoParams={&quot;start&quot;: 0,
 					&quot;size&quot;:20,
-					&quot;candidateGroupIn&quot;:[$params.userGroups],
 					&quot;candidateOrAssigned&quot;:$scope.subject.id}
+		if($params.userGroups){
+			toDoParams.candidateGroupIn=[$params.userGroups];
+		}
 		
-		$http.post(&quot;v1/flow/query/runtime/tasks&quot;,params).success(function(data){
+		var doneParams={&quot;start&quot;: 0,
+					&quot;size&quot;:20,
+					&quot;taskAssignee&quot;:$scope.subject.id}
+		$http.post(&quot;v1/flow/query/runtime/tasks&quot;,doneParams).success(function(data){
 			$scope.todoList=data.data;
 		})
 		

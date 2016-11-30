@@ -76,7 +76,7 @@ public abstract class WfAbstractPaginateList<T> {
     List<T> list = processList(query.listPage(start, size));
     WfPageListResponse<T> response = new WfPageListResponse<T>();
     response.setStart(start);
-    response.setSize(list.size()); 
+    response.setSize(size);
     response.setSort(sort);
     response.setOrder(order);
     response.setTotal(query.count());
