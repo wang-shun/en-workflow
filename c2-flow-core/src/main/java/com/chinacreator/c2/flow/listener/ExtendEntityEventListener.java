@@ -18,6 +18,7 @@ import org.activiti.engine.impl.persistence.entity.TaskEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.chinacreator.c2.flow.cmd.unitetask.DeleteWfUniteRunTaskByIdCmd;
 import com.chinacreator.c2.flow.cmd.unitetask.DeleteWfUniteRunTaskCmd;
 import com.chinacreator.c2.flow.cmd.unitetask.DeleteWfUniteRunTaskExtCmd;
 import com.chinacreator.c2.flow.cmd.unitetask.FindWfUniteHisTaskByTaskIdCmd;
@@ -196,11 +197,14 @@ public class ExtendEntityEventListener implements ActivitiEventListener {
 						}
 					}
 					
+					//解决并发测试时mysql默认隔离级别死锁异常：根据主键删除，增强数据厍并发性
+					managementService.executeCommand(new DeleteWfUniteRunTaskByIdCmd(wfUniteRunTaskEntity.getId()));
+					
 				}
 			}
 			
 			// 删除运行时任务的统一待办表的记录
-			managementService.executeCommand(new DeleteWfUniteRunTaskCmd(taskId));
+			//managementService.executeCommand(new DeleteWfUniteRunTaskCmd(taskId));
 		}
 		// 历史任务删除时
 		if (WfConstants.EVENT_ENTITY_HISTORICTASKINSTANCEENTITY

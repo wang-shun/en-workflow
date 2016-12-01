@@ -294,6 +294,10 @@ public class WfRuntimeServiceImpl implements WfRuntimeService {
 							processInstanceId);
 					wfResult.setResult(WfConstants.WF_CONTROL_EXE_FAIL);
 				}
+			}else{
+				throw new ActivitiObjectNotFoundException(
+						"Could not find processInstance data with processInstanceId '" + processInstanceId + "'.",
+						ProcessInstance.class);
 			}
 		} catch (Exception e) {
 			wfResult.setResult(WfConstants.WF_CONTROL_EXE_FAIL);
