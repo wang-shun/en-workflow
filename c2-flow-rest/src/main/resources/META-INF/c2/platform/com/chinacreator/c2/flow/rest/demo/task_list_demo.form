@@ -117,10 +117,7 @@
 			toDoParams.candidateGroupIn=[$params.userGroups];
 		}
 		
-		var doneParams={&quot;start&quot;: 0,
-					&quot;size&quot;:20,
-					&quot;taskAssignee&quot;:$scope.subject.id}
-		$http.post(&quot;v1/flow/query/runtime/tasks&quot;,doneParams).success(function(data){
+		$http.post(&quot;v1/flow/query/runtime/tasks&quot;,toDoParams).success(function(data){
 			$scope.todoList=data.data;
 		})
 		
@@ -130,7 +127,7 @@
 },
 loadDoneList:function(){
 	if($scope.subject||$scope.subject.id){
-		$http.post(&quot;v1/flow/query/history/tasks&quot;,{&quot;start&quot;: 0,&quot;size&quot;:20,&quot;taskInvolvedUser&quot;:$scope.subject.id}).success(function(data){
+		$http.post(&quot;v1/flow/query/history/tasks&quot;,{&quot;start&quot;: 0,&quot;size&quot;:20,&quot;taskAssignee&quot;:$scope.subject.id}).success(function(data){
 		$scope.doneList=data.data;
 	})
 	}else{
