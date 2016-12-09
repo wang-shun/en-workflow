@@ -44,6 +44,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import com.chinacreator.c2.config.ConfigManager;
 import com.chinacreator.c2.context.OperationContextHolder;
 import com.chinacreator.c2.context.WebOperationContext;
 import com.chinacreator.c2.flow.api.WfTaskService;
@@ -51,6 +52,7 @@ import com.chinacreator.c2.flow.detail.WfOperator;
 import com.chinacreator.c2.flow.detail.WfResult;
 import com.chinacreator.c2.flow.detail.WfTaskAction;
 import com.chinacreator.c2.flow.rest.common.C2RestResponseFactory;
+import com.chinacreator.c2.flow.rest.common.FowRestHelper;
 import com.chinacreator.c2.flow.rest.common.exception.FlowResourceAlreadyExistsException;
 import com.chinacreator.c2.flow.rest.common.exception.FlowUnauthorizedException;
 import com.chinacreator.c2.flow.rest.common.vo.WfActionResult;
@@ -391,16 +393,8 @@ public class WfTaskResource extends TaskBaseResource {
 
 		try {
 			
-			WfOperator wfOperator=new WfOperator();
-		    WebOperationContext context = (WebOperationContext)OperationContextHolder.getContext();
-		    Subject subject=context.getUser();
-		    if(null==subject||!StringUtils.hasText(subject.getId())){
-		    	throw new FlowUnauthorizedException("Not logged in without permission to operate.");
-		    }
-		    
-	    	wfOperator.setUserId(subject.getId());
-	    	wfOperator.setUserName(subject.getName());
-	    	wfOperator.setUserCName(subject.getName());
+			
+			WfOperator wfOperator=FowRestHelper.getWfOperator(actionRequest);
 
 			if (actionRequest == null) {
 				throw new ActivitiIllegalArgumentException(

@@ -13,7 +13,7 @@ import org.codehaus.jackson.annotate.JsonTypeInfo.Id;
  * @author hushowly
  */
 @ApiModel(value="WfTaskActionRequest",description="处理任务请求参数")
-public class WfTaskActionRequest{
+public class WfTaskActionRequest extends WfBaseRequest{
   
   public enum actionType{
 	  @ApiModelProperty("签收")

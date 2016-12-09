@@ -8,7 +8,7 @@ import io.swagger.annotations.ApiModelProperty;
  * @author hushowly
  */
 @ApiModel(value="WfProcessInstanceActionRequest",description="流程实例操作参数")
-public class WfProcessInstanceActionRequest {
+public class WfProcessInstanceActionRequest extends WfBaseRequest{
 
   @ApiModelProperty(value="流程实例操作",required=true)
   private InstanceAction action;

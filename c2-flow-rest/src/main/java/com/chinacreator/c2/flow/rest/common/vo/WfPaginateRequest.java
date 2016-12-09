@@ -7,7 +7,7 @@ import io.swagger.annotations.ApiModelProperty;
  * @author hushowly
  */
 @ApiModel(value="WfPaginateRequest",description="分页请求信息")
-public class WfPaginateRequest {
+public class WfPaginateRequest{
 
 	@ApiModelProperty("开始行")
 	protected Integer start;

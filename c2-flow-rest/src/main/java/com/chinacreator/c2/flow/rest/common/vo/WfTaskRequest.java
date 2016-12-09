@@ -11,7 +11,7 @@ import org.activiti.engine.task.DelegationState;
  * @author hushowly
  */
 @ApiModel(value = "WfTaskRequest", description = "任务信息请求参数")
-public class WfTaskRequest {
+public class WfTaskRequest extends WfBaseRequest{
 
 	@ApiModelProperty("任务所有者")
 	private String owner;

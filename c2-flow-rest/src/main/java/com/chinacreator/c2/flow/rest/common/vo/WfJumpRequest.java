@@ -6,7 +6,7 @@ import io.swagger.annotations.ApiModelProperty;
 import java.util.List;
 
 @ApiModel(value="WfJumpRequest", description="流程跳转入参")
-public class WfJumpRequest {
+public class WfJumpRequest extends WfBaseRequest{
 	
 	@ApiModelProperty(value = "流程实例id")
 	private String processInstanceId;

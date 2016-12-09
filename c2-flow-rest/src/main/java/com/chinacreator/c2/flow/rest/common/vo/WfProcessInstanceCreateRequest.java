@@ -14,7 +14,7 @@ import org.codehaus.jackson.annotate.JsonTypeInfo.Id;
  * @author hushow
  */
 @ApiModel(value="WfProcessInstanceCreateRequest",description="创建流程实例入参")
-public class WfProcessInstanceCreateRequest {
+public class WfProcessInstanceCreateRequest extends WfBaseRequest{
  
   /**
   * 统一任务业务数据，必须参数
