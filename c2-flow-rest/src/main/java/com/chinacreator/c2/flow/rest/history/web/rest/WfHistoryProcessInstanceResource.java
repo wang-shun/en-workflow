@@ -77,7 +77,7 @@ public class WfHistoryProcessInstanceResource extends HistoricProcessInstanceBas
 	@Autowired
 	RuntimeService runtimeService;
   
-  	@ApiOperation(value = "获取历史工作流实例列表",tags = "history_instance")
+  	@ApiOperation(value = "获取历史工作流实例列表",tags = "historyInstance")
   	@ApiResponses(value = { @ApiResponse(code = 400, message = "错误的请求参数"),@ApiResponse(code = 404, message = "操作失败，请求资源未找到"),@ApiResponse(code = 500, message = "系统内部错误")  })
   	@GET
     @Produces({ MediaType.APPLICATION_JSON })
@@ -186,7 +186,7 @@ public class WfHistoryProcessInstanceResource extends HistoricProcessInstanceBas
 	}
   
   	
-	@ApiOperation(value = "获取历史流程实例信息", tags = "history_instance")
+	@ApiOperation(value = "获取历史流程实例信息", tags = "historyInstance")
 	@ApiResponses(value = { @ApiResponse(code = 400, message = "错误的请求参数"),@ApiResponse(code = 404, message = "操作失败，请求资源未找到"),@ApiResponse(code = 500, message = "系统内部错误")  })
 	@GET
 	@Path("/{processInstanceId}")
@@ -245,7 +245,7 @@ public class WfHistoryProcessInstanceResource extends HistoricProcessInstanceBas
 	}
 	
 	
-	@ApiOperation(value = "获取历史流程实例候选人和组信息", tags = "history_instance")
+	@ApiOperation(value = "获取历史流程实例候选人和组信息", tags = "historyInstance")
 	@ApiResponses(value = { @ApiResponse(code = 400, message = "错误的请求参数"),@ApiResponse(code = 404, message = "操作失败，请求资源未找到"),@ApiResponse(code = 500, message = "系统内部错误")  })
 	@GET
 	@Path("/{processInstanceId}/identitylinks")
@@ -287,7 +287,7 @@ public class WfHistoryProcessInstanceResource extends HistoricProcessInstanceBas
 	}
 	
 	
-	@ApiOperation(value = "获取历史流程实例评论意见信息", tags = "history_instance")
+	@ApiOperation(value = "获取历史流程实例评论意见信息", tags = "historyInstance")
 	@ApiResponses(value = { @ApiResponse(code = 400, message = "错误的请求参数"),@ApiResponse(code = 404, message = "操作失败，请求资源未找到"),@ApiResponse(code = 500, message = "系统内部错误")  })
 	@GET
 	@Path("/{processInstanceId}/comments")
@@ -330,7 +330,7 @@ public class WfHistoryProcessInstanceResource extends HistoricProcessInstanceBas
 	}
 	
 
-	  @ApiOperation(value = "获取流程实例图",tags = "history_instance")
+	  @ApiOperation(value = "获取流程实例图",tags = "historyInstance")
 	  @ApiResponses(value = { @ApiResponse(code = 400, message = "错误的请求参数"),@ApiResponse(code = 404, message = "操作失败，请求资源未找到"),@ApiResponse(code = 500, message = "系统内部错误")  })
 	  @GET
 	  @Produces({"image/png"})

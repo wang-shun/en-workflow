@@ -41,7 +41,7 @@ public class WfHistoryUniteTaskResource{
 	@Autowired
 	WfRuntimeService wfRuntimeService;
 	
-	@ApiOperation(value = "统一待办列表", tags = "history_unite_task",notes="注：只能用于查询单个用户历史统一待办表中的数据")
+	@ApiOperation(value = "统一待办列表", tags = "historyUniteTask",notes="注：只能用于查询单个用户历史统一待办表中的数据")
 	@ApiResponses(value = { @ApiResponse(code = 400, message = "错误的请求参数"),@ApiResponse(code = 404, message = "操作失败，请求资源未找到"),@ApiResponse(code = 500, message = "系统内部错误")  })
 	@GET
 	@Produces({ MediaType.APPLICATION_JSON })

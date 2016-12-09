@@ -43,7 +43,7 @@ public class WfUniteTaskResource {
 	WfRuntimeService wfRuntimeService;
 	
 	
-	@ApiOperation(value = "统一待办列表", tags = "runtime_unite_task",notes="注：只能用于查单个用户统一待办表中的数据")
+	@ApiOperation(value = "统一待办列表", tags = "runtimeUniteTask",notes="注：只能用于查单个用户统一待办表中的数据")
 	@GET
 	@Produces({ MediaType.APPLICATION_JSON })
 	@Consumes({ MediaType.APPLICATION_JSON })

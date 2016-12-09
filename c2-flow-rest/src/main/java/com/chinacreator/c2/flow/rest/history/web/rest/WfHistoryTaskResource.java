@@ -60,7 +60,7 @@ public class WfHistoryTaskResource extends HistoricTaskInstanceBaseResource{
 	@Autowired
 	TaskService taskService;
 	
-  	@ApiOperation(value = "获取历史任务列表",tags = "history_task")
+  	@ApiOperation(value = "获取历史任务列表",tags = "historyTask")
   	@ApiResponses(value = { @ApiResponse(code = 400, message = "错误的请求参数"),@ApiResponse(code = 404, message = "操作失败，请求资源未找到"),@ApiResponse(code = 500, message = "系统内部错误")  })
   	@GET
     @Produces({ MediaType.APPLICATION_JSON })
@@ -267,7 +267,7 @@ public class WfHistoryTaskResource extends HistoricTaskInstanceBaseResource{
     }
 
   	
-	@ApiOperation(value = "获取历史任务信息", tags = "history_task")
+	@ApiOperation(value = "获取历史任务信息", tags = "historyTask")
 	@ApiResponses(value = { @ApiResponse(code = 400, message = "错误的请求参数"),@ApiResponse(code = 404, message = "操作失败，请求资源未找到"),@ApiResponse(code = 500, message = "系统内部错误")  })
 	@GET
 	@Produces({ MediaType.APPLICATION_JSON })
@@ -352,7 +352,7 @@ public class WfHistoryTaskResource extends HistoricTaskInstanceBaseResource{
 
 	}
 	
-	@ApiOperation(value = "获取历史任务候选人或组信息", tags = "history_task")
+	@ApiOperation(value = "获取历史任务候选人或组信息", tags = "historyTask")
 	@ApiResponses(value = { @ApiResponse(code = 400, message = "错误的请求参数"),@ApiResponse(code = 404, message = "操作失败，请求资源未找到"),@ApiResponse(code = 500, message = "系统内部错误")  })
 	@GET
 	@Produces({ MediaType.APPLICATION_JSON })

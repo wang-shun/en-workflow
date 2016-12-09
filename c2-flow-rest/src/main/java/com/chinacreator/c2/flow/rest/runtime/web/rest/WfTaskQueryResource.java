@@ -45,7 +45,7 @@ public class WfTaskQueryResource extends TaskBaseResource{
 	@Path("/tasks")
 	@Produces({ MediaType.APPLICATION_JSON })
 	@Consumes({ MediaType.APPLICATION_JSON })
-	public WfPageListResponse<WfTaskResponse> getQueryResult(@ApiParam(value = "查询过滤条件",required = true) WfTaskQueryRequest request) throws Exception{
+	public WfPageListResponse<WfTaskResponse> queryTasks(@ApiParam(value = "查询过滤条件",required = true) WfTaskQueryRequest request) throws Exception{
 		
 		try{
 

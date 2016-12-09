@@ -44,9 +44,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
-import com.chinacreator.c2.config.ConfigManager;
-import com.chinacreator.c2.context.OperationContextHolder;
-import com.chinacreator.c2.context.WebOperationContext;
 import com.chinacreator.c2.flow.api.WfTaskService;
 import com.chinacreator.c2.flow.detail.WfOperator;
 import com.chinacreator.c2.flow.detail.WfResult;
@@ -64,7 +61,6 @@ import com.chinacreator.c2.flow.rest.common.vo.WfTaskQueryRequest;
 import com.chinacreator.c2.flow.rest.common.vo.WfTaskRequest;
 import com.chinacreator.c2.flow.rest.common.vo.WfTaskResponse;
 import com.chinacreator.c2.flow.rest.runtime.TaskBaseResource;
-import com.chinacreator.c2.sysmgr.Subject;
 import com.chinacreator.c2.web.exception.InvalidRestParamException;
 import com.chinacreator.c2.web.exception.ResourceNotFoundException;
 import com.chinacreator.c2.web.exception.UnkownException;
@@ -91,7 +87,7 @@ public class WfTaskResource extends TaskBaseResource {
 	@Autowired
 	HistoryService historyService;
 
-	@ApiOperation(value = "待办列表", tags = "runtime_task")
+	@ApiOperation(value = "待办列表", tags = "runtimeTask")
 	@ApiResponses(value = { @ApiResponse(code = 400, message = "错误的请求参数"),@ApiResponse(code = 404, message = "操作失败，请求资源未找到"),@ApiResponse(code = 500, message = "系统内部错误")  })
 	@GET
 	@Produces({ MediaType.APPLICATION_JSON })
@@ -282,7 +278,7 @@ public class WfTaskResource extends TaskBaseResource {
 		return getTasksFromQueryRequest(taskQuery,request);
 	}
 
-	@ApiOperation(value = "获取任务信息", tags = "runtime_task")
+	@ApiOperation(value = "获取任务信息", tags = "runtimeTask")
 	@ApiResponses(value = { @ApiResponse(code = 400, message = "错误的请求参数"),@ApiResponse(code = 404, message = "操作失败，请求资源未找到"),@ApiResponse(code = 500, message = "系统内部错误")  })
 	@GET
 	@Produces({ MediaType.APPLICATION_JSON })
@@ -339,7 +335,7 @@ public class WfTaskResource extends TaskBaseResource {
 	}
 	
 	
-	@ApiOperation(value = "修改任务", tags = "runtime_task")
+	@ApiOperation(value = "修改任务", tags = "runtimeTask")
 	@ApiResponses(value = { @ApiResponse(code = 400, message = "错误的请求参数"),@ApiResponse(code = 404, message = "操作失败，请求资源未找到"),@ApiResponse(code = 500, message = "系统内部错误")  })
 	@PUT
 	@Produces({ MediaType.APPLICATION_JSON })
@@ -380,7 +376,7 @@ public class WfTaskResource extends TaskBaseResource {
 	}
 	
 	
-	@ApiOperation(value = "处理任务",tags = "runtime_task",notes = "处理任务：签收(CLAIM)、签收并完成(CLAIM_COMPLETE)、完成(COMPLETE)、委托代理(DELEGATE)、回绝委托代理(RESOLVE)、退回任务(REJECT)")
+	@ApiOperation(value = "处理任务",tags = "runtimeTask",notes = "处理任务：签收(CLAIM)、签收并完成(CLAIM_COMPLETE)、完成(COMPLETE)、委托代理(DELEGATE)、回绝委托代理(RESOLVE)、退回任务(REJECT)")
 	@ApiResponses(value = { @ApiResponse(code = 400, message = "错误的请求参数"),
 							@ApiResponse(code = 404, message = "操作失败，请求资源未找到"),
 							@ApiResponse(code = 401, message = "操作失败，未经认证请求"),
@@ -449,7 +445,7 @@ public class WfTaskResource extends TaskBaseResource {
 	}
 	
 	
-	@ApiOperation(value = "删除任务", tags = "runtime_task")
+	@ApiOperation(value = "删除任务", tags = "runtimeTask")
 	@ApiResponses(value = { @ApiResponse(code = 400, message = "错误的请求参数"),@ApiResponse(code = 404, message = "操作失败，请求资源未找到"),@ApiResponse(code = 500, message = "系统内部错误")  })
 	@DELETE
 	@Produces({ MediaType.APPLICATION_JSON })
@@ -496,7 +492,7 @@ public class WfTaskResource extends TaskBaseResource {
 	}
 	
 	
-	@ApiOperation(value = "获取某任务流程变量集合", tags = "runtime_task")
+	@ApiOperation(value = "获取某任务流程变量集合", tags = "runtimeTask")
 	@ApiResponses(value = { @ApiResponse(code = 400, message = "错误的请求参数"),@ApiResponse(code = 404, message = "操作失败，请求资源未找到"),@ApiResponse(code = 500, message = "系统内部错误")  })
 	@GET
 	@Produces({ MediaType.APPLICATION_JSON })
@@ -544,7 +540,7 @@ public class WfTaskResource extends TaskBaseResource {
 	}
 	
 	
-	@ApiOperation(value = "批量添加任务流程变量", tags = "runtime_task")
+	@ApiOperation(value = "批量添加任务流程变量", tags = "runtimeTask")
 	@ApiResponses(value = { @ApiResponse(code = 400, message = "错误的请求参数"),
 							@ApiResponse(code = 404, message = "操作失败，请求资源未找到"),
 							@ApiResponse(code = 409, message = "存在冲突"),
@@ -648,7 +644,7 @@ public class WfTaskResource extends TaskBaseResource {
 	}
 	
 	
-	@ApiOperation(value = "批量删除任务流程变量", tags = "runtime_task")
+	@ApiOperation(value = "批量删除任务流程变量", tags = "runtimeTask")
 	@ApiResponses(value = { @ApiResponse(code = 400, message = "错误的请求参数"),@ApiResponse(code = 404, message = "操作失败，请求资源未找到"),@ApiResponse(code = 500, message = "系统内部错误")  })
 	@DELETE
 	@Produces({ MediaType.APPLICATION_JSON })
@@ -686,7 +682,7 @@ public class WfTaskResource extends TaskBaseResource {
 	}
 	
 	
-	@ApiOperation(value = "获取某任务某流程变量", tags = "runtime_task")
+	@ApiOperation(value = "获取某任务某流程变量", tags = "runtimeTask")
 	@ApiResponses(value = { @ApiResponse(code = 400, message = "错误的请求参数"),@ApiResponse(code = 404, message = "操作失败，请求资源未找到"),@ApiResponse(code = 500, message = "系统内部错误")  })
 	@GET
 	@Produces({ MediaType.APPLICATION_JSON })
@@ -759,7 +755,7 @@ public class WfTaskResource extends TaskBaseResource {
 	}
 	
 	
-	@ApiOperation(value = "获取某任务意见列表", tags = "runtime_task")
+	@ApiOperation(value = "获取某任务意见列表", tags = "runtimeTask")
 	@ApiResponses(value = { @ApiResponse(code = 400, message = "错误的请求参数"),@ApiResponse(code = 404, message = "操作失败，请求资源未找到"),@ApiResponse(code = 500, message = "系统内部错误")  })
 	@GET
 	@Produces({ MediaType.APPLICATION_JSON })
@@ -799,7 +795,7 @@ public class WfTaskResource extends TaskBaseResource {
 	}
 	
 	
-	@ApiOperation(value = "添加任务意见", tags = "runtime_task")
+	@ApiOperation(value = "添加任务意见", tags = "runtimeTask")
 	@ApiResponses(value = { @ApiResponse(code = 400, message = "错误的请求参数"),@ApiResponse(code = 404, message = "操作失败，请求资源未找到"),@ApiResponse(code = 500, message = "系统内部错误")  })
 	@POST
 	@Produces({ MediaType.APPLICATION_JSON })
@@ -841,7 +837,7 @@ public class WfTaskResource extends TaskBaseResource {
 	}
 	
 	
-	@ApiOperation(value = "获取某任务下某条意见详细", tags = "runtime_task")
+	@ApiOperation(value = "获取某任务下某条意见详细", tags = "runtimeTask")
 	@ApiResponses(value = { @ApiResponse(code = 400, message = "错误的请求参数"),@ApiResponse(code = 404, message = "操作失败，请求资源未找到"),@ApiResponse(code = 500, message = "系统内部错误")  })
 	@GET
 	@Produces({ MediaType.APPLICATION_JSON })
@@ -890,7 +886,7 @@ public class WfTaskResource extends TaskBaseResource {
 		
 	}
 	
-	@ApiOperation(value = "删了某任务下某条意见", tags = "runtime_task")
+	@ApiOperation(value = "删了某任务下某条意见", tags = "runtimeTask")
 	@ApiResponses(value = { @ApiResponse(code = 400, message = "错误的请求参数"),@ApiResponse(code = 404, message = "操作失败，请求资源未找到"),@ApiResponse(code = 500, message = "系统内部错误")  })
 	@DELETE
 	@Produces({ MediaType.APPLICATION_JSON })

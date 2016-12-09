@@ -88,7 +88,7 @@ public class WfProcessInstanceResource extends BaseProcessInstanceResource{
   
   	
   
-  @ApiOperation(value = "工作流实例列表",tags = "runtime_instance")
+  @ApiOperation(value = "工作流实例列表",tags = "runtimeInstance")
   @ApiResponses(value = { @ApiResponse(code = 400, message = "错误的请求参数"),@ApiResponse(code = 404, message = "操作失败，请求资源未找到"),@ApiResponse(code = 500, message = "系统内部错误")  })
   @GET
   @Produces({ MediaType.APPLICATION_JSON })
@@ -187,7 +187,7 @@ public class WfProcessInstanceResource extends BaseProcessInstanceResource{
   }
   
   
-  @ApiOperation(value = "启动工作流实例",tags = "runtime_instance")
+  @ApiOperation(value = "启动工作流实例",tags = "runtimeInstance")
   @ApiResponses(value = { @ApiResponse(code = 400, message = "错误的请求参数"),
 		  				  @ApiResponse(code = 404, message = "操作失败，请求资源未找到"),
 		  				  @ApiResponse(code = 401, message = "操作失败，未经认证请求"),
@@ -354,7 +354,7 @@ public class WfProcessInstanceResource extends BaseProcessInstanceResource{
   }
   
   
-  @ApiOperation(value = "获取工作流实例信息",tags = "runtime_instance")
+  @ApiOperation(value = "获取工作流实例信息",tags = "runtimeInstance")
   @ApiResponses(value = { @ApiResponse(code = 400, message = "错误的请求参数"),@ApiResponse(code = 404, message = "操作失败，请求资源未找到"),@ApiResponse(code = 500, message = "系统内部错误")  })
   @GET
   @Produces({MediaType.APPLICATION_JSON})
@@ -394,7 +394,7 @@ public class WfProcessInstanceResource extends BaseProcessInstanceResource{
   }
   
   
-  @ApiOperation(value = "删除工作流实例信息",tags = "runtime_instance")
+  @ApiOperation(value = "删除工作流实例信息",tags = "runtimeInstance")
   @ApiResponses(value = { @ApiResponse(code = 400, message = "错误的请求参数"),@ApiResponse(code = 404, message = "操作失败，请求资源未找到"),@ApiResponse(code = 500, message = "系统内部错误")  })
   @DELETE
   @Produces({MediaType.APPLICATION_JSON})
@@ -430,7 +430,7 @@ public class WfProcessInstanceResource extends BaseProcessInstanceResource{
   }
   
   
-  @ApiOperation(value = "激活或挂起工作流实例",tags = "runtime_instance",response=WfProcessInstanceResponse.class)
+  @ApiOperation(value = "激活或挂起工作流实例",tags = "runtimeInstance",response=WfProcessInstanceResponse.class)
   @ApiResponses(value = { @ApiResponse(code = 400, message = "错误的请求参数"),@ApiResponse(code = 404, message = "操作失败，请求资源未找到"),@ApiResponse(code = 500, message = "系统内部错误")  })
   @PUT
   @Produces({MediaType.APPLICATION_JSON})
@@ -488,7 +488,7 @@ public class WfProcessInstanceResource extends BaseProcessInstanceResource{
   }
   
   
-  @ApiOperation(value = "获取流程实例图",tags = "runtime_instance",notes="获取流程实例图片，红色框标记为当前环节",produces="image/png")
+  @ApiOperation(value = "获取流程实例图",tags = "runtimeInstance",notes="获取流程实例图片，红色框标记为当前环节",produces="image/png")
   @ApiResponses(value = { @ApiResponse(code = 400, message = "错误的请求参数"),@ApiResponse(code = 404, message = "操作失败，请求资源未找到"),@ApiResponse(code = 500, message = "系统内部错误")  })
   @GET
   @Produces({"image/png"})
@@ -533,7 +533,7 @@ public class WfProcessInstanceResource extends BaseProcessInstanceResource{
 	  }
   }
   
-	@ApiOperation(value = "自由流", tags = "runtime_instance")
+	@ApiOperation(value = "自由流", tags = "runtimeInstance")
 	@ApiResponses(value = { @ApiResponse(code = 400, message = "错误的请求参数"),@ApiResponse(code = 404, message = "操作失败，请求资源未找到"),@ApiResponse(code = 500, message = "系统内部错误")  })
 	@POST
 	@Produces({ MediaType.APPLICATION_JSON })
