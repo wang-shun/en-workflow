@@ -25,26 +25,25 @@
 
 package com.chinacreator.c2.flow.rest.api;
 
-import com.chinacreator.c2.flow.rest.ApiException;
-import com.chinacreator.c2.flow.rest.model.WfProcessInstanceResponse;
-import com.chinacreator.c2.flow.rest.model.WfProcessInstanceCreateRequest;
-import com.chinacreator.c2.flow.rest.model.PageListResponseWfProcessInstanceResponse;
-import com.chinacreator.c2.flow.rest.model.WfJumpRequest;
-import com.chinacreator.c2.flow.rest.model.WfActionResult;
-import com.chinacreator.c2.flow.rest.model.WfProcessInstanceActionRequest;
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import com.chinacreator.c2.flow.rest.ApiException;
+import com.chinacreator.c2.flow.rest.model.PageListResponseWfProcessInstanceResponse;
+import com.chinacreator.c2.flow.rest.model.WfJumpRequest;
+import com.chinacreator.c2.flow.rest.model.WfProcessInstanceActionRequest;
+import com.chinacreator.c2.flow.rest.model.WfProcessInstanceCreateRequest;
+import com.chinacreator.c2.flow.rest.model.WfProcessInstanceResponse;
+import com.chinacreator.c2.flow.rest.model.WfRestVariable;
 
 /**
  * API tests for RuntimeInstanceApi
  */
 public class RuntimeInstanceApiTest {
+	
 
     private final RuntimeInstanceApi api = new RuntimeInstanceApi();
+    
+    private static String processInstanceId=null;
 
     
     /**
@@ -57,28 +56,18 @@ public class RuntimeInstanceApiTest {
      */
     @Test
     public void createProcessInstanceTest() throws ApiException {
-        WfProcessInstanceCreateRequest body = null;
-        // WfProcessInstanceResponse response = api.createProcessInstance(body);
-
-        // TODO: test validations
+        WfProcessInstanceCreateRequest body = new WfProcessInstanceCreateRequest();
+        body.setProcessDefinitionKey("jtest");
+        WfRestVariable wfRestVariable=new WfRestVariable();
+        wfRestVariable.setName("userId");
+        wfRestVariable.setType(WfRestVariable.TypeEnum.STRING);
+        wfRestVariable.setValue("test_user");
+        wfRestVariable.setVariableScope(WfRestVariable.VariableScopeEnum.GLOBAL);
+        body.addVariablesItem(wfRestVariable);
+        WfProcessInstanceResponse response = api.createProcessInstance(body);
+        processInstanceId=response.getId();
     }
     
-    /**
-     * 删除工作流实例信息
-     *
-     * 
-     *
-     * @throws ApiException
-     *          if the Api call fails
-     */
-    @Test
-    public void deleteProcessInstanceTest() throws ApiException {
-        String processInstanceId = null;
-        String deleteReason = null;
-        // Object response = api.deleteProcessInstance(processInstanceId, deleteReason);
-
-        // TODO: test validations
-    }
     
     /**
      * 获取工作流实例信息
@@ -90,11 +79,9 @@ public class RuntimeInstanceApiTest {
      */
     @Test
     public void getProcessInstanceTest() throws ApiException {
-        String processInstanceId = null;
-        // WfProcessInstanceResponse response = api.getProcessInstance(processInstanceId);
-
-        // TODO: test validations
+        WfProcessInstanceResponse response = api.getProcessInstance(processInstanceId);
     }
+    
     
     /**
      * 获取流程实例图
@@ -106,12 +93,11 @@ public class RuntimeInstanceApiTest {
      */
     @Test
     public void getProcessInstanceDiagramTest() throws ApiException {
-        String processInstanceId = null;
-        // api.getProcessInstanceDiagram(processInstanceId);
-
-        // TODO: test validations
+         api.getProcessInstanceDiagram(processInstanceId);
     }
     
+    
+
     /**
      * 工作流实例列表
      *
@@ -139,10 +125,10 @@ public class RuntimeInstanceApiTest {
         Integer sort = null;
         Integer start = null;
         Integer size = null;
-        // PageListResponseWfProcessInstanceResponse response = api.getProcessInstances(id, processDefinitionKey, processDefinitionId, businessKey, involvedUser, suspended, superProcessInstanceId, subProcessInstanceId, excludeSubprocesses, includeProcessVariables, tenantId, tenantIdLike, withoutTenantId, order, sort, start, size);
+        PageListResponseWfProcessInstanceResponse response = api.getProcessInstances(id, processDefinitionKey, processDefinitionId, businessKey, involvedUser, suspended, superProcessInstanceId, subProcessInstanceId, excludeSubprocesses, includeProcessVariables, tenantId, tenantIdLike, withoutTenantId, order, sort, start, size);
 
-        // TODO: test validations
     }
+    
     
     /**
      * 自由流
@@ -171,11 +157,26 @@ public class RuntimeInstanceApiTest {
      */
     @Test
     public void performProcessInstanceActionTest() throws ApiException {
-        String processInstanceId = null;
-        WfProcessInstanceActionRequest body = null;
-        // WfProcessInstanceResponse response = api.performProcessInstanceAction(processInstanceId, body);
-
-        // TODO: test validations
+        WfProcessInstanceActionRequest body = new WfProcessInstanceActionRequest();
+        body.setAction(WfProcessInstanceActionRequest.ActionEnum.SUSPEND);
+        WfProcessInstanceResponse response = api.performProcessInstanceAction(processInstanceId, body);
+        
+        
+    }
+    
+    
+    /**
+     * 删除工作流实例信息
+     *
+     * 
+     *
+     * @throws ApiException
+     *          if the Api call fails
+     */
+    @Test
+    public void deleteProcessInstanceTest() throws ApiException {
+        String deleteReason = "junit rest";
+        Object response = api.deleteProcessInstance(processInstanceId, deleteReason);
     }
     
 }

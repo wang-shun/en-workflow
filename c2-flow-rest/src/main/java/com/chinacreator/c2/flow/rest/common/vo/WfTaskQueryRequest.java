@@ -86,7 +86,7 @@ public class WfTaskQueryRequest extends WfPaginateRequest {
   private Date dueAfter;
   @ApiModelProperty("忽略过期时间条件")
   private Boolean withoutDueDate;
-  @ApiModelProperty("是否活动")
+  @ApiModelProperty(value="是否活动")
   private Boolean active;
   @ApiModelProperty("是否只查询包含流程环节变量任务")
   private Boolean includeTaskLocalVariables;

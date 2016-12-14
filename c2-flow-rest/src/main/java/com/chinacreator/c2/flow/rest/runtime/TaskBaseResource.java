@@ -128,9 +128,13 @@ public class TaskBaseResource {
     if(request.getOwnerLike() != null) {
       taskQuery.taskOwnerLike(request.getOwnerLike());
     }
-    if(request.getUnassigned() != null) {
-      taskQuery.taskUnassigned();
+    
+    if(request.getUnassigned()!=null){
+	    if(request.getUnassigned().booleanValue() ) {
+	      taskQuery.taskUnassigned();
+	    }
     }
+    
     if(request.getDelegationState() != null) {
       DelegationState state = getDelegationState(request.getDelegationState());
       if(state != null) {
@@ -142,7 +146,7 @@ public class TaskBaseResource {
 		taskQuery.taskCandidateUser(request.getCandidateUser());
 	}
 	
-	if (request.getCandidateGroupIn() != null) {
+	if (request.getCandidateGroupIn() != null&&request.getCandidateGroupIn().size()>0) {
 		taskQuery.taskCandidateGroupIn(request.getCandidateGroupIn());
 	}
 	

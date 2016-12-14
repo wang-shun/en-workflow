@@ -18,16 +18,15 @@ public class FowRestHelper {
 	    */
 		public static WfOperator getWfOperator(WfBaseRequest actionRequest) throws Exception{
 			
+			boolean isDebug="true".equals(ConfigManager.getInstance().getConfig("c2.flow.rest.debug"))?true:false;
 			WfOperator wfOperator=new WfOperator();
 		    WebOperationContext context = (WebOperationContext)OperationContextHolder.getContext();
 		    Subject subject=context.getUser();
-		    if(null==subject||!StringUtils.hasText(subject.getId())){
-		    	//如果开启了调试模式从参数中取当前用户
-		    	boolean isDebug="true".equals(ConfigManager.getInstance().getConfig("c2.flow.rest.debug"))?true:false;
-			    if(isDebug){
-			    	wfOperator.setUserId(actionRequest.getCurrentLoginUserId());
-			    }
-		    }else{
+		    
+		    //如果开启了调试模式从参数中取当前用户
+		    if(StringUtils.hasText(actionRequest.getCurrentLoginUserId())&&isDebug){
+		    	wfOperator.setUserId(actionRequest.getCurrentLoginUserId());
+		    }else if(null!=subject&&StringUtils.hasText(subject.getId())){
 		    	wfOperator.setUserId(subject.getId());
 		    }
 		    

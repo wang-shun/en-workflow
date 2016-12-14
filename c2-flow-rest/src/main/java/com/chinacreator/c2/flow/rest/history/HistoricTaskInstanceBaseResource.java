@@ -129,20 +129,16 @@ public class HistoricTaskInstanceBaseResource {
     if (queryRequest.getTaskPriority() != null) {
     	query.taskPriority(queryRequest.getTaskPriority());
     }
+    
     if (queryRequest.getFinished() != null) {
       if (queryRequest.getFinished()) {
         query.finished();
       } else {
-        query.unfinished();
+    	  query.unfinished();
       }
     }
-    if (queryRequest.getProcessFinished() != null) {
-      if (queryRequest.getProcessFinished()) {
-        query.processFinished();
-      } else {
-        query.processUnfinished();
-      }
-    }
+    
+    if (queryRequest.getProcessFinished() != null) { }
     if (queryRequest.getParentTaskId() != null) {
       query.taskParentTaskId(queryRequest.getParentTaskId());
     }

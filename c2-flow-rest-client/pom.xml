@@ -24,7 +24,7 @@
               <value>conf/log4j.properties</value>
             </property>
           </systemProperties>
-          <argLine>-Xms512m -Xmx1500m</argLine>
+          <argLine>-Xms256m -Xmx512m</argLine>
           <parallel>methods</parallel>
           <forkMode>pertest</forkMode>
         </configuration>
@@ -106,6 +106,21 @@
         <artifactId>maven-javadoc-plugin</artifactId>
         <version>2.10.4</version>
       </plugin>
+      
+			<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-source-plugin</artifactId>
+					<version>2.2.1</version>
+					<executions>
+						<execution>
+							<id>attach-sources</id>
+							<goals>
+								<goal>jar-no-fork</goal>
+							</goals>
+						</execution>
+					</executions>
+			</plugin>
+			
     </plugins>
   </build>
   <dependencies>

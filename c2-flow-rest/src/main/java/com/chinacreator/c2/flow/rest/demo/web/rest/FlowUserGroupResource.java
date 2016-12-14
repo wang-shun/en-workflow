@@ -2,9 +2,11 @@ package com.chinacreator.c2.flow.rest.demo.web.rest;
 
 import java.util.List;
 
+import javax.servlet.ServletContext;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
+import javax.ws.rs.core.Context;
 
 import org.activiti.engine.ManagementService;
 import org.activiti.engine.impl.cfg.IdGenerator;
@@ -29,6 +31,14 @@ public class FlowUserGroupResource {
 	public List<ChooseGroup> getGroupByCurrentUser(@PathParam("userId") String userId){
 		List<ChooseGroup> candidateGroupList=WfUtils.getGroupsByUserId(userId);
 		return candidateGroupList;
+	}
+	
+	@GET
+	@Path("/ttt")
+	public void getGroupByCurrentUser(@Context ServletContext context){
+		
+		System.out.println(context.getClass().getName());
+		System.out.println(context.getClass());
 	}
 	
 	

@@ -6,7 +6,6 @@ import io.swagger.annotations.ApiModelProperty;
 import java.util.Date;
 import java.util.List;
 
-import org.activiti.rest.service.api.engine.variable.QueryVariable;
 import org.codehaus.jackson.annotate.JsonTypeInfo;
 import org.codehaus.jackson.annotate.JsonTypeInfo.Id;
 
@@ -14,7 +13,7 @@ import org.codehaus.jackson.annotate.JsonTypeInfo.Id;
 /**
  * @author hushowly
  */
-@ApiModel(value="WfHistoricTaskInstanceQueryRequest",description="历史任务查询参数")
+@ApiModel(value="WfHistoricTaskInstanceQueryRequest",description="历史任务查询参数111111")
 public class WfHistoricTaskInstanceQueryRequest extends WfPaginateRequest {
 
   @ApiModelProperty("任务id")
@@ -69,10 +68,10 @@ public class WfHistoricTaskInstanceQueryRequest extends WfPaginateRequest {
   private Integer taskMinPriority;
   @ApiModelProperty("任务优先级上区间")
   private Integer taskMaxPriority;
-  @ApiModelProperty("任务是否完成")
-  private Boolean finished;
+  @ApiModelProperty(value="任务是否完成")
+  private Boolean finished=null;
   @ApiModelProperty("流程是否完成")
-  private Boolean processFinished;
+  private Boolean processFinished=null;
   @ApiModelProperty("父任务id")
   private String parentTaskId;
   @ApiModelProperty("任务过期时间")
@@ -82,7 +81,7 @@ public class WfHistoricTaskInstanceQueryRequest extends WfPaginateRequest {
   @ApiModelProperty("任务过期时间早于")
   private Date dueDateBefore;
   @ApiModelProperty("放弃过期时间过滤")
-  private Boolean withoutDueDate;
+  private Boolean withoutDueDate=null;
   @ApiModelProperty("任务创建时间")
   private Date taskCreatedOn;
   @ApiModelProperty("任务创建时间早于")
@@ -96,9 +95,9 @@ public class WfHistoricTaskInstanceQueryRequest extends WfPaginateRequest {
   @ApiModelProperty("任务完成时间晚于")
   private Date taskCompletedAfter;
   @ApiModelProperty("是否只查询包含流程环节变量任务")
-  private Boolean includeTaskLocalVariables;
+  private Boolean includeTaskLocalVariables=null;
   @ApiModelProperty("是否只查询包含流程环节变量和全局变量任务")
-  private Boolean includeProcessVariables;
+  private Boolean includeProcessVariables=null;
   @ApiModelProperty("任务变量条件(LOCAL)")
   private List<WfQueryVariable> taskVariables;
   @ApiModelProperty("任务所在流程变量条件(GLOBAL)")
@@ -108,7 +107,7 @@ public class WfHistoricTaskInstanceQueryRequest extends WfPaginateRequest {
   @ApiModelProperty("租户模糊")
   private String tenantIdLike;
   @ApiModelProperty("忽略租户条件")
-  private Boolean withoutTenantId;
+  private Boolean withoutTenantId=null;
 
   public String getTaskId() {
     return taskId;

@@ -48,7 +48,7 @@ import com.chinacreator.c2.flow.rest.model.WfTaskResponse;
 /**
  * API tests for RuntimeTaskApi
  */
-public class RuntimeTaskApiTest {
+public class MInstanceRuntimeTaskApiTest {
 
     private final RuntimeTaskApi api = new RuntimeTaskApi();
     
@@ -63,10 +63,10 @@ public class RuntimeTaskApiTest {
     public void init()  throws ApiException{
     	//创建流程实例
         WfProcessInstanceCreateRequest body = new WfProcessInstanceCreateRequest();
-        body.setProcessDefinitionKey("jtest");
+        body.setProcessDefinitionKey("d1");
         WfRestVariable wfRestVariable=new WfRestVariable();
         wfRestVariable.setName("userId");
-        wfRestVariable.setType(WfRestVariable.TypeEnum.STRING);
+        wfRestVariable.setType(WfRestVariable.TypeEnum.LONG);
         wfRestVariable.setValue("test_user");
         wfRestVariable.setVariableScope(WfRestVariable.VariableScopeEnum.GLOBAL);
         body.addVariablesItem(wfRestVariable);
