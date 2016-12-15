@@ -1,6 +1,6 @@
 # RuntimeTaskApi
 
-All URIs are relative to *http://127.0.0.1:83/rest/*
+All URIs are relative to *http://127.0.0.1:83/rest*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -476,15 +476,15 @@ String processDefinitionNameLike = "processDefinitionNameLike_example"; // Strin
 String processInstanceId = "processInstanceId_example"; // String | 任务所属流程实例id
 String processInstanceBusinessKey = "processInstanceBusinessKey_example"; // String | 任务所属业务id
 String executionId = "executionId_example"; // String | 任务执行id
-DateTime createdOn = new DateTime(); // DateTime | 任务创建时间
-DateTime createdBefore = new DateTime(); // DateTime | 创建时间下区间
-DateTime createdAfter = new DateTime(); // DateTime | 创建时间上区间
+Date createdOn = new Date(); // Date | 任务创建时间
+Date createdBefore = new Date(); // Date | 创建时间下区间
+Date createdAfter = new Date(); // Date | 创建时间上区间
 Boolean excludeSubTasks = true; // Boolean | 是否排除有子任务
 String taskDefinitionKey = "taskDefinitionKey_example"; // String | 任务key
 String taskDefinitionKeyLike = "taskDefinitionKeyLike_example"; // String | 任务key模糊匹配
-DateTime dueDate = new DateTime(); // DateTime | 任务处理时间
-DateTime dueBefore = new DateTime(); // DateTime | 任务处理时间下区间
-DateTime dueAfter = new DateTime(); // DateTime | 任务处理时间上区间
+Date dueDate = new Date(); // Date | 任务处理时间
+Date dueBefore = new Date(); // Date | 任务处理时间下区间
+Date dueAfter = new Date(); // Date | 任务处理时间上区间
 Boolean active = true; // Boolean | 任务是否活动的
 Boolean includeTaskLocalVariables = true; // Boolean | 是否只查询包含流程环节变量任务
 Boolean includeProcessVariables = true; // Boolean | 是否只查询包含流程环节变量和全局变量任务
@@ -525,15 +525,15 @@ Name | Type | Description  | Notes
  **processInstanceId** | **String**| 任务所属流程实例id | [optional]
  **processInstanceBusinessKey** | **String**| 任务所属业务id | [optional]
  **executionId** | **String**| 任务执行id | [optional]
- **createdOn** | **DateTime**| 任务创建时间 | [optional]
- **createdBefore** | **DateTime**| 创建时间下区间 | [optional]
- **createdAfter** | **DateTime**| 创建时间上区间 | [optional]
+ **createdOn** | **Date**| 任务创建时间 | [optional]
+ **createdBefore** | **Date**| 创建时间下区间 | [optional]
+ **createdAfter** | **Date**| 创建时间上区间 | [optional]
  **excludeSubTasks** | **Boolean**| 是否排除有子任务 | [optional]
  **taskDefinitionKey** | **String**| 任务key | [optional]
  **taskDefinitionKeyLike** | **String**| 任务key模糊匹配 | [optional]
- **dueDate** | **DateTime**| 任务处理时间 | [optional]
- **dueBefore** | **DateTime**| 任务处理时间下区间 | [optional]
- **dueAfter** | **DateTime**| 任务处理时间上区间 | [optional]
+ **dueDate** | **Date**| 任务处理时间 | [optional]
+ **dueBefore** | **Date**| 任务处理时间下区间 | [optional]
+ **dueAfter** | **Date**| 任务处理时间上区间 | [optional]
  **active** | **Boolean**| 任务是否活动的 | [optional]
  **includeTaskLocalVariables** | **Boolean**| 是否只查询包含流程环节变量任务 | [optional]
  **includeProcessVariables** | **Boolean**| 是否只查询包含流程环节变量和全局变量任务 | [optional]

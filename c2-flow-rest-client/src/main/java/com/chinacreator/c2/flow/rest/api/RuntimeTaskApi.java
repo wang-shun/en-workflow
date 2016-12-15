@@ -38,7 +38,7 @@ import com.chinacreator.c2.flow.rest.model.WfTaskActionRequest;
 import com.chinacreator.c2.flow.rest.model.WfActionResult;
 import com.chinacreator.c2.flow.rest.model.WfTaskResponse;
 import com.chinacreator.c2.flow.rest.model.PageListResponseWfTaskResponse;
-import org.joda.time.DateTime;
+import java.util.Date;
 import com.chinacreator.c2.flow.rest.model.WfTaskRequest;
 
 
@@ -47,7 +47,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-12-09T14:24:45.873+08:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-12-15T15:13:20.386+08:00")
 public class RuntimeTaskApi {
   private ApiClient apiClient;
 
@@ -524,7 +524,7 @@ public class RuntimeTaskApi {
    * @return PageListResponseWfTaskResponse
    * @throws ApiException if fails to make API call
    */
-  public PageListResponseWfTaskResponse getTasks(String name, String nameLike, String description, String descriptionLike, Integer priority, Integer minimumPriority, Integer maximumPriority, String assignee, String owner, Boolean unassigned, String delegationState, String candidateUser, String involvedUser, String candidateGroup, String processDefinitionKey, String processDefinitionKeyLike, String processDefinitionName, String processDefinitionNameLike, String processInstanceId, String processInstanceBusinessKey, String executionId, DateTime createdOn, DateTime createdBefore, DateTime createdAfter, Boolean excludeSubTasks, String taskDefinitionKey, String taskDefinitionKeyLike, DateTime dueDate, DateTime dueBefore, DateTime dueAfter, Boolean active, Boolean includeTaskLocalVariables, Boolean includeProcessVariables, String tenantId, String tenantIdLike, Boolean withoutTenantId) throws ApiException {
+  public PageListResponseWfTaskResponse getTasks(String name, String nameLike, String description, String descriptionLike, Integer priority, Integer minimumPriority, Integer maximumPriority, String assignee, String owner, Boolean unassigned, String delegationState, String candidateUser, String involvedUser, String candidateGroup, String processDefinitionKey, String processDefinitionKeyLike, String processDefinitionName, String processDefinitionNameLike, String processInstanceId, String processInstanceBusinessKey, String executionId, Date createdOn, Date createdBefore, Date createdAfter, Boolean excludeSubTasks, String taskDefinitionKey, String taskDefinitionKeyLike, Date dueDate, Date dueBefore, Date dueAfter, Boolean active, Boolean includeTaskLocalVariables, Boolean includeProcessVariables, String tenantId, String tenantIdLike, Boolean withoutTenantId) throws ApiException {
     Object localVarPostBody = null;
     
     // create path and map variables

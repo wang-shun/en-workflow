@@ -34,7 +34,7 @@ import com.chinacreator.c2.flow.rest.Pair;
 
 import com.chinacreator.c2.flow.rest.model.WfHistoricIdentityLinkResponse;
 import com.chinacreator.c2.flow.rest.model.PageListResponseWfHistoricProcessInstanceResponse;
-import org.joda.time.DateTime;
+import java.util.Date;
 import com.chinacreator.c2.flow.rest.model.WfCommentResponse;
 import com.chinacreator.c2.flow.rest.model.WfHistoricProcessInstanceResponse;
 
@@ -44,7 +44,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-12-09T14:24:45.873+08:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-12-15T15:13:20.386+08:00")
 public class HistoryInstanceApi {
   private ApiClient apiClient;
 
@@ -129,7 +129,7 @@ public class HistoryInstanceApi {
    * @return PageListResponseWfHistoricProcessInstanceResponse
    * @throws ApiException if fails to make API call
    */
-  public PageListResponseWfHistoricProcessInstanceResponse getHistoricProcessInstances(String processInstanceId, String processDefinitionKey, String processDefinitionId, String businessKey, String involvedUser, Boolean finished, String superProcessInstanceId, Boolean excludeSubprocesses, DateTime finishedBefore, DateTime finishedAfter, DateTime startedBefore, DateTime startedAfter, String startedBy, Boolean includeProcessVariables, String tenantId, String tenantIdLike, Boolean withoutTenantId) throws ApiException {
+  public PageListResponseWfHistoricProcessInstanceResponse getHistoricProcessInstances(String processInstanceId, String processDefinitionKey, String processDefinitionId, String businessKey, String involvedUser, Boolean finished, String superProcessInstanceId, Boolean excludeSubprocesses, Date finishedBefore, Date finishedAfter, Date startedBefore, Date startedAfter, String startedBy, Boolean includeProcessVariables, String tenantId, String tenantIdLike, Boolean withoutTenantId) throws ApiException {
     Object localVarPostBody = null;
     
     // create path and map variables

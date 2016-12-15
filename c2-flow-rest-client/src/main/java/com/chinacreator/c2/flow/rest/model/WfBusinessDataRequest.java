@@ -36,7 +36,7 @@ import io.swagger.annotations.ApiModelProperty;
  * 业务数据对象(如果流程和某个业务或事项有关联则必须参数)
  */
 @ApiModel(description = "业务数据对象(如果流程和某个业务或事项有关联则必须参数)")
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-12-09T14:24:45.873+08:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-12-15T15:13:20.386+08:00")
 public class WfBusinessDataRequest   {
   @JsonProperty("businessKey")
   private String businessKey = null;

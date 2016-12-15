@@ -32,7 +32,7 @@ import com.chinacreator.c2.flow.rest.Configuration;
 import com.chinacreator.c2.flow.rest.model.*;
 import com.chinacreator.c2.flow.rest.Pair;
 
-import org.joda.time.DateTime;
+import java.util.Date;
 import com.chinacreator.c2.flow.rest.model.PageListResponseWfHistoricTaskInstanceResponse;
 import com.chinacreator.c2.flow.rest.model.WfHistoricIdentityLinkResponse;
 import com.chinacreator.c2.flow.rest.model.WfHistoricTaskInstanceResponse;
@@ -43,7 +43,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-12-09T14:24:45.873+08:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-12-15T15:13:20.386+08:00")
 public class HistoryTaskApi {
   private ApiClient apiClient;
 
@@ -106,7 +106,7 @@ public class HistoryTaskApi {
    * @return PageListResponseWfHistoricTaskInstanceResponse
    * @throws ApiException if fails to make API call
    */
-  public PageListResponseWfHistoricTaskInstanceResponse getHistoricTaskProcessInstances(String taskId, String processInstanceId, String processBusinessKey, String processDefinitionKey, String processDefinitionId, String processDefinitionName, String executionId, String taskName, String taskNameLike, String taskDescription, String taskDescriptionLike, String taskDefinitionKey, String taskDeleteReason, String taskDeleteReasonLike, String taskAssignee, String taskAssigneeLike, String taskOwner, String taskOwnerLike, String taskInvolvedUser, Integer taskPriority, Boolean finished, Boolean processFinished, String parentTaskId, DateTime dueDate, DateTime dueDateBefore, DateTime dueDateAfter, DateTime taskCreatedOn, DateTime taskCreatedBefore, DateTime taskCreatedAfter, DateTime taskCompletedOn, DateTime taskCompletedBefore, DateTime taskCompletedAfter, Boolean includeTaskLocalVariables, Boolean includeProcessVariables, String tenantId, String tenantIdLike, Boolean withoutTenantId) throws ApiException {
+  public PageListResponseWfHistoricTaskInstanceResponse getHistoricTaskProcessInstances(String taskId, String processInstanceId, String processBusinessKey, String processDefinitionKey, String processDefinitionId, String processDefinitionName, String executionId, String taskName, String taskNameLike, String taskDescription, String taskDescriptionLike, String taskDefinitionKey, String taskDeleteReason, String taskDeleteReasonLike, String taskAssignee, String taskAssigneeLike, String taskOwner, String taskOwnerLike, String taskInvolvedUser, Integer taskPriority, Boolean finished, Boolean processFinished, String parentTaskId, Date dueDate, Date dueDateBefore, Date dueDateAfter, Date taskCreatedOn, Date taskCreatedBefore, Date taskCreatedAfter, Date taskCompletedOn, Date taskCompletedBefore, Date taskCompletedAfter, Boolean includeTaskLocalVariables, Boolean includeProcessVariables, String tenantId, String tenantIdLike, Boolean withoutTenantId) throws ApiException {
     Object localVarPostBody = null;
     
     // create path and map variables

@@ -16,7 +16,7 @@ public class WfRestVariable{
 
   @ApiModelProperty("变量名")
   private String name;
-  @ApiModelProperty(value="变量类型",allowableValues="string,boolean,date,double,integer,long,short")
+  @ApiModelProperty(value="变量类型",allowableValues="string,boolean,date,double,integer,long,short,java.util.List,java.util.Map")
   private String type;
   @ApiModelProperty(value="变量作用域")
   private RestVariableScope variableScope;

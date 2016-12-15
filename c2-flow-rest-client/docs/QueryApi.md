@@ -1,6 +1,6 @@
 # QueryApi
 
-All URIs are relative to *http://127.0.0.1:83/rest/*
+All URIs are relative to *http://127.0.0.1:83/rest*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------

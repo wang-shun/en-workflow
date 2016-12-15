@@ -30,14 +30,14 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import org.joda.time.DateTime;
+import java.util.Date;
 
 
 /**
  * 任务信息请求参数
  */
 @ApiModel(description = "任务信息请求参数")
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-12-09T14:24:45.873+08:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-12-15T15:13:20.386+08:00")
 public class WfTaskRequest   {
   @JsonProperty("currentLoginUserId")
   private String currentLoginUserId = null;
@@ -88,7 +88,7 @@ public class WfTaskRequest   {
   private String description = null;
 
   @JsonProperty("dueDate")
-  private DateTime dueDate = null;
+  private Date dueDate = null;
 
   @JsonProperty("priority")
   private Integer priority = null;
@@ -207,7 +207,7 @@ public class WfTaskRequest   {
     this.description = description;
   }
 
-  public WfTaskRequest dueDate(DateTime dueDate) {
+  public WfTaskRequest dueDate(Date dueDate) {
     this.dueDate = dueDate;
     return this;
   }
@@ -217,11 +217,11 @@ public class WfTaskRequest   {
    * @return dueDate
   **/
   @ApiModelProperty(example = "null", value = "任务过期时间")
-  public DateTime getDueDate() {
+  public Date getDueDate() {
     return dueDate;
   }
 
-  public void setDueDate(DateTime dueDate) {
+  public void setDueDate(Date dueDate) {
     this.dueDate = dueDate;
   }
 

@@ -39,7 +39,7 @@ import java.util.List;
  * 流程实例查询参数
  */
 @ApiModel(description = "流程实例查询参数")
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-12-09T14:24:45.873+08:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-12-15T15:13:20.386+08:00")
 public class WfProcessInstanceQueryRequest   {
   @JsonProperty("start")
   private Integer start = null;
@@ -72,16 +72,16 @@ public class WfProcessInstanceQueryRequest   {
   private String subProcessInstanceId = null;
 
   @JsonProperty("excludeSubprocesses")
-  private Boolean excludeSubprocesses = false;
+  private Boolean excludeSubprocesses = null;
 
   @JsonProperty("involvedUser")
   private String involvedUser = null;
 
   @JsonProperty("suspended")
-  private Boolean suspended = false;
+  private Boolean suspended = null;
 
   @JsonProperty("includeProcessVariables")
-  private Boolean includeProcessVariables = false;
+  private Boolean includeProcessVariables = null;
 
   @JsonProperty("variables")
   private List<WfQueryVariable> variables = new ArrayList<WfQueryVariable>();
@@ -93,7 +93,7 @@ public class WfProcessInstanceQueryRequest   {
   private String tenantIdLike = null;
 
   @JsonProperty("withoutTenantId")
-  private Boolean withoutTenantId = false;
+  private Boolean withoutTenantId = null;
 
   public WfProcessInstanceQueryRequest start(Integer start) {
     this.start = start;

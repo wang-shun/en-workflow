@@ -32,15 +32,15 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
-import org.joda.time.DateTime;
 
 
 /**
  * 历史流程实例查询参数
  */
 @ApiModel(description = "历史流程实例查询参数")
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-12-09T14:24:45.873+08:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-12-15T15:13:20.386+08:00")
 public class WfHistoricProcessInstanceQueryRequest   {
   @JsonProperty("start")
   private Integer start = null;
@@ -73,31 +73,31 @@ public class WfHistoricProcessInstanceQueryRequest   {
   private String superProcessInstanceId = null;
 
   @JsonProperty("excludeSubprocesses")
-  private Boolean excludeSubprocesses = false;
+  private Boolean excludeSubprocesses = null;
 
   @JsonProperty("finished")
-  private Boolean finished = false;
+  private Boolean finished = null;
 
   @JsonProperty("involvedUser")
   private String involvedUser = null;
 
   @JsonProperty("finishedAfter")
-  private DateTime finishedAfter = null;
+  private Date finishedAfter = null;
 
   @JsonProperty("finishedBefore")
-  private DateTime finishedBefore = null;
+  private Date finishedBefore = null;
 
   @JsonProperty("startedAfter")
-  private DateTime startedAfter = null;
+  private Date startedAfter = null;
 
   @JsonProperty("startedBefore")
-  private DateTime startedBefore = null;
+  private Date startedBefore = null;
 
   @JsonProperty("startedBy")
   private String startedBy = null;
 
   @JsonProperty("includeProcessVariables")
-  private Boolean includeProcessVariables = false;
+  private Boolean includeProcessVariables = null;
 
   @JsonProperty("variables")
   private List<WfQueryVariable> variables = new ArrayList<WfQueryVariable>();
@@ -109,7 +109,7 @@ public class WfHistoricProcessInstanceQueryRequest   {
   private String tenantIdLike = null;
 
   @JsonProperty("withoutTenantId")
-  private Boolean withoutTenantId = false;
+  private Boolean withoutTenantId = null;
 
   public WfHistoricProcessInstanceQueryRequest start(Integer start) {
     this.start = start;
@@ -350,7 +350,7 @@ public class WfHistoricProcessInstanceQueryRequest   {
     this.involvedUser = involvedUser;
   }
 
-  public WfHistoricProcessInstanceQueryRequest finishedAfter(DateTime finishedAfter) {
+  public WfHistoricProcessInstanceQueryRequest finishedAfter(Date finishedAfter) {
     this.finishedAfter = finishedAfter;
     return this;
   }
@@ -360,15 +360,15 @@ public class WfHistoricProcessInstanceQueryRequest   {
    * @return finishedAfter
   **/
   @ApiModelProperty(example = "null", value = "完成时间晚于")
-  public DateTime getFinishedAfter() {
+  public Date getFinishedAfter() {
     return finishedAfter;
   }
 
-  public void setFinishedAfter(DateTime finishedAfter) {
+  public void setFinishedAfter(Date finishedAfter) {
     this.finishedAfter = finishedAfter;
   }
 
-  public WfHistoricProcessInstanceQueryRequest finishedBefore(DateTime finishedBefore) {
+  public WfHistoricProcessInstanceQueryRequest finishedBefore(Date finishedBefore) {
     this.finishedBefore = finishedBefore;
     return this;
   }
@@ -378,15 +378,15 @@ public class WfHistoricProcessInstanceQueryRequest   {
    * @return finishedBefore
   **/
   @ApiModelProperty(example = "null", value = "完成时间早于")
-  public DateTime getFinishedBefore() {
+  public Date getFinishedBefore() {
     return finishedBefore;
   }
 
-  public void setFinishedBefore(DateTime finishedBefore) {
+  public void setFinishedBefore(Date finishedBefore) {
     this.finishedBefore = finishedBefore;
   }
 
-  public WfHistoricProcessInstanceQueryRequest startedAfter(DateTime startedAfter) {
+  public WfHistoricProcessInstanceQueryRequest startedAfter(Date startedAfter) {
     this.startedAfter = startedAfter;
     return this;
   }
@@ -396,15 +396,15 @@ public class WfHistoricProcessInstanceQueryRequest   {
    * @return startedAfter
   **/
   @ApiModelProperty(example = "null", value = "开始时间晚于")
-  public DateTime getStartedAfter() {
+  public Date getStartedAfter() {
     return startedAfter;
   }
 
-  public void setStartedAfter(DateTime startedAfter) {
+  public void setStartedAfter(Date startedAfter) {
     this.startedAfter = startedAfter;
   }
 
-  public WfHistoricProcessInstanceQueryRequest startedBefore(DateTime startedBefore) {
+  public WfHistoricProcessInstanceQueryRequest startedBefore(Date startedBefore) {
     this.startedBefore = startedBefore;
     return this;
   }
@@ -414,11 +414,11 @@ public class WfHistoricProcessInstanceQueryRequest   {
    * @return startedBefore
   **/
   @ApiModelProperty(example = "null", value = "开始时间早于")
-  public DateTime getStartedBefore() {
+  public Date getStartedBefore() {
     return startedBefore;
   }
 
-  public void setStartedBefore(DateTime startedBefore) {
+  public void setStartedBefore(Date startedBefore) {
     this.startedBefore = startedBefore;
   }
 

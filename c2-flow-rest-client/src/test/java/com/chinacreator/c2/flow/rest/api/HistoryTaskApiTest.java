@@ -26,7 +26,7 @@
 package com.chinacreator.c2.flow.rest.api;
 
 import com.chinacreator.c2.flow.rest.ApiException;
-import org.joda.time.DateTime;
+import java.util.Date;
 import com.chinacreator.c2.flow.rest.model.PageListResponseWfHistoricTaskInstanceResponse;
 import com.chinacreator.c2.flow.rest.model.WfHistoricIdentityLinkResponse;
 import com.chinacreator.c2.flow.rest.model.WfHistoricTaskInstanceResponse;
@@ -78,15 +78,15 @@ public class HistoryTaskApiTest {
         Boolean finished = null;
         Boolean processFinished = null;
         String parentTaskId = null;
-        DateTime dueDate = null;
-        DateTime dueDateBefore = null;
-        DateTime dueDateAfter = null;
-        DateTime taskCreatedOn = null;
-        DateTime taskCreatedBefore = null;
-        DateTime taskCreatedAfter = null;
-        DateTime taskCompletedOn = null;
-        DateTime taskCompletedBefore = null;
-        DateTime taskCompletedAfter = null;
+        Date dueDate = null;
+        Date dueDateBefore = null;
+        Date dueDateAfter = null;
+        Date taskCreatedOn = null;
+        Date taskCreatedBefore = null;
+        Date taskCreatedAfter = null;
+        Date taskCompletedOn = null;
+        Date taskCompletedBefore = null;
+        Date taskCompletedAfter = null;
         Boolean includeTaskLocalVariables = null;
         Boolean includeProcessVariables = null;
         String tenantId = null;

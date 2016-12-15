@@ -1,6 +1,6 @@
 # HistoryInstanceApi
 
-All URIs are relative to *http://127.0.0.1:83/rest/*
+All URIs are relative to *http://127.0.0.1:83/rest*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -80,10 +80,10 @@ String involvedUser = "involvedUser_example"; // String | 流程参与者(处理
 Boolean finished = true; // Boolean | 是否完成
 String superProcessInstanceId = "superProcessInstanceId_example"; // String | 父流程实例id
 Boolean excludeSubprocesses = true; // Boolean | 排除拥有子流的
-DateTime finishedBefore = new DateTime(); // DateTime | 完成时间下区间
-DateTime finishedAfter = new DateTime(); // DateTime | 完成时间上区间
-DateTime startedBefore = new DateTime(); // DateTime | 开始时间下区间
-DateTime startedAfter = new DateTime(); // DateTime | 开始时间上区间
+Date finishedBefore = new Date(); // Date | 完成时间下区间
+Date finishedAfter = new Date(); // Date | 完成时间上区间
+Date startedBefore = new Date(); // Date | 开始时间下区间
+Date startedAfter = new Date(); // Date | 开始时间上区间
 String startedBy = "startedBy_example"; // String | 流程起动者
 Boolean includeProcessVariables = true; // Boolean | 是否包含流程变量
 String tenantId = "tenantId_example"; // String | 租户
@@ -110,10 +110,10 @@ Name | Type | Description  | Notes
  **finished** | **Boolean**| 是否完成 | [optional]
  **superProcessInstanceId** | **String**| 父流程实例id | [optional]
  **excludeSubprocesses** | **Boolean**| 排除拥有子流的 | [optional]
- **finishedBefore** | **DateTime**| 完成时间下区间 | [optional]
- **finishedAfter** | **DateTime**| 完成时间上区间 | [optional]
- **startedBefore** | **DateTime**| 开始时间下区间 | [optional]
- **startedAfter** | **DateTime**| 开始时间上区间 | [optional]
+ **finishedBefore** | **Date**| 完成时间下区间 | [optional]
+ **finishedAfter** | **Date**| 完成时间上区间 | [optional]
+ **startedBefore** | **Date**| 开始时间下区间 | [optional]
+ **startedAfter** | **Date**| 开始时间上区间 | [optional]
  **startedBy** | **String**| 流程起动者 | [optional]
  **includeProcessVariables** | **Boolean**| 是否包含流程变量 | [optional]
  **tenantId** | **String**| 租户 | [optional]

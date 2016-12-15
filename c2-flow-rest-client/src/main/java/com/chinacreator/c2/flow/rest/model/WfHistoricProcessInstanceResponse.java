@@ -32,15 +32,15 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
-import org.joda.time.DateTime;
 
 
 /**
  * 历史流程实例信息
  */
 @ApiModel(description = "历史流程实例信息")
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-12-09T14:24:45.873+08:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-12-15T15:13:20.386+08:00")
 public class WfHistoricProcessInstanceResponse   {
   @JsonProperty("id")
   private String id = null;
@@ -52,10 +52,10 @@ public class WfHistoricProcessInstanceResponse   {
   private String processDefinitionId = null;
 
   @JsonProperty("startTime")
-  private DateTime startTime = null;
+  private Date startTime = null;
 
   @JsonProperty("endTime")
-  private DateTime endTime = null;
+  private Date endTime = null;
 
   @JsonProperty("durationInMillis")
   private Long durationInMillis = null;
@@ -135,7 +135,7 @@ public class WfHistoricProcessInstanceResponse   {
     this.processDefinitionId = processDefinitionId;
   }
 
-  public WfHistoricProcessInstanceResponse startTime(DateTime startTime) {
+  public WfHistoricProcessInstanceResponse startTime(Date startTime) {
     this.startTime = startTime;
     return this;
   }
@@ -145,15 +145,15 @@ public class WfHistoricProcessInstanceResponse   {
    * @return startTime
   **/
   @ApiModelProperty(example = "null", value = "流程实例开始时间")
-  public DateTime getStartTime() {
+  public Date getStartTime() {
     return startTime;
   }
 
-  public void setStartTime(DateTime startTime) {
+  public void setStartTime(Date startTime) {
     this.startTime = startTime;
   }
 
-  public WfHistoricProcessInstanceResponse endTime(DateTime endTime) {
+  public WfHistoricProcessInstanceResponse endTime(Date endTime) {
     this.endTime = endTime;
     return this;
   }
@@ -163,11 +163,11 @@ public class WfHistoricProcessInstanceResponse   {
    * @return endTime
   **/
   @ApiModelProperty(example = "null", value = "流程实例结束时间")
-  public DateTime getEndTime() {
+  public Date getEndTime() {
     return endTime;
   }
 
-  public void setEndTime(DateTime endTime) {
+  public void setEndTime(Date endTime) {
     this.endTime = endTime;
   }
 

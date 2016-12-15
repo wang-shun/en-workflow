@@ -39,7 +39,7 @@ import java.util.List;
  * 流程实例信息
  */
 @ApiModel(description = "流程实例信息")
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-12-09T14:24:45.873+08:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-12-15T15:13:20.386+08:00")
 public class WfProcessInstanceResponse   {
   @JsonProperty("id")
   private String id = null;
@@ -48,7 +48,7 @@ public class WfProcessInstanceResponse   {
   private String businessKey = null;
 
   @JsonProperty("suspended")
-  private Boolean suspended = false;
+  private Boolean suspended = null;
 
   @JsonProperty("processDefinitionId")
   private String processDefinitionId = null;

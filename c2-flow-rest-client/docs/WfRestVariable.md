@@ -21,6 +21,8 @@ DOUBLE | &quot;double&quot;
 INTEGER | &quot;integer&quot;
 LONG | &quot;long&quot;
 SHORT | &quot;short&quot;
+JAVA_UTIL_LIST | &quot;java.util.List&quot;
+JAVA_UTIL_MAP | &quot;java.util.Map&quot;
 
 
 <a name="VariableScopeEnum"></a>

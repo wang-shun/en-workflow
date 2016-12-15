@@ -10,7 +10,7 @@ Name | Type | Description | Notes
 **delegationState** | [**DelegationStateEnum**](#DelegationStateEnum) | 任务委托状态 |  [optional]
 **name** | **String** | 任务名称 |  [optional]
 **description** | **String** | 任务描述 |  [optional]
-**dueDate** | [**DateTime**](DateTime.md) | 任务过期时间 |  [optional]
+**dueDate** | [**Date**](Date.md) | 任务过期时间 |  [optional]
 **priority** | **Integer** | 任务优先级 |  [optional]
 **parentTaskId** | **String** | 父任务id |  [optional]
 **category** | **String** | 任务类别 |  [optional]

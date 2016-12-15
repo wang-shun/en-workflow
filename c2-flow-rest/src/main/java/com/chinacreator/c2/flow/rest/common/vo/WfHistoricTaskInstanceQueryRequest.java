@@ -6,6 +6,8 @@ import io.swagger.annotations.ApiModelProperty;
 import java.util.Date;
 import java.util.List;
 
+import javax.xml.bind.annotation.XmlElement;
+
 import org.codehaus.jackson.annotate.JsonTypeInfo;
 import org.codehaus.jackson.annotate.JsonTypeInfo.Id;
 
@@ -13,12 +15,13 @@ import org.codehaus.jackson.annotate.JsonTypeInfo.Id;
 /**
  * @author hushowly
  */
-@ApiModel(value="WfHistoricTaskInstanceQueryRequest",description="历史任务查询参数111111")
+@ApiModel(value="WfHistoricTaskInstanceQueryRequest",description="历史任务查询参数")
 public class WfHistoricTaskInstanceQueryRequest extends WfPaginateRequest {
 
-  @ApiModelProperty("任务id")
+  
+  @ApiModelProperty(value="任务id")
   private String taskId;
-  @ApiModelProperty("流程实例id")
+  @ApiModelProperty(value="流程实例id")
   private String processInstanceId;
   @ApiModelProperty("业务主键")
   private String processBusinessKey;
@@ -95,6 +98,7 @@ public class WfHistoricTaskInstanceQueryRequest extends WfPaginateRequest {
   @ApiModelProperty("任务完成时间晚于")
   private Date taskCompletedAfter;
   @ApiModelProperty("是否只查询包含流程环节变量任务")
+  @XmlElement(defaultValue="",nillable=true)
   private Boolean includeTaskLocalVariables=null;
   @ApiModelProperty("是否只查询包含流程环节变量和全局变量任务")
   private Boolean includeProcessVariables=null;
@@ -108,7 +112,7 @@ public class WfHistoricTaskInstanceQueryRequest extends WfPaginateRequest {
   private String tenantIdLike;
   @ApiModelProperty("忽略租户条件")
   private Boolean withoutTenantId=null;
-
+  
   public String getTaskId() {
     return taskId;
   }
@@ -123,6 +127,7 @@ public class WfHistoricTaskInstanceQueryRequest extends WfPaginateRequest {
 
   public void setProcessInstanceId(String processInstanceId) {
     this.processInstanceId = processInstanceId;
+    
   }
 
   public String getProcessBusinessKey() {

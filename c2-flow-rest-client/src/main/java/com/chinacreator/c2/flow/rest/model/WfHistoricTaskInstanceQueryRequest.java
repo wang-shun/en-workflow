@@ -32,15 +32,15 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
-import org.joda.time.DateTime;
 
 
 /**
  * 历史任务查询参数
  */
 @ApiModel(description = "历史任务查询参数")
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-12-09T14:24:45.873+08:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-12-15T15:13:20.386+08:00")
 public class WfHistoricTaskInstanceQueryRequest   {
   @JsonProperty("start")
   private Integer start = null;
@@ -133,49 +133,49 @@ public class WfHistoricTaskInstanceQueryRequest   {
   private Integer taskMaxPriority = null;
 
   @JsonProperty("finished")
-  private Boolean finished = false;
+  private Boolean finished = null;
 
   @JsonProperty("processFinished")
-  private Boolean processFinished = false;
+  private Boolean processFinished = null;
 
   @JsonProperty("parentTaskId")
   private String parentTaskId = null;
 
   @JsonProperty("dueDate")
-  private DateTime dueDate = null;
+  private Date dueDate = null;
 
   @JsonProperty("dueDateAfter")
-  private DateTime dueDateAfter = null;
+  private Date dueDateAfter = null;
 
   @JsonProperty("dueDateBefore")
-  private DateTime dueDateBefore = null;
+  private Date dueDateBefore = null;
 
   @JsonProperty("withoutDueDate")
-  private Boolean withoutDueDate = false;
+  private Boolean withoutDueDate = null;
 
   @JsonProperty("taskCreatedOn")
-  private DateTime taskCreatedOn = null;
+  private Date taskCreatedOn = null;
 
   @JsonProperty("taskCreatedBefore")
-  private DateTime taskCreatedBefore = null;
+  private Date taskCreatedBefore = null;
 
   @JsonProperty("taskCreatedAfter")
-  private DateTime taskCreatedAfter = null;
+  private Date taskCreatedAfter = null;
 
   @JsonProperty("taskCompletedOn")
-  private DateTime taskCompletedOn = null;
+  private Date taskCompletedOn = null;
 
   @JsonProperty("taskCompletedBefore")
-  private DateTime taskCompletedBefore = null;
+  private Date taskCompletedBefore = null;
 
   @JsonProperty("taskCompletedAfter")
-  private DateTime taskCompletedAfter = null;
+  private Date taskCompletedAfter = null;
 
   @JsonProperty("includeTaskLocalVariables")
-  private Boolean includeTaskLocalVariables = false;
+  private Boolean includeTaskLocalVariables = null;
 
   @JsonProperty("includeProcessVariables")
-  private Boolean includeProcessVariables = false;
+  private Boolean includeProcessVariables = null;
 
   @JsonProperty("taskVariables")
   private List<WfQueryVariable> taskVariables = new ArrayList<WfQueryVariable>();
@@ -190,7 +190,7 @@ public class WfHistoricTaskInstanceQueryRequest   {
   private String tenantIdLike = null;
 
   @JsonProperty("withoutTenantId")
-  private Boolean withoutTenantId = false;
+  private Boolean withoutTenantId = null;
 
   public WfHistoricTaskInstanceQueryRequest start(Integer start) {
     this.start = start;
@@ -786,7 +786,7 @@ public class WfHistoricTaskInstanceQueryRequest   {
     this.parentTaskId = parentTaskId;
   }
 
-  public WfHistoricTaskInstanceQueryRequest dueDate(DateTime dueDate) {
+  public WfHistoricTaskInstanceQueryRequest dueDate(Date dueDate) {
     this.dueDate = dueDate;
     return this;
   }
@@ -796,15 +796,15 @@ public class WfHistoricTaskInstanceQueryRequest   {
    * @return dueDate
   **/
   @ApiModelProperty(example = "null", value = "任务过期时间")
-  public DateTime getDueDate() {
+  public Date getDueDate() {
     return dueDate;
   }
 
-  public void setDueDate(DateTime dueDate) {
+  public void setDueDate(Date dueDate) {
     this.dueDate = dueDate;
   }
 
-  public WfHistoricTaskInstanceQueryRequest dueDateAfter(DateTime dueDateAfter) {
+  public WfHistoricTaskInstanceQueryRequest dueDateAfter(Date dueDateAfter) {
     this.dueDateAfter = dueDateAfter;
     return this;
   }
@@ -814,15 +814,15 @@ public class WfHistoricTaskInstanceQueryRequest   {
    * @return dueDateAfter
   **/
   @ApiModelProperty(example = "null", value = "任务过期时间晚于")
-  public DateTime getDueDateAfter() {
+  public Date getDueDateAfter() {
     return dueDateAfter;
   }
 
-  public void setDueDateAfter(DateTime dueDateAfter) {
+  public void setDueDateAfter(Date dueDateAfter) {
     this.dueDateAfter = dueDateAfter;
   }
 
-  public WfHistoricTaskInstanceQueryRequest dueDateBefore(DateTime dueDateBefore) {
+  public WfHistoricTaskInstanceQueryRequest dueDateBefore(Date dueDateBefore) {
     this.dueDateBefore = dueDateBefore;
     return this;
   }
@@ -832,11 +832,11 @@ public class WfHistoricTaskInstanceQueryRequest   {
    * @return dueDateBefore
   **/
   @ApiModelProperty(example = "null", value = "任务过期时间早于")
-  public DateTime getDueDateBefore() {
+  public Date getDueDateBefore() {
     return dueDateBefore;
   }
 
-  public void setDueDateBefore(DateTime dueDateBefore) {
+  public void setDueDateBefore(Date dueDateBefore) {
     this.dueDateBefore = dueDateBefore;
   }
 
@@ -858,7 +858,7 @@ public class WfHistoricTaskInstanceQueryRequest   {
     this.withoutDueDate = withoutDueDate;
   }
 
-  public WfHistoricTaskInstanceQueryRequest taskCreatedOn(DateTime taskCreatedOn) {
+  public WfHistoricTaskInstanceQueryRequest taskCreatedOn(Date taskCreatedOn) {
     this.taskCreatedOn = taskCreatedOn;
     return this;
   }
@@ -868,15 +868,15 @@ public class WfHistoricTaskInstanceQueryRequest   {
    * @return taskCreatedOn
   **/
   @ApiModelProperty(example = "null", value = "任务创建时间")
-  public DateTime getTaskCreatedOn() {
+  public Date getTaskCreatedOn() {
     return taskCreatedOn;
   }
 
-  public void setTaskCreatedOn(DateTime taskCreatedOn) {
+  public void setTaskCreatedOn(Date taskCreatedOn) {
     this.taskCreatedOn = taskCreatedOn;
   }
 
-  public WfHistoricTaskInstanceQueryRequest taskCreatedBefore(DateTime taskCreatedBefore) {
+  public WfHistoricTaskInstanceQueryRequest taskCreatedBefore(Date taskCreatedBefore) {
     this.taskCreatedBefore = taskCreatedBefore;
     return this;
   }
@@ -886,15 +886,15 @@ public class WfHistoricTaskInstanceQueryRequest   {
    * @return taskCreatedBefore
   **/
   @ApiModelProperty(example = "null", value = "任务创建时间早于")
-  public DateTime getTaskCreatedBefore() {
+  public Date getTaskCreatedBefore() {
     return taskCreatedBefore;
   }
 
-  public void setTaskCreatedBefore(DateTime taskCreatedBefore) {
+  public void setTaskCreatedBefore(Date taskCreatedBefore) {
     this.taskCreatedBefore = taskCreatedBefore;
   }
 
-  public WfHistoricTaskInstanceQueryRequest taskCreatedAfter(DateTime taskCreatedAfter) {
+  public WfHistoricTaskInstanceQueryRequest taskCreatedAfter(Date taskCreatedAfter) {
     this.taskCreatedAfter = taskCreatedAfter;
     return this;
   }
@@ -904,15 +904,15 @@ public class WfHistoricTaskInstanceQueryRequest   {
    * @return taskCreatedAfter
   **/
   @ApiModelProperty(example = "null", value = "任务创建时间晚于")
-  public DateTime getTaskCreatedAfter() {
+  public Date getTaskCreatedAfter() {
     return taskCreatedAfter;
   }
 
-  public void setTaskCreatedAfter(DateTime taskCreatedAfter) {
+  public void setTaskCreatedAfter(Date taskCreatedAfter) {
     this.taskCreatedAfter = taskCreatedAfter;
   }
 
-  public WfHistoricTaskInstanceQueryRequest taskCompletedOn(DateTime taskCompletedOn) {
+  public WfHistoricTaskInstanceQueryRequest taskCompletedOn(Date taskCompletedOn) {
     this.taskCompletedOn = taskCompletedOn;
     return this;
   }
@@ -922,15 +922,15 @@ public class WfHistoricTaskInstanceQueryRequest   {
    * @return taskCompletedOn
   **/
   @ApiModelProperty(example = "null", value = "任务完成时间")
-  public DateTime getTaskCompletedOn() {
+  public Date getTaskCompletedOn() {
     return taskCompletedOn;
   }
 
-  public void setTaskCompletedOn(DateTime taskCompletedOn) {
+  public void setTaskCompletedOn(Date taskCompletedOn) {
     this.taskCompletedOn = taskCompletedOn;
   }
 
-  public WfHistoricTaskInstanceQueryRequest taskCompletedBefore(DateTime taskCompletedBefore) {
+  public WfHistoricTaskInstanceQueryRequest taskCompletedBefore(Date taskCompletedBefore) {
     this.taskCompletedBefore = taskCompletedBefore;
     return this;
   }
@@ -940,15 +940,15 @@ public class WfHistoricTaskInstanceQueryRequest   {
    * @return taskCompletedBefore
   **/
   @ApiModelProperty(example = "null", value = "任务完成时间早于")
-  public DateTime getTaskCompletedBefore() {
+  public Date getTaskCompletedBefore() {
     return taskCompletedBefore;
   }
 
-  public void setTaskCompletedBefore(DateTime taskCompletedBefore) {
+  public void setTaskCompletedBefore(Date taskCompletedBefore) {
     this.taskCompletedBefore = taskCompletedBefore;
   }
 
-  public WfHistoricTaskInstanceQueryRequest taskCompletedAfter(DateTime taskCompletedAfter) {
+  public WfHistoricTaskInstanceQueryRequest taskCompletedAfter(Date taskCompletedAfter) {
     this.taskCompletedAfter = taskCompletedAfter;
     return this;
   }
@@ -958,11 +958,11 @@ public class WfHistoricTaskInstanceQueryRequest   {
    * @return taskCompletedAfter
   **/
   @ApiModelProperty(example = "null", value = "任务完成时间晚于")
-  public DateTime getTaskCompletedAfter() {
+  public Date getTaskCompletedAfter() {
     return taskCompletedAfter;
   }
 
-  public void setTaskCompletedAfter(DateTime taskCompletedAfter) {
+  public void setTaskCompletedAfter(Date taskCompletedAfter) {
     this.taskCompletedAfter = taskCompletedAfter;
   }
 

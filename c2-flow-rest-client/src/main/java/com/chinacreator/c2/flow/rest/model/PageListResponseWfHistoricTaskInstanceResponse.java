@@ -39,7 +39,7 @@ import java.util.List;
  * 数据集响应模型
  */
 @ApiModel(description = "数据集响应模型")
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-12-09T14:24:45.873+08:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-12-15T15:13:20.386+08:00")
 public class PageListResponseWfHistoricTaskInstanceResponse   {
   @JsonProperty("data")
   private List<WfHistoricTaskInstanceResponse> data = new ArrayList<WfHistoricTaskInstanceResponse>();

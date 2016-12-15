@@ -36,7 +36,7 @@ import io.swagger.annotations.ApiModelProperty;
  * 变量查询参数
  */
 @ApiModel(description = "变量查询参数")
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-12-09T14:24:45.873+08:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-12-15T15:13:20.386+08:00")
 public class WfQueryVariable   {
   @JsonProperty("name")
   private String name = null;

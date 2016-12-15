@@ -1,6 +1,6 @@
 # HistoryTaskApi
 
-All URIs are relative to *http://127.0.0.1:83/rest/*
+All URIs are relative to *http://127.0.0.1:83/rest*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -48,15 +48,15 @@ Integer taskPriority = 56; // Integer | 任务优先级
 Boolean finished = true; // Boolean | 是否完成
 Boolean processFinished = true; // Boolean | 任务所在流程实例是否完成
 String parentTaskId = "parentTaskId_example"; // String | 父任务
-DateTime dueDate = new DateTime(); // DateTime | 任务过期时间
-DateTime dueDateBefore = new DateTime(); // DateTime | 过期时间下区间
-DateTime dueDateAfter = new DateTime(); // DateTime | 过期时间上区间
-DateTime taskCreatedOn = new DateTime(); // DateTime | 任务创建时间
-DateTime taskCreatedBefore = new DateTime(); // DateTime | 创建时间下区间
-DateTime taskCreatedAfter = new DateTime(); // DateTime | 创建时间上区间
-DateTime taskCompletedOn = new DateTime(); // DateTime | 任务完成时间
-DateTime taskCompletedBefore = new DateTime(); // DateTime | 完成时间下区间
-DateTime taskCompletedAfter = new DateTime(); // DateTime | 完成时间上区间
+Date dueDate = new Date(); // Date | 任务过期时间
+Date dueDateBefore = new Date(); // Date | 过期时间下区间
+Date dueDateAfter = new Date(); // Date | 过期时间上区间
+Date taskCreatedOn = new Date(); // Date | 任务创建时间
+Date taskCreatedBefore = new Date(); // Date | 创建时间下区间
+Date taskCreatedAfter = new Date(); // Date | 创建时间上区间
+Date taskCompletedOn = new Date(); // Date | 任务完成时间
+Date taskCompletedBefore = new Date(); // Date | 完成时间下区间
+Date taskCompletedAfter = new Date(); // Date | 完成时间上区间
 Boolean includeTaskLocalVariables = true; // Boolean | 是否只查询包含流程环节变量任务
 Boolean includeProcessVariables = true; // Boolean | 是否只查询包含流程环节变量和全局变量任务
 String tenantId = "tenantId_example"; // String | 租户
@@ -98,15 +98,15 @@ Name | Type | Description  | Notes
  **finished** | **Boolean**| 是否完成 | [optional]
  **processFinished** | **Boolean**| 任务所在流程实例是否完成 | [optional]
  **parentTaskId** | **String**| 父任务 | [optional]
- **dueDate** | **DateTime**| 任务过期时间 | [optional]
- **dueDateBefore** | **DateTime**| 过期时间下区间 | [optional]
- **dueDateAfter** | **DateTime**| 过期时间上区间 | [optional]
- **taskCreatedOn** | **DateTime**| 任务创建时间 | [optional]
- **taskCreatedBefore** | **DateTime**| 创建时间下区间 | [optional]
- **taskCreatedAfter** | **DateTime**| 创建时间上区间 | [optional]
- **taskCompletedOn** | **DateTime**| 任务完成时间 | [optional]
- **taskCompletedBefore** | **DateTime**| 完成时间下区间 | [optional]
- **taskCompletedAfter** | **DateTime**| 完成时间上区间 | [optional]
+ **dueDate** | **Date**| 任务过期时间 | [optional]
+ **dueDateBefore** | **Date**| 过期时间下区间 | [optional]
+ **dueDateAfter** | **Date**| 过期时间上区间 | [optional]
+ **taskCreatedOn** | **Date**| 任务创建时间 | [optional]
+ **taskCreatedBefore** | **Date**| 创建时间下区间 | [optional]
+ **taskCreatedAfter** | **Date**| 创建时间上区间 | [optional]
+ **taskCompletedOn** | **Date**| 任务完成时间 | [optional]
+ **taskCompletedBefore** | **Date**| 完成时间下区间 | [optional]
+ **taskCompletedAfter** | **Date**| 完成时间上区间 | [optional]
  **includeTaskLocalVariables** | **Boolean**| 是否只查询包含流程环节变量任务 | [optional]
  **includeProcessVariables** | **Boolean**| 是否只查询包含流程环节变量和全局变量任务 | [optional]
  **tenantId** | **String**| 租户 | [optional]

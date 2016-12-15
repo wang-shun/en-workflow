@@ -32,15 +32,15 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
-import org.joda.time.DateTime;
 
 
 /**
  * 任务查询对象
  */
 @ApiModel(description = "任务查询对象")
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-12-09T14:24:45.873+08:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-12-15T15:13:20.386+08:00")
 public class WfTaskQueryRequest   {
   @JsonProperty("start")
   private Integer start = null;
@@ -88,7 +88,7 @@ public class WfTaskQueryRequest   {
   private String ownerLike = null;
 
   @JsonProperty("unassigned")
-  private Boolean unassigned = false;
+  private Boolean unassigned = null;
 
   @JsonProperty("delegationState")
   private String delegationState = null;
@@ -130,16 +130,16 @@ public class WfTaskQueryRequest   {
   private String executionId = null;
 
   @JsonProperty("createdOn")
-  private DateTime createdOn = null;
+  private Date createdOn = null;
 
   @JsonProperty("createdBefore")
-  private DateTime createdBefore = null;
+  private Date createdBefore = null;
 
   @JsonProperty("createdAfter")
-  private DateTime createdAfter = null;
+  private Date createdAfter = null;
 
   @JsonProperty("excludeSubTasks")
-  private Boolean excludeSubTasks = false;
+  private Boolean excludeSubTasks = null;
 
   @JsonProperty("taskDefinitionKey")
   private String taskDefinitionKey = null;
@@ -148,25 +148,25 @@ public class WfTaskQueryRequest   {
   private String taskDefinitionKeyLike = null;
 
   @JsonProperty("dueDate")
-  private DateTime dueDate = null;
+  private Date dueDate = null;
 
   @JsonProperty("dueBefore")
-  private DateTime dueBefore = null;
+  private Date dueBefore = null;
 
   @JsonProperty("dueAfter")
-  private DateTime dueAfter = null;
+  private Date dueAfter = null;
 
   @JsonProperty("withoutDueDate")
-  private Boolean withoutDueDate = false;
+  private Boolean withoutDueDate = null;
 
   @JsonProperty("active")
-  private Boolean active = false;
+  private Boolean active = null;
 
   @JsonProperty("includeTaskLocalVariables")
-  private Boolean includeTaskLocalVariables = false;
+  private Boolean includeTaskLocalVariables = null;
 
   @JsonProperty("includeProcessVariables")
-  private Boolean includeProcessVariables = false;
+  private Boolean includeProcessVariables = null;
 
   @JsonProperty("tenantId")
   private String tenantId = null;
@@ -175,7 +175,7 @@ public class WfTaskQueryRequest   {
   private String tenantIdLike = null;
 
   @JsonProperty("withoutTenantId")
-  private Boolean withoutTenantId = false;
+  private Boolean withoutTenantId = null;
 
   @JsonProperty("taskVariables")
   private List<WfQueryVariable> taskVariables = new ArrayList<WfQueryVariable>();
@@ -710,7 +710,7 @@ public class WfTaskQueryRequest   {
     this.executionId = executionId;
   }
 
-  public WfTaskQueryRequest createdOn(DateTime createdOn) {
+  public WfTaskQueryRequest createdOn(Date createdOn) {
     this.createdOn = createdOn;
     return this;
   }
@@ -720,15 +720,15 @@ public class WfTaskQueryRequest   {
    * @return createdOn
   **/
   @ApiModelProperty(example = "null", value = "任务创建时间")
-  public DateTime getCreatedOn() {
+  public Date getCreatedOn() {
     return createdOn;
   }
 
-  public void setCreatedOn(DateTime createdOn) {
+  public void setCreatedOn(Date createdOn) {
     this.createdOn = createdOn;
   }
 
-  public WfTaskQueryRequest createdBefore(DateTime createdBefore) {
+  public WfTaskQueryRequest createdBefore(Date createdBefore) {
     this.createdBefore = createdBefore;
     return this;
   }
@@ -738,15 +738,15 @@ public class WfTaskQueryRequest   {
    * @return createdBefore
   **/
   @ApiModelProperty(example = "null", value = "任务创建时间下区间条件")
-  public DateTime getCreatedBefore() {
+  public Date getCreatedBefore() {
     return createdBefore;
   }
 
-  public void setCreatedBefore(DateTime createdBefore) {
+  public void setCreatedBefore(Date createdBefore) {
     this.createdBefore = createdBefore;
   }
 
-  public WfTaskQueryRequest createdAfter(DateTime createdAfter) {
+  public WfTaskQueryRequest createdAfter(Date createdAfter) {
     this.createdAfter = createdAfter;
     return this;
   }
@@ -756,11 +756,11 @@ public class WfTaskQueryRequest   {
    * @return createdAfter
   **/
   @ApiModelProperty(example = "null", value = "任务创建时间上区间条件")
-  public DateTime getCreatedAfter() {
+  public Date getCreatedAfter() {
     return createdAfter;
   }
 
-  public void setCreatedAfter(DateTime createdAfter) {
+  public void setCreatedAfter(Date createdAfter) {
     this.createdAfter = createdAfter;
   }
 
@@ -818,7 +818,7 @@ public class WfTaskQueryRequest   {
     this.taskDefinitionKeyLike = taskDefinitionKeyLike;
   }
 
-  public WfTaskQueryRequest dueDate(DateTime dueDate) {
+  public WfTaskQueryRequest dueDate(Date dueDate) {
     this.dueDate = dueDate;
     return this;
   }
@@ -828,15 +828,15 @@ public class WfTaskQueryRequest   {
    * @return dueDate
   **/
   @ApiModelProperty(example = "null", value = "任务过期时间")
-  public DateTime getDueDate() {
+  public Date getDueDate() {
     return dueDate;
   }
 
-  public void setDueDate(DateTime dueDate) {
+  public void setDueDate(Date dueDate) {
     this.dueDate = dueDate;
   }
 
-  public WfTaskQueryRequest dueBefore(DateTime dueBefore) {
+  public WfTaskQueryRequest dueBefore(Date dueBefore) {
     this.dueBefore = dueBefore;
     return this;
   }
@@ -846,15 +846,15 @@ public class WfTaskQueryRequest   {
    * @return dueBefore
   **/
   @ApiModelProperty(example = "null", value = "过期时间范围下区间")
-  public DateTime getDueBefore() {
+  public Date getDueBefore() {
     return dueBefore;
   }
 
-  public void setDueBefore(DateTime dueBefore) {
+  public void setDueBefore(Date dueBefore) {
     this.dueBefore = dueBefore;
   }
 
-  public WfTaskQueryRequest dueAfter(DateTime dueAfter) {
+  public WfTaskQueryRequest dueAfter(Date dueAfter) {
     this.dueAfter = dueAfter;
     return this;
   }
@@ -864,11 +864,11 @@ public class WfTaskQueryRequest   {
    * @return dueAfter
   **/
   @ApiModelProperty(example = "null", value = "过期时间范围上区间")
-  public DateTime getDueAfter() {
+  public Date getDueAfter() {
     return dueAfter;
   }
 
-  public void setDueAfter(DateTime dueAfter) {
+  public void setDueAfter(Date dueAfter) {
     this.dueAfter = dueAfter;
   }
 

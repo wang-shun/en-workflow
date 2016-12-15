@@ -36,7 +36,7 @@ import io.swagger.annotations.ApiModelProperty;
  * 流程变量
  */
 @ApiModel(description = "流程变量")
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-12-09T14:24:45.873+08:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-12-15T15:13:20.386+08:00")
 public class WfRestVariable   {
   @JsonProperty("name")
   private String name = null;
@@ -57,7 +57,11 @@ public class WfRestVariable   {
     
     LONG("long"),
     
-    SHORT("short");
+    SHORT("short"),
+    
+    JAVA_UTIL_LIST("java.util.List"),
+    
+    JAVA_UTIL_MAP("java.util.Map");
 
     private String value;
 

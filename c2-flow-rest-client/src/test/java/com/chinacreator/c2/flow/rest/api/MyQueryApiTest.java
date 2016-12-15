@@ -25,29 +25,25 @@
 
 package com.chinacreator.c2.flow.rest.api;
 
-import com.chinacreator.c2.flow.rest.ApiException;
-import com.chinacreator.c2.flow.rest.model.PageListResponseWfHistoricProcessInstanceResponse;
-import com.chinacreator.c2.flow.rest.model.WfHistoricProcessInstanceQueryRequest;
-import com.chinacreator.c2.flow.rest.model.PageListResponseWfHistoricTaskInstanceResponse;
-import com.chinacreator.c2.flow.rest.model.WfHistoricTaskInstanceQueryRequest;
-import com.chinacreator.c2.flow.rest.model.PageListResponseWfProcessInstanceResponse;
-import com.chinacreator.c2.flow.rest.model.WfProcessInstanceQueryRequest;
-import com.chinacreator.c2.flow.rest.model.PageListResponseWfTaskResponse;
-import com.chinacreator.c2.flow.rest.model.WfTaskQueryRequest;
+import org.junit.Assert;
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import com.chinacreator.c2.flow.rest.ApiException;
+import com.chinacreator.c2.flow.rest.model.PageListResponseWfHistoricProcessInstanceResponse;
+import com.chinacreator.c2.flow.rest.model.PageListResponseWfHistoricTaskInstanceResponse;
+import com.chinacreator.c2.flow.rest.model.PageListResponseWfProcessInstanceResponse;
+import com.chinacreator.c2.flow.rest.model.PageListResponseWfTaskResponse;
+import com.chinacreator.c2.flow.rest.model.WfHistoricProcessInstanceQueryRequest;
+import com.chinacreator.c2.flow.rest.model.WfHistoricTaskInstanceQueryRequest;
+import com.chinacreator.c2.flow.rest.model.WfProcessInstanceQueryRequest;
+import com.chinacreator.c2.flow.rest.model.WfTaskQueryRequest;
 
 /**
  * API tests for QueryApi
  */
-public class QueryApiTest {
-
+public class MyQueryApiTest {
+	
     private final QueryApi api = new QueryApi();
-
     
     /**
      * 查询历史流程实例列表
@@ -59,10 +55,9 @@ public class QueryApiTest {
      */
     @Test
     public void queryHistoricProcessInstancesTest() throws ApiException {
-        WfHistoricProcessInstanceQueryRequest body = null;
-        // PageListResponseWfHistoricProcessInstanceResponse response = api.queryHistoricProcessInstances(body);
-
-        // TODO: test validations
+        WfHistoricProcessInstanceQueryRequest body = new WfHistoricProcessInstanceQueryRequest();
+        PageListResponseWfHistoricProcessInstanceResponse response = api.queryHistoricProcessInstances(body);
+        Assert.assertNotNull("not null",response);
     }
     
     /**
@@ -75,10 +70,12 @@ public class QueryApiTest {
      */
     @Test
     public void queryHistoricTaskInstancesTest() throws ApiException {
-        WfHistoricTaskInstanceQueryRequest body = null;
-        // PageListResponseWfHistoricTaskInstanceResponse response = api.queryHistoricTaskInstances(body);
-
-        // TODO: test validations
+        WfHistoricTaskInstanceQueryRequest body = new WfHistoricTaskInstanceQueryRequest();
+        body.setStart(0);
+        body.setSize(10);
+        System.out.println(body.toString());
+        PageListResponseWfHistoricTaskInstanceResponse response = api.queryHistoricTaskInstances(body);
+        Assert.assertNotNull("not null",response);
     }
     
     /**
@@ -91,26 +88,22 @@ public class QueryApiTest {
      */
     @Test
     public void queryProcessInstancesTest() throws ApiException {
-        WfProcessInstanceQueryRequest body = null;
-        // PageListResponseWfProcessInstanceResponse response = api.queryProcessInstances(body);
-
-        // TODO: test validations
+        WfProcessInstanceQueryRequest body = new WfProcessInstanceQueryRequest();
+        PageListResponseWfProcessInstanceResponse response = api.queryProcessInstances(body);
+        Assert.assertNotNull("not null",response);
     }
+    
     
     /**
      * 查询待办列表
-     *
-     * 
-     *
      * @throws ApiException
      *          if the Api call fails
      */
     @Test
     public void queryTasksTest() throws ApiException {
-        WfTaskQueryRequest body = null;
-        // PageListResponseWfTaskResponse response = api.queryTasks(body);
-
-        // TODO: test validations
+        WfTaskQueryRequest body = new WfTaskQueryRequest();
+		PageListResponseWfTaskResponse result = api.queryTasks(body);
+		Assert.assertNotNull("not null",result);
     }
     
 }

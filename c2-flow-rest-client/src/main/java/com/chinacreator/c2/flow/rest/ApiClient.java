@@ -32,7 +32,6 @@ import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.GenericType;
-import com.sun.jersey.api.client.Statuses;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
 import com.sun.jersey.api.client.filter.LoggingFilter;
 import com.sun.jersey.api.client.WebResource.Builder;
@@ -66,7 +65,7 @@ import com.chinacreator.c2.flow.rest.auth.HttpBasicAuth;
 import com.chinacreator.c2.flow.rest.auth.ApiKeyAuth;
 import com.chinacreator.c2.flow.rest.auth.OAuth;
 
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-12-09T14:24:45.873+08:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-12-15T15:13:20.386+08:00")
 public class ApiClient {
   private Map<String, String> defaultHeaderMap = new HashMap<String, String>();
   private String basePath = "http://127.0.0.1:83/rest";
@@ -619,7 +618,7 @@ public class ApiClient {
     statusCode = response.getStatusInfo().getStatusCode();
     responseHeaders = response.getHeaders();
 
-    if(response.getStatusInfo().getStatusCode() == ClientResponse.Status.NO_CONTENT.getStatusCode()) {
+    if(response.getStatusInfo() == ClientResponse.Status.NO_CONTENT) {
       return null;
     } else if (response.getStatusInfo().getFamily() == Family.SUCCESSFUL) {
       if (returnType == null)

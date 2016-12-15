@@ -32,15 +32,15 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
-import org.joda.time.DateTime;
 
 
 /**
  * 任务信息
  */
 @ApiModel(description = "任务信息")
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-12-09T14:24:45.873+08:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-12-15T15:13:20.386+08:00")
 public class WfTaskResponse   {
   @JsonProperty("id")
   private String id = null;
@@ -61,16 +61,16 @@ public class WfTaskResponse   {
   private String description = null;
 
   @JsonProperty("createTime")
-  private DateTime createTime = null;
+  private Date createTime = null;
 
   @JsonProperty("dueDate")
-  private DateTime dueDate = null;
+  private Date dueDate = null;
 
   @JsonProperty("priority")
   private Integer priority = null;
 
   @JsonProperty("suspended")
-  private Boolean suspended = false;
+  private Boolean suspended = null;
 
   @JsonProperty("taskDefinitionKey")
   private String taskDefinitionKey = null;
@@ -204,7 +204,7 @@ public class WfTaskResponse   {
     this.description = description;
   }
 
-  public WfTaskResponse createTime(DateTime createTime) {
+  public WfTaskResponse createTime(Date createTime) {
     this.createTime = createTime;
     return this;
   }
@@ -214,15 +214,15 @@ public class WfTaskResponse   {
    * @return createTime
   **/
   @ApiModelProperty(example = "null", value = "任务创建时间")
-  public DateTime getCreateTime() {
+  public Date getCreateTime() {
     return createTime;
   }
 
-  public void setCreateTime(DateTime createTime) {
+  public void setCreateTime(Date createTime) {
     this.createTime = createTime;
   }
 
-  public WfTaskResponse dueDate(DateTime dueDate) {
+  public WfTaskResponse dueDate(Date dueDate) {
     this.dueDate = dueDate;
     return this;
   }
@@ -232,11 +232,11 @@ public class WfTaskResponse   {
    * @return dueDate
   **/
   @ApiModelProperty(example = "null", value = "任务过期时间")
-  public DateTime getDueDate() {
+  public Date getDueDate() {
     return dueDate;
   }
 
-  public void setDueDate(DateTime dueDate) {
+  public void setDueDate(Date dueDate) {
     this.dueDate = dueDate;
   }
 

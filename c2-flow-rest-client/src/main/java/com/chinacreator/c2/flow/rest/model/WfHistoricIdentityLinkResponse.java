@@ -36,7 +36,7 @@ import io.swagger.annotations.ApiModelProperty;
  * 历史候选人或候选组信息
  */
 @ApiModel(description = "历史候选人或候选组信息")
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-12-09T14:24:45.873+08:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-12-15T15:13:20.386+08:00")
 public class WfHistoricIdentityLinkResponse   {
   @JsonProperty("type")
   private String type = null;

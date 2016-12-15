@@ -86,7 +86,7 @@ public class HistoryInstanceApiExample {
 
 ## Documentation for API Endpoints
 
-All URIs are relative to *http://127.0.0.1:83/rest/*
+All URIs are relative to *http://127.0.0.1:83/rest*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------

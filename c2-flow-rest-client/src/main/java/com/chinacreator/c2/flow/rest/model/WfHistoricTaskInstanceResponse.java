@@ -32,15 +32,15 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
-import org.joda.time.DateTime;
 
 
 /**
  * 历史任务信息
  */
 @ApiModel(description = "历史任务信息")
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-12-09T14:24:45.873+08:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-12-15T15:13:20.386+08:00")
 public class WfHistoricTaskInstanceResponse   {
   @JsonProperty("id")
   private String id = null;
@@ -70,10 +70,10 @@ public class WfHistoricTaskInstanceResponse   {
   private String assignee = null;
 
   @JsonProperty("startTime")
-  private DateTime startTime = null;
+  private Date startTime = null;
 
   @JsonProperty("endTime")
-  private DateTime endTime = null;
+  private Date endTime = null;
 
   @JsonProperty("durationInMillis")
   private Long durationInMillis = null;
@@ -82,7 +82,7 @@ public class WfHistoricTaskInstanceResponse   {
   private Long workTimeInMillis = null;
 
   @JsonProperty("claimTime")
-  private DateTime claimTime = null;
+  private Date claimTime = null;
 
   @JsonProperty("taskDefinitionKey")
   private String taskDefinitionKey = null;
@@ -94,7 +94,7 @@ public class WfHistoricTaskInstanceResponse   {
   private Integer priority = null;
 
   @JsonProperty("dueDate")
-  private DateTime dueDate = null;
+  private Date dueDate = null;
 
   @JsonProperty("parentTaskId")
   private String parentTaskId = null;
@@ -270,7 +270,7 @@ public class WfHistoricTaskInstanceResponse   {
     this.assignee = assignee;
   }
 
-  public WfHistoricTaskInstanceResponse startTime(DateTime startTime) {
+  public WfHistoricTaskInstanceResponse startTime(Date startTime) {
     this.startTime = startTime;
     return this;
   }
@@ -280,15 +280,15 @@ public class WfHistoricTaskInstanceResponse   {
    * @return startTime
   **/
   @ApiModelProperty(example = "null", value = "任务开始时间")
-  public DateTime getStartTime() {
+  public Date getStartTime() {
     return startTime;
   }
 
-  public void setStartTime(DateTime startTime) {
+  public void setStartTime(Date startTime) {
     this.startTime = startTime;
   }
 
-  public WfHistoricTaskInstanceResponse endTime(DateTime endTime) {
+  public WfHistoricTaskInstanceResponse endTime(Date endTime) {
     this.endTime = endTime;
     return this;
   }
@@ -298,11 +298,11 @@ public class WfHistoricTaskInstanceResponse   {
    * @return endTime
   **/
   @ApiModelProperty(example = "null", value = "任务结束时间")
-  public DateTime getEndTime() {
+  public Date getEndTime() {
     return endTime;
   }
 
-  public void setEndTime(DateTime endTime) {
+  public void setEndTime(Date endTime) {
     this.endTime = endTime;
   }
 
@@ -342,7 +342,7 @@ public class WfHistoricTaskInstanceResponse   {
     this.workTimeInMillis = workTimeInMillis;
   }
 
-  public WfHistoricTaskInstanceResponse claimTime(DateTime claimTime) {
+  public WfHistoricTaskInstanceResponse claimTime(Date claimTime) {
     this.claimTime = claimTime;
     return this;
   }
@@ -352,11 +352,11 @@ public class WfHistoricTaskInstanceResponse   {
    * @return claimTime
   **/
   @ApiModelProperty(example = "null", value = "任务签收时间")
-  public DateTime getClaimTime() {
+  public Date getClaimTime() {
     return claimTime;
   }
 
-  public void setClaimTime(DateTime claimTime) {
+  public void setClaimTime(Date claimTime) {
     this.claimTime = claimTime;
   }
 
@@ -414,7 +414,7 @@ public class WfHistoricTaskInstanceResponse   {
     this.priority = priority;
   }
 
-  public WfHistoricTaskInstanceResponse dueDate(DateTime dueDate) {
+  public WfHistoricTaskInstanceResponse dueDate(Date dueDate) {
     this.dueDate = dueDate;
     return this;
   }
@@ -424,11 +424,11 @@ public class WfHistoricTaskInstanceResponse   {
    * @return dueDate
   **/
   @ApiModelProperty(example = "null", value = "任务过期时间")
-  public DateTime getDueDate() {
+  public Date getDueDate() {
     return dueDate;
   }
 
-  public void setDueDate(DateTime dueDate) {
+  public void setDueDate(Date dueDate) {
     this.dueDate = dueDate;
   }
 

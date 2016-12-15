@@ -25,25 +25,21 @@
 
 package com.chinacreator.c2.flow.rest.api;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.joda.time.DateTime;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-
 import com.chinacreator.c2.flow.rest.ApiException;
-import com.chinacreator.c2.flow.rest.model.PageListResponseWfTaskResponse;
-import com.chinacreator.c2.flow.rest.model.WfActionResult;
 import com.chinacreator.c2.flow.rest.model.WfCommentResponse;
-import com.chinacreator.c2.flow.rest.model.WfProcessInstanceCreateRequest;
-import com.chinacreator.c2.flow.rest.model.WfProcessInstanceResponse;
 import com.chinacreator.c2.flow.rest.model.WfRestVariable;
 import com.chinacreator.c2.flow.rest.model.WfTaskActionRequest;
-import com.chinacreator.c2.flow.rest.model.WfTaskActionRequest.ActionEnum;
-import com.chinacreator.c2.flow.rest.model.WfTaskRequest;
+import com.chinacreator.c2.flow.rest.model.WfActionResult;
 import com.chinacreator.c2.flow.rest.model.WfTaskResponse;
+import com.chinacreator.c2.flow.rest.model.PageListResponseWfTaskResponse;
+import java.util.Date;
+import com.chinacreator.c2.flow.rest.model.WfTaskRequest;
+import org.junit.Test;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * API tests for RuntimeTaskApi
@@ -51,28 +47,160 @@ import com.chinacreator.c2.flow.rest.model.WfTaskResponse;
 public class RuntimeTaskApiTest {
 
     private final RuntimeTaskApi api = new RuntimeTaskApi();
+
     
-    private final RuntimeInstanceApi runtimeInstanceApi = new RuntimeInstanceApi();
-    
-    private static WfProcessInstanceResponse wfProcessInstanceResponse=null;
-    private static WfTaskResponse wfTaskResponse=null;
-    private static WfCommentResponse wfCommentResponse=null;
-    
-    
-    @Before
-    public void init()  throws ApiException{
-    	//创建流程实例
-        WfProcessInstanceCreateRequest body = new WfProcessInstanceCreateRequest();
-        body.setProcessDefinitionKey("jtest");
-        WfRestVariable wfRestVariable=new WfRestVariable();
-        wfRestVariable.setName("userId");
-        wfRestVariable.setType(WfRestVariable.TypeEnum.STRING);
-        wfRestVariable.setValue("test_user");
-        wfRestVariable.setVariableScope(WfRestVariable.VariableScopeEnum.GLOBAL);
-        body.addVariablesItem(wfRestVariable);
-        wfProcessInstanceResponse = runtimeInstanceApi.createProcessInstance(body);
+    /**
+     * 添加任务意见
+     *
+     * 
+     *
+     * @throws ApiException
+     *          if the Api call fails
+     */
+    @Test
+    public void createCommentTest() throws ApiException {
+        String taskId = null;
+        WfCommentResponse body = null;
+        // WfCommentResponse response = api.createComment(taskId, body);
+
+        // TODO: test validations
     }
     
+    /**
+     * 批量添加任务流程变量
+     *
+     * 
+     *
+     * @throws ApiException
+     *          if the Api call fails
+     */
+    @Test
+    public void createTaskVariableTest() throws ApiException {
+        String taskId = null;
+        List<WfRestVariable> body = null;
+        // List<WfRestVariable> response = api.createTaskVariable(taskId, body);
+
+        // TODO: test validations
+    }
+    
+    /**
+     * 批量删除任务流程变量
+     *
+     * 
+     *
+     * @throws ApiException
+     *          if the Api call fails
+     */
+    @Test
+    public void deleteAllLocalTaskVariablesTest() throws ApiException {
+        String taskId = null;
+        // api.deleteAllLocalTaskVariables(taskId);
+
+        // TODO: test validations
+    }
+    
+    /**
+     * 删了某任务下某条意见
+     *
+     * 
+     *
+     * @throws ApiException
+     *          if the Api call fails
+     */
+    @Test
+    public void deleteCommentTest() throws ApiException {
+        String taskId = null;
+        String commentId = null;
+        // api.deleteComment(taskId, commentId);
+
+        // TODO: test validations
+    }
+    
+    /**
+     * 删除任务
+     *
+     * 
+     *
+     * @throws ApiException
+     *          if the Api call fails
+     */
+    @Test
+    public void deleteTaskTest() throws ApiException {
+        String taskId = null;
+        Boolean cascadeHistory = null;
+        String deleteReason = null;
+        // api.deleteTask(taskId, cascadeHistory, deleteReason);
+
+        // TODO: test validations
+    }
+    
+    /**
+     * 处理任务
+     *
+     * 处理任务：签收(CLAIM)、签收并完成(CLAIM_COMPLETE)、完成(COMPLETE)、委托代理(DELEGATE)、回绝委托代理(RESOLVE)、退回任务(REJECT)
+     *
+     * @throws ApiException
+     *          if the Api call fails
+     */
+    @Test
+    public void executeTaskActionTest() throws ApiException {
+        String taskId = null;
+        WfTaskActionRequest body = null;
+        // WfActionResult response = api.executeTaskAction(taskId, body);
+
+        // TODO: test validations
+    }
+    
+    /**
+     * 获取某任务下某条意见详细
+     *
+     * 
+     *
+     * @throws ApiException
+     *          if the Api call fails
+     */
+    @Test
+    public void getCommentTest() throws ApiException {
+        String taskId = null;
+        String commentId = null;
+        // WfCommentResponse response = api.getComment(taskId, commentId);
+
+        // TODO: test validations
+    }
+    
+    /**
+     * 获取某任务意见列表
+     *
+     * 
+     *
+     * @throws ApiException
+     *          if the Api call fails
+     */
+    @Test
+    public void getCommentsTest() throws ApiException {
+        String taskId = null;
+        // List<WfCommentResponse> response = api.getComments(taskId);
+
+        // TODO: test validations
+    }
+    
+    /**
+     * 获取任务信息
+     *
+     * 
+     *
+     * @throws ApiException
+     *          if the Api call fails
+     */
+    @Test
+    public void getTaskTest() throws ApiException {
+        String taskId = null;
+        Boolean includeTaskLocalVariables = null;
+        Boolean includeProcessVariables = null;
+        // WfTaskResponse response = api.getTask(taskId, includeTaskLocalVariables, includeProcessVariables);
+
+        // TODO: test validations
+    }
     
     /**
      * 待办列表
@@ -102,109 +230,27 @@ public class RuntimeTaskApiTest {
         String processDefinitionKeyLike = null;
         String processDefinitionName = null;
         String processDefinitionNameLike = null;
-        String processInstanceId = wfProcessInstanceResponse.getId();
+        String processInstanceId = null;
         String processInstanceBusinessKey = null;
         String executionId = null;
-        DateTime createdOn = null;
-        DateTime createdBefore = null;
-        DateTime createdAfter = null;
+        Date createdOn = null;
+        Date createdBefore = null;
+        Date createdAfter = null;
         Boolean excludeSubTasks = null;
         String taskDefinitionKey = null;
         String taskDefinitionKeyLike = null;
-        DateTime dueDate = null;
-        DateTime dueBefore = null;
-        DateTime dueAfter = null;
+        Date dueDate = null;
+        Date dueBefore = null;
+        Date dueAfter = null;
         Boolean active = null;
         Boolean includeTaskLocalVariables = null;
         Boolean includeProcessVariables = null;
         String tenantId = null;
         String tenantIdLike = null;
         Boolean withoutTenantId = null;
-        PageListResponseWfTaskResponse pageListResponseWfTaskResponse = api.getTasks(name, nameLike, description, descriptionLike, priority, minimumPriority, maximumPriority, assignee, owner, unassigned, delegationState, candidateUser, involvedUser, candidateGroup, processDefinitionKey, processDefinitionKeyLike, processDefinitionName, processDefinitionNameLike, processInstanceId, processInstanceBusinessKey, executionId, createdOn, createdBefore, createdAfter, excludeSubTasks, taskDefinitionKey, taskDefinitionKeyLike, dueDate, dueBefore, dueAfter, active, includeTaskLocalVariables, includeProcessVariables, tenantId, tenantIdLike, withoutTenantId);
-        Assert.assertFalse("获取已办数据不能为空",pageListResponseWfTaskResponse.getData().size()>0);
-        wfTaskResponse=pageListResponseWfTaskResponse.getData().get(0);
-    }
-    
-    /**
-     * 添加任务意见
-     *
-     * 
-     *
-     * @throws ApiException
-     *          if the Api call fails
-     */
-    @Test
-    public void createCommentTest() throws ApiException {
-        String taskId = null;
-        WfCommentResponse body = new WfCommentResponse();
-        body.setAuthor("comment_user1");
-        body.setMessage("junit comment");
-        wfCommentResponse = api.createComment(wfTaskResponse.getId(), body);
+        // PageListResponseWfTaskResponse response = api.getTasks(name, nameLike, description, descriptionLike, priority, minimumPriority, maximumPriority, assignee, owner, unassigned, delegationState, candidateUser, involvedUser, candidateGroup, processDefinitionKey, processDefinitionKeyLike, processDefinitionName, processDefinitionNameLike, processInstanceId, processInstanceBusinessKey, executionId, createdOn, createdBefore, createdAfter, excludeSubTasks, taskDefinitionKey, taskDefinitionKeyLike, dueDate, dueBefore, dueAfter, active, includeTaskLocalVariables, includeProcessVariables, tenantId, tenantIdLike, withoutTenantId);
 
-    }
-    
-    
-    
-    /**
-     * 获取某任务下某条意见详细
-     *
-     * 
-     *
-     * @throws ApiException
-     *          if the Api call fails
-     */
-    @Test
-    public void getCommentTest() throws ApiException {
-    	WfCommentResponse response = api.getComment(wfTaskResponse.getId(), wfCommentResponse.getId());
-    }
-    
-    
-    /**
-     * 获取某任务意见列表
-     *
-     * 
-     *
-     * @throws ApiException
-     *          if the Api call fails
-     */
-    @Test
-    public void getCommentsTest() throws ApiException {
-        List<WfCommentResponse> response = api.getComments(wfTaskResponse.getId());
-    }
-    
-    
-    /**
-     * 删了某任务下某条意见
-     *
-     * 
-     *
-     * @throws ApiException
-     *          if the Api call fails
-     */
-    @Test
-    public void deleteCommentTest() throws ApiException {
-        api.deleteComment(wfTaskResponse.getId(), wfCommentResponse.getId());
-    }
-    
-    
-    /**
-     * 批量添加任务流程变量
-     *
-     * 
-     *
-     * @throws ApiException
-     *          if the Api call fails
-     */
-    @Test
-    public void createTaskVariableTest() throws ApiException {
-        String taskId = null;
-        List<WfRestVariable> body = new ArrayList<>();
-        WfRestVariable wf=new WfRestVariable();
-        wf.setName("junit_var");
-        wf.setType(WfRestVariable.TypeEnum.STRING);
-        wf.setValue("junit var value");
-        wf.setVariableScope(WfRestVariable.VariableScopeEnum.GLOBAL);
-        List<WfRestVariable> response = api.createTaskVariable(wfTaskResponse.getId(), body);
+        // TODO: test validations
     }
     
     /**
@@ -225,7 +271,6 @@ public class RuntimeTaskApiTest {
         // TODO: test validations
     }
     
-    
     /**
      * 获取某任务流程变量集合
      *
@@ -236,37 +281,13 @@ public class RuntimeTaskApiTest {
      */
     @Test
     public void getVariablesTest() throws ApiException {
-        List<WfRestVariable> response = api.getVariables(wfTaskResponse.getId(),WfRestVariable.VariableScopeEnum.GLOBAL.name());
-    }
-    
-    
-    /**
-     * 批量删除任务流程变量
-     *
-     * 
-     *
-     * @throws ApiException
-     *          if the Api call fails
-     */
-    @Test
-    public void deleteAllLocalTaskVariablesTest() throws ApiException {
-    	api.deleteAllLocalTaskVariables(wfTaskResponse.getId());
-    }
-    
-    
-    /**
-     * 获取任务信息
-     *
-     * 
-     *
-     * @throws ApiException
-     *          if the Api call fails
-     */
-    @Test
-    public void getTaskTest() throws ApiException {
-        WfTaskResponse response = api.getTask(wfTaskResponse.getId(),null,null);
-    }
+        String taskId = null;
+        String scope = null;
+        // List<WfRestVariable> response = api.getVariables(taskId, scope);
 
+        // TODO: test validations
+    }
+    
     /**
      * 修改任务
      *
@@ -277,48 +298,11 @@ public class RuntimeTaskApiTest {
      */
     @Test
     public void updateTaskTest() throws ApiException {
-        WfTaskRequest body = new WfTaskRequest();
-        body.setDescription("update desc from updateTaskTest");
-        WfTaskResponse response = api.updateTask(wfTaskResponse.getId(), body);
-    }
-    
-    
-    /**
-     * 处理任务
-     *
-     * 处理任务：签收(CLAIM)、签收并完成(CLAIM_COMPLETE)、完成(COMPLETE)、委托代理(DELEGATE)、回绝委托代理(RESOLVE)、退回任务(REJECT)
-     *
-     * @throws ApiException
-     *          if the Api call fails
-     */
-    @Test
-    public void executeTaskActionTest() throws ApiException {
         String taskId = null;
-        WfTaskActionRequest body = new WfTaskActionRequest();
-        body.setAction(ActionEnum.CLAIM_COMPLETE);
-        body.setCurrentLoginUserId("test_user");
-        WfActionResult response = api.executeTaskAction(wfTaskResponse.getId(), body);
-    }
-    
-    
-    /**
-     * 删除任务
-     *
-     * 
-     *
-     * @throws ApiException
-     *          if the Api call fails
-     */
-    @Test
-    public void deleteTaskTest() throws ApiException {
-        String taskId = null;
-        Boolean cascadeHistory = null;
-        String deleteReason = null;
-        //api.deleteTask(taskId, cascadeHistory, deleteReason);
+        WfTaskRequest body = null;
+        // WfTaskResponse response = api.updateTask(taskId, body);
 
         // TODO: test validations
     }
-    
-
     
 }
