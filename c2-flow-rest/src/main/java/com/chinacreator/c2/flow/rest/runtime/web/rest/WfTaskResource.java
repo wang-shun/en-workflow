@@ -5,6 +5,8 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import io.swagger.annotations.SwaggerDefinition;
+import io.swagger.annotations.Tag;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -53,6 +55,7 @@ import com.chinacreator.c2.flow.rest.common.FowRestHelper;
 import com.chinacreator.c2.flow.rest.common.exception.FlowResourceAlreadyExistsException;
 import com.chinacreator.c2.flow.rest.common.exception.FlowUnauthorizedException;
 import com.chinacreator.c2.flow.rest.common.vo.WfActionResult;
+import com.chinacreator.c2.flow.rest.common.vo.WfCommentRequest;
 import com.chinacreator.c2.flow.rest.common.vo.WfCommentResponse;
 import com.chinacreator.c2.flow.rest.common.vo.WfPageListResponse;
 import com.chinacreator.c2.flow.rest.common.vo.WfRestVariable;
@@ -73,6 +76,7 @@ import com.chinacreator.c2.web.exception.UnkownException;
 @Service
 @Path("v1/flow/runtime/tasks")
 @Api
+@SwaggerDefinition(tags={@Tag(name = "runtimeTask",description="运行时任务相关操作")})
 public class WfTaskResource extends TaskBaseResource {
 	
 	@Autowired
@@ -802,7 +806,7 @@ public class WfTaskResource extends TaskBaseResource {
 	@Consumes({ MediaType.APPLICATION_JSON })
 	@Path("/{taskId}/comments")
 	public WfCommentResponse createComment(@ApiParam(value = "任务实例id", required = true) @PathParam("taskId") String taskId,
-			@ApiParam(value = "竟见数据", required = true) WfCommentResponse comment) throws Exception{
+			@ApiParam(value = "竟见数据", required = true) WfCommentRequest comment) throws Exception{
 
 		try{
 			

@@ -4,6 +4,8 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import io.swagger.annotations.SwaggerDefinition;
+import io.swagger.annotations.Tag;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
@@ -34,6 +36,7 @@ import com.chinacreator.c2.web.exception.UnkownException;
 @Service
 @Path("v1/flow/query/runtime")
 @Api
+@SwaggerDefinition(tags={@Tag(name = "query",description="复杂入参查询")})
 public class WfTaskQueryResource extends TaskBaseResource{
 
 	@Autowired

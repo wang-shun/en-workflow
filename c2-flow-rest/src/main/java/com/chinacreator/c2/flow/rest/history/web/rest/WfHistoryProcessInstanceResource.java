@@ -5,6 +5,8 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import io.swagger.annotations.SwaggerDefinition;
+import io.swagger.annotations.Tag;
 
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -60,6 +62,7 @@ import com.chinacreator.c2.web.exception.UnkownException;
 @Service
 @Path("v1/flow/history/instances")
 @Api
+@SwaggerDefinition(tags={@Tag(name = "historyInstance",description="历史流程实例相关操作")})
 public class WfHistoryProcessInstanceResource extends HistoricProcessInstanceBaseResource{
 	
 	@Autowired

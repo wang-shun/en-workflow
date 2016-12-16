@@ -5,6 +5,8 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import io.swagger.annotations.SwaggerDefinition;
+import io.swagger.annotations.Tag;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -49,6 +51,7 @@ import com.chinacreator.c2.web.exception.UnkownException;
 @Service
 @Path("v1/flow/history/tasks")
 @Api
+@SwaggerDefinition(tags={@Tag(name = "historyTask",description="历史任务相关操作")})
 public class WfHistoryTaskResource extends HistoricTaskInstanceBaseResource{
 
 	@Autowired
