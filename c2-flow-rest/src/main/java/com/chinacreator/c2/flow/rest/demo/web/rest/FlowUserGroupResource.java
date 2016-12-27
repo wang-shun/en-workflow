@@ -45,25 +45,25 @@ public class FlowUserGroupResource {
 	@GET
 	@Path("/insertTest")
 	public void insertWfTaskTest(){
-		final IdGenerator idGenerator=new PKGenerator();
-		for(int i=0;i<50;i++){
-			final int num=i;
-			new Thread() {
-				public void run() {
-					try{
-						WfUniteRunTaskEntity wfUniteRunTask=new WfUniteRunTaskEntity();
-						wfUniteRunTask.setId(idGenerator.getNextId());
-						wfUniteRunTask.setTaskId("ok");
-						wfUniteRunTask.setAssignee("aaaaaaa");
-						wfUniteRunTask.setDescription(Thread.currentThread().getName());
-						WfUniteRunTaskEntity wfUniteRunTaskEntity= managementService.executeCommand(new InsertWfUniteRunTaskCmd(wfUniteRunTask));
-					}catch(Exception e){
-						e.printStackTrace();
-					}
-				}
-			}.start();
-			
-		}
+//		final IdGenerator idGenerator=new PKGenerator();
+//		for(int i=0;i<50;i++){
+//			final int num=i;
+//			new Thread() {
+//				public void run() {
+//					try{
+//						WfUniteRunTaskEntity wfUniteRunTask=new WfUniteRunTaskEntity();
+//						wfUniteRunTask.setId(idGenerator.getNextId());
+//						wfUniteRunTask.setTaskId("ok");
+//						wfUniteRunTask.setAssignee("aaaaaaa");
+//						wfUniteRunTask.setDescription(Thread.currentThread().getName());
+//						WfUniteRunTaskEntity wfUniteRunTaskEntity= managementService.executeCommand(new InsertWfUniteRunTaskCmd(wfUniteRunTask));
+//					}catch(Exception e){
+//						e.printStackTrace();
+//					}
+//				}
+//			}.start();
+//			
+//		}
 
 	}
 	

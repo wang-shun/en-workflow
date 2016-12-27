@@ -102,6 +102,18 @@ Class | Method | HTTP request | Description
 *QueryApi* | [**queryHistoricTaskInstances**](docs/QueryApi.md#queryHistoricTaskInstances) | **POST** /v1/flow/query/history/tasks | 查询历史任务列表
 *QueryApi* | [**queryProcessInstances**](docs/QueryApi.md#queryProcessInstances) | **POST** /v1/flow/query/runtime/instances | 查询流程实例列表
 *QueryApi* | [**queryTasks**](docs/QueryApi.md#queryTasks) | **POST** /v1/flow/query/runtime/tasks | 查询待办列表
+*RepositoryDefinitionApi* | [**executeProcessDefinitionAction**](docs/RepositoryDefinitionApi.md#executeProcessDefinitionAction) | **PUT** /v1/flow/repository/definitions/{processDefinitionId} | 修改流程某些信息
+*RepositoryDefinitionApi* | [**getModelResource**](docs/RepositoryDefinitionApi.md#getModelResource) | **GET** /v1/flow/repository/definitions/{processDefinitionId}/model | 获取流程定义模型
+*RepositoryDefinitionApi* | [**getProcessDefinition**](docs/RepositoryDefinitionApi.md#getProcessDefinition) | **GET** /v1/flow/repository/definitions/{processDefinitionId} | 获取单个流程信息
+*RepositoryDefinitionApi* | [**getProcessDefinitionResourceData**](docs/RepositoryDefinitionApi.md#getProcessDefinitionResourceData) | **GET** /v1/flow/repository/definitions/{processDefinitionId}/resourcedata | 下载流程定义文件
+*RepositoryDefinitionApi* | [**getProcessDefinitions**](docs/RepositoryDefinitionApi.md#getProcessDefinitions) | **GET** /v1/flow/repository/definitions | 流程定义列表
+*RepositoryDeploymentApi* | [**deleteDeployment**](docs/RepositoryDeploymentApi.md#deleteDeployment) | **DELETE** /v1/flow/repository/deploy/{deploymentId} | 删除流程部署
+*RepositoryDeploymentApi* | [**getDeployment**](docs/RepositoryDeploymentApi.md#getDeployment) | **GET** /v1/flow/repository/deploy/{deploymentId} | 获取部署信息)
+*RepositoryDeploymentApi* | [**getDeploymentResource**](docs/RepositoryDeploymentApi.md#getDeploymentResource) | **GET** /v1/flow/repository/deploy/{deploymentId}/resources/{resourceId} | 获取部署下的某个资源信息)
+*RepositoryDeploymentApi* | [**getDeploymentResourceData**](docs/RepositoryDeploymentApi.md#getDeploymentResourceData) | **GET** /v1/flow/repository/deploy/{deploymentId}/resources/{resourceId}/resourcedata | 下载部署下的资源数据)
+*RepositoryDeploymentApi* | [**getDeploymentResources**](docs/RepositoryDeploymentApi.md#getDeploymentResources) | **GET** /v1/flow/repository/deploy/{deploymentId}/resources | 获取部署下的资源列表)
+*RepositoryDeploymentApi* | [**getDeployments**](docs/RepositoryDeploymentApi.md#getDeployments) | **GET** /v1/flow/repository/deploy | 获取流程定义部署列表
+*RepositoryDeploymentApi* | [**uploadDeployment**](docs/RepositoryDeploymentApi.md#uploadDeployment) | **POST** /v1/flow/repository/deploy | 部署流程定义资源(*bpmn20.xml)
 *RuntimeInstanceApi* | [**createProcessInstance**](docs/RuntimeInstanceApi.md#createProcessInstance) | **POST** /v1/flow/runtime/instances | 启动工作流实例
 *RuntimeInstanceApi* | [**deleteProcessInstance**](docs/RuntimeInstanceApi.md#deleteProcessInstance) | **DELETE** /v1/flow/runtime/instances/{processInstanceId} | 删除工作流实例信息
 *RuntimeInstanceApi* | [**getProcessInstance**](docs/RuntimeInstanceApi.md#getProcessInstance) | **GET** /v1/flow/runtime/instances/{processInstanceId} | 获取工作流实例信息
@@ -126,19 +138,26 @@ Class | Method | HTTP request | Description
 
 ## Documentation for Models
 
+ - [PageListResponseWfDeploymentResponse](docs/PageListResponseWfDeploymentResponse.md)
  - [PageListResponseWfHistoricProcessInstanceResponse](docs/PageListResponseWfHistoricProcessInstanceResponse.md)
  - [PageListResponseWfHistoricTaskInstanceResponse](docs/PageListResponseWfHistoricTaskInstanceResponse.md)
+ - [PageListResponseWfProcessDefinitionResponse](docs/PageListResponseWfProcessDefinitionResponse.md)
  - [PageListResponseWfProcessInstanceResponse](docs/PageListResponseWfProcessInstanceResponse.md)
  - [PageListResponseWfTaskResponse](docs/PageListResponseWfTaskResponse.md)
  - [WfActionResult](docs/WfActionResult.md)
  - [WfBusinessDataRequest](docs/WfBusinessDataRequest.md)
  - [WfCommentResponse](docs/WfCommentResponse.md)
+ - [WfDeploymentRequest](docs/WfDeploymentRequest.md)
+ - [WfDeploymentResourceResponse](docs/WfDeploymentResourceResponse.md)
+ - [WfDeploymentResponse](docs/WfDeploymentResponse.md)
  - [WfHistoricIdentityLinkResponse](docs/WfHistoricIdentityLinkResponse.md)
  - [WfHistoricProcessInstanceQueryRequest](docs/WfHistoricProcessInstanceQueryRequest.md)
  - [WfHistoricProcessInstanceResponse](docs/WfHistoricProcessInstanceResponse.md)
  - [WfHistoricTaskInstanceQueryRequest](docs/WfHistoricTaskInstanceQueryRequest.md)
  - [WfHistoricTaskInstanceResponse](docs/WfHistoricTaskInstanceResponse.md)
  - [WfJumpRequest](docs/WfJumpRequest.md)
+ - [WfProcessDefinitionActionRequest](docs/WfProcessDefinitionActionRequest.md)
+ - [WfProcessDefinitionResponse](docs/WfProcessDefinitionResponse.md)
  - [WfProcessInstanceActionRequest](docs/WfProcessInstanceActionRequest.md)
  - [WfProcessInstanceCreateRequest](docs/WfProcessInstanceCreateRequest.md)
  - [WfProcessInstanceQueryRequest](docs/WfProcessInstanceQueryRequest.md)

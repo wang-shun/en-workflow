@@ -49,6 +49,7 @@ import com.chinacreator.c2.flow.detail.WfOperator;
 import com.chinacreator.c2.flow.detail.WfProcessInstance;
 import com.chinacreator.c2.flow.detail.WfResult;
 import com.chinacreator.c2.flow.rest.common.C2RestResponseFactory;
+import com.chinacreator.c2.flow.rest.common.FowRestHelper;
 import com.chinacreator.c2.flow.rest.common.vo.WfJumpRequest;
 import com.chinacreator.c2.flow.rest.common.vo.WfActionResult;
 import com.chinacreator.c2.flow.rest.common.vo.WfPageListResponse;
@@ -200,23 +201,19 @@ public class WfProcessInstanceResource extends BaseProcessInstanceResource{
   @Consumes({MediaType.APPLICATION_JSON})
   public WfProcessInstanceResponse createProcessInstance(@ApiParam(value = "创建流程实例参数", required = true) WfProcessInstanceCreateRequest requestVo) throws Exception{
 	  
-	    WfOperator wfOperator=new WfOperator();
 	    WfResult wfResult=null;
+	    WfOperator wfOperator=new WfOperator();
 	    
 	  	try{
 	  		
-		    WebOperationContext context = (WebOperationContext)OperationContextHolder.getContext();
-		    Subject subject=context.getUser();
+	  		wfOperator=FowRestHelper.getWfOperator(requestVo);
+	  		
+//		    WebOperationContext context = (WebOperationContext)OperationContextHolder.getContext();
+//		    Subject subject=context.getUser();
 		    //暂时开放未登陆可以启动工作流，流程不一定都是用户环节
 //		    if(null==subject||!StringUtils.hasText(subject.getId())){
 //		    	throw new FlowUnauthorizedException("Not logged in without permission to operate.");
 //		    }
-		    
-		    if(null!=subject){
-			    wfOperator.setUserId(subject.getId());
-			    wfOperator.setUserName(subject.getName());
-			    wfOperator.setUserCName(subject.getName());
-		    }
 		   
 	  		if(null==requestVo){
 		  		throw new ActivitiIllegalArgumentException("Either processDefinitionId, processDefinitionKey or message is required.");

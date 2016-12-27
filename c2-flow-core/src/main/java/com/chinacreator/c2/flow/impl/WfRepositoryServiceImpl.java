@@ -476,18 +476,13 @@ public class WfRepositoryServiceImpl implements WfRepositoryService {
 		}
 		return WfConstants.WF_CONTROL_EXE_FAIL;
 	}
-
+	
 	@Override
 	public String deleteDeploymentsById(WfOperator wfOper, boolean casecade,
 			String deploymentId) throws Exception {
 		try {
 			repositoryService.deleteDeployment(deploymentId, casecade);
-		} catch (ActivitiObjectNotFoundException e) {
-			LoggerManager.log(getClass(), LoggerType.ERROR, wfOper, e,
-					"删除流程部署失败:部署id={}", deploymentId);
-			e.printStackTrace();
-			return WfConstants.WF_CONTROL_EXE_SUCCESS;
-		} catch (Exception e) {
+		}catch (Exception e) {
 			LoggerManager.log(getClass(), LoggerType.ERROR, wfOper, e,
 					"删除流程部署失败:部署id={}", deploymentId);
 			throw e;

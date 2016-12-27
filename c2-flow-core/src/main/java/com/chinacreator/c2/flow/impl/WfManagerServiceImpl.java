@@ -2238,19 +2238,16 @@ public class WfManagerServiceImpl implements WfManagerService {
 
 		List<String> highLightedFlows = new ArrayList<String>();
 
-//		List<HistoricActivityInstance> historicActivityInstances = historyService
-//				.createHistoricActivityInstanceQuery()
-//				.processInstanceId(processInstanceId).orderByHistoricActivityInstanceEndTime().asc()
-//				.orderByHistoricActivityInstanceStartTime().asc()
-				// order by startime asc is not correct. use default order is
-				// correct.
-				// .orderByHistoricActivityInstanceStartTime().asc()/*.orderByActivityId().asc()*/
-//				.list();
+		List<HistoricActivityInstance> historicActivityInstances = historyService
+				.createHistoricActivityInstanceQuery()
+				.processInstanceId(processInstanceId)
+				 .orderByHistoricActivityInstanceStartTime().asc().orderByActivityId().desc()/*.orderByActivityId().asc()*/
+				.list();
 
-		GetHistoricActivityInstanceByProcessInstanceId cmd = new GetHistoricActivityInstanceByProcessInstanceId(
-				processInstanceId);
-		List<HistoricActivityInstance> historicActivityInstances = managementService
-				.executeCommand(cmd);
+//		GetHistoricActivityInstanceByProcessInstanceId cmd = new GetHistoricActivityInstanceByProcessInstanceId(
+//				processInstanceId);
+//		List<HistoricActivityInstance> historicActivityInstances = managementService
+//				.executeCommand(cmd);
 		
 		Map<String, String> actInsKeys = new HashMap<String, String>();
 		setActInsTransKeys(historicActivityInstances, actInsKeys);

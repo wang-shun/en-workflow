@@ -39,7 +39,7 @@ import java.util.List;
  * 处理任务请求参数
  */
 @ApiModel(description = "处理任务请求参数")
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-12-15T15:13:20.386+08:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-12-27T09:47:23.486+08:00")
 public class WfTaskActionRequest   {
   @JsonProperty("currentLoginUserId")
   private String currentLoginUserId = null;

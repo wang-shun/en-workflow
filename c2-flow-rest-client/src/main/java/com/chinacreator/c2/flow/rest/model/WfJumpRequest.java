@@ -39,7 +39,7 @@ import java.util.List;
  * 流程跳转入参
  */
 @ApiModel(description = "流程跳转入参")
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-12-15T15:13:20.386+08:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-12-27T09:47:23.486+08:00")
 public class WfJumpRequest   {
   @JsonProperty("currentLoginUserId")
   private String currentLoginUserId = null;
