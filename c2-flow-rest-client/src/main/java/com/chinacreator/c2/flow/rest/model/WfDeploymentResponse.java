@@ -37,7 +37,7 @@ import java.util.Date;
  * 部署信息
  */
 @ApiModel(description = "部署信息")
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-12-27T09:47:23.486+08:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-12-28T13:50:28.213+08:00")
 public class WfDeploymentResponse   {
   @JsonProperty("id")
   private String id = null;

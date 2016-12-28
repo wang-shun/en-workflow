@@ -17,7 +17,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-12-27T09:47:23.486+08:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-12-28T13:50:28.213+08:00")
 public class RepositoryDeploymentApi {
   private ApiClient apiClient;
 
@@ -343,6 +343,7 @@ public class RepositoryDeploymentApi {
     if(null!=body.getTenantId()){
     	localVarFormParams.put("tenantId",body.getTenantId());
     }
+    	
     
     final String[] localVarAccepts = {
       "application/json"

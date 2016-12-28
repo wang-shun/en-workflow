@@ -36,7 +36,7 @@ import io.swagger.annotations.ApiModelProperty;
  * 流程实例操作参数
  */
 @ApiModel(description = "流程实例操作参数")
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-12-27T09:47:23.486+08:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-12-28T13:50:28.213+08:00")
 public class WfProcessInstanceActionRequest   {
   @JsonProperty("currentLoginUserId")
   private String currentLoginUserId = null;

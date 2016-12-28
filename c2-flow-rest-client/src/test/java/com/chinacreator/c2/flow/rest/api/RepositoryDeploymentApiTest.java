@@ -72,9 +72,9 @@ public class RepositoryDeploymentApiTest {
      */
     @Test
     public void getDeploymentTest() throws ApiException {
-        String deploymentId = "65593B2D451F47E5A06B075CF03F0A59";
-         WfDeploymentResponse response = api.getDeployment(deploymentId);
-         System.out.println(response);
+        String deploymentId = null;
+        // WfDeploymentResponse response = api.getDeployment(deploymentId);
+
         // TODO: test validations
     }
     
@@ -105,10 +105,10 @@ public class RepositoryDeploymentApiTest {
      */
     @Test
     public void getDeploymentResourceDataTest() throws ApiException {
-        String deploymentId = "65593B2D451F47E5A06B075CF03F0A59";
-        String resourceId = "bpmn20.xml";
-         byte[] response = api.getDeploymentResourceData(deploymentId, resourceId);
-         System.out.println(response);
+        String deploymentId = null;
+        String resourceId = null;
+        // byte[] response = api.getDeploymentResourceData(deploymentId, resourceId);
+
         // TODO: test validations
     }
     
@@ -145,7 +145,7 @@ public class RepositoryDeploymentApiTest {
         String tenantId = null;
         String tenantIdLike = null;
         Boolean withoutTenantId = null;
-        // PageListResponseWfDeploymentResponse response = api.getDeployments(name, nameLike, category, categoryNotEquals, tenantId, tenantIdLike, withoutTenantId);
+        PageListResponseWfDeploymentResponse response = api.getDeployments(name, nameLike, category, categoryNotEquals, tenantId, tenantIdLike, withoutTenantId);
 
         // TODO: test validations
     }
@@ -161,12 +161,11 @@ public class RepositoryDeploymentApiTest {
     @Test
     public void uploadDeploymentTest() throws ApiException {
         WfDeploymentRequest body = new WfDeploymentRequest();
-        body.setCategory("aa");
-        body.setCurrentLoginUserId("1");
-        body.setDeployName("flow1.bpmn20.xml");
-        body.setDeployResource(new File("d://flow1.bpmn20.xml"));
+        body.setDeployResource(new File("D://leave.bpmn20.xml"));
+        body.setDeployName("leave.bpmn20.xml");
+        body.setCurrentLoginUserId("tt");
         WfDeploymentResponse response = api.uploadDeployment(body);
-        System.out.println(response);
+        
         // TODO: test validations
     }
     

@@ -40,7 +40,7 @@ import java.util.List;
  * 任务查询对象
  */
 @ApiModel(description = "任务查询对象")
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-12-27T09:47:23.486+08:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-12-28T13:50:28.213+08:00")
 public class WfTaskQueryRequest   {
   @JsonProperty("start")
   private Integer start = null;
