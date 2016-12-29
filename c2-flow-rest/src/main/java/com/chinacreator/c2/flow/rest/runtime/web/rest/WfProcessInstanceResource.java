@@ -37,12 +37,15 @@ import org.activiti.engine.impl.persistence.entity.ProcessDefinitionEntity;
 import org.activiti.engine.runtime.ProcessInstance;
 import org.activiti.rest.service.api.engine.variable.RestVariable.RestVariableScope;
 import org.activiti.spring.ProcessEngineFactoryBean;
+import org.codehaus.jackson.map.ObjectMapper;
+import org.codehaus.jackson.node.ObjectNode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import com.chinacreator.c2.context.OperationContextHolder;
 import com.chinacreator.c2.context.WebOperationContext;
+import com.chinacreator.c2.flow.api.WfManagerService;
 import com.chinacreator.c2.flow.api.WfRuntimeService;
 import com.chinacreator.c2.flow.detail.WfBusinessData;
 import com.chinacreator.c2.flow.detail.WfOperator;
@@ -50,8 +53,8 @@ import com.chinacreator.c2.flow.detail.WfProcessInstance;
 import com.chinacreator.c2.flow.detail.WfResult;
 import com.chinacreator.c2.flow.rest.common.C2RestResponseFactory;
 import com.chinacreator.c2.flow.rest.common.FowRestHelper;
-import com.chinacreator.c2.flow.rest.common.vo.WfJumpRequest;
 import com.chinacreator.c2.flow.rest.common.vo.WfActionResult;
+import com.chinacreator.c2.flow.rest.common.vo.WfJumpRequest;
 import com.chinacreator.c2.flow.rest.common.vo.WfPageListResponse;
 import com.chinacreator.c2.flow.rest.common.vo.WfProcessInstanceActionRequest;
 import com.chinacreator.c2.flow.rest.common.vo.WfProcessInstanceCreateRequest;
@@ -74,6 +77,7 @@ import com.chinacreator.c2.web.exception.UnkownException;
 @Path("v1/flow/runtime/instances")
 @Api
 @SwaggerDefinition(tags={@Tag(name = "runtimeInstance",description="运行时流程实例相关")})
+@ApiResponses(value = { @ApiResponse(code = 400, message = "错误的请求参数"),@ApiResponse(code = 404, message = "操作失败，请求资源未找到"),@ApiResponse(code = 500, message = "系统内部错误")  })
 public class WfProcessInstanceResource extends BaseProcessInstanceResource{
 	
   @Autowired
@@ -90,10 +94,13 @@ public class WfProcessInstanceResource extends BaseProcessInstanceResource{
   @Autowired
   ProcessEngineFactoryBean processEngine;
   
+  
+  @Autowired
+  WfManagerService wfManagerService;
+  
   	
   
   @ApiOperation(value = "工作流实例列表",tags = "runtimeInstance")
-  @ApiResponses(value = { @ApiResponse(code = 400, message = "错误的请求参数"),@ApiResponse(code = 404, message = "操作失败，请求资源未找到"),@ApiResponse(code = 500, message = "系统内部错误")  })
   @GET
   @Produces({ MediaType.APPLICATION_JSON })
   @Consumes({ MediaType.APPLICATION_JSON })
@@ -192,10 +199,6 @@ public class WfProcessInstanceResource extends BaseProcessInstanceResource{
   
   
   @ApiOperation(value = "启动工作流实例",tags = "runtimeInstance")
-  @ApiResponses(value = { @ApiResponse(code = 400, message = "错误的请求参数"),
-		  				  @ApiResponse(code = 404, message = "操作失败，请求资源未找到"),
-		  				  @ApiResponse(code = 401, message = "操作失败，未经认证请求"),
-		  				  @ApiResponse(code = 500, message = "系统内部错误")  })
   @POST
   @Produces({MediaType.APPLICATION_JSON})
   @Consumes({MediaType.APPLICATION_JSON})
@@ -355,7 +358,6 @@ public class WfProcessInstanceResource extends BaseProcessInstanceResource{
   
   
   @ApiOperation(value = "获取工作流实例信息",tags = "runtimeInstance")
-  @ApiResponses(value = { @ApiResponse(code = 400, message = "错误的请求参数"),@ApiResponse(code = 404, message = "操作失败，请求资源未找到"),@ApiResponse(code = 500, message = "系统内部错误")  })
   @GET
   @Produces({MediaType.APPLICATION_JSON})
   @Consumes({MediaType.APPLICATION_JSON})
@@ -395,7 +397,6 @@ public class WfProcessInstanceResource extends BaseProcessInstanceResource{
   
   
   @ApiOperation(value = "删除工作流实例信息",tags = "runtimeInstance")
-  @ApiResponses(value = { @ApiResponse(code = 400, message = "错误的请求参数"),@ApiResponse(code = 404, message = "操作失败，请求资源未找到"),@ApiResponse(code = 500, message = "系统内部错误")  })
   @DELETE
   @Produces({MediaType.APPLICATION_JSON})
   @Consumes({MediaType.APPLICATION_JSON})
@@ -431,7 +432,6 @@ public class WfProcessInstanceResource extends BaseProcessInstanceResource{
   
   
   @ApiOperation(value = "激活或挂起工作流实例",tags = "runtimeInstance",response=WfProcessInstanceResponse.class)
-  @ApiResponses(value = { @ApiResponse(code = 400, message = "错误的请求参数"),@ApiResponse(code = 404, message = "操作失败，请求资源未找到"),@ApiResponse(code = 500, message = "系统内部错误")  })
   @PUT
   @Produces({MediaType.APPLICATION_JSON})
   @Consumes({MediaType.APPLICATION_JSON})
@@ -489,7 +489,6 @@ public class WfProcessInstanceResource extends BaseProcessInstanceResource{
   
   
   @ApiOperation(value = "获取流程实例图",tags = "runtimeInstance",notes="获取流程实例图片，红色框标记为当前环节",produces="image/png")
-  @ApiResponses(value = { @ApiResponse(code = 400, message = "错误的请求参数"),@ApiResponse(code = 404, message = "操作失败，请求资源未找到"),@ApiResponse(code = 500, message = "系统内部错误")  })
   @GET
   @Produces({"image/png"})
   @Path("/{processInstanceId}/diagram")
@@ -534,7 +533,6 @@ public class WfProcessInstanceResource extends BaseProcessInstanceResource{
   }
   
 	@ApiOperation(value = "自由流", tags = "runtimeInstance")
-	@ApiResponses(value = { @ApiResponse(code = 400, message = "错误的请求参数"),@ApiResponse(code = 404, message = "操作失败，请求资源未找到"),@ApiResponse(code = 500, message = "系统内部错误")  })
 	@POST
 	@Produces({ MediaType.APPLICATION_JSON })
 	@Consumes({ MediaType.APPLICATION_JSON })
@@ -584,6 +582,53 @@ public class WfProcessInstanceResource extends BaseProcessInstanceResource{
 			throw new InvalidRestParamException(e1.getMessage());
 		} catch (ActivitiObjectNotFoundException e2) {
 			throw new ResourceNotFoundException(e2.getMessage());
+		} catch (Exception e) {
+			throw new UnkownException(e.getMessage(), e);
+		}
+	}
+	
+	
+	@ApiOperation(value = "获取流程实例的流程定义布局信息", tags = "runtimeInstance")
+	@GET
+	@Produces({ MediaType.APPLICATION_JSON })
+	@Consumes({ MediaType.APPLICATION_JSON })
+	@Path("/{processInstanceId}/diagramLayout")
+	public String getProcessInstanceDiagramLayout(
+			@ApiParam(value = "流程实例id", required = true) @PathParam("processInstanceId") String processInstanceId)
+			throws Exception {
+
+		try{
+			ObjectNode responseJSON = new ObjectMapper().createObjectNode();
+			String responseJSONStr = wfManagerService.getDiagram(processInstanceId,null);
+			//responseJSON = new ObjectMapper().readValue(responseJSONStr, ObjectNode.class);
+			return responseJSONStr;
+		} catch (ActivitiIllegalArgumentException e) {
+			throw new InvalidRestParamException(e.getMessage());
+		} catch (ActivitiObjectNotFoundException e) {
+			throw new ResourceNotFoundException(e.getMessage());
+		} catch (Exception e) {
+			throw new UnkownException(e.getMessage(), e);
+		}
+	}
+	
+	
+	@ApiOperation(value = "获取流程实例高亮信息", tags = "runtimeInstance")
+	@GET
+	@Produces({ MediaType.APPLICATION_JSON })
+	@Consumes({ MediaType.APPLICATION_JSON })
+	@Path("/{processInstanceId}/highlighted")
+	public String getProcessInstanceHighlighted(
+			@ApiParam(value = "流程实例id", required = true) @PathParam("processInstanceId") String processInstanceId)
+			throws Exception {
+
+		try{
+			String responseJSONStr = wfManagerService.getHighlighted(processInstanceId);
+			return responseJSONStr;
+			
+		} catch (ActivitiIllegalArgumentException e) {
+			throw new InvalidRestParamException(e.getMessage());
+		} catch (ActivitiObjectNotFoundException e) {
+			throw new ResourceNotFoundException(e.getMessage());
 		} catch (Exception e) {
 			throw new UnkownException(e.getMessage(), e);
 		}

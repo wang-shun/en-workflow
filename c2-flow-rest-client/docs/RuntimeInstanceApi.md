@@ -8,6 +8,8 @@ Method | HTTP request | Description
 [**deleteProcessInstance**](RuntimeInstanceApi.md#deleteProcessInstance) | **DELETE** /v1/flow/runtime/instances/{processInstanceId} | 删除工作流实例信息
 [**getProcessInstance**](RuntimeInstanceApi.md#getProcessInstance) | **GET** /v1/flow/runtime/instances/{processInstanceId} | 获取工作流实例信息
 [**getProcessInstanceDiagram**](RuntimeInstanceApi.md#getProcessInstanceDiagram) | **GET** /v1/flow/runtime/instances/{processInstanceId}/diagram | 获取流程实例图
+[**getProcessInstanceDiagramLayout**](RuntimeInstanceApi.md#getProcessInstanceDiagramLayout) | **GET** /v1/flow/runtime/instances/{processInstanceId}/diagramLayout | 获取流程实例的流程定义布局信息
+[**getProcessInstanceHighlighted**](RuntimeInstanceApi.md#getProcessInstanceHighlighted) | **GET** /v1/flow/runtime/instances/{processInstanceId}/highlighted | 获取流程实例高亮信息
 [**getProcessInstances**](RuntimeInstanceApi.md#getProcessInstances) | **GET** /v1/flow/runtime/instances | 工作流实例列表
 [**goAnyWhere**](RuntimeInstanceApi.md#goAnyWhere) | **POST** /v1/flow/runtime/instances/{processInstanceId}/goAnyWhere | 自由流
 [**performProcessInstanceAction**](RuntimeInstanceApi.md#performProcessInstanceAction) | **PUT** /v1/flow/runtime/instances/{processInstanceId} | 激活或挂起工作流实例
@@ -193,6 +195,96 @@ No authorization required
 
  - **Content-Type**: Not defined
  - **Accept**: image/png
+
+<a name="getProcessInstanceDiagramLayout"></a>
+# **getProcessInstanceDiagramLayout**
+> String getProcessInstanceDiagramLayout(processInstanceId)
+
+获取流程实例的流程定义布局信息
+
+
+
+### Example
+```java
+// Import classes:
+//import com.chinacreator.c2.flow.rest.ApiException;
+//import com.chinacreator.c2.flow.rest.api.RuntimeInstanceApi;
+
+
+RuntimeInstanceApi apiInstance = new RuntimeInstanceApi();
+String processInstanceId = "processInstanceId_example"; // String | 流程实例id
+try {
+    String result = apiInstance.getProcessInstanceDiagramLayout(processInstanceId);
+    System.out.println(result);
+} catch (ApiException e) {
+    System.err.println("Exception when calling RuntimeInstanceApi#getProcessInstanceDiagramLayout");
+    e.printStackTrace();
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **processInstanceId** | **String**| 流程实例id |
+
+### Return type
+
+**String**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+<a name="getProcessInstanceHighlighted"></a>
+# **getProcessInstanceHighlighted**
+> String getProcessInstanceHighlighted(processInstanceId)
+
+获取流程实例高亮信息
+
+
+
+### Example
+```java
+// Import classes:
+//import com.chinacreator.c2.flow.rest.ApiException;
+//import com.chinacreator.c2.flow.rest.api.RuntimeInstanceApi;
+
+
+RuntimeInstanceApi apiInstance = new RuntimeInstanceApi();
+String processInstanceId = "processInstanceId_example"; // String | 流程实例id
+try {
+    String result = apiInstance.getProcessInstanceHighlighted(processInstanceId);
+    System.out.println(result);
+} catch (ApiException e) {
+    System.err.println("Exception when calling RuntimeInstanceApi#getProcessInstanceHighlighted");
+    e.printStackTrace();
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **processInstanceId** | **String**| 流程实例id |
+
+### Return type
+
+**String**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
 
 <a name="getProcessInstances"></a>
 # **getProcessInstances**

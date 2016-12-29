@@ -16,7 +16,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-12-28T13:50:28.213+08:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-12-28T16:50:41.068+08:00")
 public class RepositoryDefinitionApi {
   private ApiClient apiClient;
 
@@ -78,6 +78,48 @@ public class RepositoryDefinitionApi {
 
     GenericType<WfProcessDefinitionResponse> localVarReturnType = new GenericType<WfProcessDefinitionResponse>() {};
     return apiClient.invokeAPI(localVarPath, "PUT", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
+      }
+  /**
+   * 获取流程定义布局图
+   * 
+   * @param processDefinitionId 流程定义id (required)
+   * @return String
+   * @throws ApiException if fails to make API call
+   */
+  public String getDiagramLayout(String processDefinitionId) throws ApiException {
+    Object localVarPostBody = null;
+    
+    // verify the required parameter 'processDefinitionId' is set
+    if (processDefinitionId == null) {
+      throw new ApiException(400, "Missing the required parameter 'processDefinitionId' when calling getDiagramLayout");
+    }
+    
+    // create path and map variables
+    String localVarPath = "/v1/flow/repository/definitions/{processDefinitionId}/diagramLayout".replaceAll("\\{format\\}","json")
+      .replaceAll("\\{" + "processDefinitionId" + "\\}", apiClient.escapeString(processDefinitionId.toString()));
+
+    // query params
+    List<Pair> localVarQueryParams = new ArrayList<Pair>();
+    Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+    Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+
+    
+    
+    final String[] localVarAccepts = {
+      "application/json"
+    };
+    final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
+
+    final String[] localVarContentTypes = {
+      
+    };
+    final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
+
+    String[] localVarAuthNames = new String[] {  };
+
+    GenericType<String> localVarReturnType = new GenericType<String>() {};
+    return apiClient.invokeAPI(localVarPath, "GET", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
       }
   /**
    * 获取流程定义模型

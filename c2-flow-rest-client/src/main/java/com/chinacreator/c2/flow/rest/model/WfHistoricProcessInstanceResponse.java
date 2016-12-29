@@ -35,13 +35,13 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-
+import java.io.Serializable;
 /**
  * 历史流程实例信息
  */
 @ApiModel(description = "历史流程实例信息")
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-12-28T13:50:28.213+08:00")
-public class WfHistoricProcessInstanceResponse   {
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-12-28T16:50:41.068+08:00")
+public class WfHistoricProcessInstanceResponse  implements Serializable {
   @JsonProperty("id")
   private String id = null;
 

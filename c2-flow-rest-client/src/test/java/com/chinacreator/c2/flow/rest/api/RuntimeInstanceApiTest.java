@@ -113,6 +113,38 @@ public class RuntimeInstanceApiTest {
     }
     
     /**
+     * 获取流程实例的流程定义布局信息
+     *
+     * 
+     *
+     * @throws ApiException
+     *          if the Api call fails
+     */
+    @Test
+    public void getProcessInstanceDiagramLayoutTest() throws ApiException {
+        String processInstanceId = null;
+        // String response = api.getProcessInstanceDiagramLayout(processInstanceId);
+
+        // TODO: test validations
+    }
+    
+    /**
+     * 获取流程实例高亮信息
+     *
+     * 
+     *
+     * @throws ApiException
+     *          if the Api call fails
+     */
+    @Test
+    public void getProcessInstanceHighlightedTest() throws ApiException {
+        String processInstanceId = null;
+        // String response = api.getProcessInstanceHighlighted(processInstanceId);
+
+        // TODO: test validations
+    }
+    
+    /**
      * 工作流实例列表
      *
      * 

@@ -9,6 +9,8 @@ Method | HTTP request | Description
 [**getHistoryInstanceComments**](HistoryInstanceApi.md#getHistoryInstanceComments) | **GET** /v1/flow/history/instances/{processInstanceId}/comments | 获取历史流程实例评论意见信息
 [**getHistoryProcessInstance**](HistoryInstanceApi.md#getHistoryProcessInstance) | **GET** /v1/flow/history/instances/{processInstanceId} | 获取历史流程实例信息
 [**getHistoryProcessInstanceDiagram**](HistoryInstanceApi.md#getHistoryProcessInstanceDiagram) | **GET** /v1/flow/history/instances/{processInstanceId}/diagram | 获取流程实例图
+[**getHistoryProcessInstanceDiagramLayout**](HistoryInstanceApi.md#getHistoryProcessInstanceDiagramLayout) | **GET** /v1/flow/history/instances/{processInstanceId}/diagramLayout | 获取历史流程实例的流程定义布局信息
+[**getHistoryProcessInstanceHighlighted**](HistoryInstanceApi.md#getHistoryProcessInstanceHighlighted) | **GET** /v1/flow/history/instances/{processInstanceId}/highlighted | 获取历史流程实例高亮信息
 
 
 <a name="getHistoricInstanceIdentityLinks"></a>
@@ -266,4 +268,94 @@ No authorization required
 
  - **Content-Type**: Not defined
  - **Accept**: image/png
+
+<a name="getHistoryProcessInstanceDiagramLayout"></a>
+# **getHistoryProcessInstanceDiagramLayout**
+> String getHistoryProcessInstanceDiagramLayout(processInstanceId)
+
+获取历史流程实例的流程定义布局信息
+
+
+
+### Example
+```java
+// Import classes:
+//import com.chinacreator.c2.flow.rest.ApiException;
+//import com.chinacreator.c2.flow.rest.api.HistoryInstanceApi;
+
+
+HistoryInstanceApi apiInstance = new HistoryInstanceApi();
+String processInstanceId = "processInstanceId_example"; // String | 流程实例id
+try {
+    String result = apiInstance.getHistoryProcessInstanceDiagramLayout(processInstanceId);
+    System.out.println(result);
+} catch (ApiException e) {
+    System.err.println("Exception when calling HistoryInstanceApi#getHistoryProcessInstanceDiagramLayout");
+    e.printStackTrace();
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **processInstanceId** | **String**| 流程实例id |
+
+### Return type
+
+**String**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+<a name="getHistoryProcessInstanceHighlighted"></a>
+# **getHistoryProcessInstanceHighlighted**
+> String getHistoryProcessInstanceHighlighted(processInstanceId)
+
+获取历史流程实例高亮信息
+
+
+
+### Example
+```java
+// Import classes:
+//import com.chinacreator.c2.flow.rest.ApiException;
+//import com.chinacreator.c2.flow.rest.api.HistoryInstanceApi;
+
+
+HistoryInstanceApi apiInstance = new HistoryInstanceApi();
+String processInstanceId = "processInstanceId_example"; // String | 流程实例id
+try {
+    String result = apiInstance.getHistoryProcessInstanceHighlighted(processInstanceId);
+    System.out.println(result);
+} catch (ApiException e) {
+    System.err.println("Exception when calling HistoryInstanceApi#getHistoryProcessInstanceHighlighted");
+    e.printStackTrace();
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **processInstanceId** | **String**| 流程实例id |
+
+### Return type
+
+**String**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
 

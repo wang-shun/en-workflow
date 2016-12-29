@@ -25,7 +25,7 @@
 
 package com.chinacreator.c2.flow.rest;
 
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-12-28T13:50:28.213+08:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-12-28T16:50:41.068+08:00")
 public class Pair {
     private String name = "";
     private String value = "";

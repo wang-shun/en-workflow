@@ -142,4 +142,36 @@ public class HistoryInstanceApiTest {
         // TODO: test validations
     }
     
+    /**
+     * 获取历史流程实例的流程定义布局信息
+     *
+     * 
+     *
+     * @throws ApiException
+     *          if the Api call fails
+     */
+    @Test
+    public void getHistoryProcessInstanceDiagramLayoutTest() throws ApiException {
+        String processInstanceId = null;
+        // String response = api.getHistoryProcessInstanceDiagramLayout(processInstanceId);
+
+        // TODO: test validations
+    }
+    
+    /**
+     * 获取历史流程实例高亮信息
+     *
+     * 
+     *
+     * @throws ApiException
+     *          if the Api call fails
+     */
+    @Test
+    public void getHistoryProcessInstanceHighlightedTest() throws ApiException {
+        String processInstanceId = null;
+        // String response = api.getHistoryProcessInstanceHighlighted(processInstanceId);
+
+        // TODO: test validations
+    }
+    
 }

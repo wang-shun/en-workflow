@@ -41,6 +41,7 @@ import org.activiti.bpmn.model.BpmnModel;
 import org.activiti.engine.ActivitiIllegalArgumentException;
 import org.activiti.engine.ActivitiObjectNotFoundException;
 import org.activiti.engine.RepositoryService;
+import org.activiti.engine.RuntimeService;
 import org.activiti.engine.impl.ProcessDefinitionQueryProperty;
 import org.activiti.engine.impl.persistence.entity.ProcessDefinitionEntity;
 import org.activiti.engine.query.QueryProperty;
@@ -51,6 +52,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import com.chinacreator.c2.flow.api.WfManagerService;
 import com.chinacreator.c2.flow.rest.common.vo.WfPageListResponse;
 import com.chinacreator.c2.flow.rest.common.vo.WfProcessDefinitionActionRequest;
 import com.chinacreator.c2.flow.rest.common.vo.WfProcessDefinitionResponse;
@@ -86,6 +88,12 @@ public class ProcessDefinitionResource extends BaseProcessDefinitionResource {
 
 	@Autowired
 	RepositoryService repositoryService;
+	
+	@Autowired
+	RuntimeService runtimeService;
+	
+	@Autowired
+	WfManagerService wfManagerService;
 
 	@ApiOperation(value = "流程定义列表", tags = "repositoryDefinition")
 	@GET
@@ -309,6 +317,25 @@ public class ProcessDefinitionResource extends BaseProcessDefinitionResource {
 		    ProcessDefinition processDefinition = this.getProcessDefinitionFromRequest(processDefinitionQuery, processDefinitionId);
 		    BpmnModel bpmnModel=repositoryService.getBpmnModel(processDefinition.getId());
 		    return bpmnModel;
+		} catch (ActivitiIllegalArgumentException e) {
+			throw new InvalidRestParamException(e.getMessage());
+		} catch (ActivitiObjectNotFoundException e) {
+			throw new ResourceNotFoundException(e.getMessage());
+		} catch (Exception e) {
+			throw new UnkownException(e.getMessage(), e);
+		}
+
+	}
+	
+	
+	@ApiOperation(value = "获取流程定义布局图", tags = "repositoryDefinition")
+	@GET
+	@Produces({ MediaType.APPLICATION_JSON })
+	@Path("/{processDefinitionId}/diagramLayout")
+	  public String  getDiagramLayout(@ApiParam(value = "流程定义id") @PathParam("processDefinitionId") String processDefinitionId) throws Exception{
+		try{
+			String responseJSONStr = wfManagerService.getDiagram(null,processDefinitionId);
+			return responseJSONStr;
 		} catch (ActivitiIllegalArgumentException e) {
 			throw new InvalidRestParamException(e.getMessage());
 		} catch (ActivitiObjectNotFoundException e) {

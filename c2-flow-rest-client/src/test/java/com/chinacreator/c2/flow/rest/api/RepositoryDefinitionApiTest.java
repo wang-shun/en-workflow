@@ -62,6 +62,22 @@ public class RepositoryDefinitionApiTest {
     }
     
     /**
+     * 获取流程定义布局图
+     *
+     * 
+     *
+     * @throws ApiException
+     *          if the Api call fails
+     */
+    @Test
+    public void getDiagramLayoutTest() throws ApiException {
+        String processDefinitionId = "d1:1:F52DFDE4716E48418256B166F7500B22";
+        String response = api.getDiagramLayout(processDefinitionId);
+        System.out.println(response);
+        // TODO: test validations
+    }
+    
+    /**
      * 获取流程定义模型
      *
      * 

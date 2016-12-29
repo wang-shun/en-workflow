@@ -31,13 +31,13 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
-
+import java.io.Serializable;
 /**
  * 业务数据对象(如果流程和某个业务或事项有关联则必须参数)
  */
 @ApiModel(description = "业务数据对象(如果流程和某个业务或事项有关联则必须参数)")
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-12-28T13:50:28.213+08:00")
-public class WfBusinessDataRequest   {
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-12-28T16:50:41.068+08:00")
+public class WfBusinessDataRequest  implements Serializable {
   @JsonProperty("businessKey")
   private String businessKey = null;
 

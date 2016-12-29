@@ -95,6 +95,8 @@ Class | Method | HTTP request | Description
 *HistoryInstanceApi* | [**getHistoryInstanceComments**](docs/HistoryInstanceApi.md#getHistoryInstanceComments) | **GET** /v1/flow/history/instances/{processInstanceId}/comments | 获取历史流程实例评论意见信息
 *HistoryInstanceApi* | [**getHistoryProcessInstance**](docs/HistoryInstanceApi.md#getHistoryProcessInstance) | **GET** /v1/flow/history/instances/{processInstanceId} | 获取历史流程实例信息
 *HistoryInstanceApi* | [**getHistoryProcessInstanceDiagram**](docs/HistoryInstanceApi.md#getHistoryProcessInstanceDiagram) | **GET** /v1/flow/history/instances/{processInstanceId}/diagram | 获取流程实例图
+*HistoryInstanceApi* | [**getHistoryProcessInstanceDiagramLayout**](docs/HistoryInstanceApi.md#getHistoryProcessInstanceDiagramLayout) | **GET** /v1/flow/history/instances/{processInstanceId}/diagramLayout | 获取历史流程实例的流程定义布局信息
+*HistoryInstanceApi* | [**getHistoryProcessInstanceHighlighted**](docs/HistoryInstanceApi.md#getHistoryProcessInstanceHighlighted) | **GET** /v1/flow/history/instances/{processInstanceId}/highlighted | 获取历史流程实例高亮信息
 *HistoryTaskApi* | [**getHistoricTaskProcessInstances**](docs/HistoryTaskApi.md#getHistoricTaskProcessInstances) | **GET** /v1/flow/history/tasks | 获取历史任务列表
 *HistoryTaskApi* | [**getHistoryTaskIdentityLinks**](docs/HistoryTaskApi.md#getHistoryTaskIdentityLinks) | **GET** /v1/flow/history/tasks/{taskId}/identitylinks | 获取历史任务候选人或组信息
 *HistoryTaskApi* | [**getTaskInstance**](docs/HistoryTaskApi.md#getTaskInstance) | **GET** /v1/flow/history/tasks/{taskId} | 获取历史任务信息
@@ -103,6 +105,7 @@ Class | Method | HTTP request | Description
 *QueryApi* | [**queryProcessInstances**](docs/QueryApi.md#queryProcessInstances) | **POST** /v1/flow/query/runtime/instances | 查询流程实例列表
 *QueryApi* | [**queryTasks**](docs/QueryApi.md#queryTasks) | **POST** /v1/flow/query/runtime/tasks | 查询待办列表
 *RepositoryDefinitionApi* | [**executeProcessDefinitionAction**](docs/RepositoryDefinitionApi.md#executeProcessDefinitionAction) | **PUT** /v1/flow/repository/definitions/{processDefinitionId} | 修改流程某些信息
+*RepositoryDefinitionApi* | [**getDiagramLayout**](docs/RepositoryDefinitionApi.md#getDiagramLayout) | **GET** /v1/flow/repository/definitions/{processDefinitionId}/diagramLayout | 获取流程定义布局图
 *RepositoryDefinitionApi* | [**getModelResource**](docs/RepositoryDefinitionApi.md#getModelResource) | **GET** /v1/flow/repository/definitions/{processDefinitionId}/model | 获取流程定义模型
 *RepositoryDefinitionApi* | [**getProcessDefinition**](docs/RepositoryDefinitionApi.md#getProcessDefinition) | **GET** /v1/flow/repository/definitions/{processDefinitionId} | 获取单个流程信息
 *RepositoryDefinitionApi* | [**getProcessDefinitionResourceData**](docs/RepositoryDefinitionApi.md#getProcessDefinitionResourceData) | **GET** /v1/flow/repository/definitions/{processDefinitionId}/resourcedata | 下载流程定义文件
@@ -118,6 +121,8 @@ Class | Method | HTTP request | Description
 *RuntimeInstanceApi* | [**deleteProcessInstance**](docs/RuntimeInstanceApi.md#deleteProcessInstance) | **DELETE** /v1/flow/runtime/instances/{processInstanceId} | 删除工作流实例信息
 *RuntimeInstanceApi* | [**getProcessInstance**](docs/RuntimeInstanceApi.md#getProcessInstance) | **GET** /v1/flow/runtime/instances/{processInstanceId} | 获取工作流实例信息
 *RuntimeInstanceApi* | [**getProcessInstanceDiagram**](docs/RuntimeInstanceApi.md#getProcessInstanceDiagram) | **GET** /v1/flow/runtime/instances/{processInstanceId}/diagram | 获取流程实例图
+*RuntimeInstanceApi* | [**getProcessInstanceDiagramLayout**](docs/RuntimeInstanceApi.md#getProcessInstanceDiagramLayout) | **GET** /v1/flow/runtime/instances/{processInstanceId}/diagramLayout | 获取流程实例的流程定义布局信息
+*RuntimeInstanceApi* | [**getProcessInstanceHighlighted**](docs/RuntimeInstanceApi.md#getProcessInstanceHighlighted) | **GET** /v1/flow/runtime/instances/{processInstanceId}/highlighted | 获取流程实例高亮信息
 *RuntimeInstanceApi* | [**getProcessInstances**](docs/RuntimeInstanceApi.md#getProcessInstances) | **GET** /v1/flow/runtime/instances | 工作流实例列表
 *RuntimeInstanceApi* | [**goAnyWhere**](docs/RuntimeInstanceApi.md#goAnyWhere) | **POST** /v1/flow/runtime/instances/{processInstanceId}/goAnyWhere | 自由流
 *RuntimeInstanceApi* | [**performProcessInstanceAction**](docs/RuntimeInstanceApi.md#performProcessInstanceAction) | **PUT** /v1/flow/runtime/instances/{processInstanceId} | 激活或挂起工作流实例

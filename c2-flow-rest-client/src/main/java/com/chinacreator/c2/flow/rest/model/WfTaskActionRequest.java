@@ -34,13 +34,13 @@ import io.swagger.annotations.ApiModelProperty;
 import java.util.ArrayList;
 import java.util.List;
 
-
+import java.io.Serializable;
 /**
  * 处理任务请求参数
  */
 @ApiModel(description = "处理任务请求参数")
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-12-28T13:50:28.213+08:00")
-public class WfTaskActionRequest   {
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-12-28T16:50:41.068+08:00")
+public class WfTaskActionRequest  implements Serializable {
   @JsonProperty("currentLoginUserId")
   private String currentLoginUserId = null;
 

@@ -18,7 +18,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-12-28T13:50:28.213+08:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-12-28T16:50:41.068+08:00")
 public class HistoryInstanceApi {
   private ApiClient apiClient;
 
@@ -274,4 +274,88 @@ public class HistoryInstanceApi {
 
     apiClient.invokeAPI(localVarPath, "GET", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, null);
   }
+  /**
+   * 获取历史流程实例的流程定义布局信息
+   * 
+   * @param processInstanceId 流程实例id (required)
+   * @return String
+   * @throws ApiException if fails to make API call
+   */
+  public String getHistoryProcessInstanceDiagramLayout(String processInstanceId) throws ApiException {
+    Object localVarPostBody = null;
+    
+    // verify the required parameter 'processInstanceId' is set
+    if (processInstanceId == null) {
+      throw new ApiException(400, "Missing the required parameter 'processInstanceId' when calling getHistoryProcessInstanceDiagramLayout");
+    }
+    
+    // create path and map variables
+    String localVarPath = "/v1/flow/history/instances/{processInstanceId}/diagramLayout".replaceAll("\\{format\\}","json")
+      .replaceAll("\\{" + "processInstanceId" + "\\}", apiClient.escapeString(processInstanceId.toString()));
+
+    // query params
+    List<Pair> localVarQueryParams = new ArrayList<Pair>();
+    Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+    Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+
+    
+    
+    final String[] localVarAccepts = {
+      "application/json"
+    };
+    final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
+
+    final String[] localVarContentTypes = {
+      "application/json"
+    };
+    final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
+
+    String[] localVarAuthNames = new String[] {  };
+
+    GenericType<String> localVarReturnType = new GenericType<String>() {};
+    return apiClient.invokeAPI(localVarPath, "GET", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
+      }
+  /**
+   * 获取历史流程实例高亮信息
+   * 
+   * @param processInstanceId 流程实例id (required)
+   * @return String
+   * @throws ApiException if fails to make API call
+   */
+  public String getHistoryProcessInstanceHighlighted(String processInstanceId) throws ApiException {
+    Object localVarPostBody = null;
+    
+    // verify the required parameter 'processInstanceId' is set
+    if (processInstanceId == null) {
+      throw new ApiException(400, "Missing the required parameter 'processInstanceId' when calling getHistoryProcessInstanceHighlighted");
+    }
+    
+    // create path and map variables
+    String localVarPath = "/v1/flow/history/instances/{processInstanceId}/highlighted".replaceAll("\\{format\\}","json")
+      .replaceAll("\\{" + "processInstanceId" + "\\}", apiClient.escapeString(processInstanceId.toString()));
+
+    // query params
+    List<Pair> localVarQueryParams = new ArrayList<Pair>();
+    Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+    Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+
+    
+    
+    final String[] localVarAccepts = {
+      "application/json"
+    };
+    final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
+
+    final String[] localVarContentTypes = {
+      "application/json"
+    };
+    final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
+
+    String[] localVarAuthNames = new String[] {  };
+
+    GenericType<String> localVarReturnType = new GenericType<String>() {};
+    return apiClient.invokeAPI(localVarPath, "GET", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
+      }
 }

@@ -34,13 +34,13 @@ import io.swagger.annotations.ApiModelProperty;
 import java.util.ArrayList;
 import java.util.List;
 
-
+import java.io.Serializable;
 /**
  * 数据集响应模型
  */
 @ApiModel(description = "数据集响应模型")
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-12-28T13:50:28.213+08:00")
-public class PageListResponseWfDeploymentResponse   {
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-12-28T16:50:41.068+08:00")
+public class PageListResponseWfDeploymentResponse  implements Serializable {
   @JsonProperty("data")
   private List<WfDeploymentResponse> data = new ArrayList<WfDeploymentResponse>();
 

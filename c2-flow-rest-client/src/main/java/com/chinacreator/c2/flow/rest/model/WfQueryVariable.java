@@ -31,13 +31,13 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
-
+import java.io.Serializable;
 /**
  * 变量查询参数
  */
 @ApiModel(description = "变量查询参数")
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-12-28T13:50:28.213+08:00")
-public class WfQueryVariable   {
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-12-28T16:50:41.068+08:00")
+public class WfQueryVariable  implements Serializable {
   @JsonProperty("name")
   private String name = null;
 

@@ -32,7 +32,6 @@ import com.chinacreator.c2.flow.rest.model.PageListResponseWfDeploymentResponse;
 import com.chinacreator.c2.flow.rest.model.WfDeploymentRequest;
 import org.junit.Test;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -145,7 +144,7 @@ public class RepositoryDeploymentApiTest {
         String tenantId = null;
         String tenantIdLike = null;
         Boolean withoutTenantId = null;
-        PageListResponseWfDeploymentResponse response = api.getDeployments(name, nameLike, category, categoryNotEquals, tenantId, tenantIdLike, withoutTenantId);
+        // PageListResponseWfDeploymentResponse response = api.getDeployments(name, nameLike, category, categoryNotEquals, tenantId, tenantIdLike, withoutTenantId);
 
         // TODO: test validations
     }
@@ -160,12 +159,9 @@ public class RepositoryDeploymentApiTest {
      */
     @Test
     public void uploadDeploymentTest() throws ApiException {
-        WfDeploymentRequest body = new WfDeploymentRequest();
-        body.setDeployResource(new File("D://leave.bpmn20.xml"));
-        body.setDeployName("leave.bpmn20.xml");
-        body.setCurrentLoginUserId("tt");
-        WfDeploymentResponse response = api.uploadDeployment(body);
-        
+        WfDeploymentRequest body = null;
+        // WfDeploymentResponse response = api.uploadDeployment(body);
+
         // TODO: test validations
     }
     

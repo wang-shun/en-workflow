@@ -5,6 +5,7 @@ All URIs are relative to *http://127.0.0.1:83/rest*
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**executeProcessDefinitionAction**](RepositoryDefinitionApi.md#executeProcessDefinitionAction) | **PUT** /v1/flow/repository/definitions/{processDefinitionId} | 修改流程某些信息
+[**getDiagramLayout**](RepositoryDefinitionApi.md#getDiagramLayout) | **GET** /v1/flow/repository/definitions/{processDefinitionId}/diagramLayout | 获取流程定义布局图
 [**getModelResource**](RepositoryDefinitionApi.md#getModelResource) | **GET** /v1/flow/repository/definitions/{processDefinitionId}/model | 获取流程定义模型
 [**getProcessDefinition**](RepositoryDefinitionApi.md#getProcessDefinition) | **GET** /v1/flow/repository/definitions/{processDefinitionId} | 获取单个流程信息
 [**getProcessDefinitionResourceData**](RepositoryDefinitionApi.md#getProcessDefinitionResourceData) | **GET** /v1/flow/repository/definitions/{processDefinitionId}/resourcedata | 下载流程定义文件
@@ -56,6 +57,51 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: application/json
+ - **Accept**: application/json
+
+<a name="getDiagramLayout"></a>
+# **getDiagramLayout**
+> String getDiagramLayout(processDefinitionId)
+
+获取流程定义布局图
+
+
+
+### Example
+```java
+// Import classes:
+//import com.chinacreator.c2.flow.rest.ApiException;
+//import com.chinacreator.c2.flow.rest.api.RepositoryDefinitionApi;
+
+
+RepositoryDefinitionApi apiInstance = new RepositoryDefinitionApi();
+String processDefinitionId = "processDefinitionId_example"; // String | 流程定义id
+try {
+    String result = apiInstance.getDiagramLayout(processDefinitionId);
+    System.out.println(result);
+} catch (ApiException e) {
+    System.err.println("Exception when calling RepositoryDefinitionApi#getDiagramLayout");
+    e.printStackTrace();
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **processDefinitionId** | **String**| 流程定义id |
+
+### Return type
+
+**String**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
  - **Accept**: application/json
 
 <a name="getModelResource"></a>

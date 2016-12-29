@@ -180,4 +180,17 @@
     <maven-plugin-version>1.0.0</maven-plugin-version>
     <junit-version>4.12</junit-version>
   </properties>
+  
+  	<distributionManagement>
+		<repository>
+			<id>releases</id>
+			<name>deployment</name>
+			<url>http://172.16.25.142/nexus/content/repositories/releases/</url>
+		</repository>
+		<snapshotRepository>
+			<id>snapshots</id>
+			<name>deployment</name>
+			<url>http://172.16.25.142/nexus/content/repositories/snapshots/</url>
+		</snapshotRepository>
+	</distributionManagement>
 </project>

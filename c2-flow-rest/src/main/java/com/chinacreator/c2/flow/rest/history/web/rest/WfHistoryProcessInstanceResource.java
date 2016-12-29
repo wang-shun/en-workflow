@@ -40,10 +40,13 @@ import org.activiti.engine.impl.persistence.entity.ProcessDefinitionEntity;
 import org.activiti.engine.task.Comment;
 import org.activiti.rest.service.api.engine.variable.RestVariable.RestVariableScope;
 import org.activiti.spring.ProcessEngineFactoryBean;
+import org.codehaus.jackson.map.ObjectMapper;
+import org.codehaus.jackson.node.ObjectNode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import com.chinacreator.c2.flow.api.WfManagerService;
 import com.chinacreator.c2.flow.rest.common.C2RestResponseFactory;
 import com.chinacreator.c2.flow.rest.common.vo.WfCommentResponse;
 import com.chinacreator.c2.flow.rest.common.vo.WfHistoricIdentityLinkResponse;
@@ -79,6 +82,9 @@ public class WfHistoryProcessInstanceResource extends HistoricProcessInstanceBas
 	
 	@Autowired
 	RuntimeService runtimeService;
+	
+	@Autowired
+	WfManagerService wfManagerService;
   
   	@ApiOperation(value = "获取历史工作流实例列表",tags = "historyInstance")
   	@ApiResponses(value = { @ApiResponse(code = 400, message = "错误的请求参数"),@ApiResponse(code = 404, message = "操作失败，请求资源未找到"),@ApiResponse(code = 500, message = "系统内部错误")  })
@@ -385,5 +391,52 @@ public class WfHistoryProcessInstanceResource extends HistoricProcessInstanceBas
 			  return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
 		  }
 	  }
+	  
+	  
+		@ApiOperation(value = "获取历史流程实例的流程定义布局信息", tags = "historyInstance")
+		@GET
+		@Produces({ MediaType.APPLICATION_JSON })
+		@Consumes({ MediaType.APPLICATION_JSON })
+		@Path("/{processInstanceId}/diagramLayout")
+		public String getHistoryProcessInstanceDiagramLayout(
+				@ApiParam(value = "流程实例id", required = true) @PathParam("processInstanceId") String processInstanceId)
+				throws Exception {
+
+			try{
+				ObjectNode responseJSON = new ObjectMapper().createObjectNode();
+				String responseJSONStr = wfManagerService.getDiagram(processInstanceId,null);
+				//responseJSON = new ObjectMapper().readValue(responseJSONStr, ObjectNode.class);
+				return responseJSONStr;
+			} catch (ActivitiIllegalArgumentException e) {
+				throw new InvalidRestParamException(e.getMessage());
+			} catch (ActivitiObjectNotFoundException e) {
+				throw new ResourceNotFoundException(e.getMessage());
+			} catch (Exception e) {
+				throw new UnkownException(e.getMessage(), e);
+			}
+		}
+		
+		
+		@ApiOperation(value = "获取历史流程实例高亮信息", tags = "historyInstance")
+		@GET
+		@Produces({ MediaType.APPLICATION_JSON })
+		@Consumes({ MediaType.APPLICATION_JSON })
+		@Path("/{processInstanceId}/highlighted")
+		public String getHistoryProcessInstanceHighlighted(
+				@ApiParam(value = "流程实例id", required = true) @PathParam("processInstanceId") String processInstanceId)
+				throws Exception {
+
+			try{
+				String responseJSONStr = wfManagerService.getHighlighted(processInstanceId);
+				return responseJSONStr;
+				
+			} catch (ActivitiIllegalArgumentException e) {
+				throw new InvalidRestParamException(e.getMessage());
+			} catch (ActivitiObjectNotFoundException e) {
+				throw new ResourceNotFoundException(e.getMessage());
+			} catch (Exception e) {
+				throw new UnkownException(e.getMessage(), e);
+			}
+		}
 
 }
