@@ -7,22 +7,12 @@ import io.swagger.annotations.ApiModelProperty;
 /**
  * @author hushowly
  */
-@ApiModel(value="WfCommentResponse",description="评论意见信息")
+@ApiModel(value="WfCommentRequest",description="评论意见信息")
 public class WfCommentRequest {
-  @ApiModelProperty("意见id")
-  private String id;
   @ApiModelProperty("意见作者")
   private String author;
   @ApiModelProperty("意见内容")
   private String message;
-  
-  public void setId(String id) {
-    this.id = id;
-  }
-  
-  public String getId() {
-    return id;
-  }
   
   public String getAuthor() {
     return author;
