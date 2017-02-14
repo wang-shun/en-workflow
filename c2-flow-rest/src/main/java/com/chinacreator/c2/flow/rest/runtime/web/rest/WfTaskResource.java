@@ -31,6 +31,7 @@ import org.activiti.engine.ActivitiException;
 import org.activiti.engine.ActivitiIllegalArgumentException;
 import org.activiti.engine.ActivitiObjectNotFoundException;
 import org.activiti.engine.HistoryService;
+import org.activiti.engine.IdentityService;
 import org.activiti.engine.RuntimeService;
 import org.activiti.engine.TaskService;
 import org.activiti.engine.history.HistoricTaskInstance;
@@ -90,6 +91,9 @@ public class WfTaskResource extends TaskBaseResource {
 	
 	@Autowired
 	HistoryService historyService;
+	
+	@Autowired
+	IdentityService identityService;
 
 	@ApiOperation(value = "待办列表", tags = "runtimeTask")
 	@ApiResponses(value = { @ApiResponse(code = 400, message = "错误的请求参数"),@ApiResponse(code = 404, message = "操作失败，请求资源未找到"),@ApiResponse(code = 500, message = "系统内部错误")  })
@@ -823,9 +827,9 @@ public class WfTaskResource extends TaskBaseResource {
 				throw new ActivitiIllegalArgumentException(
 						"Comment text is required.");
 			}
-
-			Comment createdComment = taskService.addComment(task.getId(), null, comment.getMessage());
 			
+			identityService.setAuthenticatedUserId(comment.getAuthor());
+			Comment createdComment = taskService.addComment(task.getId(), null, comment.getMessage());
 			C2RestResponseFactory responseFactory = new C2RestResponseFactory();
 			return responseFactory.createRestComment(createdComment);
 			
@@ -835,7 +839,9 @@ public class WfTaskResource extends TaskBaseResource {
 			throw new ResourceNotFoundException(e2.getMessage());
 		} catch (Exception e) {
 			throw new UnkownException(e.getMessage(), e);
-		}
+		} finally {
+          identityService.setAuthenticatedUserId(null);
+        }
 		
 	    
 	}
