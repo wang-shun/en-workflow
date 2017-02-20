@@ -31,7 +31,7 @@ import org.activiti.engine.history.HistoricTaskInstanceQuery;
 import org.activiti.rest.service.api.engine.variable.RestVariable.RestVariableScope;
 import org.activiti.spring.ProcessEngineFactoryBean;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 
 import com.chinacreator.c2.flow.rest.common.C2RestResponseFactory;
@@ -48,7 +48,7 @@ import com.chinacreator.c2.web.exception.UnkownException;
  * 历史流程实例rest接口
  * @author hushow
  */
-@Service
+@Controller
 @Path("v1/flow/history/tasks")
 @Api
 @SwaggerDefinition(tags={@Tag(name = "historyTask",description="历史任务相关操作")})

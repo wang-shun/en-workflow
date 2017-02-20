@@ -43,7 +43,7 @@ import org.activiti.spring.ProcessEngineFactoryBean;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.node.ObjectNode;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 
 import com.chinacreator.c2.flow.api.WfManagerService;
@@ -62,7 +62,7 @@ import com.chinacreator.c2.web.exception.UnkownException;
  * 历史流程实例rest接口
  * @author hushow
  */
-@Service
+@Controller
 @Path("v1/flow/history/instances")
 @Api
 @SwaggerDefinition(tags={@Tag(name = "historyInstance",description="历史流程实例相关操作")})

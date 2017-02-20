@@ -49,7 +49,7 @@ import org.activiti.engine.repository.Deployment;
 import org.activiti.engine.repository.ProcessDefinition;
 import org.activiti.engine.repository.ProcessDefinitionQuery;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 
 import com.chinacreator.c2.flow.api.WfManagerService;
@@ -68,7 +68,7 @@ import com.chinacreator.c2.web.exception.UnkownException;
  * @author hushow
  * 
  */
-@Service
+@Controller
 @Path("v1/flow/repository/definitions")
 @Api
 @ApiResponses(value = { @ApiResponse(code = 400, message = "错误的请求参数"),@ApiResponse(code = 404, message = "操作失败，请求资源未找到"),@ApiResponse(code = 500, message = "系统内部错误") })

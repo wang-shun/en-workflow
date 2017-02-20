@@ -16,7 +16,7 @@ import org.activiti.engine.ActivitiIllegalArgumentException;
 import org.activiti.engine.ActivitiObjectNotFoundException;
 import org.activiti.engine.HistoryService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Controller;
 
 import com.chinacreator.c2.flow.rest.common.vo.WfHistoricTaskInstanceQueryRequest;
 import com.chinacreator.c2.flow.rest.common.vo.WfHistoricTaskInstanceResponse;
@@ -32,7 +32,7 @@ import com.chinacreator.c2.web.exception.UnkownException;
  * 历史任务查询接口
  * @author hushow
  */
-@Service
+@Controller
 @Path("v1/flow/query/history/tasks")
 @Api
 public class WfHistoricTaskQueryResource extends HistoricTaskInstanceBaseResource {

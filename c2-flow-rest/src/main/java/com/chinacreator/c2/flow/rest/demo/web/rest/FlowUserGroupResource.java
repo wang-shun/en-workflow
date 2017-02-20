@@ -9,17 +9,13 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.core.Context;
 
 import org.activiti.engine.ManagementService;
-import org.activiti.engine.impl.cfg.IdGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Controller;
 
-import com.chinacreator.c2.flow.cmd.unitetask.InsertWfUniteRunTaskCmd;
 import com.chinacreator.c2.flow.detail.ChooseGroup;
-import com.chinacreator.c2.flow.persistence.entity.WfUniteRunTaskEntity;
-import com.chinacreator.c2.flow.util.PKGenerator;
 import com.chinacreator.c2.flow.util.WfUtils;
 
-@Service
+@Controller
 @Path("v1/flow/demo/users")
 public class FlowUserGroupResource {
 	

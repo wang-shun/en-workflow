@@ -19,7 +19,7 @@ import javax.ws.rs.core.MediaType;
 import org.activiti.engine.ActivitiIllegalArgumentException;
 import org.activiti.engine.ActivitiObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 
 import com.chinacreator.c2.flow.api.WfRuntimeService;
@@ -35,7 +35,7 @@ import com.chinacreator.c2.web.exception.UnkownException;
  * 
  * @author hushow
  */
-@Service
+@Controller
 @Path("v1/flow/runtime/unite/tasks")
 public class WfUniteTaskResource {
 	

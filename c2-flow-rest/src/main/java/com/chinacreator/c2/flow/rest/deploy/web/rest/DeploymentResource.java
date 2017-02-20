@@ -38,7 +38,7 @@ import org.activiti.engine.repository.DeploymentQuery;
 import org.activiti.rest.common.application.DefaultMediaTypeResolver;
 import org.jboss.resteasy.annotations.providers.multipart.MultipartForm;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Controller;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.util.StringUtils;
 
@@ -68,7 +68,7 @@ import com.chinacreator.c2.web.exception.UnkownException;
  * @author hushow
  * 
  */
-@Service
+@Controller
 @Path("v1/flow/repository/deploy")
 @Api
 @SwaggerDefinition(tags = { @Tag(name = "repositoryDeployment", description = "流程部署相关操作") })
