@@ -44,7 +44,7 @@ import org.activiti.rest.service.api.RestResponseFactory;
 import org.activiti.rest.service.api.engine.variable.RestVariable;
 import org.activiti.rest.service.api.engine.variable.RestVariable.RestVariableScope;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 
 import com.chinacreator.c2.flow.api.WfTaskService;
@@ -74,7 +74,7 @@ import com.chinacreator.c2.web.exception.UnkownException;
  * 
  * @author hushow
  */
-@Service
+@Controller
 @Path("v1/flow/runtime/tasks")
 @Api
 @SwaggerDefinition(tags={@Tag(name = "runtimeTask",description="运行时任务相关操作")})

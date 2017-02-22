@@ -16,7 +16,7 @@ import org.activiti.engine.ActivitiObjectNotFoundException;
 import org.activiti.engine.RuntimeService;
 import org.activiti.engine.runtime.ProcessInstanceQuery;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Controller;
 
 import com.chinacreator.c2.flow.rest.common.vo.WfPageListResponse;
 import com.chinacreator.c2.flow.rest.common.vo.WfProcessInstanceQueryRequest;
@@ -36,7 +36,7 @@ import com.chinacreator.c2.web.exception.UnkownException;
  * 任务查询接口
  * @author hushow
  */
-@Service
+@Controller
 @Path("v1/flow/query/runtime")
 @Api
 public class WfInstanceQueryResource extends BaseProcessInstanceResource{

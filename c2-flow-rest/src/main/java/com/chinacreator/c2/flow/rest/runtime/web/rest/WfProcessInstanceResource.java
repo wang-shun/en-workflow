@@ -40,7 +40,7 @@ import org.activiti.spring.ProcessEngineFactoryBean;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.node.ObjectNode;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 
 import com.chinacreator.c2.context.OperationContextHolder;
@@ -73,7 +73,7 @@ import com.chinacreator.c2.web.exception.UnkownException;
  * 流程实例rest接口
  * @author hushow
  */
-@Service
+@Controller
 @Path("v1/flow/runtime/instances")
 @Api
 @SwaggerDefinition(tags={@Tag(name = "runtimeInstance",description="运行时流程实例相关")})
@@ -265,6 +265,7 @@ public class WfProcessInstanceResource extends BaseProcessInstanceResource{
 		    	  
 			      WfBusinessData wfBusinessData=new WfBusinessData();
 			      wfBusinessData.setBusinessKey(requestVo.getBusinessData().getBusinessKey());
+			      bussinessKey=requestVo.getBusinessData().getBusinessKey();
 			      wfBusinessData.setAppId(requestVo.getBusinessData().getAppId());
 			      wfBusinessData.setModuleId(requestVo.getBusinessData().getModuleId());
 			      wfBusinessData.setModuleName(requestVo.getBusinessData().getModuleName());
