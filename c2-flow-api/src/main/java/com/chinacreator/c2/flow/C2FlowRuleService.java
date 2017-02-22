@@ -1123,4 +1123,12 @@ public class C2FlowRuleService implements WfRuntimeService,
 		return null;
 	}
 	
+	@Override
+	public WfResult goAnyWhere(WfOperator wfOperator, String processInstanceId,
+			String destTaskDefinitionKey, Map<String, Object> variables)
+			throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
 }

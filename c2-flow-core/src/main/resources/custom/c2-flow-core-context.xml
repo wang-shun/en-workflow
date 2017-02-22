@@ -51,6 +51,7 @@
 			</list>
 		</property>
 	</bean>
+	
 	<bean id="processEngine" class="org.activiti.spring.ProcessEngineFactoryBean"
 		destroy-method="destroy">
 		<property name="processEngineConfiguration" ref="processEngineConfiguration" />
@@ -98,6 +99,14 @@
 		<property name="identityService" ref="identityService" />
 		<property name="historyService" ref="historyService" />
 		<property name="wfRepositoryServiceLocal" ref="wfRepositoryServiceLocal" />
+	</bean>
+	<!-- 4.1.6.1开始新增 -->
+	<bean id="wfTaskServiceLocal" class="com.chinacreator.c2.flow.impl.WfTaskServiceImpl">
+		<property name="taskService" ref="taskService" />
+		<property name="identityService" ref="identityService" />
+		<property name="repositoryService" ref="repositoryService" />
+		<property name="historyService" ref="historyService" />
+		<property name="managementService" ref="managementService" />
 	</bean>
 	
 	<context:component-scan base-package="com.chinacreator.c2.flow" />

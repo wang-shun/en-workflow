@@ -2,7 +2,6 @@ package com.chinacreator.c2.flow.impl;
 
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -295,6 +294,10 @@ public class WfRuntimeServiceImpl implements WfRuntimeService {
 							processInstanceId);
 					wfResult.setResult(WfConstants.WF_CONTROL_EXE_FAIL);
 				}
+			}else{
+				throw new ActivitiObjectNotFoundException(
+						"Could not find processInstance data with processInstanceId '" + processInstanceId + "'.",
+						ProcessInstance.class);
 			}
 		} catch (Exception e) {
 			wfResult.setResult(WfConstants.WF_CONTROL_EXE_FAIL);
@@ -1636,6 +1639,62 @@ public class WfRuntimeServiceImpl implements WfRuntimeService {
 		} catch (Exception e) {
 			LoggerManager.log(getClass(), LoggerType.ERROR, wfOperator, e,
 					"委托任务失败：taskId={}, destUserId={} ", taskId, destUserId);
+			throw e;
+		} finally {
+			identityService.setAuthenticatedUserId(null);
+		}
+		return result;
+	}
+	
+	@Override
+	public WfResult goAnyWhere(WfOperator wfOperator,String processInstanceId,
+						String destTaskDefinitionKey,Map<String,Object> variables) throws Exception {
+		
+		WfResult result = new WfResult();
+		String userId = wfOperator.getUserId();
+		try {
+			
+			long num=taskService.createTaskQuery().processInstanceId(processInstanceId).processDefinitionKey(destTaskDefinitionKey).count();
+			if(num>0) throw  new ActivitiException("目标环节["+destTaskDefinitionKey+"]不能和当前环节相同");
+			// 用来设置操作流程的人员ID，引擎会自动把用户ID保存到activiti:initiator中
+			identityService.setAuthenticatedUserId(userId);
+
+			if(variables == null){
+				variables = new HashMap<String, Object>();
+			}
+			if (variables != null){
+				variables.put(WfConstants.WF_BUSINESS_DATA_KEY,
+						wfOperator.getBusinessData());
+				for(String key : variables.keySet()){
+					if("".equals(variables.get(key))){
+						variables.put(key, null);
+					}
+				}
+			}
+			
+			String nextTaskIds = taskTransferOutLine(null, null,
+					processInstanceId,
+					destTaskDefinitionKey,
+					WfConstants.JUMPREASON_GOANYWHERE,null,
+					variables);
+			result.setNextTaskId(nextTaskIds);
+			
+			result.setResult(WfConstants.WF_CONTROL_EXE_SUCCESS);
+			LoggerManager
+					.log(getClass(),
+							LoggerType.DEBUG,
+							wfOperator,
+							null,
+							"自由流转成功： processInstanceId={},destTaskDefinitionKey={}, variables={}",
+							processInstanceId, destTaskDefinitionKey, variables);
+		} catch (Exception e) {
+			LoggerManager
+					.log(getClass(),
+							LoggerType.ERROR,
+							wfOperator,
+							e,
+							"自由流转失败： processInstanceId={},destTaskDefinitionKey={}, variables={}",
+							processInstanceId, destTaskDefinitionKey, variables);
 			throw e;
 		} finally {
 			identityService.setAuthenticatedUserId(null);
