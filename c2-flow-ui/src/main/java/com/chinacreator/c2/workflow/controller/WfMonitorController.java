@@ -33,6 +33,7 @@ import com.chinacreator.c2.flow.util.DateUtil;
 import com.chinacreator.c2.flow.util.WfUtils;
 import com.chinacreator.c2.ioc.ApplicationContextManager;
 import com.chinacreator.c2.web.controller.ResponseFactory;
+import com.chinacreator.c2.workflow.service.OrgGroupType;
 
 /**
  * 流程监控控制器
@@ -168,6 +169,11 @@ public class WfMonitorController {
 								GroupType groupType=WfUtils.getGroupTypeByPrex(groupPrex);
 								if(null==groupType) groupType=WfUtils.getDefaultGroupType();  //获取系统默认组类型
 								ChooseGroup candidateGroup=groupType.getGroup(gid);
+								//依赖流程引擎待办，groupId 没有grouptype信息前缀  默认为岗位组 查不出来查 机构组
+								if(candidateGroup == null){
+									groupType = new OrgGroupType();
+									candidateGroup = groupType.getGroup(gid);
+								}
 								assigneeGroupItem += candidateGroup.getDisplayName()+ ",";
 							} catch (Exception e) {
 								assigneeGroupItem += groupId + ",";

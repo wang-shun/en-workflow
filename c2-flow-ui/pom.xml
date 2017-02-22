@@ -8,6 +8,7 @@
     <version>4.1.6.2</version>
   </parent>
   <artifactId>c2-flow-ui</artifactId>
+  <version>4.1.6.2-qyb</version>
   <name>c2-flow-ui</name>
   <url>http://maven.apache.org</url>
   <properties>
@@ -41,7 +42,7 @@
 		<dependency>
 			<groupId>com.chinacreator.c2</groupId>
 			<artifactId>c2-flow-modeler</artifactId>
-			<version>${project.version}</version>
+			<version>4.1.6.2</version>
 			<exclusions>
 				<exclusion>
 					<artifactId>spring-beans</artifactId>
@@ -72,4 +73,16 @@
 			<scope>provided</scope>
 		</dependency>
   </dependencies>
+ 	<distributionManagement>
+ 		<repository>
+ 			<id>business-releases</id>
+ 			<name>business</name>
+ 			<url>http://172.16.25.142/nexus/content/repositories/business-releases/</url>
+ 		</repository>
+ 		<snapshotRepository>
+ 			<id>business-snapshots</id>
+ 			<name>business</name>
+ 			<url>http://172.16.25.142/nexus/content/repositories/business-snapshots</url>
+ 		</snapshotRepository>
+ 	</distributionManagement>	  
 </project>
