@@ -19,6 +19,7 @@ import org.activiti.engine.task.IdentityLink;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
+import org.springframework.util.StringUtils;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
@@ -322,7 +323,13 @@ public class ExtendTaskListener implements TaskListener {
 		if((null==identityInlnkSet || identityInlnkSet.isEmpty()) && CommonUtil.stringNullOrEmpty(assignee)){
 			hasPerformer = false;
 		}
-		List<WfProcessConfigProperty> wfProcessConfigPropertyList = managementService.executeCommand(new FindProcessConfigProperty(procDefId, moduleId, taskDefKey));
+		
+		//从4.1.6.1开始允许moduleId参数为空，也就是无须外围配置
+		List<WfProcessConfigProperty> wfProcessConfigPropertyList=null;
+		if(StringUtils.hasText(moduleId)){
+			wfProcessConfigPropertyList = managementService.executeCommand(new FindProcessConfigProperty(procDefId, moduleId, taskDefKey));
+		}
+		
 		if(wfProcessConfigPropertyList!=null && !wfProcessConfigPropertyList.isEmpty()){
 			WfProcessConfigProperty wpcp = wfProcessConfigPropertyList.get(0);
 			//当参与者是非空时，也要判断是用户参与者非空还是群组参与者非空，对参与者为空的，读取外围配置进行参与者的指定

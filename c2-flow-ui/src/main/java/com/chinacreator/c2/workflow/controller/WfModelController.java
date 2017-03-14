@@ -198,8 +198,8 @@ public class WfModelController {
 			IOUtils.copy(in, response.getOutputStream());
 			String filename = bpmnModel.getMainProcess().getId()
 					+ ".bpmn20.xml";
-			response.setHeader("Content-Disposition", "attachment; filename="
-					+ filename);
+			response.setHeader("Content-Disposition", "attachment; filename="+ filename);
+			response.setContentType("application/octet-stream");
 			response.flushBuffer();
 		} catch (Exception e) {
 			logger.error("导出model的xml文件失败：modelId={}", modelId, e);

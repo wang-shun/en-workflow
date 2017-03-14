@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form:Form xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dync="http://www.chinacreator.com/platform/mvc/ui/dync" xmlns:form="http://www.chinacreator.com/platform/mvc/form" name="restful接口待办已办任务列表示例" sn="task_list_demo" type="form">
+  <form:control type="page/normal">
+    <form:attributes source="page/normal">
+      <dync:attribute default="" group="HTML" id="showHead" name="显示标题" value="">
+        <dync:render/>
+        <dync:children/>
+      </dync:attribute>
+      <dync:attribute default="" group="HTML" id="title" name="标题" value="">
+        <dync:render/>
+        <dync:children/>
+      </dync:attribute>
+      <dync:attribute default="" group="HTML" id="desc" name="描述" value="">
+        <dync:render/>
+        <dync:children/>
+      </dync:attribute>
+      <dync:attribute default="false" group="HTML" id="fixedHeight" name="自动高度" value="false">
+        <dync:render/>
+        <dync:children/>
+      </dync:attribute>
+      <dync:attribute default="false" group="HTML" id="compact" name="紧凑页面" value="false">
+        <dync:render/>
+        <dync:children/>
+      </dync:attribute>
+      <dync:attribute default="false" group="HTML" id="dirtyCheck" name="脏检查" value="false">
+        <dync:render/>
+        <dync:children/>
+      </dync:attribute>
+      <dync:attribute default="" group="注入配置" id="angularJsServices" name="注入服务" value="">
+        <dync:render/>
+        <dync:children/>
+      </dync:attribute>
+      <dync:attribute default="" group="事件" id="beforeDataSourceLoad" name="数据源加载前" value="page_beforeDataSourceLoad($params)">
+        <dync:render/>
+        <dync:children/>
+      </dync:attribute>
+      <dync:attribute default="" group="事件" id="afterDataSourceLoad" name="数据源加载后" value="">
+        <dync:render/>
+        <dync:children/>
+      </dync:attribute>
+      <dync:attribute default="" group="事件" id="onload" name="页面加载完成" value="page_onload()">
+        <dync:render/>
+        <dync:children/>
+      </dync:attribute>
+    </form:attributes>
+  </form:control>
+  <form:child xsi:type="form:Group" id="toolbarWidget" name="标题栏工具条">
+    <form:control type="container/toolbar_widget">
+      <form:attributes source="container/toolbar_widget"/>
+    </form:control>
+    <form:child xsi:type="form:Field" id="button" name="创建新流程实例" customize="true">
+      <form:control type="widget/button">
+        <form:attributes source="widget/button">
+          <dync:attribute default="" group="事件设置" id="click" name="点击事件" value="button_click($event)">
+            <dync:render colSpan="1" height="0" multi="false" name="event">
+              <dync:item name="params" value="$event"/>
+            </dync:render>
+            <dync:children/>
+          </dync:attribute>
+        </form:attributes>
+      </form:control>
+      <form:validation/>
+    </form:child>
+  </form:child>
+  <form:child xsi:type="form:Group" id="tabs" name="Tabs">
+    <form:control type="container/tabs">
+      <form:attributes source="container/tabs"/>
+    </form:control>
+    <form:child xsi:type="form:Group" id="newTab1" name="我的待办">
+      <form:control type="container/tab">
+        <form:attributes source="container/tab">
+          <dync:attribute default="false" group="HTML配置" id="active" name="选中" value="true">
+            <dync:render colSpan="1" height="0" multi="false" name="checkbox"/>
+            <dync:children/>
+          </dync:attribute>
+        </form:attributes>
+      </form:control>
+      <form:child xsi:type="form:Group" id="div" name="简单容器(DIV)">
+        <form:control type="container/div">
+          <form:attributes source="container/div">
+            <dync:attribute default="" group="高级自定义" id="html" name="自定义HTML" value="div_html">
+              <dync:render colSpan="2" height="0" multi="false" name="html"/>
+              <dync:children/>
+            </dync:attribute>
+          </form:attributes>
+        </form:control>
+      </form:child>
+    </form:child>
+    <form:child xsi:type="form:Group" id="newTab2" name="我的已办">
+      <form:control type="container/tab">
+        <form:attributes source="container/tab"/>
+      </form:control>
+      <form:child xsi:type="form:Group" id="div1" name="简单容器(DIV)">
+        <form:control type="container/div">
+          <form:attributes source="container/div">
+            <dync:attribute default="" group="高级自定义" id="html" name="自定义HTML" value="div1_html">
+              <dync:render colSpan="2" height="0" multi="false" name="html"/>
+              <dync:children/>
+            </dync:attribute>
+          </form:attributes>
+        </form:control>
+      </form:child>
+    </form:child>
+  </form:child>
+  <form:datasources>
+    <form:datasource xsi:type="form:Inputs"/>
+  </form:datasources>
+  <form:scripts>loadTodoList:function(){
+
+	if($scope.subject||$scope.subject.id){
+		
+		//查询当前用户(处理人、候选人、所属组)的待办
+		var toDoParams={&quot;start&quot;: 0,
+					&quot;size&quot;:20,
+					&quot;candidateOrAssigned&quot;:$scope.subject.id}
+		if($params.userGroups){
+			toDoParams.candidateGroupIn=[$params.userGroups];
+		}
+		
+		$http.post(&quot;v1/flow/query/runtime/tasks&quot;,toDoParams).success(function(data){
+			$scope.todoList=data.data;
+		})
+		
+	}else{
+		Messenger.error(&quot;当前用户id获取为空，无法获取待办列表!&quot;);
+	}
+},
+loadDoneList:function(){
+	if($scope.subject||$scope.subject.id){
+		$http.post(&quot;v1/flow/query/history/tasks&quot;,{&quot;start&quot;: 0,&quot;size&quot;:20,&quot;taskAssignee&quot;:$scope.subject.id}).success(function(data){
+		$scope.doneList=data.data;
+	})
+	}else{
+		Messenger.error(&quot;当前用户id获取为空，无法获取已办列表!&quot;);
+	}
+},
+page_beforeDataSourceLoad:function($params){
+	functions.loadTodoList();
+	functions.loadDoneList();
+},
+
+page_onload:function(){
+	
+},
+openDetail:function(taskId){
+	Modal.open(&quot;f/task_detail_demo&quot;,{taskId:taskId},
+	    function(AA){
+	        functions.loadTodoList();
+	    },
+	    function(){
+
+	    }
+    );
+},
+openMonitor:function(procinstid){
+	Modal.open(&quot;f/task_monitor_demo&quot;,{processInstanceId:procinstid},
+	    function(AA){
+	        
+	    },
+	    function(){
+
+	    }
+    );
+},
+button_click:function($event){
+	Modal.open(&quot;f/task_add_demo&quot;,{},function(){
+		functions.loadTodoList();
+	});
+}</form:scripts>
+  <form:htmls>
+&lt;script type=&quot;text/ng-template&quot; id=&quot;div_html&quot;>
+&lt;table style=&quot;width:100%;&quot;>
+	&lt;tr>
+		&lt;th style=&quot;width: 25%;&quot;>流程实例id&lt;/th>
+		&lt;th style=&quot;width: 25%;&quot;>任务id&lt;/th>
+    	&lt;th style=&quot;width: 10%;&quot;>任务名称&lt;/th>
+    	&lt;th>处理人&lt;/th>
+	    &lt;th>创建时间&lt;/td>
+		&lt;th>状态&lt;/td>
+		&lt;th>操作&lt;/th>
+		&lt;th>监控&lt;/th>
+  	&lt;/tr>
+
+	&lt;tr ng-repeat=&quot;todo in todoList&quot;>
+		&lt;td>{{todo.processInstanceId}}&lt;/td>
+		&lt;td>{{todo.id}}&lt;/td>
+    	&lt;td>{{todo.name}}&lt;/td>
+    	&lt;td>{{todo.assignee}}&lt;/td>
+		&lt;td>{{todo.createTime|date :'yyyy-MM-dd hh:mm:ss'}}&lt;/td>
+		&lt;td>待处理&lt;/td>
+		&lt;td>&lt;a href=&quot;javascript:void(0);&quot; ng-click=&quot;functions.openDetail(todo.id)&quot;>详细&lt;/a>&lt;/td>
+		&lt;th>&lt;a href=&quot;javascript:void(0);&quot; ng-click=&quot;functions.openMonitor(todo.processInstanceId)&quot;>监控&lt;/a>&lt;/th>
+  	&lt;/tr>
+&lt;/table>
+&lt;/script>
+&lt;script type=&quot;text/ng-template&quot; id=&quot;div1_html&quot;>
+&lt;table style=&quot;width:100%;&quot;>
+	&lt;tr>
+		&lt;th  style=&quot;width: 25%;&quot;>流程实例id&lt;/th>
+		&lt;th style=&quot;width: 25%;&quot;>任务id&lt;/th>
+    	&lt;th style=&quot;width: 10%;&quot;>任务名称&lt;/th>
+    	&lt;th>处理人&lt;/th>
+	    &lt;th>创建时间&lt;/td>
+		&lt;th>状态&lt;/td>
+		&lt;th>操作&lt;/th>
+		&lt;th>监控&lt;/th>
+  	&lt;/tr>
+
+	&lt;tr ng-repeat=&quot;done in doneList&quot;>
+		&lt;td>{{done.processInstanceId}}&lt;/td>
+		&lt;td>{{done.id}}&lt;/td>
+    	&lt;td>{{done.name}}&lt;/td>
+    	&lt;td>{{done.assignee}}&lt;/td>
+		&lt;td>{{done.startTime|date :'yyyy-MM-dd hh:mm:ss'}}&lt;/td>
+		&lt;td>已处理&lt;/td>
+		&lt;td>&lt;a href=&quot;javascript:void(0);&quot; ng-click=&quot;functions.openDetail(done.id)&quot;>详细&lt;/a>&lt;/td>
+		&lt;th>&lt;a href=&quot;javascript:void(0);&quot; ng-click=&quot;functions.openMonitor(done.processInstanceId)&quot;>监控&lt;/a>&lt;/th>
+  	&lt;/tr>
+&lt;/table>
+&lt;/script></form:htmls>
+</form:Form>

@@ -11,9 +11,9 @@ import org.activiti.engine.impl.cfg.IdGenerator;
  * @author minghua.guo
  */
 public class PKGenerator implements IdGenerator{
-
+	
 	@Override
-	public String getNextId() {
+	public synchronized String getNextId() {
         String s = UUID.randomUUID().toString().toUpperCase(Locale.US);
         return s.substring(0, 8) + s.substring(9, 13) + s.substring(14, 18)
                 + s.substring(19, 23) + s.substring(24);

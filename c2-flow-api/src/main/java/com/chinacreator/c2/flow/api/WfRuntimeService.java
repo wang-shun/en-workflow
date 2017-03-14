@@ -661,6 +661,24 @@ public interface WfRuntimeService {
 			String currenTaskId, String destTaskDefinitionKey,
 			boolean useHisAssignee, Map<String, Object> variables)
 			throws Exception;
+	
+	
+	/**
+	 * 自由流控制
+	 * 
+	 * @param wfOperator
+	 *            操作者信息，必须参数
+	 * @param processInstanceId
+	 *            流程实例id
+	 * @param destTaskDefinitionKey
+	 *            目标任务定义id, 必须参数
+	 * @param variables
+	 *            流程参数， 可以为null
+	 * @return 流程操作结果对象
+	 * @throws Exception
+	 */
+	public WfResult goAnyWhere(WfOperator wfOperator,String processInstanceId,
+						String destTaskDefinitionKey,Map<String,Object> variables) throws Exception;
 
 	/**
 	 * 查询统一任务配置信息
