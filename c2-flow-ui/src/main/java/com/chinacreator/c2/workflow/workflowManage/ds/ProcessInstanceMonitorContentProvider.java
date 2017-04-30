@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
+import org.springframework.stereotype.Service;
 
 import com.chinacreator.asp.comp.sys.advanced.job.service.JobService;
 import com.chinacreator.asp.comp.sys.advanced.user.service.UserService;
@@ -31,14 +32,15 @@ import com.chinacreator.c2.ioc.ApplicationContextManager;
 import com.chinacreator.c2.web.ds.ArrayContentProvider;
 import com.chinacreator.c2.web.ds.ArrayContext;
 import com.chinacreator.c2.workflow.service.OrgGroupType;
-
+@Service("processmonitorcontent")
 public class ProcessInstanceMonitorContentProvider implements ArrayContentProvider{
 
-	private WfHistoryService wfHistoryService = WfApiFactory.getWfHistoryService();
-	private WfRuntimeService wfRuntimeService = WfApiFactory.getWfRuntimeService();
+
 	
 	@Override
 	public Page<Map<String, Object>> getElements(ArrayContext context) {
+		WfHistoryService wfHistoryService = WfApiFactory.getWfHistoryService();
+		WfRuntimeService wfRuntimeService = WfApiFactory.getWfRuntimeService();		
 		Page<Map<String, Object>> page = new Page<Map<String, Object>>(new Pageable(), new ArrayList<Map<String, Object>>());
 		
 		List<Map<String, Object>> mapList = new ArrayList<Map<String,Object>>(); 
@@ -81,6 +83,8 @@ public class ProcessInstanceMonitorContentProvider implements ArrayContentProvid
 
 	private List<Map<String, Object>> formList(
 			WfPageList<WfHistoricTask, WfHistoricTaskParam> wfHistoricTaskPageList) throws Exception{
+		WfHistoryService wfHistoryService = WfApiFactory.getWfHistoryService();
+		WfRuntimeService wfRuntimeService = WfApiFactory.getWfRuntimeService();		
 		
 		UserService userService = ApplicationContextManager.getContext().getBean(UserService.class);
 		JobService jobService = ApplicationContextManager.getContext().getBean(JobService.class);
