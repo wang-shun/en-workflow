@@ -56,3 +56,7 @@ c2-flow-webapp/.settings/org.eclipse.wst.common.project.facet.core.xml
 c2-flow-webapp/.settings/org.eclipse.wst.jsdt.ui.superType.container
 c2-flow-webapp/.settings/org.eclipse.wst.jsdt.ui.superType.name
 c2-flow-webapp/.settings/org.eclipse.wst.validation.prefs
+c2-flow-api/.settings/
+c2-flow-rest/target/
+c2-flow-core/.settings/
+c2-flow-ui/.settings/
